@@ -1,0 +1,87 @@
+{
+  "menu": {
+    "home": "Home",
+    "apple_products": "Apple Products",
+    "samsung_products": "Samsung Products",
+    "accessories": "Accessories",
+    "articles": "Articles",
+    "about": "About Us",
+    "categories": "Product Categories",
+
+    "apple": {
+      "iphone": "iPhone",
+      "ipad": "iPad",
+      "macbook": "MacBook",
+      "watch": "Apple Watch",
+      "airpods": "AirPods"
+    },
+
+    "samsung": {
+      "a_series": "A Series",
+      "s_series": "S Series",
+      "z_series": "Z Series",
+      "m_series": "M Series",
+      "note_series": "Note Series",
+      "tablets": "Tablets",
+      "laptops": "Laptops"
+    },
+
+    "acc": {
+      "cases": "Phone Cases",
+      "chargers": "Chargers",
+      "protection": "Screen Protectors",
+      "cables": "Cables",
+      "audio": "Audio Accessories"
+    }
+  },
+
+  "header": {
+    "store": "Apple Store",
+    "search": "Search",
+    "cart": "Cart",
+    "login": "Login",
+    "register": "Sign Up",
+    "designer": "Website designed by Fatemeh Rostami",
+    "social": {
+      "instagram": "Instagram",
+      "whatsapp": "WhatsApp",
+      "telegram": "Telegram",
+      "linkedin": "LinkedIn",
+      "bale": "Bale"
+    }
+  },
+
+  "login": "Join Us",
+  "register": "Register Now",
+  "cart": "Shop",
+  "search": "Search products...",
+
+  "footer": {
+    "storeDesc": "Apple Store is a specialized retailer of Apple and Samsung products with authenticity guarantee, competitive pricing, and professional support.",
+    "linksTitle": "Quick Links",
+    "socialTitle": "Social Media",
+    "locationTitle": "Our Location",
+    "locationAddress": "Tehran, Iran — Apple Store Main Branch"
+  },
+
+  "add_to_cart": "Add to Cart",
+
+  "home": {
+    "featured_products": "Featured Products"
+  },
+
+  "filters": {
+    "all": "All",
+    "apple": "Apple",
+    "samsung": "Samsung",
+    "phone": "Phone",
+    "watch": "Watch",
+    "accessories": "Accessories"
+  },
+
+  "product": {
+    "buy_now": "BUY NOW",
+    "brand_apple": "APPLE",
+    "brand_samsung": "SAMSUNG"
+  }
+}

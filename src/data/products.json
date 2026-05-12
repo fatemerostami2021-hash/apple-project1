@@ -1,0 +1,132 @@
+[
+  {
+    "id": 1,
+    "name": { "en": "iPhone 15 Pro Max", "fa": "آیفون ۱۵ پرو مکس" },
+    "brand": "Apple", "category": "Smartphones", "price": 1199, "thumbnail": "/images/products/iphone-15-pro-max.png"
+  },
+  {
+    "id": 2,
+    "name": { "en": "Apple Watch Ultra 2", "fa": "اپل واچ اولترا ۲" },
+    "brand": "Apple", "category": "Wearables", "price": 799, "thumbnail": "/images/products/apple-watch-ultra.png"
+  },
+  {
+    "id": 3,
+    "name": { "en": "AirPods Pro (2nd Gen)", "fa": "ایرپاد پرو (نسل دوم)" },
+    "brand": "Apple", "category": "Audio", "price": 249, "thumbnail": "/images/products/airpods-pro-2.png"
+  },
+  {
+    "id": 4,
+    "name": { "en": "MacBook Air M3", "fa": "مک‌بوک ایر M3" },
+    "brand": "Apple", "category": "Laptops", "price": 1099, "thumbnail": "/images/products/macbook-air-m3.png"
+  },
+  {
+    "id": 5,
+    "name": { "en": "Magic Keyboard for iPad Pro", "fa": "مجیک کیبورد برای آیپد پرو" },
+    "brand": "Apple", "category": "Accessories", "price": 349, "thumbnail": "/images/products/magic-keyboard.png"
+  },
+  {
+    "id": 6,
+    "name": { "en": "MagSafe Charger", "fa": "شارژر مگ‌سیف" },
+    "brand": "Apple", "category": "Accessories", "price": 39, "thumbnail": "/images/products/magsafe-charger.png"
+  },
+  {
+    "id": 7,
+    "name": { "en": "Samsung Galaxy S24 Ultra", "fa": "سامسونگ گلکسی S24 اولترا" },
+    "brand": "Samsung", "category": "Smartphones", "price": 1299, "thumbnail": "/images/products/samsung-s24-ultra.png"
+  },
+  {
+    "id": 8,
+    "name": { "en": "Samsung Galaxy Z Fold 5", "fa": "سامسونگ گلکسی Z Fold 5" },
+    "brand": "Samsung", "category": "Smartphones", "price": 1799, "thumbnail": "/images/products/samsung-z-fold-5.png"
+  },
+  {
+    "id": 9,
+    "name": { "en": "Samsung Galaxy Tab S9 Ultra", "fa": "سامسونگ گلکسی تب S9 اولترا" },
+    "brand": "Samsung", "category": "Tablets", "price": 1199, "thumbnail": "/images/products/samsung-tab-s9.png"
+  },
+  {
+    "id": 10,
+    "name": { "en": "Samsung Galaxy Watch 6 Classic", "fa": "سامسونگ گلکسی واچ ۶ کلاسیک" },
+    "brand": "Samsung", "category": "Wearables", "price": 399, "thumbnail": "/images/products/samsung-watch-6.png"
+  },
+  {
+    "id": 11,
+    "name": { "en": "Samsung 45W USB-C Adapter", "fa": "آداپتور سامسونگ ۴۵ وات" },
+    "brand": "Samsung", "category": "Accessories", "price": 49, "thumbnail": "/images/products/samsung-adapter.png"
+  },
+  {
+    "id": 12,
+    "name": { "en": "Samsung Galaxy Buds 2 Pro", "fa": "سامسونگ گلکسی بادز ۲ پرو" },
+    "brand": "Samsung", "category": "Audio", "price": 229, "thumbnail": "/images/products/samsung-buds-2.png"
+  },
+  {
+    "id": 13,
+    "name": { "en": "iPhone 17 Pro Max (Main)", "fa": "آیفون ۱۷ پرو مکس (اصلی)" },
+    "brand": "Apple", "category": "Smartphones", "price": 1299, "thumbnail": "/images/products/iphone-17-pro-max-main.png"
+  },
+  {
+    "id": 14,
+    "name": { "en": "iPhone 17 Pro Max (Green)", "fa": "آیفون ۱۷ پرو مکس (سبز)" },
+    "brand": "Apple", "category": "Smartphones", "price": 1299, "thumbnail": "/images/products/iphone-17-pro-max-green.png"
+  },
+  {
+    "id": 15,
+    "name": { "en": "iPhone 17 Pro Max (Natural)", "fa": "آیفون ۱۷ پرو مکس (طبیعی)" },
+    "brand": "Apple", "category": "Smartphones", "price": 1299, "thumbnail": "/images/products/iphone-17-pro-max-4.png"
+  },
+  {
+    "id": 16,
+    "name": { "en": "S24 Ultra Trio (Hero)", "fa": "سامسونگ اس ۲۴ اولترا (سه‌گانه)" },
+    "brand": "Samsung", "category": "Smartphones", "price": 1299, "thumbnail": "/images/products/hero-12.png"
+  },
+  {
+    "id": 17,
+    "name": { "en": "iPad Pro M4 (Hero)", "fa": "آیپد پرو M4 (تصویر اصلی)" },
+    "brand": "Apple", "category": "Tablets", "price": 1099, "thumbnail": "/images/products/ipad-pro-horizontal.png"
+  },
+  {
+    "id": 18,
+    "name": { "en": "iPhone 15 Pro Duo", "fa": "آیفون ۱۵ پرو (جفت)" },
+    "brand": "Apple", "category": "Smartphones", "price": 999, "thumbnail": "/images/products/iphone-15-pro-duo.png"
+  },
+  {
+    "id": 19,
+    "name": { "en": "iMac 24-inch M3", "fa": "آیمک ۲۴ اینچی M3" },
+    "brand": "Apple", "category": "Desktops", "price": 1299, "thumbnail": "/images/products/imac-24-silver.png"
+  },
+  {
+    "id": 20,
+    "name": { "en": "iPhone 17 Pro Max (Orange)", "fa": "آیفون ۱۷ پرو مکس (نارنجی)" },
+    "brand": "Apple", "category": "Smartphones", "price": 1299, "thumbnail": "/images/products/iphone-17-pro-max-3.png"
+  },
+  {
+    "id": 21,
+    "name": { "en": "iPhone 17 Pro Max (Black)", "fa": "آیفون ۱۷ پرو مکس (مشکی)" },
+    "brand": "Apple", "category": "Smartphones", "price": 1299, "thumbnail": "/images/products/iphone-17-pro-max-black.png"
+  },
+  {
+    "id": 22,
+    "name": { "en": "iPhone 17 Pro Max (Triple)", "fa": "آیفون ۱۷ پرو مکس (سه رنگ)" },
+    "brand": "Apple", "category": "Smartphones", "price": 1299, "thumbnail": "/images/products/iphone-17-pro-max-triple.png"
+  },
+  {
+    "id": 23,
+    "name": { "en": "Galaxy AI Ecosystem", "fa": "اکوسیستم هوش مصنوعی گلکسی" },
+    "brand": "Samsung", "category": "Smartphones", "price": 1899, "thumbnail": "/images/products/samsung-fold-flip-ai.png"
+  },
+  {
+    "id": 24,
+    "name": { "en": "iPhone 17 Pro Max (Gold)", "fa": "آیفون ۱۷ پرو مکس (طلایی)" },
+    "brand": "Apple", "category": "Smartphones", "price": 1299, "thumbnail": "/images/products/iphone-17-pro-max-6.png"
+  },
+  {
+    "id": 25,
+    "name": { "en": "iPad Pro M2 (Old Gen)", "fa": "آیپد پرو M2 (نسل قبلی)" },
+    "brand": "Apple", "category": "Tablets", "price": 899, "thumbnail": "/images/products/ipad-pro-m2.png"
+  },
+  {
+    "id": 26,
+    "name": { "en": "Apple Event Banner", "fa": "بنر رویداد اپل" },
+    "brand": "Apple", "category": "Event", "price": 0, "thumbnail": "/images/products/hero-14.png"
+  }
+]

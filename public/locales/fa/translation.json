@@ -1,0 +1,87 @@
+{
+  "menu": {
+    "home": "صفحه نخست",
+    "apple_products": "محصولات اپل",
+    "samsung_products": "محصولات سامسونگ",
+    "accessories": "لوازم جانبی",
+    "articles": "مقالات",
+    "about": "درباره ما",
+    "categories": "دسته‌بندی محصولات",
+
+    "apple": {
+      "iphone": "آیفون",
+      "ipad": "آیپد",
+      "macbook": "مک‌بوک",
+      "watch": "اپل واچ",
+      "airpods": "ایرپاد"
+    },
+
+    "samsung": {
+      "a_series": "سری A",
+      "s_series": "سری S",
+      "z_series": "سری Z",
+      "m_series": "سری M",
+      "note_series": "سری Note",
+      "tablets": "تبلت‌ها",
+      "laptops": "لپ‌تاپ‌ها"
+    },
+
+    "acc": {
+      "cases": "قاب موبایل",
+      "chargers": "شارژر",
+      "protection": "محافظ صفحه",
+      "cables": "کابل",
+      "audio": "لوازم صوتی"
+    }
+  },
+
+  "header": {
+    "store": "فروشگاه اپل",
+    "search": "جستجو",
+    "cart": "سبد خرید",
+    "login": "ورود",
+    "register": "عضویت",
+    "designer": "طراحی سایت توسط فاطمه رستمی",
+    "social": {
+      "instagram": "اینستاگرام",
+      "whatsapp": "واتساپ",
+      "telegram": "تلگرام",
+      "linkedin": "لینکدین",
+      "bale": "بله"
+    }
+  },
+
+  "login": "عضو شوید",
+  "register": "ثبت نام کنید",
+  "cart": "خرید",
+  "search": "جستجو در محصولات...",
+
+  "footer": {
+    "storeDesc": "فروشگاه اپل، مرجع تخصصی محصولات اپل و سامسونگ با تضمین اصالت، قیمت مناسب و پشتیبانی حرفه‌ای.",
+    "linksTitle": "دسترسی سریع",
+    "socialTitle": "شبکه‌های اجتماعی",
+    "locationTitle": "آدرس ما",
+    "locationAddress": "ایران، تهران — فروشگاه مرکزی اپل استور"
+  },
+
+  "add_to_cart": "افزودن به سبد خرید",
+
+  "home": {
+    "featured_products": "محصولات ویژه"
+  },
+
+  "filters": {
+    "all": "همه",
+    "apple": "اپل",
+    "samsung": "سامسونگ",
+    "phone": "گوشی",
+    "watch": "ساعت",
+    "accessories": "لوازم جانبی"
+  },
+
+  "product": {
+    "buy_now": "خرید آنلاین",
+    "brand_apple": "APPLE",
+    "brand_samsung": "SAMSUNG"
+  }
+}
