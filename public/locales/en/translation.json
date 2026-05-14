@@ -17,13 +17,13 @@
     },
 
     "samsung": {
-      "a_series": "A Series",
-      "s_series": "S Series",
-      "z_series": "Z Series",
-      "m_series": "M Series",
-      "note_series": "Note Series",
-      "tablets": "Tablets",
-      "laptops": "Laptops"
+      "a_series": "Galaxy A Series",
+      "s_series": "Galaxy S Series",
+      "z_series": "Galaxy Z Series",
+      "m_series": "Galaxy M Series",
+      "note_series": "Galaxy Note Series",
+      "tablets": "Samsung Tablets",
+      "laptops": "Samsung Laptops"
     },
 
     "acc": {
@@ -40,8 +40,9 @@
     "search": "Search",
     "cart": "Cart",
     "login": "Login",
-    "register": "Sign Up",
+    "register": "Create Account",
     "designer": "Website designed by Fatemeh Rostami",
+
     "social": {
       "instagram": "Instagram",
       "whatsapp": "WhatsApp",
@@ -51,10 +52,100 @@
     }
   },
 
-  "login": "Join Us",
-  "register": "Register Now",
-  "cart": "Shop",
-  "search": "Search products...",
+  "common": {
+    "login": "Join Us",
+    "register": "Register Now",
+    "cart": "Shop",
+    "search_placeholder": "Search products..."
+  },
+
+  "hero": {
+    "slides": {
+      "s24_ultra": {
+        "title": "Galaxy S24 Ultra",
+        "subtitle": "AI in your hands. Experience next-level photography and unmatched S-Pen power.",
+        "button": "Buy Galaxy"
+      },
+
+      "apple_ecosystem": {
+        "title": "Apple Ecosystem",
+        "subtitle": "A seamless experience across all devices. The magic of iPhone, Mac and iPad together.",
+        "button": "Explore Ecosystem"
+      },
+
+      "watch_s9": {
+        "title": "Apple Watch Series 9",
+        "subtitle": "Smarter, brighter and more powerful. Your perfect fitness and health companion.",
+        "button": "Buy Watch"
+      },
+
+      "iphone13_red": {
+        "title": "iPhone 13 Product Red",
+        "subtitle": "A bold color with limitless power. Designed for those who stand out.",
+        "button": "View iPhone 13"
+      },
+
+      "iphone15_pro": {
+        "title": "iPhone 15 Pro",
+        "subtitle": "Crafted from titanium. The lightest and most powerful Pro ever made.",
+        "button": "Buy 15 Pro"
+      },
+
+      "samsung_flagships": {
+        "title": "Samsung Flagships",
+        "subtitle": "The Galaxy S24 family. The peak of Android innovation in your hands.",
+        "button": "View Flagships"
+      },
+
+      "macbook_pro": {
+        "title": "MacBook Pro Series",
+        "subtitle": "Built for professionals. Experience the incredible power of M3 chips.",
+        "button": "Order MacBook"
+      },
+
+      "ipad_pro": {
+        "title": "iPad Pro with M2",
+        "subtitle": "A tablet powerful enough to replace your computer. Fast and elegant.",
+        "button": "Buy iPad Pro"
+      },
+
+      "iphone17_concept": {
+        "title": "iPhone 17 Pro Max",
+        "subtitle": "A futuristic Apple concept featuring a stunning metallic orange design.",
+        "button": "Pre-order Concept"
+      },
+
+      "dual_view": {
+        "title": "Dual-View Concept",
+        "subtitle": "A close-up look at the futuristic circular camera module design.",
+        "button": "Design Details"
+      },
+
+      "apple_setup": {
+        "title": "Full Apple Setup",
+        "subtitle": "The ultimate Apple setup for your premium workspace.",
+        "button": "Complete Setup"
+      },
+
+      "s24_family": {
+        "title": "Galaxy S24 Series",
+        "subtitle": "Choose between the best models. From standard to Ultra.",
+        "button": "Choose Model"
+      },
+
+      "ipad_creative": {
+        "title": "iPad Pro Creative",
+        "subtitle": "A creative powerhouse for artists and digital designers.",
+        "button": "Start Creating"
+      },
+
+      "watch_collection": {
+        "title": "Watch Collection",
+        "subtitle": "A variety of Apple Watch bands and models for every style.",
+        "button": "View Collection"
+      }
+    }
+  },
 
   "footer": {
     "storeDesc": "Apple Store is a specialized retailer of Apple and Samsung products with authenticity guarantee, competitive pricing, and professional support.",
@@ -63,8 +154,6 @@
     "locationTitle": "Our Location",
     "locationAddress": "Tehran, Iran — Apple Store Main Branch"
   },
-
-  "add_to_cart": "Add to Cart",
 
   "home": {
     "featured_products": "Featured Products"

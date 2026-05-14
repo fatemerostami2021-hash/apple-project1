@@ -1,0 +1,668 @@
+.samsung-card{
+  position: relative;
+
+  border-radius: 24px;
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.04),
+      rgba(255,255,255,.015)
+    );
+
+  border: 1px solid rgba(255,255,255,.06);
+
+  backdrop-filter: blur(16px);
+
+  transition: .35s ease;
+
+  cursor: pointer;
+
+  height: auto;
+}
+
+.samsung-card:hover{
+  border-color: rgba(0,119,255,.22);
+
+  box-shadow:
+    0 18px 45px rgba(0,0,0,.22);
+}
+
+.samsung-card-top{
+  position: relative;
+
+  height: 190px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  padding: 12px;
+}
+
+.samsung-card-glow{
+  position: absolute;
+
+  width: 160px;
+  height: 160px;
+
+  border-radius: 50%;
+
+  filter: blur(10px);
+
+  opacity: .8;
+}
+
+.samsung-card-image{
+  width: 72%;
+  object-fit: contain;
+
+  z-index: 2;
+
+  transition: .4s ease;
+}
+
+.samsung-card:hover .samsung-card-image{
+  transform: scale(1.04);
+}
+
+.samsung-card-content{
+  padding: 18px;
+}
+
+.samsung-card-category{
+  display: inline-block;
+
+  font-size: .72rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+
+  color: #4da3ff;
+
+  margin-bottom: 8px;
+}
+
+.samsung-card-title{
+  font-size: 1.1rem;
+  font-weight: 700;
+
+  margin-bottom: 10px;
+
+  line-height: 1.3;
+}
+
+.samsung-card-description{
+  color: rgba(255,255,255,.68);
+
+  line-height: 1.6;
+  font-size: .86rem;
+
+  margin-bottom: 14px;
+}
+
+.samsung-card-quote{
+  padding-left: 12px;
+
+  border-left: 2px solid #4da3ff;
+
+  color: white;
+
+  font-size: .82rem;
+  opacity: .85;
+
+  margin-bottom: 18px;
+}
+
+.samsung-card-bottom{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.samsung-card-price-box{
+  display: flex;
+  flex-direction: column;
+}
+
+.samsung-card-price-label{
+  font-size: .7rem;
+  color: rgba(255,255,255,.5);
+}
+
+.samsung-card-price{
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.samsung-card-btn{
+  border: none;
+
+  background:
+    linear-gradient(
+      135deg,
+      #0066ff,
+      #3ba0ff
+    );
+
+  color: white;
+
+  padding: 10px 14px;
+
+  border-radius: 12px;
+
+  cursor: pointer;
+
+  font-size: .82rem;
+  font-weight: 600;
+
+  transition: .3s ease;
+}
+
+.samsung-card-btn:hover{
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 10px 22px rgba(0,119,255,.28);
+}
+
+@media(max-width:768px){
+
+  .samsung-card-top{
+    height: 160px;
+  }
+
+  .samsung-card-content{
+    padding: 16px;
+  }
+
+  .samsung-card-title{
+    font-size: 1rem;
+  }
+
+  .samsung-card-bottom{
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .samsung-card-btn{
+    width: 100%;
+  }
+
+}
+/* ================================
+   ULTRA-COMPACT & BOLD SAMSUNG CARD
+   SHORTER CARD + BIGGER PRODUCT IMAGE
+================================ */
+
+.samsung-card {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  padding: 12px; /* کمتر برای کوتاه‌تر شدن کارت */
+  margin: 0 auto;
+
+  border-radius: 24px;
+  overflow: hidden;
+
+  /* Glassmorphism روشن و شفاف */
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.08),
+    0 0 20px rgba(255, 215, 120, 0.1);
+
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  isolation: isolate;
+}
+
+.samsung-card:hover {
+  transform: translateY(-8px) scale(1.02);
+
+  box-shadow:
+    0 25px 50px rgba(0, 0, 0, 0.15),
+    0 0 40px rgba(255, 215, 120, 0.3);
+}
+
+/* ================================
+     IMAGE AREA (کارت کوتاه‌تر + عکس بزرگ‌تر)
+================================ */
+
+.samsung-card-top {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 145px; /* کمتر از قبل برای کوتاه‌تر شدن کارت */
+  margin-bottom: 4px;
+}
+
+.samsung-card-glow {
+  position: absolute;
+  width: 170px;
+  height: 170px;
+
+  background: radial-gradient(
+    circle,
+    rgba(255, 215, 120, 0.4) 0%,
+    transparent 70%
+  );
+
+  filter: blur(28px);
+  z-index: 1;
+}
+
+.samsung-card-image {
+  width: 98%; /* تصویر بزرگ‌تر */
+  height: 98%;
+  object-fit: contain;
+
+  z-index: 2;
+
+  transition: transform 0.5s ease;
+
+  filter: drop-shadow(0 15px 25px rgba(0,0,0,0.1));
+}
+
+.samsung-card:hover .samsung-card-image {
+  transform: scale(1.18);
+}
+
+/* ================================
+     CONTENT (متن‌های تیره و بولد)
+================================ */
+
+.samsung-card-content {
+  text-align: center;
+}
+
+/* دسته بندی */
+
+.samsung-card-category {
+  display: inline-block;
+
+  padding: 3px 9px;
+
+  background: #f0f0f0;
+  color: #555;
+
+  border-radius: 50px;
+
+  font-size: 0.68rem;
+  font-weight: 800;
+
+  text-transform: uppercase;
+
+  margin-bottom: 6px;
+}
+
+/* تیتر اصلی */
+
+.samsung-card-title {
+  font-size: 1.3rem;
+
+  font-weight: 900;
+
+  color: #000;
+
+  margin-bottom: 4px;
+
+  line-height: 1.15;
+}
+
+/* توضیحات */
+
+.samsung-card-description {
+  font-size: 0.82rem;
+
+  font-weight: 600;
+
+  color: #2c3e50;
+
+  line-height: 1.35;
+
+  margin-bottom: 8px;
+}
+
+/* متن انگیزشی */
+
+.samsung-card-quote {
+  font-size: 0.9rem;
+
+  font-weight: 800;
+
+  color: #1a1a1a;
+
+  font-style: italic;
+
+  padding: 4px;
+
+  border-top: 1px solid rgba(0,0,0,0.05);
+
+  margin-bottom: 10px;
+}
+
+/* ================================
+     PRICE & BUTTON
+================================ */
+
+.samsung-card-price {
+  font-size: 1.35rem;
+
+  font-weight: 900;
+
+  color: #b38600;
+
+  margin-bottom: 10px;
+
+  display: block;
+}
+
+.samsung-card-btn {
+  width: 100%;
+
+  padding: 10px;
+
+  border: none;
+  border-radius: 14px;
+
+  background: linear-gradient(
+    135deg,
+    #000 0%,
+    #333 100%
+  );
+
+  color: #fff;
+
+  font-weight: 700;
+  font-size: 0.85rem;
+
+  cursor: pointer;
+
+  transition: 0.3s;
+}
+
+.samsung-card-btn:hover {
+  background: #b38600;
+
+  transform: scale(1.02);
+
+  box-shadow:
+    0 10px 20px rgba(179, 134, 0, 0.3);
+}
+
+/* ================================
+     GOLDEN BORDER GLOW
+================================ */
+
+.samsung-card::after {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  border-radius: 24px;
+
+  border: 2px solid transparent;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,215,120,0.4),
+      transparent,
+      rgba(255,215,120,0.2)
+    ) border-box;
+
+  -webkit-mask:
+    linear-gradient(#fff 0 0) padding-box,
+    linear-gradient(#fff 0 0);
+
+  -webkit-mask-composite: destination-out;
+
+  mask-composite: exclude;
+
+  pointer-events: none;
+}
+.samsung-hero-content{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:80px;
+}
+
+/* TEXT COLUMN */
+
+.samsung-hero-text{
+  flex:0.9;
+  max-width:520px;
+}
+
+/* IMAGE COLUMN */
+
+.samsung-hero-image-wrap{
+  flex:1.4;
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+}
+
+/* HERO IMAGE */
+
+.samsung-hero-image{
+  width:100%;
+  max-width:1000px;
+  object-fit:contain;
+
+  filter:
+  drop-shadow(0 50px 100px rgba(0,0,0,.7));
+
+  transition:
+  transform .6s ease,
+  filter .6s ease;
+}
+
+.samsung-hero-image:hover{
+  transform:scale(1.05);
+  filter:
+  drop-shadow(0 80px 120px rgba(0,0,0,.85))
+  drop-shadow(0 0 40px rgba(37,99,255,.35));
+}
+.samsung-hero-content{
+  animation:heroFade 1.2s ease;
+}
+
+@keyframes heroFade{
+
+  from{
+    opacity:0;
+    transform:
+    translateY(40px)
+    scale(.98);
+  }
+
+  to{
+    opacity:1;
+    transform:
+    translateY(0)
+    scale(1);
+  }
+
+}
+.samsung-hero-image{
+  animation:floatHero 6s ease-in-out infinite;
+}
+
+@keyframes floatHero{
+
+  0%{
+    transform:translateY(0px);
+  }
+
+  50%{
+    transform:translateY(-18px);
+  }
+
+  100%{
+    transform:translateY(0px);
+  }
+
+}
+.samsung-mini,
+.samsung-heading,
+.samsung-description,
+.samsung-hero-buttons{
+  opacity:0;
+  transform:translateY(30px);
+
+  animation:revealText .8s ease forwards;
+}
+
+.samsung-heading{
+  animation-delay:.2s;
+}
+
+.samsung-description{
+  animation-delay:.4s;
+}
+
+.samsung-hero-buttons{
+  animation-delay:.6s;
+}
+
+@keyframes revealText{
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+}
+.samsung-secondary-btn{
+
+  background:
+  rgba(255,255,255,.05);
+
+  backdrop-filter:blur(20px);
+
+  border:
+  1px solid rgba(255,255,255,.12);
+
+  box-shadow:
+  inset 0 1px 1px rgba(255,255,255,.12),
+  0 10px 40px rgba(0,0,0,.25);
+}
+.samsung-heading{
+
+  text-shadow:
+
+  0 0 10px rgba(255,215,0,.35),
+  0 0 25px rgba(0,140,255,.35),
+  0 0 45px rgba(0,140,255,.2);
+
+}
+.samsung-heading{
+
+  transition:
+  transform .35s ease,
+  text-shadow .35s ease;
+
+}
+
+.samsung-heading:hover{
+
+  transform:scale(1.05);
+
+  text-shadow:
+
+  0 0 20px rgba(255,215,0,.7),
+  0 0 40px rgba(0,140,255,.7),
+  0 0 80px rgba(0,140,255,.4);
+
+}
+@keyframes shineFlow{
+
+  0%{
+    background-position:0% center;
+  }
+
+  100%{
+    background-position:300% center;
+  }
+
+}
+@keyframes textFloat{
+
+  0%{
+    transform:translateY(0px);
+  }
+
+  50%{
+    transform:translateY(-6px);
+  }
+
+  100%{
+    transform:translateY(0px);
+  }
+
+}
+.samsung-heading:hover{
+
+  transform:scale(1.03);
+
+  filter:brightness(1.15);
+
+  text-shadow:
+
+    0 0 15px rgba(255,215,0,.6),
+    0 0 35px rgba(255,215,0,.35),
+
+    0 0 25px rgba(0,140,255,.7),
+    0 0 60px rgba(0,140,255,.45),
+
+    0 0 100px rgba(0,140,255,.25);
+
+}
+.samsung-heading::after{
+
+  content:"";
+
+  position:absolute;
+
+  left:var(--x);
+  top:var(--y);
+
+  width:220px;
+  height:220px;
+
+  transform:translate(-50%,-50%);
+
+  background:
+  radial-gradient(
+    circle,
+    rgba(255,215,0,.35) 0%,
+    rgba(0,119,255,.28) 35%,
+    transparent 75%
+  );
+
+  filter:blur(35px);
+
+  opacity:0;
+
+  transition:opacity .25s ease;
+
+  pointer-events:none;
+}
+
+.samsung-heading:hover::after{
+  opacity:1;
+}

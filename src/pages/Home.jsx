@@ -5,15 +5,22 @@ import ProductCard from "../components/product/ProductCard";
 import QuickViewModal from "../components/QuickViewModal";
 import productsData from "../data/products.json";
 import { useTranslation } from "react-i18next";
-import { motion } from "framer-motion"; // برای افکت‌های اپل
+import { motion } from "framer-motion";
 import FloatingGoldText from "../animations/FloatingGoldText";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 
+import SamsungCard from "../components/samsung/SamsungCard.jsx";
+import samsungProducts from "../data/samsungProducts";
+
+import "../components/samsung/SamsungCard.css";
+import "../components/product/SamsungProductModal.css";
+
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+
 
 const Home = () => {
   const { t, i18n } = useTranslation();
@@ -398,6 +405,111 @@ const Home = () => {
 
   </div>
 </section>
+{/* ================================= */}
+{/* SAMSUNG ECOSYSTEM SECTION */}
+{/* ================================= */}
+
+<section className="samsung-ecosystem-section">
+
+  {/* BG EFFECT */}
+  <div className="samsung-bg-glow"></div>
+
+  {/* ================================= */}
+  {/* HERO */}
+  {/* ================================= */}
+
+  <div className="samsung-hero-content">
+
+    {/* LEFT CONTENT */}
+    <div className="samsung-hero-text">
+
+      <img
+        src="/images/samsung-pic/samsung-logo.png"
+        alt="Samsung"
+        className="samsung-logo"
+      />
+
+      <span className="samsung-mini">
+        {isRTL ? "اکوسیستم Galaxy AI" : "Galaxy AI Ecosystem"}
+      </span>
+<h2
+  className="samsung-heading"
+  onMouseMove={(e) => {
+
+    const rect = e.target.getBoundingClientRect();
+
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    e.target.style.setProperty('--x', `${x}px`);
+    e.target.style.setProperty('--y', `${y}px`);
+
+  }}
+>
+  {isRTL
+    ? "قدرت واقعی Galaxy در اتصال آن است"
+    : "The Power of Galaxy is Connection"}
+</h2>
+
+
+      <p className="samsung-description">
+        {isRTL
+          ? "گوشی، تبلت، ساعت و Galaxy Buds در یک اکوسیستم هوشمند کنار هم کار می‌کنند تا تجربه‌ای سریع‌تر، ساده‌تر و یکپارچه‌تر از فناوری سامسونگ داشته باشید."
+          : "Your phone, tablet, watch and Galaxy Buds work together in one intelligent ecosystem to create a faster, simpler and more connected Samsung experience."}
+      </p>
+
+      <div className="samsung-hero-buttons">
+
+        <button className="samsung-primary-btn">
+          {isRTL ? "مشاهده محصولات" : "Explore Devices"}
+        </button>
+
+        <button className="samsung-secondary-btn">
+          Galaxy AI
+        </button>
+
+      </div>
+
+    </div>
+
+    {/* RIGHT IMAGE */}
+    <div className="samsung-hero-image-wrap">
+
+      <img
+        src="/images/samsung-pic/samsung-products-main.png"
+        alt="Samsung Galaxy Ecosystem"
+        className="samsung-hero-image"
+      />
+
+    </div>
+
+  </div>
+
+  {/* ================================= */}
+  {/* PRODUCTS GRID */}
+  {/* ================================= */}
+
+  <div className="samsung-products-wrapper">
+
+    <div className="samsung-grid">
+
+      {samsungProducts.map((product) => (
+        <SamsungCard
+          key={product.id}
+          product={product}
+          isRTL={isRTL}
+          onOpen={setSelectedProduct}
+        />
+      ))}
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
 
 
 
