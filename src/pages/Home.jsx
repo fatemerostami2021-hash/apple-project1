@@ -16,6 +16,8 @@ import samsungProducts from "../data/samsungProducts";
 
 import "../components/samsung/SamsungCard.css";
 import "../components/product/SamsungProductModal.css";
+import BrandWaveSlider from "../components/BrandWaveSlider";
+
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -112,6 +114,9 @@ const Home = () => {
           </Swiper>
         </div>
       </section>
+
+     <BrandWaveSlider />
+     
 {/* APPLE PRODUCTS SHOWCASE SECTION */}
 <section className="relative w-full py-24 overflow-hidden">
   <FloatingGoldText />
