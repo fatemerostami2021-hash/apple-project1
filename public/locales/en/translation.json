@@ -182,5 +182,24 @@
     "colors": "Colors",
     "benchmark": "Benchmarks",
     "review": "Review"
-  }
+  },
+"iphonePage": {
+  "hero": {
+    "heroTitle": "iPhone Evolution",
+    "heroSubtitle": "Explore the evolution of the world's most powerful smartphones from iPhone 12 to the stunning iPhone 17 Pro Max.",
+    "title1": "iPhone",
+    "title2": "Evolution",
+    "subtitle": "Discover the evolution of the world's most powerful smartphones from iPhone 12 to iPhone 17 Pro Max."
+  },
+
+  "compare": "Compare",
+  "newGen": "New Generation",
+  "specsTitle": "Specifications",
+  "discover": "Discover More",
+  "exploreAll": "Explore All Models",
+  "videoTitle": "Cinematic Experience",
+  "footerBrand": "APPLE IPHONE"
+}
+
+
 }
