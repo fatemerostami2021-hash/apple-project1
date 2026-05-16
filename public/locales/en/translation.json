@@ -154,7 +154,6 @@
     "locationTitle": "Our Location",
     "locationAddress": "Tehran, Iran — Apple Store Main Branch"
   },
-
   "home": {
     "featured_products": "Featured Products"
   },
@@ -173,8 +172,15 @@
     "brand_apple": "APPLE",
     "brand_samsung": "SAMSUNG"
   },
-  
-  "featuredBrands": "Featured Brands"
+
+  "featuredBrands": "Featured Brands",
+
+  "specs": {
+    "cpu": "CPU",
+    "camera": "Camera",
+    "battery": "Battery",
+    "colors": "Colors",
+    "benchmark": "Benchmarks",
+    "review": "Review"
+  }
 }
-
-

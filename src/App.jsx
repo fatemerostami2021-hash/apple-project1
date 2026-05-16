@@ -11,6 +11,8 @@ import { useEffect } from "react";
 import Home from "./pages/Home";
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
+import IphonePage from "./pages/apple/IphonePage";
+
 
 export default function App() {
   const { theme } = useTheme();
@@ -56,6 +58,13 @@ export default function App() {
           <Route path="/services" element={<div>Services Page</div>} />
           <Route path="/articles" element={<div>Articles Page</div>} />
           <Route path="/about" element={<div>About Page</div>} />
+          <Route path="/apple-products/iphone" element={<IphonePage />} />
+          <Route path="/apple-products/ipad" element={<div>iPad Page</div>} />
+<Route path="/apple-products/macbook" element={<div>MacBook Page</div>} />
+<Route path="/apple-products/watch" element={<div>Apple Watch Page</div>} />
+<Route path="/apple-products/airpods" element={<div>AirPods Page</div>} />
+
+
         </Routes>
       </main>
 

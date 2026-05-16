@@ -154,25 +154,33 @@
     "locationTitle": "آدرس ما",
     "locationAddress": "ایران، تهران — فروشگاه مرکزی اپل استور"
   },
+"home": {
+  "featured_products": "محصولات ویژه"
+},
 
-  "home": {
-    "featured_products": "محصولات ویژه"
-  },
+"filters": {
+  "all": "همه",
+  "apple": "اپل",
+  "samsung": "سامسونگ",
+  "phone": "موبایل",
+  "watch": "ساعت",
+  "accessories": "لوازم جانبی"
+},
 
-  "filters": {
-    "all": "همه",
-    "apple": "اپل",
-    "samsung": "سامسونگ",
-    "phone": "گوشی",
-    "watch": "ساعت",
-    "accessories": "لوازم جانبی"
-  },
+"product": {
+  "buy_now": "خرید",
+  "brand_apple": "اپل",
+  "brand_samsung": "سامسونگ"
+},
 
-  "product": {
-    "buy_now": "خرید آنلاین",
-    "brand_apple": "APPLE",
-    "brand_samsung": "SAMSUNG"
-  
-     }, 
-  "featuredBrands": "برندهای منتخب"
+"featuredBrands": "برندهای منتخب",
+
+"specs": {
+  "cpu": "پردازنده",
+  "camera": "دوربین",
+  "battery": "باتری",
+  "colors": "رنگ‌ها",
+  "benchmark": "بنچمارک",
+  "review": "بررسی"
+}
 }

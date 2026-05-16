@@ -16,7 +16,7 @@ import {
   Speaker,
   Home,
   Info,
-  Newspaper
+  Newspaper,
 } from "lucide-react";
 
 const iconMap = {
@@ -53,55 +53,89 @@ export default function MobileNav({ close }) {
   const items = getMobileNavigation(navigationConfig);
 
   return (
-    <div className="md:hidden px-6 py-5 flex flex-col gap-4 bg-white dark:bg-black">
-
+    <nav
+      className="
+        md:hidden
+        px-6 py-6
+        flex flex-col gap-5
+        bg-white dark:bg-zinc-900
+        border-t border-gray-200 dark:border-zinc-800
+        animate-[fadeInUp_0.25s_ease]
+      "
+    >
       {items.map((item) => {
         const Icon = iconMap[item.id] || iconMap.default;
 
         return (
           <div
             key={item.id}
-            className="border-b border-gray-200 dark:border-zinc-800 pb-3"
+            className="border-b border-gray-200 dark:border-zinc-800 pb-4 last:border-none"
           >
-
-            {/* SIMPLE LINK */}
             {item.type === "link" && (
               <Link
                 to={item.path}
                 onClick={close}
-                className="flex items-center gap-3 text-lg text-gray-900 dark:text-white"
+                className="
+                  flex items-center gap-3
+                  py-1
+                  text-[16px]
+                  text-gray-900 dark:text-white
+                  font-semibold
+                  hover:text-yellow-500
+                  transition-all
+                "
               >
                 <Icon
                   size={22}
-                  className="text-gray-700 dark:text-white"
+                  className="text-gray-600 dark:text-gray-300"
                 />
-                {t(item.labelKey)}
+                <span>{t(item.labelKey)}</span>
               </Link>
             )}
 
-            {/* MEGA MENU */}
             {item.type === "mega" && (
               <details className="group">
                 <summary
                   className="
                     list-none
-                    flex items-center gap-3
-                    cursor-pointer text-lg
+                    flex items-center justify-between
+                    cursor-pointer
+                    py-1
+                    text-[16px]
+                    font-semibold
                     text-gray-900 dark:text-white
                   "
                 >
-                  <Icon
-                    size={22}
-                    className="text-gray-700 dark:text-white"
-                  />
-                  {t(item.labelKey)}
+                  <div className="flex items-center gap-3">
+                    <Icon size={22} className="text-gray-600 dark:text-gray-300" />
+                    <span>{t(item.labelKey)}</span>
+                  </div>
+
+                  <span
+                    className="
+                      inline-flex items-center justify-center
+                      w-6 h-6 rounded-full
+                      text-[12px]
+                      border border-gray-300 dark:border-zinc-600
+                      text-gray-600 dark:text-gray-300
+                      transition-transform duration-300
+                      group-open:rotate-180
+                    "
+                  >
+                    ▾
+                  </span>
                 </summary>
 
-                <div className="mt-3 flex flex-col gap-3 pl-8">
-
+                <div
+                  className="
+                    mt-3 ps-8
+                    border-s border-gray-300 dark:border-zinc-700
+                    flex flex-col gap-2
+                    animate-[fadeInUp_0.25s_ease]
+                  "
+                >
                   {item.children?.map((child) => {
-                    const ChildIcon =
-                      iconMap[child.id] || iconMap.default;
+                    const ChildIcon = iconMap[child.id] || iconMap.default;
 
                     return (
                       <Link
@@ -110,30 +144,24 @@ export default function MobileNav({ close }) {
                         onClick={close}
                         className="
                           flex items-center gap-3
+                          py-1
                           text-[15px]
-                          text-gray-700 dark:text-white
-                          hover:text-yellow-600
-                          dark:hover:text-yellow-400
-                          transition-colors
+                          text-gray-700 dark:text-gray-300
+                          hover:text-yellow-500
+                          transition-all
                         "
                       >
-                        <ChildIcon
-                          size={18}
-                          className="text-gray-600 dark:text-white"
-                        />
-
-                        {t(child.labelKey)}
+                        <ChildIcon size={18} />
+                        <span>{t(child.labelKey)}</span>
                       </Link>
                     );
                   })}
-
                 </div>
               </details>
             )}
-
           </div>
         );
       })}
-    </div>
+    </nav>
   );
 }

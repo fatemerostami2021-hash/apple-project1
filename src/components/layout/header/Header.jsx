@@ -20,6 +20,8 @@ import {
 import { useTheme } from "@/store/theme";
 import DesktopNav from "./DesktopNav";
 import MobileNav from "./MobileNav";
+import TabletNav from "./TabletNav";
+
 
 export default function Header() {
   const { theme, toggleTheme } = useTheme();
@@ -113,9 +115,12 @@ export default function Header() {
           </div>
 
           {/* منوی وسط */}
-          <div className="flex-1 flex justify-center">
-            <DesktopNav />
-          </div>
+          {/* ⭐ مهم: این div را relative + z-50 کردیم تا مگامنو درست position و روی همه لایه‌ها باشد */}
+        <div className="flex-1 flex justify-center relative z-50">
+  <DesktopNav />     {/* lg & up */}
+  <TabletNav />      {/* md to lg */}
+</div>
+
 
           {/* سمت راست */}
           <div className="flex items-center gap-5 font-bold">
