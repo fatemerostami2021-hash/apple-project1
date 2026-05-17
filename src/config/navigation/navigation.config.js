@@ -134,16 +134,16 @@ export const navigationConfig = [
       },
     ],
   },
-  {
-    id: "articles",
-    labelKey: "menu.articles",
-    path: "/articles",
-    type: "link",
-    visible: {
-      header: true,
-      footer: true,
-      mobile: true,
-    },
+{
+  id: "articles",
+  labelKey: "menu.articles",
+  path: "/blog",
+  type: "link",
+  visible: {
+    header: true,
+    footer: true,
+    mobile: true,
+  },
   },
   {
     id: "about",

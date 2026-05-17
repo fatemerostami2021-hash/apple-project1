@@ -12,6 +12,9 @@ import Home from "./pages/Home";
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
 import IphonePage from "./pages/apple/IphonePage";
+import BlogPage from "./pages/blog/BlogPage"; 
+import ArticlePage from "./pages/blog/ArticlePage";
+
 
 
 export default function App() {
@@ -63,7 +66,8 @@ export default function App() {
 <Route path="/apple-products/macbook" element={<div>MacBook Page</div>} />
 <Route path="/apple-products/watch" element={<div>Apple Watch Page</div>} />
 <Route path="/apple-products/airpods" element={<div>AirPods Page</div>} />
-
+ <Route path="/blog" element={<BlogPage />} />
+      <Route path="/blog/:slug" element={<ArticlePage />} />
 
         </Routes>
       </main>

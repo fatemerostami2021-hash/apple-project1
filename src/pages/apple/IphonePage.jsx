@@ -26,6 +26,8 @@ import ip13 from "../../assets/iphone/iphone-13.png";
 import ip12pm from "../../assets/iphone/iphone-12-pro-max.png";
 import ip12p from "../../assets/iphone/iphone-12-pro.png";
 import ip12 from "../../assets/iphone/iphone-12.png";
+import { Link } from "react-router-dom";
+
 
 export default function IphonePage() {
   const { t, i18n } = useTranslation();
@@ -44,8 +46,13 @@ export default function IphonePage() {
 
   const models = [
  {
+
   id: 17,
+  slug: "iphone-17-pro-max",
+  buyLink: "https://www.apple.com/iphone/",
+  officialLink: "https://www.apple.com/iphone/",
   name: "iPhone 17 Pro Max",
+
   img: ip17pm,
   price: "1199",
   rating: 4.9,
@@ -58,8 +65,13 @@ export default function IphonePage() {
   }
 },
 {
+
   id: 16,
+ slug: "iphone-16-pro-max",
+  buyLink: "https://www.apple.com/iphone/",
+  officialLink: "https://www.apple.com/iphone/",
   name: "iPhone 16 Pro Max",
+
   img: ip16pm,
   price: "1099",
   rating: 4.8,
@@ -72,8 +84,13 @@ export default function IphonePage() {
   }
 },
 {
+
   id: 15,
+ slug: "iphone-15-pro-max",
+  buyLink: "https://www.apple.com/iphone/",
+  officialLink: "https://www.apple.com/iphone/",
   name: "iPhone 15 Pro Max",
+
   img: ip15pm,
   price: "999",
   rating: 4.7,
@@ -86,8 +103,13 @@ export default function IphonePage() {
   }
 },
 {
+
   id: 14,
+  slug: "iphone-14-pro-max",
+  buyLink: "https://www.apple.com/iphone/",
+  officialLink: "https://www.apple.com/iphone/",
   name: "iPhone 14 Pro Max",
+
   img: ip14pm,
   price: "899",
   rating: 4.7,
@@ -100,8 +122,13 @@ export default function IphonePage() {
   }
 },
 {
+
   id: 13,
+slug: "iphone-13-pro-max",
+  buyLink: "https://www.apple.com/iphone/",
+  officialLink: "https://www.apple.com/iphone/",
   name: "iPhone 13 Pro Max",
+
   img: ip13pm,
   price: "799",
   rating: 4.6,
@@ -114,8 +141,13 @@ export default function IphonePage() {
   }
 },
 {
+
   id: 12,
+slug: "iphone-12-pro-max",
+  buyLink: "https://www.apple.com/iphone/",
+  officialLink: "https://www.apple.com/iphone/",
   name: "iPhone 12 Pro Max",
+
   img: ip12pm,
   price: "699",
   rating: 4.5,
@@ -188,7 +220,8 @@ export default function IphonePage() {
       </section>
 
       {/* PRODUCTS LOOP */}
-      <section className="max-w-[1400px] mx-auto px-6 py-20 space-y-40">
+     <section id="models" className="max-w-[1400px] mx-auto px-6 py-20 space-y-40">
+
         {models.map((m) => {
           const activeImage = activeImages[m.name] || m.img;
           return (
@@ -210,9 +243,13 @@ export default function IphonePage() {
                     />
                   </AnimatePresence>
                   
-                  <div className="absolute -top-4 -right-4 bg-blue-600 text-white p-4 rounded-2xl shadow-xl text-xs font-bold rotate-12 hover:rotate-0 transition-transform cursor-pointer">
-                    + Compare
-                  </div>
+             <Link
+  to={`/iphone/compare?model=${encodeURIComponent(m.slug)}`}
+  className="absolute -top-4 -right-4 bg-blue-600 text-white p-4 rounded-2xl shadow-xl text-xs font-bold rotate-12 hover:rotate-0 transition-transform"
+>
+  + {t("iphonePage.compare")}
+</Link>
+
                 </div>
 
                 {/* DYNAMIC GALLERY */}
@@ -235,14 +272,60 @@ export default function IphonePage() {
               {/* RIGHT SIDE - Content */}
               <div className="lg:col-span-7 space-y-10">
                 <div className={isRtl ? 'text-right' : 'text-left'}>
-                  <h2 className="text-5xl font-black mb-6 flex items-center gap-4">
-                    {m.name}
-                    <span className="text-sm bg-green-100 text-green-700 px-3 py-1 rounded-full">New Gen</span>
-                  </h2>
+                <h2 className="text-5xl font-black mb-6 flex items-center gap-4">
+  <Link to={`/iphone/${m.slug}`} className="hover:text-blue-600 transition-colors">
+    {m.name}
+  </Link>
+
+  <span className="text-sm bg-green-100 text-green-700 px-3 py-1 rounded-full">
+    {t("iphonePage.newGen")}
+  </span>
+</h2>
+
                   
-              <p className="text-xl leading-relaxed opacity-90 mb-8 first-letter:text-4xl first-letter:font-bold">
-  {m.description[i18n.language]}
-</p>
+<div className={`flex flex-wrap gap-4 mb-6 ${isRtl ? "justify-end" : "justify-start"}`}>
+
+<a
+  href={m.buyLink}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="px-6 py-3 rounded-full bg-blue-600 text-white font-semibold hover:bg-blue-500 transition-colors"
+>
+  {isRtl ? "خرید" : "Buy Now"}
+</a>
+
+<Link
+  to={`/blog/${m.slug}`}
+  className="
+    inline-flex items-center justify-center
+    px-6 py-3 rounded-full
+    font-extrabold tracking-wide
+    text-sm md:text-base
+    text-black dark:text-black
+    bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500
+    border border-yellow-300/80
+    shadow-md shadow-yellow-500/20
+    transition-all duration-300 ease-in-out
+    hover:scale-105 hover:shadow-xl hover:shadow-yellow-500/30
+    hover:from-yellow-300 hover:via-amber-300 hover:to-yellow-400
+    active:scale-95
+    focus:outline-none focus:ring-2 focus:ring-yellow-400/60
+  "
+>
+  {t("readMore")}
+</Link>
+
+
+
+<Link
+  to={`/iphone/compare?model=${encodeURIComponent(m.slug)}`}
+  className="px-6 py-3 rounded-full border border-blue-600 text-blue-600 font-semibold hover:bg-blue-50 dark:hover:bg-blue-950/30 transition-colors"
+>
+  {t("iphonePage.compare")}
+</Link>
+
+</div>
+
 
 
                   <div className="flex gap-4 mb-4">
@@ -260,24 +343,42 @@ export default function IphonePage() {
                   <AccordionItem model={m.name} />
                 </div>
 
-                {/* SIMILAR SLIDER */}
-                <div className="pt-10">
-                  <h4 className="text-2xl font-bold mb-8 flex justify-between items-center">
-                    Discover More
-                    <a href="#models" className="text-sm text-blue-600 hover:underline">Explore All Models</a>
-                  </h4>
-                  <div ref={sliderRef} className="keen-slider">
-                    {models.filter(x => x.name !== m.name).map((item) => (
-                      <div key={item.name} className="keen-slider__slide px-2">
-                        <div className="bg-white/10 dark:bg-black/10 border border-gray-200 dark:border-gray-800 rounded-3xl p-6 text-center hover:bg-white dark:hover:bg-gray-800 transition-all duration-500 shadow-sm hover:shadow-2xl">
-                          <img src={item.img} className="h-32 mx-auto object-contain mb-4" alt={item.name} />
-                          <p className="text-sm font-black mb-1">{item.name}</p>
-                          <p className="text-blue-600 font-bold text-xs">${item.price}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+             {/* SIMILAR SLIDER */}
+<div className="pt-10">
+<h4 className="text-2xl font-bold mb-8 flex justify-between items-center">
+  {t("iphonePage.discover")}
+
+    <a href="#models" className="text-sm text-blue-600 hover:underline">
+      Explore All Models
+    </a>
+  </h4>
+
+  <div ref={sliderRef} className="keen-slider">
+    {models.filter(x => x.name !== m.name).map((item) => (
+      <div key={item.name} className="keen-slider__slide px-2">
+
+        <Link
+          to={`/iphone/${item.slug}`}
+          className="block bg-white/10 dark:bg-black/10 border border-gray-200 dark:border-gray-800 rounded-3xl p-6 text-center hover:bg-white dark:hover:bg-gray-800 transition-all duration-500 shadow-sm hover:shadow-2xl"
+        >
+          <img
+            src={item.img}
+            className="h-32 mx-auto object-contain mb-4"
+            alt={item.name}
+          />
+
+          <p className="text-sm font-black mb-1">{item.name}</p>
+
+          <p className="text-blue-600 font-bold text-xs">
+            ${item.price}
+          </p>
+        </Link>
+
+      </div>
+    ))}
+  </div>
+</div>
+
               </div>
             </article>
           )

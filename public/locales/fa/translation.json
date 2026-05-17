@@ -173,33 +173,38 @@
   "brand_samsung": "سامسونگ"
 },
 
-"featuredBrands": "برندهای منتخب",
 
-"specs": {
-  "cpu": "پردازنده",
-  "camera": "دوربین",
-  "battery": "باتری",
-  "colors": "رنگ‌ها",
-  "benchmark": "بنچمارک",
-  "review": "بررسی"
-},
-"iphonePage": {
-  "hero": {
-    "heroTitle": "سیر تکامل آیفون",
-    "heroSubtitle": "بررسی سیر تحول قدرتمندترین گوشی‌های هوشمند دنیا. از iPhone 12 تا شکوه iPhone 17 Pro Max.",
-    "title1": "آیفون",
-    "title2": "تکامل",
-    "subtitle": "سیر تحول قدرتمندترین گوشی‌های هوشمند دنیا از آیفون ۱۲ تا آیفون ۱۷ پرو مکس را کشف کنید."
+  "featuredBrands": "برندهای منتخب",
+  "specs": {
+    "cpu": "پردازنده",
+    "camera": "دوربین",
+    "battery": "باتری",
+    "colors": "رنگ‌ها",
+    "benchmark": "بنچمارک‌ها",
+    "review": "بررسی"
   },
-
-  "compare": "مقایسه",
-  "newGen": "نسل جدید",
-  "specsTitle": "مشخصات",
-  "discover": "مدل‌های بیشتر",
-  "exploreAll": "مشاهده همه مدل‌ها",
-  "videoTitle": "تجربه سینمایی",
-  "footerBrand": "اپل آیفون"
-}
-
-
+  "iphonePage": {
+    "hero": {
+      "heroTitle": "تکامل آیفون",
+      "heroSubtitle": "سیر تکامل قدرتمندترین گوشی‌های هوشمند دنیا را از آیفون ۱۲ تا آیفون ۱۷ پرو مکس شگفت‌انگیز بررسی کنید.",
+      "title1": "تکامل",
+      "title2": "آیفون",
+      "subtitle": "سیر تکامل قدرتمندترین گوشی‌های هوشمند جهان را از آیفون ۱۲ تا آیفون ۱۷ پرو مکس کشف کنید."
+    },
+    "compare": "مقایسه",
+    "newGen": "نسل جدید",
+    "specsTitle": "مشخصات",
+    "discover": "بیشتر ببینید",
+    "exploreAll": "مشاهده همه مدل‌ها",
+    "videoTitle": "تجربه سینمایی",
+    "footerBrand": "اپل آیفون"
+  },
+  "blogPageTitle": "مقالات آیفون",
+  "blogPageSubtitle": "مقالات و راهنماهای کامل درباره سری آیفون اپل را بررسی کنید.",
+  "readMore": "مشاهده جزئیات",
+  "articleNotFoundTitle": "مقاله پیدا نشد",
+  "backToArticles": "بازگشت به مقالات",
+  "backToIphone": "بازگشت به آیفون‌ها",
+  "viewProductPage": "مشاهده صفحه محصول",
+  "backToAllArticles": "بازگشت به همه مقالات"
 }
