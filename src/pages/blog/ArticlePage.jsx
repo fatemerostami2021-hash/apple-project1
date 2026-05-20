@@ -2,76 +2,71 @@ import { useMemo } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Helmet } from "react-helmet";
+import { motion } from "framer-motion";
+import { HiOutlineClock, HiOutlineCalendar, HiOutlineArrowLeft, HiOutlineArrowRight } from "react-icons/hi";
 import { iphoneArticles } from "../../data/iphoneArticles";
-
+import { fadeUp, staggerContainer } from "../../utils/motionVariants";
 export default function ArticlePage() {
   const { slug } = useParams();
-  const { i18n } = useTranslation();
-  const isRtl = i18n.language === "fa";
+  const { i18n, t } = useTranslation();
+  const lang = i18n.language === "fa" ? "fa" : "en";
+  const isRtl = lang === "fa";
 
-  const article = useMemo(
-    () => iphoneArticles.find((a) => a.slug === slug),
-    [slug]
-  );
+  const article = useMemo(() => iphoneArticles.find((a) => a.slug === slug), [slug]);
 
-  if (!article) {
-    return (
-      <main className={`max-w-4xl mx-auto px-6 py-20 ${isRtl ? "text-right" : "text-left"}`}>
-        <Helmet>
-          <title>{isRtl ? "مقاله یافت نشد" : "Article Not Found"}</title>
-        </Helmet>
-        <p className="text-lg font-bold mb-4">{isRtl ? "مقاله یافت نشد" : "Article not found"}</p>
-        <Link to="/blog" className="text-blue-600 hover:underline font-bold">
-          {isRtl ? "بازگشت به لیست مقالات" : "Back to articles"}
-        </Link>
-      </main>
-    );
-  }
-
-  const title = article.title[i18n.language];
-  const description = article.excerpt[i18n.language];
+  if (!article) return <div className="text-center py-20">Article not found</div>;
 
   return (
-    <main className={`max-w-4xl mx-auto px-6 py-16 ${isRtl ? "text-right" : "text-left"}`}>
+    <main dir={isRtl ? "rtl" : "ltr"} className="bg-white dark:bg-zinc-950 transition-colors duration-300">
       <Helmet>
-        <title>{title}</title>
-        <meta name="description" content={description} />
+        <title>{article.title[lang]} | Tech Magazine</title>
       </Helmet>
 
-      <nav className="mb-8 text-sm opacity-80">
-        <Link to="/blog" className="hover:underline">
-          {isRtl ? "مقالات" : "Articles"}
-        </Link>
-        <span className={`mx-2 ${isRtl ? "ml-2" : "mr-2"}`}>/</span>
-        <span>{title}</span>
-      </nav>
+      {/* --- HERO SECTION --- */}
+      <div className="relative w-full h-[50vh] md:h-[60vh] overflow-hidden">
+        <img
+          src={article.cover}
+          alt={article.title[lang]}
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/20 to-transparent" />
+      </div>
 
-      <img
-        src={article.cover}
-        alt={title}
-        className="w-full h-64 md:h-80 object-contain rounded-3xl border border-gray-200 dark:border-gray-800 p-6 mb-10 shadow-sm"
-      />
+      <div className="max-w-3xl mx-auto px-6 -mt-32 relative z-10 pb-20">
+        {/* --- HEADER --- */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xl p-8 md:p-10 rounded-3xl border border-white/20 dark:border-zinc-800 shadow-2xl"
+        >
+          <div className="flex gap-4 text-sm text-blue-600 dark:text-blue-400 font-semibold mb-4 uppercase tracking-wider">
+            {article.brand || "Tech"}
+          </div>
+          
+          <h1 className="text-3xl md:text-5xl font-black text-zinc-900 dark:text-white leading-[1.1] mb-6">
+            {article.title[lang]}
+          </h1>
 
-      <h1 className="text-4xl md:text-5xl font-black tracking-tight mb-6 leading-tight">
-        {title}
-      </h1>
+          <div className="flex flex-wrap items-center gap-6 text-zinc-500 dark:text-zinc-400 text-sm">
+            <span className="flex items-center gap-2"><HiOutlineCalendar /> {article.publishDate}</span>
+            <span className="flex items-center gap-2"><HiOutlineClock /> {article.readTime} min read</span>
+          </div>
+        </motion.div>
 
-      <article className="text-lg opacity-90 leading-relaxed whitespace-pre-line">
-        {article.content[i18n.language]}
-      </article>
+        {/* --- CONTENT --- */}
+        <article className="prose prose-lg dark:prose-invert prose-zinc mt-12 max-w-none leading-relaxed">
+          {article.content[lang]}
+        </article>
 
-      <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800 flex flex-wrap gap-4">
-        {article.relatedModelSlug && (
-          <Link
-            to={`/iphone/${article.relatedModelSlug}`}
-            className="text-blue-600 hover:underline font-bold text-sm"
-          >
-            {isRtl ? "مشاهده صفحه محصول آیفون" : "View iPhone Product Page"}
+        {/* --- FOOTER --- */}
+        <div className="mt-20 pt-10 border-t border-zinc-200 dark:border-zinc-800 flex justify-between items-center">
+          <Link to="/blog" className="flex items-center gap-2 text-zinc-600 dark:text-zinc-400 hover:text-blue-600 transition">
+            {isRtl ? <HiOutlineArrowRight /> : <HiOutlineArrowLeft />}
+            {isRtl ? "بازگشت" : "Back to Blog"}
           </Link>
-        )}
-        <Link to="/blog" className="text-blue-600 hover:underline font-bold text-sm">
-          {isRtl ? "بازگشت به تمام مقالات" : "Back to All Articles"}
-        </Link>
+      
+          
+        </div>
       </div>
     </main>
   );

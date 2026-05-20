@@ -154,6 +154,7 @@
     "locationTitle": "Our Location",
     "locationAddress": "Tehran, Iran — Apple Store Main Branch"
   },
+  
   "home": {
     "featured_products": "Featured Products"
   },
@@ -174,6 +175,7 @@
   },
 
   "featuredBrands": "Featured Brands",
+
   "specs": {
     "cpu": "CPU",
     "camera": "Camera",
@@ -182,10 +184,11 @@
     "benchmark": "Benchmarks",
     "review": "Review"
   },
+
   "iphonePage": {
     "hero": {
       "heroTitle": "iPhone Evolution",
-      "heroSubtitle": "Explore the evolution of the world's most powerful smartphones from iPhone 12 to the stunning iPhone 17 Pro Max.",
+      "heroSubtitle": "Explore the evolution of the world's most powerful smartphones from iPhone 12 to iPhone 17 Pro Max.",
       "title1": "iPhone",
       "title2": "Evolution",
       "subtitle": "Discover the evolution of the world's most powerful smartphones from iPhone 12 to iPhone 17 Pro Max."
@@ -198,6 +201,7 @@
     "videoTitle": "Cinematic Experience",
     "footerBrand": "APPLE IPHONE"
   },
+
   "blogPageTitle": "iPhone Articles",
   "blogPageSubtitle": "Explore detailed articles and guides on Apple's iPhone lineup.",
   "readMore": "View Details",
@@ -205,8 +209,45 @@
   "backToArticles": "Back to Articles",
   "backToIphone": "Back to iPhones",
   "viewProductPage": "View product page",
-  "backToAllArticles": "Back to All Articles"
+  "backToAllArticles": "Back to All Articles",
+
+  "blog": {
+    "heroTitle": "Tech Magazine",
+    "heroDesc": "Latest news, reviews and buying guides for tech enthusiasts",
+    "search": "Search articles...",
+    "all": "All",
+    "newest": "Newest",
+    "mostViewed": "Most viewed",
+    "shortestRead": "Shortest read",
+    "trending": "Trending Articles",
+    "readArticle": "Read Article",
+    "noArticles": "No articles found",
+    "minute": "min"
+
+    
+  },
+  "brands": {
+  "apple": "Apple",
+  "samsung": "Samsung",
+  "comparison": "Comparison"
+},
+
+  
+    "appleTitle": "The Future in Your Hands",
+    "appleSub": "An expert review of Apple's new ecosystem and its impact on daily life.",
+    "samsungTitle": "Samsung's Artificial Intelligence",
+    "samsungSub": "The new Galaxy with AI capabilities that pushes the boundaries of technology.",
+    "techTitle": "Tech World 2026",
+    "techSub": "Latest news from the world of gadgets and the giant steps of the digital world."
+    
+  
+  ,
+  "readOurArticle": "Read our article"
 }
+
+
+
+
 
 
 

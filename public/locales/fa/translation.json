@@ -154,57 +154,93 @@
     "locationTitle": "آدرس ما",
     "locationAddress": "ایران، تهران — فروشگاه مرکزی اپل استور"
   },
-"home": {
-  "featured_products": "محصولات ویژه"
-},
 
-"filters": {
-  "all": "همه",
-  "apple": "اپل",
-  "samsung": "سامسونگ",
-  "phone": "موبایل",
-  "watch": "ساعت",
-  "accessories": "لوازم جانبی"
-},
+  "home": {
+    "featured_products": "محصولات ویژه"
+  },
 
-"product": {
-  "buy_now": "خرید",
-  "brand_apple": "اپل",
-  "brand_samsung": "سامسونگ"
-},
+  "filters": {
+    "all": "همه",
+    "apple": "اپل",
+    "samsung": "سامسونگ",
+    "phone": "موبایل",
+    "watch": "ساعت",
+    "accessories": "لوازم جانبی"
+  },
 
+  "product": {
+    "buy_now": "خرید",
+    "brand_apple": "اپل",
+    "brand_samsung": "سامسونگ"
+  },
 
-  "featuredBrands": "برندهای منتخب",
+  "featuredBrands": "برندهای ویژه",
+
   "specs": {
     "cpu": "پردازنده",
     "camera": "دوربین",
     "battery": "باتری",
     "colors": "رنگ‌ها",
-    "benchmark": "بنچمارک‌ها",
+    "benchmark": "بنچمارک",
     "review": "بررسی"
   },
+
   "iphonePage": {
     "hero": {
       "heroTitle": "تکامل آیفون",
-      "heroSubtitle": "سیر تکامل قدرتمندترین گوشی‌های هوشمند دنیا را از آیفون ۱۲ تا آیفون ۱۷ پرو مکس شگفت‌انگیز بررسی کنید.",
-      "title1": "تکامل",
-      "title2": "آیفون",
-      "subtitle": "سیر تکامل قدرتمندترین گوشی‌های هوشمند جهان را از آیفون ۱۲ تا آیفون ۱۷ پرو مکس کشف کنید."
+      "heroSubtitle": "تحول قدرتمندترین گوشی‌های دنیا از آیفون ۱۲ تا آیفون ۱۷ پرو مکس را کشف کنید.",
+      "title1": "آیفون",
+      "title2": "تکامل",
+      "subtitle": "تکامل گوشی‌های قدرتمند اپل از آیفون ۱۲ تا آیفون ۱۷ پرو مکس را بررسی کنید."
     },
     "compare": "مقایسه",
     "newGen": "نسل جدید",
     "specsTitle": "مشخصات",
-    "discover": "بیشتر ببینید",
+    "discover": "بیشتر بدانید",
     "exploreAll": "مشاهده همه مدل‌ها",
     "videoTitle": "تجربه سینمایی",
     "footerBrand": "اپل آیفون"
   },
+
   "blogPageTitle": "مقالات آیفون",
-  "blogPageSubtitle": "مقالات و راهنماهای کامل درباره سری آیفون اپل را بررسی کنید.",
+  "blogPageSubtitle": "مقالات تخصصی و راهنمای خرید درباره آیفون‌های اپل را مطالعه کنید.",
   "readMore": "مشاهده جزئیات",
   "articleNotFoundTitle": "مقاله پیدا نشد",
   "backToArticles": "بازگشت به مقالات",
   "backToIphone": "بازگشت به آیفون‌ها",
   "viewProductPage": "مشاهده صفحه محصول",
-  "backToAllArticles": "بازگشت به همه مقالات"
+  "backToAllArticles": "بازگشت به همه مقالات",
+
+  "blog": {
+    "heroTitle": "مجله تکنولوژی",
+    "heroDesc": "آخرین اخبار، بررسی‌ها و راهنمای خرید برای علاقه‌مندان تکنولوژی",
+    "search": "جست‌وجوی مقاله...",
+    "all": "همه",
+    "newest": "جدیدترین",
+    "mostViewed": "پربازدیدترین",
+    "shortestRead": "کمترین زمان مطالعه",
+    "trending": "مقالات ترند",
+    "readArticle": "مطالعه مقاله",
+    "noArticles": "هیچ مقاله‌ای پیدا نشد",
+    "minute": "دقیقه"
+  },
+  "brands": {
+  "apple": "اپل",
+  "samsung": "سامسونگ",
+  "comparison": "مقایسه"
+},
+
+
+  
+    "appleTitle": "آینده در دستان شما",
+    "appleSub": "بررسی تخصصی اکوسیستم جدید اپل و تاثیر آن بر زندگی روزمره.",
+    "samsungTitle": "هوش مصنوعی سامسونگ",
+    "samsungSub": "گلکسی جدید با قابلیت‌های AI که مرزهای تکنولوژی را جابجا کرده است.",
+    "techTitle": "دنیای تکنولوژی ۲۰۲۶",
+    "techSub": "تازه‌ترین اخبار از دنیای گجت‌ها و گام‌های بلند دنیای دیجیتال."
+  
+
+,
+  "readOurArticle": "مطالعه مقاله"
 }
+
