@@ -12,10 +12,10 @@ import Home from "./pages/Home";
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
 import IphonePage from "./pages/apple/IphonePage";
-import BlogPage from "./pages/blog/BlogPage"; 
+import BlogPage from "./pages/blog/BlogPage";
 import ArticlePage from "./pages/blog/ArticlePage";
 
-
+import GalaxyBackground from "./components/GalaxyBackground";
 
 export default function App() {
   const { theme } = useTheme();
@@ -37,23 +37,26 @@ export default function App() {
   }, [theme]);
 
   return (
-    <div
-      className={`
-        min-h-screen flex flex-col transition-colors duration-300
-        ${
-          theme === "dark"
-            ? "bg-black text-white"
-            : "bg-[#E8F5FF] text-black"
-        }
-      `}
-      style={{ fontFamily: "IRANSans, sans-serif" }}
-    >
-      {/* HEADER */}
-      <Header />
+   <div
+  className={`
+    relative min-h-screen flex flex-col transition-colors duration-300
+    ${
+      theme === "dark"
+        ? "bg-transparent text-white" // شفاف شد تا کهکشان دیده شود
+        : "bg-[#E8F5FF] text-black"   // رنگ اصلی تم روشن
+    }
+  `}
+  style={{ fontFamily: "IRANSans, sans-serif" }}
+>
+  {/* کهکشان فقط در دارک مود رندر می‌شود */}
+  <GalaxyBackground theme={theme} />
+  
+  <Header />
 
       {/* MAIN CONTENT */}
       <main className="flex-1 w-full">
         <Routes>
+
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
           <Route path="/products/:slug" element={<ProductDetail />} />
@@ -61,19 +64,22 @@ export default function App() {
           <Route path="/services" element={<div>Services Page</div>} />
           <Route path="/articles" element={<div>Articles Page</div>} />
           <Route path="/about" element={<div>About Page</div>} />
+
           <Route path="/apple-products/iphone" element={<IphonePage />} />
           <Route path="/apple-products/ipad" element={<div>iPad Page</div>} />
-<Route path="/apple-products/macbook" element={<div>MacBook Page</div>} />
-<Route path="/apple-products/watch" element={<div>Apple Watch Page</div>} />
-<Route path="/apple-products/airpods" element={<div>AirPods Page</div>} />
- <Route path="/blog" element={<BlogPage />} />
-      <Route path="/blog/:slug" element={<ArticlePage />} />
+          <Route path="/apple-products/macbook" element={<div>MacBook Page</div>} />
+          <Route path="/apple-products/watch" element={<div>Apple Watch Page</div>} />
+          <Route path="/apple-products/airpods" element={<div>AirPods Page</div>} />
+
+          <Route path="/blog" element={<BlogPage />} />
+          <Route path="/blog/:slug" element={<ArticlePage />} />
 
         </Routes>
       </main>
 
       {/* FOOTER */}
       <Footer />
+
     </div>
   );
 }
