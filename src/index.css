@@ -908,11 +908,6 @@ html.dark .hero-muted {
   inset: 0;
 }
 
-.swiper-slide:not(.swiper-slide-active) * {
-  opacity: 0 !important;
-  visibility: hidden !important;
-  pointer-events: none !important;
-}
 @layer components {
   .h3-premium {
     @apply font-black tracking-[0.25em] uppercase transition-all duration-700 ease-out;
@@ -936,4 +931,40 @@ html.dark .hero-muted {
     filter: drop-shadow(0 2px 4px rgba(255, 215, 0, 0.4));
     transform: scale(1.02);
   }
+}
+/* Article inline code */
+.article-content .inline-code {
+  @apply font-mono text-sm bg-zinc-100 dark:bg-zinc-800 text-pink-600 dark:text-pink-400 px-1.5 py-0.5 rounded;
+}
+/* src/components/home/HeroSlider.css - اضافه کردن به فایل گلوبال یا همان فایل */
+
+/* Shimmer effect for CTA button */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Focus ring for accessibility */
+.hero-slider-button:focus-visible {
+  outline: 2px solid #eab308;
+  outline-offset: 2px;
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Gradient text for brand name */
+.gradient-text {
+  background: linear-gradient(135deg, #fff 0%, #eab308 50%, #fff 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 3s linear infinite;
 }

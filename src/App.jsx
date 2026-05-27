@@ -16,6 +16,7 @@ import BlogPage from "./pages/blog/BlogPage";
 import ArticlePage from "./pages/blog/ArticlePage";
 
 import GalaxyBackground from "./components/GalaxyBackground";
+import ProductPage from "./pages/ProductPage";
 
 export default function App() {
   const { theme } = useTheme();
@@ -73,6 +74,7 @@ export default function App() {
 
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/blog/:slug" element={<ArticlePage />} />
+          <Route path="/product/:id" element={<ProductPage />} />
 
         </Routes>
       </main>
