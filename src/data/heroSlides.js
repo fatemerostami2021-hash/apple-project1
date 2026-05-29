@@ -1,4 +1,4 @@
-// src/data/heroSlides.js - نسخه بهبود یافته با metadata بیشتر
+// src/data/heroSlides.js - نسخه اصلاح شده با مسیرهای صحیح
 
 export const heroSlides = [
   {
@@ -10,7 +10,7 @@ export const heroSlides = [
     description: "دوربین 200 مگاپیکسلی | هوش مصنوعی Galaxy AI | قلم S Pen داخلی",
     image: "/images/hero-slider-home/hero-1.png",
     buttonText: { fa: "خرید کهکشانی", en: "Buy Galaxy" },
-    buttonLink: "/products/samsung/s24-ultra",
+    buttonLink: "/product/s24-ultra",  // اصلاح شد
     gradient: "from-blue-600/20 to-purple-600/20",
   },
   {
@@ -22,7 +22,7 @@ export const heroSlides = [
     description: "Handoff | Universal Clipboard | Sidecar | AirPlay",
     image: "/images/hero-slider-home/hero-2.png",
     buttonText: { fa: "مشاهده اکوسیستم", en: "Explore All" },
-    buttonLink: "/products/apple/ecosystem",
+    buttonLink: "/product/apple-eco",  // اصلاح شد
     gradient: "from-gray-600/20 to-white/10",
   },
   {
@@ -34,7 +34,7 @@ export const heroSlides = [
     description: "S9 SIP | Always-On Retina Display | Double Tap Gesture",
     image: "/images/hero-slider-home/hero-3.png",
     buttonText: { fa: "خرید اپل واچ", en: "Buy Watch" },
-    buttonLink: "/products/apple/watch-series-9",
+    buttonLink: "/product/watch-s9",  // اصلاح شد
     gradient: "from-gray-600/20 to-black/20",
   },
   {
@@ -46,7 +46,7 @@ export const heroSlides = [
     description: "A15 Bionic | سیستم دوربین دوگانه | 5G",
     image: "/images/hero-slider-home/hero-4.png",
     buttonText: { fa: "مشاهده آیفون ۱۳", en: "View iPhone 13" },
-    buttonLink: "/products/apple/iphone-13",
+    buttonLink: "/product/iphone-13-red",  // اصلاح شد
     gradient: "from-red-600/20 to-black/30",
   },
   {
@@ -58,7 +58,7 @@ export const heroSlides = [
     description: "A17 Pro | تیتانیوم | USB-C | Action Button",
     image: "/images/hero-slider-home/hero-5.png",
     buttonText: { fa: "خرید آیفون ۱۵ پرو", en: "Buy 15 Pro" },
-    buttonLink: "/products/apple/iphone-15-pro",
+    buttonLink: "/product/iphone-15-pro",  // اصلاح شد
     gradient: "from-gray-600/20 to-black/30",
   },
   {
@@ -70,7 +70,7 @@ export const heroSlides = [
     description: "Snapdragon 8 Gen 3 | Dynamic AMOLED 2X | One UI 6",
     image: "/images/hero-slider-home/hero-6.png",
     buttonText: { fa: "مشاهده پرچمداران", en: "View Flagships" },
-    buttonLink: "/products/samsung/galaxy-s24-series",
+    buttonLink: "/product/samsung-flagship",  // اصلاح شد
     gradient: "from-blue-600/20 to-cyan-600/20",
   },
   {
@@ -82,7 +82,7 @@ export const heroSlides = [
     description: "M3, M3 Pro, M3 Max | تا 22 ساعت عمر باتری | Liquid Retina XDR",
     image: "/images/hero-slider-home/hero-7.png",
     buttonText: { fa: "سفارش مک‌بوک", en: "Order MacBook" },
-    buttonLink: "/products/apple/macbook-pro",
+    buttonLink: "/product/macbook-pro",  // اصلاح شد
     gradient: "from-gray-600/20 to-slate-800/20",
   },
   {
@@ -94,7 +94,7 @@ export const heroSlides = [
     description: "M2 chip | Apple Pencil hover | Stage Manager",
     image: "/images/hero-slider-home/hero-8.png",
     buttonText: { fa: "خرید آیپد پرو", en: "Buy iPad Pro" },
-    buttonLink: "/products/apple/ipad-pro",
+    buttonLink: "/product/ipad-pro-m2",  // اصلاح شد
     gradient: "from-gray-600/20 to-white/10",
   },
   {
@@ -106,7 +106,7 @@ export const heroSlides = [
     description: "کانسپت طراحی آینده | نمایشگر تمام‌صفحه | دوربین زیر نمایشگر",
     image: "/images/hero-slider-home/hero-9.png",
     buttonText: { fa: "پیش‌خرید کانسپت", en: "Pre-order Concept" },
-    buttonLink: "/products/concept/iphone-17",
+    buttonLink: "/product/iphone-17-concept-1",  // اصلاح شد
     gradient: "from-orange-600/20 to-red-600/20",
   },
   {
@@ -118,7 +118,7 @@ export const heroSlides = [
     description: "ماژول دوربین دایره‌ای | طراحی یکپارچه | الهام از آینده",
     image: "/images/hero-slider-home/hero-10.png",
     buttonText: { fa: "جزئیات طراحی", en: "Design Details" },
-    buttonLink: "/blog/iphone-17-design-concept",
+    buttonLink: "/blog/iphone-17-design-concept",  // این یکی به blog می‌رود
     gradient: "from-orange-600/20 to-purple-600/20",
   },
   {
@@ -130,7 +130,7 @@ export const heroSlides = [
     description: "Mac Studio | Studio Display | Magic Accessories",
     image: "/images/hero-slider-home/hero-11.png",
     buttonText: { fa: "تکمیل ست", en: "Complete Setup" },
-    buttonLink: "/products/apple/studio-setup",
+    buttonLink: "/product/apple-full-eco",  // اصلاح شد
     gradient: "from-gray-600/20 to-black/30",
   },
   {
@@ -142,7 +142,7 @@ export const heroSlides = [
     description: "S24 | S24+ | S24 Ultra | Galaxy AI",
     image: "/images/hero-slider-home/hero-12.png",
     buttonText: { fa: "انتخاب مدل", en: "Choose Model" },
-    buttonLink: "/products/samsung/galaxy-s24-series",
+    buttonLink: "/product/s24-family",  // اصلاح شد
     gradient: "from-blue-600/20 to-sky-600/20",
   },
   {
@@ -154,7 +154,7 @@ export const heroSlides = [
     description: "Apple Pencil Pro | Procreate | Final Cut Pro",
     image: "/images/hero-slider-home/hero-13.png",
     buttonText: { fa: "شروع خلق کردن", en: "Start Creating" },
-    buttonLink: "/products/apple/ipad-pro-creative",
+    buttonLink: "/product/ipad-pro-creative",  // اصلاح شد
     gradient: "from-purple-600/20 to-pink-600/20",
   },
   {
@@ -166,7 +166,12 @@ export const heroSlides = [
     description: "Apple Watch Series 9 | Ultra 2 | SE",
     image: "/images/hero-slider-home/hero-14.png",
     buttonText: { fa: "مشاهده کلکسیون", en: "View Collection" },
-    buttonLink: "/products/apple/watch-collection",
+    buttonLink: "/product/watch-collection",  // اصلاح شد
     gradient: "from-gray-600/20 to-blue-600/20",
   },
 ];
+
+// متد کمکی برای دریافت لینک صحیح
+export const getProductLink = (slide) => {
+  return slide.buttonLink;
+};

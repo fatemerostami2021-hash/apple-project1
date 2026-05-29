@@ -1,3 +1,4 @@
+// src/App.jsx
 import { Routes, Route } from "react-router-dom";
 import Header from "./components/layout/header/Header";
 import Footer from "./components/layout/footer/Footer";
@@ -17,18 +18,22 @@ import ArticlePage from "./pages/blog/ArticlePage";
 
 import GalaxyBackground from "./components/GalaxyBackground";
 import ProductPage from "./pages/ProductPage";
+import WatchPage from "./pages/apple/WatchPage";
+
+// ✅ مقالات اپل واچ از مسیر جدید
+import ArticleAppleWatchUltra4 from "./pages/products/watch/article/ArticleAppleWatchUltra4";
+import ArticleAppleWatchUltra3 from "./pages/products/watch/article/ArticleAppleWatchUltra3";
+import ArticleAppleWatchSeries12 from "./pages/products/watch/article/ArticleAppleWatchSeries12";
+import ArticleAppleWatchSE3 from "./pages/products/watch/article/ArticleAppleWatchSE3";
 
 export default function App() {
   const { theme } = useTheme();
   const { i18n } = useTranslation();
 
-  // RTL / LTR
   useEffect(() => {
-    document.documentElement.dir =
-      i18n.language === "fa" ? "rtl" : "ltr";
+    document.documentElement.dir = i18n.language === "fa" ? "rtl" : "ltr";
   }, [i18n.language]);
 
-  // DARK MODE CLASS
   useEffect(() => {
     if (theme === "dark") {
       document.documentElement.classList.add("dark");
@@ -38,50 +43,48 @@ export default function App() {
   }, [theme]);
 
   return (
-   <div
-  className={`
-    relative min-h-screen flex flex-col transition-colors duration-300
-    ${
-      theme === "dark"
-        ? "bg-transparent text-white" // شفاف شد تا کهکشان دیده شود
-        : "bg-[#E8F5FF] text-black"   // رنگ اصلی تم روشن
-    }
-  `}
-  style={{ fontFamily: "IRANSans, sans-serif" }}
->
-  {/* کهکشان فقط در دارک مود رندر می‌شود */}
-  <GalaxyBackground theme={theme} />
-  
-  <Header />
+    <div
+      className={`
+        relative min-h-screen flex flex-col transition-colors duration-300
+        ${theme === "dark" ? "bg-transparent text-white" : "bg-[#E8F5FF] text-black"}
+      `}
+      style={{ fontFamily: "IRANSans, sans-serif" }}
+    >
+      <GalaxyBackground theme={theme} />
+      
+      <Header />
 
-      {/* MAIN CONTENT */}
       <main className="flex-1 w-full">
         <Routes>
-
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
           <Route path="/products/:slug" element={<ProductDetail />} />
+          <Route path="/product/:id" element={<ProductPage />} />
 
           <Route path="/services" element={<div>Services Page</div>} />
           <Route path="/articles" element={<div>Articles Page</div>} />
           <Route path="/about" element={<div>About Page</div>} />
 
+          {/* Apple Products */}
           <Route path="/apple-products/iphone" element={<IphonePage />} />
           <Route path="/apple-products/ipad" element={<div>iPad Page</div>} />
           <Route path="/apple-products/macbook" element={<div>MacBook Page</div>} />
-          <Route path="/apple-products/watch" element={<div>Apple Watch Page</div>} />
+          <Route path="/apple-products/watch" element={<WatchPage />} />
           <Route path="/apple-products/airpods" element={<div>AirPods Page</div>} />
 
+          {/* Apple Watch Articles - مسیر جدید */}
+          <Route path="/apple-products/watch/article/apple-watch-ultra-4" element={<ArticleAppleWatchUltra4 />} />
+          <Route path="/apple-products/watch/article/apple-watch-ultra-3" element={<ArticleAppleWatchUltra3 />} />
+          <Route path="/apple-products/watch/article/apple-watch-series-12" element={<ArticleAppleWatchSeries12 />} />
+          <Route path="/apple-products/watch/article/apple-watch-se-3" element={<ArticleAppleWatchSE3 />} />
+
+          {/* Main Blog - فقط آیفون و سامسونگ */}
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/blog/:slug" element={<ArticlePage />} />
-          <Route path="/product/:id" element={<ProductPage />} />
-
         </Routes>
       </main>
 
-      {/* FOOTER */}
       <Footer />
-
     </div>
   );
 }

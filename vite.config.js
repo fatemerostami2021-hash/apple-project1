@@ -10,4 +10,9 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  server: {
+    open: true,        // باز شدن خودکار در مرورگر
+    port: 5173,        // پورت پیش‌فرض (اختیاری)
+    host: true         // نمایش لینک Network (اختیاری)
+  }
 });

@@ -1,8 +1,8 @@
-// HeroSlider.jsx - نسخه اصلاح شده با اضافه شدن useNavigate
+// HeroSlider.jsx - نسخه با نمایش فوری تایپینگ
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
-import { useNavigate } from "react-router-dom"; // اضافه کردن import
+import { useNavigate } from "react-router-dom";
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -10,7 +10,7 @@ import "swiper/css/navigation";
 
 import { useTranslation } from "react-i18next";
 import { useState, useEffect, useCallback, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { HiOutlineShoppingBag, HiOutlineSparkles } from "react-icons/hi";
 
 import { heroSlides } from "../../data/heroSlides";
@@ -19,10 +19,60 @@ import WaveCircleText from "../../animations/WaveCircleText";
 import { useTheme } from "../../store/theme";
 import { fadeIn } from "../../animations/variants";
 
+// کامپوننت TypingText با نمایش فوری متن اولیه
+const TypingText = ({ texts, className }) => {
+  const [currentTextIndex, setCurrentTextIndex] = useState(0);
+  // تنظیم متن اولیه به جای رشته خالی - برای نمایش فوری
+  const [currentText, setCurrentText] = useState(() => texts[0] || "");
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [isInitial, setIsInitial] = useState(true);
+
+  useEffect(() => {
+    const currentFullText = texts[currentTextIndex];
+    let timeout;
+
+    if (!isDeleting) {
+      // تایپ کردن
+      if (currentText.length < currentFullText.length) {
+        // بعد از مرحله اولیه، سرعت تایپ را恢复正常
+        const speed = isInitial ? 0 : 80;
+        timeout = setTimeout(() => {
+          setCurrentText(currentFullText.slice(0, currentText.length + 1));
+          setIsInitial(false);
+        }, speed);
+      } else {
+        // مکث بعد از تایپ کامل
+        timeout = setTimeout(() => {
+          setIsDeleting(true);
+        }, 2500);
+      }
+    } else {
+      // پاک کردن
+      if (currentText.length > 0) {
+        timeout = setTimeout(() => {
+          setCurrentText(currentFullText.slice(0, currentText.length - 1));
+        }, 40);
+      } else {
+        setIsDeleting(false);
+        setCurrentTextIndex((prev) => (prev + 1) % texts.length);
+      }
+    }
+
+    return () => clearTimeout(timeout);
+  }, [currentText, currentTextIndex, isDeleting, texts, isInitial]);
+
+  return (
+    <span className={className}>
+      {currentText}
+      <span className="inline-block w-[2px] h-8 bg-yellow-400 animate-pulse ml-1" />
+    </span>
+  );
+};
+
 const HeroSlider = () => {
   const { i18n } = useTranslation();
   const { theme } = useTheme();
-  const navigate = useNavigate(); // اضافه کردن useNavigate
+  const navigate = useNavigate();
 
   const darkMode = theme === "dark";
   const currentLang = i18n.resolvedLanguage || i18n.language || "fa";
@@ -37,7 +87,7 @@ const HeroSlider = () => {
   const frame = useRef();
   const swiperRef = useRef(null);
   const progressInterval = useRef(null);
-  const autoplayDelay = 4000; // کاهش به 4 ثانیه برای سرعت بیشتر
+  const autoplayDelay = 4000;
 
   // Progress bar animation
   const startProgress = useCallback(() => {
@@ -61,11 +111,9 @@ const HeroSlider = () => {
     if (progressInterval.current) clearInterval(progressInterval.current);
   }, []);
 
-  // بازسازی اسلایدها هنگام تغییر زبان با انیمیشن
   useEffect(() => {
     setSlides([...heroSlides]);
     
-    // افکت حرکت عکس‌ها هنگام تغییر زبان
     const images = document.querySelectorAll('.hero-product-image');
     images.forEach(img => {
       img.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
@@ -90,14 +138,11 @@ const HeroSlider = () => {
     return isRTL ? slide.buttonText.fa : slide.buttonText.en;
   };
 
-  // اصلاح تابع handleNavigation
   const handleNavigation = (id) => {
     if (!id) return;
-    console.log("Navigating to product:", id); // برای دیباگ
     navigate(`/product/${id}`);
   };
 
-  // تغییر جهت Swiper هنگام تغییر زبان
   useEffect(() => {
     if (swiperRef.current && swiperRef.current.swiper) {
       const swiper = swiperRef.current.swiper;
@@ -106,7 +151,6 @@ const HeroSlider = () => {
     }
   }, [isRTL]);
 
-  // مدیریت progress bar با autoplay
   useEffect(() => {
     if (!isHovering) {
       startProgress();
@@ -115,6 +159,18 @@ const HeroSlider = () => {
     }
     return () => stopProgress();
   }, [activeIndex, isHovering, startProgress, stopProgress]);
+
+  // آماده کردن متن‌های تایپینگ برای هر اسلاید
+  const getTypingTexts = (slide) => {
+    const title = slide.title;
+    return [
+      title,
+      `${title} `,
+      `${title} `,
+      `${title} `,
+      `${title} `
+    ];
+  };
 
   return (
     <section
@@ -134,7 +190,7 @@ const HeroSlider = () => {
       <HeroBackground darkMode={darkMode} />
       <WaveCircleText darkMode={darkMode} />
 
-      {/* Progress Bar - در بالای صفحه */}
+      {/* Progress Bar */}
       <div className="absolute top-0 left-0 right-0 z-50 h-1 bg-white/20">
         <motion.div
           className="h-full bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 rounded-r-full"
@@ -215,7 +271,7 @@ const HeroSlider = () => {
                   md:p-12
                 "
               >
-                {/* Brand Badge with Icon */}
+                {/* Brand Badge */}
                 <div className="flex items-center gap-2 mb-3">
                   <HiOutlineSparkles className="text-yellow-400 text-xs" />
                   <p className="hero-brand text-[10px] md:text-xs">
@@ -223,14 +279,23 @@ const HeroSlider = () => {
                   </p>
                 </div>
 
-                <h1 className="hero-title text-3xl md:text-5xl lg:text-6xl">
-                  {slide.title}
-                </h1>
+                {/* Typing Title with Golden Gradient - نمایش فوری */}
+                <div className="min-h-[120px] md:min-h-[140px]">
+                  <TypingText
+                    texts={getTypingTexts(slide)}
+                    className="hero-title text-3xl md:text-5xl lg:text-6xl font-black tracking-tight
+                               bg-gradient-to-r from-yellow-400 via-amber-500 to-yellow-600 
+                               bg-clip-text text-transparent
+                               drop-shadow-[0_0_15px_rgba(255,215,0,0.5)]"
+                  />
+                </div>
 
+                {/* Subtitle */}
                 <p className="hero-subtitle mt-5 text-sm md:text-base lg:text-lg">
                   {slide.subtitle}
                 </p>
 
+                {/* Button */}
                 <button
                   onClick={() => handleNavigation(slide.id)}
                   className="
@@ -283,7 +348,7 @@ const HeroSlider = () => {
                   ${isRTL ? "justify-start" : "justify-end"}
                 `}
               >
-                {/* Enhanced GLOW with gradient */}
+                {/* Glow Effect */}
                 <div
                   className="
                     absolute
@@ -302,7 +367,7 @@ const HeroSlider = () => {
                   }}
                 />
 
-                {/* PRODUCT IMAGE با انیمیشن حرکت هنگام تغییر زبان */}
+                {/* Product Image */}
                 <motion.img
                   key={`${slide.id}-${currentLang}`}
                   initial={{
@@ -361,7 +426,7 @@ const HeroSlider = () => {
         ))}
       </Swiper>
 
-      {/* Custom Navigation Buttons */}
+      {/* Navigation Buttons */}
       <button
         className="hero-prev absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-40
                    w-10 h-10 md:w-12 md:h-12 rounded-full
@@ -400,7 +465,7 @@ const HeroSlider = () => {
         </svg>
       </button>
 
-      {/* Pagination Container */}
+      {/* Pagination */}
       <div className="hero-pagination absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3 z-30" />
 
       {/* Slide Counter */}
@@ -438,18 +503,6 @@ const HeroSlider = () => {
           font-weight: 600;
           text-transform: uppercase;
           opacity: .7;
-        }
-
-        .hero-title {
-          font-weight: 800;
-          line-height: 1.05;
-          letter-spacing: -.02em;
-        }
-
-        html.dark .hero-title {
-          background: linear-gradient(90deg, #fff, #d1d5db);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
         }
 
         .hero-subtitle {
@@ -500,13 +553,11 @@ const HeroSlider = () => {
           background: #fff;
         }
 
-        /* Hide default Swiper navigation */
         .swiper-button-next,
         .swiper-button-prev {
           display: none;
         }
 
-        /* Swiper container fixes */
         .swiper {
           overflow: visible !important;
         }
@@ -515,27 +566,14 @@ const HeroSlider = () => {
           height: auto !important;
         }
 
-        /* انیمیشن حرکت عکس هنگام تغییر زبان */
-        @keyframes slideInFromRight {
-          from {
-            opacity: 0;
-            transform: translateX(100px) scale(0.9);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0) scale(1.03);
-          }
+        /* انیمیشن برای کرسر تایپینگ */
+        @keyframes blink {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0; }
         }
 
-        @keyframes slideInFromLeft {
-          from {
-            opacity: 0;
-            transform: translateX(-100px) scale(0.9);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0) scale(1.03);
-          }
+        .animate-pulse {
+          animation: blink 1s step-end infinite;
         }
 
         @media (max-width: 768px) {
