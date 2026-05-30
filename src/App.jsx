@@ -15,6 +15,7 @@ import ProductDetail from "./pages/ProductDetail";
 import IphonePage from "./pages/apple/IphonePage";
 import BlogPage from "./pages/blog/BlogPage";
 import ArticlePage from "./pages/blog/ArticlePage";
+import About from "./pages/About";
 
 import GalaxyBackground from "./components/GalaxyBackground";
 import ProductPage from "./pages/ProductPage";
@@ -63,7 +64,9 @@ export default function App() {
 
           <Route path="/services" element={<div>Services Page</div>} />
           <Route path="/articles" element={<div>Articles Page</div>} />
-          <Route path="/about" element={<div>About Page</div>} />
+          
+          {/* ✅ فقط یک مسیر about */}
+          <Route path="/about" element={<About />} />
 
           {/* Apple Products */}
           <Route path="/apple-products/iphone" element={<IphonePage />} />
