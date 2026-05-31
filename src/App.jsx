@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Header from "./components/layout/header/Header";
 import Footer from "./components/layout/footer/Footer";
 import ForgotPassword from "./pages/ForgotPassword";
-
+import FloatingSocialButtons from "./components/layout/FloatingSocialButtons";
 import "./i18n";
 import { useTheme } from "./store/theme";
 import { useTranslation } from "react-i18next";
@@ -89,6 +89,7 @@ export default function App() {
 <Route path="/register" element={<Register />} />
 <Route path="/cart" element={<Cart />} />
 <Route path="/forgot-password" element={<ForgotPassword />} />
+
           {/* Main Blog - فقط آیفون و سامسونگ */}
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/blog/:slug" element={<ArticlePage />} />
@@ -97,6 +98,8 @@ export default function App() {
       </main>
 
       <Footer />
+       {/* ✅ دکمه‌های شناور اجتماعی و پشتیبانی - قبل از </div> پایانی */}
+      <FloatingSocialButtons />
     </div>
   );
 }

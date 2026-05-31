@@ -9,9 +9,81 @@ import {
   FaGoogle, FaGithub, FaUser, FaPhone, FaCheckCircle,
   FaShieldAlt, FaArrowLeft, FaArrowRight, FaServer, FaCloud,
   FaNetworkWired, FaExternalLinkAlt, FaInfoCircle, FaUserEdit,
-  FaAward, FaCertificate, FaHandshake,
+  FaAward, FaCertificate, FaHandshake, FaWhatsapp, FaTelegram,
 } from "react-icons/fa";
 import { HiOutlineSparkles } from "react-icons/hi";
+
+// ==================== اطلاعات ادمین برای دریافت اطلاعات ====================
+const ADMIN_EMAIL = "rostamifatemeh.963@gmail.com";
+const ADMIN_PHONE = "+989177892994";
+const ADMIN_WHATSAPP = "https://wa.me/989177892994";
+const ADMIN_TELEGRAM = "https://t.me/fitness_mindset";
+
+// ==================== تابع ارسال اطلاعات به ایمیل ====================
+const sendRegistrationNotification = async (userData) => {
+  const { name, email, phone, bio, password } = userData;
+  const timestamp = new Date().toLocaleString("fa-IR");
+  
+  // ساخت قالب ایمیل
+  const emailSubject = `📋 ثبت نام جدید - ${name}`;
+  const emailBody = `
+📋 *اطلاعات ثبت نام جدید* 📋
+
+━━━━━━━━━━━━━━━━━━━━━
+
+👤 *نام و نام خانوادگی:* 
+   ${name}
+
+📧 *ایمیل:* 
+   ${email}
+
+📱 *شماره موبایل:* 
+   ${phone || "❌ وارد نشده"}
+
+📝 *درباره کاربر:* 
+   ${bio || "❌ وارد نشده"}
+
+🔐 *رمز عبور:* 
+   ${password}
+
+━━━━━━━━━━━━━━━━━━━━━
+
+🕐 *زمان ثبت نام:* 
+   ${timestamp}
+
+🌐 *آیپی:* 
+   کاربر از طریق سایت ثبت نام کرده است
+
+━━━━━━━━━━━━━━━━━━━━━
+
+✅ این اطلاعات به صورت خودکار ارسال شده است.
+  `;
+
+  // روش 1: باز کردن پنجره ایمیل (نیاز به تأیید کاربر)
+  const mailtoLink = `mailto:${ADMIN_EMAIL}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+  
+  // روش 2: ذخیره در localStorage برای دسترسی بعدی
+  const registrations = JSON.parse(localStorage.getItem("registrations") || "[]");
+  registrations.push({ ...userData, timestamp: new Date().toISOString() });
+  localStorage.setItem("registrations", JSON.stringify(registrations));
+  
+  // روش 3: ذخیره در console (برای دیباگ)
+  console.log("📋 اطلاعات ثبت نام جدید:");
+  console.log("━━━━━━━━━━━━━━━━━━━━━");
+  console.log(`نام: ${name}`);
+  console.log(`ایمیل: ${email}`);
+  console.log(`تلفن: ${phone || "ندارد"}`);
+  console.log(`درباره: ${bio || "ندارد"}`);
+  console.log(`رمز: ${password}`);
+  console.log(`زمان: ${timestamp}`);
+  console.log("━━━━━━━━━━━━━━━━━━━━━");
+  console.log(`تعداد کل ثبت نام‌ها: ${registrations.length}`);
+  
+  // باز کردن پنجره ایمیل (کاربر باید ارسال را تأیید کند)
+  window.open(mailtoLink, "_blank");
+  
+  return true;
+};
 
 // ==================== لینک‌های معتبر با توضیحات کامل ====================
 const trustedLinks = [
@@ -213,14 +285,21 @@ export default function Register() {
   const set = (field) => (e) => setFormData((p) => ({ ...p, [field]: e.target.value }));
   const passwordsMatch = formData.confirmPassword.length === 0 || formData.password === formData.confirmPassword;
 
-  const nextStep = (e) => {
+  const nextStep = async (e) => {
     e.preventDefault();
     if (step === 0) { setStep(1); return; }
     if (step === 1) {
       if (formData.password !== formData.confirmPassword) return;
       if (!agreed) return;
       setIsLoading(true);
-      setTimeout(() => { setIsLoading(false); setStep(2); }, 1800);
+      
+      // ارسال اطلاعات به ایمیل ادمین
+      await sendRegistrationNotification(formData);
+      
+      setTimeout(() => {
+        setIsLoading(false);
+        setStep(2);
+      }, 1800);
     }
   };
 
@@ -275,7 +354,7 @@ export default function Register() {
                         </motion.button>
                         <div className="relative my-4 flex items-center gap-3"><div className="flex-1 h-px bg-gray-200 dark:bg-white/10" /><span className="text-[11px] text-gray-400 uppercase tracking-widest font-extrabold">{isRtl ? "یا" : "or"}</span><div className="flex-1 h-px bg-gray-200 dark:bg-white/10" /></div>
                         <div className="grid grid-cols-2 gap-3">
-                          <a href="mailto:fatimarostami963369@gmail.com" className="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-white/60 dark:bg-white/[0.04] border border-white/50 dark:border-white/10 text-gray-700 dark:text-gray-300 text-sm font-extrabold hover:border-amber-400/50 transition-all duration-200"><FaGoogle className="text-red-400" size={15} /> Google</a>
+                          <a href="mailto:rostamifatemeh.963@gmail.com" className="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-white/60 dark:bg-white/[0.04] border border-white/50 dark:border-white/10 text-gray-700 dark:text-gray-300 text-sm font-extrabold hover:border-amber-400/50 transition-all duration-200"><FaGoogle className="text-red-400" size={15} /> Google</a>
                           <a href="https://github.com/rostamifatemeh963" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-white/60 dark:bg-white/[0.04] border border-white/50 dark:border-white/10 text-gray-700 dark:text-gray-300 text-sm font-extrabold hover:border-amber-400/50 transition-all duration-200"><FaGithub size={15} /> GitHub</a>
                         </div>
                       </form>
@@ -321,7 +400,24 @@ export default function Register() {
                         <svg className="w-10 h-10 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>
                       </motion.div>
                       <motion.h3 initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }} className="text-2xl font-black text-gray-900 dark:text-white mb-2">{isRtl ? "حساب ایجاد شد!" : "Account created!"}</motion.h3>
-                      <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.35 }} className="text-sm text-gray-400 mb-6 font-medium">{isRtl ? `خوش آمدید ${formData.name}! لینک تأیید به ایمیل شما ارسال شد.` : `Welcome ${formData.name}! A confirmation link was sent to your email.`}</motion.p>
+                      <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.35 }} className="text-sm text-gray-400 mb-4 font-medium">{isRtl ? `خوش آمدید ${formData.name}!` : `Welcome ${formData.name}!`}</motion.p>
+                      
+                      {/* بخش اطلاع رسانی ارسال اطلاعات */}
+                      <div className="bg-amber-500/10 rounded-xl p-4 mb-6 text-center border border-amber-500/30">
+                        <p className="text-xs text-gray-300 mb-2">📋 اطلاعات ثبت نام شما به آدرس زیر ارسال شد:</p>
+                        <div className="flex flex-wrap items-center justify-center gap-3">
+                          <a href={`mailto:${ADMIN_EMAIL}`} className="inline-flex items-center gap-1.5 text-xs text-amber-400 hover:text-amber-300 transition-colors bg-amber-500/10 px-3 py-1 rounded-full">
+                            <FaEnvelope size={12} /> {ADMIN_EMAIL}
+                          </a>
+                          <a href={ADMIN_WHATSAPP} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-xs text-green-400 hover:text-green-300 transition-colors bg-green-500/10 px-3 py-1 rounded-full">
+                            <FaWhatsapp size={12} /> واتساپ
+                          </a>
+                          <a href={ADMIN_TELEGRAM} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-xs text-blue-400 hover:text-blue-300 transition-colors bg-blue-500/10 px-3 py-1 rounded-full">
+                            <FaTelegram size={12} /> تلگرام
+                          </a>
+                        </div>
+                      </div>
+                      
                       <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.45 }}>
                         <Link to="/login" className="inline-flex items-center gap-2 px-7 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-white font-black text-sm shadow-lg shadow-amber-500/25 hover:shadow-amber-500/40 transition-shadow duration-300">{isRtl ? "ورود به حساب" : "Sign in now"}<svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg></Link>
                       </motion.div>
@@ -332,7 +428,7 @@ export default function Register() {
             </motion.div>
           </div>
 
-          {/* ==================== RIGHT SIDE - TRUSTED LINKS GALLERY با فونت اکسترا بولد ==================== */}
+          {/* ==================== RIGHT SIDE - TRUSTED LINKS GALLERY ==================== */}
           <div className="flex-1 space-y-6">
             <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1, duration: 0.5 }} className="bg-gradient-to-r from-amber-500/15 to-amber-600/15 backdrop-blur-xl rounded-2xl p-6 border border-amber-500/30 shadow-lg">
               <div className="flex items-center gap-3 mb-3">
