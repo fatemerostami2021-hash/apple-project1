@@ -2,6 +2,7 @@
 import { Routes, Route } from "react-router-dom";
 import Header from "./components/layout/header/Header";
 import Footer from "./components/layout/footer/Footer";
+import ForgotPassword from "./pages/ForgotPassword";
 
 import "./i18n";
 import { useTheme } from "./store/theme";
@@ -16,6 +17,9 @@ import IphonePage from "./pages/apple/IphonePage";
 import BlogPage from "./pages/blog/BlogPage";
 import ArticlePage from "./pages/blog/ArticlePage";
 import About from "./pages/About";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Cart from "./pages/Cart";
 
 import GalaxyBackground from "./components/GalaxyBackground";
 import ProductPage from "./pages/ProductPage";
@@ -65,6 +69,7 @@ export default function App() {
           <Route path="/services" element={<div>Services Page</div>} />
           <Route path="/articles" element={<div>Articles Page</div>} />
           
+          
           {/* ✅ فقط یک مسیر about */}
           <Route path="/about" element={<About />} />
 
@@ -80,10 +85,14 @@ export default function App() {
           <Route path="/apple-products/watch/article/apple-watch-ultra-3" element={<ArticleAppleWatchUltra3 />} />
           <Route path="/apple-products/watch/article/apple-watch-series-12" element={<ArticleAppleWatchSeries12 />} />
           <Route path="/apple-products/watch/article/apple-watch-se-3" element={<ArticleAppleWatchSE3 />} />
-
+<Route path="/login" element={<Login />} />
+<Route path="/register" element={<Register />} />
+<Route path="/cart" element={<Cart />} />
+<Route path="/forgot-password" element={<ForgotPassword />} />
           {/* Main Blog - فقط آیفون و سامسونگ */}
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/blog/:slug" element={<ArticlePage />} />
+
         </Routes>
       </main>
 
