@@ -25,11 +25,14 @@ import GalaxyBackground from "./components/GalaxyBackground";
 import ProductPage from "./pages/ProductPage";
 import WatchPage from "./pages/apple/WatchPage";
 
-// ✅ مقالات اپل واچ از مسیر جدید
+// ✅ مقالات اپل واچ
 import ArticleAppleWatchUltra4 from "./pages/products/watch/article/ArticleAppleWatchUltra4";
 import ArticleAppleWatchUltra3 from "./pages/products/watch/article/ArticleAppleWatchUltra3";
 import ArticleAppleWatchSeries12 from "./pages/products/watch/article/ArticleAppleWatchSeries12";
 import ArticleAppleWatchSE3 from "./pages/products/watch/article/ArticleAppleWatchSE3";
+
+// ✅ صفحه مقایسه و تکامل آیفون (مسیر صحیح)
+import IPhoneEvolutionArticle from "./pages/articles/IPhoneEvolutionArticle";
 
 export default function App() {
   const { theme } = useTheme();
@@ -69,8 +72,6 @@ export default function App() {
           <Route path="/services" element={<div>Services Page</div>} />
           <Route path="/articles" element={<div>Articles Page</div>} />
           
-          
-          {/* ✅ فقط یک مسیر about */}
           <Route path="/about" element={<About />} />
 
           {/* Apple Products */}
@@ -80,25 +81,30 @@ export default function App() {
           <Route path="/apple-products/watch" element={<WatchPage />} />
           <Route path="/apple-products/airpods" element={<div>AirPods Page</div>} />
 
-          {/* Apple Watch Articles - مسیر جدید */}
+          {/* Apple Watch Articles */}
           <Route path="/apple-products/watch/article/apple-watch-ultra-4" element={<ArticleAppleWatchUltra4 />} />
           <Route path="/apple-products/watch/article/apple-watch-ultra-3" element={<ArticleAppleWatchUltra3 />} />
           <Route path="/apple-products/watch/article/apple-watch-series-12" element={<ArticleAppleWatchSeries12 />} />
           <Route path="/apple-products/watch/article/apple-watch-se-3" element={<ArticleAppleWatchSE3 />} />
-<Route path="/login" element={<Login />} />
-<Route path="/register" element={<Register />} />
-<Route path="/cart" element={<Cart />} />
-<Route path="/forgot-password" element={<ForgotPassword />} />
 
-          {/* Main Blog - فقط آیفون و سامسونگ */}
-          <Route path="/blog" element={<BlogPage />} />
+          {/* ✅ مسیرهای اصلی برای همه مقالات (آیفون، سامسونگ، مقایسه) */}
           <Route path="/blog/:slug" element={<ArticlePage />} />
+          <Route path="/iphone/:slug" element={<ArticlePage />} />
+          
+          {/* ✅ مسیر مقایسه - صفحه تکامل آیفون */}
+          <Route path="/iphone/compare" element={<IPhoneEvolutionArticle />} />
 
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+
+          {/* Main Blog */}
+          <Route path="/blog" element={<BlogPage />} />
         </Routes>
       </main>
 
       <Footer />
-       {/* ✅ دکمه‌های شناور اجتماعی و پشتیبانی - قبل از </div> پایانی */}
       <FloatingSocialButtons />
     </div>
   );
