@@ -1,0 +1,20 @@
+{
+  "slug": "test-article",
+  "brand": "Apple",
+  "title": {
+    "fa": "مقاله تست",
+    "en": "Test Article"
+  },
+  "excerpt": {
+    "fa": "این یک مقاله تست است",
+    "en": "This is a test article"
+  },
+  "content": {
+    "fa": "محتوای مقاله تست",
+    "en": "Test content"
+  },
+  "cover": "/images/test.jpg",
+  "readTime": 5,
+  "publishDate": "2025-06-03",
+  "tags": ["test"]
+}

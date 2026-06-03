@@ -1,0 +1,48 @@
+[
+  {
+    "slug": "iphone-17-pro-max",
+    "brand": "Apple",
+    "title": {
+      "fa": "آیفون ۱۷ پرو مکس: انقلابی در قدرت و تجربه کاربری",
+      "en": "iPhone 17 Pro Max: A Revolution in Power and User Experience"
+    },
+    "excerpt": {
+      "fa": "نگاهی عمیق به آیفون ۱۷ پرو مکس با پردازنده نسل آینده A18 و سیستم دوربین حرفه‌ای ۴۸ مگاپیکسلی.",
+      "en": "An in-depth look at the iPhone 17 Pro Max with next-gen A18 processor and pro 48MP camera system."
+    },
+    "content": {
+      "fa": "## آیفون ۱۷ پرو مکس: اوج مهندسی اپل\n\nمتن کامل مقاله اینجا قرار می‌گیرد...",
+      "en": "## iPhone 17 Pro Max: Peak of Apple Engineering\n\nFull article content here..."
+    },
+    "cover": "/images/iphone-17-pro-max.png",
+    "readTime": 15,
+    "likes": 342,
+    "isTrending": true,
+    "publishDate": "2025-02-10T00:00:00.000Z",
+    "tags": ["آیفون", "پرو مکس", "A18", "دوربین"],
+    "author": "Amirhossein Yari"
+  },
+  {
+    "slug": "iphone-16-pro-max",
+    "brand": "Apple",
+    "title": {
+      "fa": "آیفون ۱۶ پرو مکس: تعادل قدرت و طراحی",
+      "en": "iPhone 16 Pro Max: Balance of Power and Design"
+    },
+    "excerpt": {
+      "fa": "ترکیبی از عملکرد قدرتمند تراشه A17 Pro، طراحی مدرن تیتانیومی و دوربین پیشرفته ۴۸ مگاپیکسلی.",
+      "en": "A blend of powerful A17 Pro performance, modern titanium design, and advanced 48MP camera."
+    },
+    "content": {
+      "fa": "## آیفون ۱۶ پرو مکس: بلوغ طراحی اپل\n\nمتن کامل مقاله اینجا قرار می‌گیرد...",
+      "en": "## iPhone 16 Pro Max: Maturity of Apple Design\n\nFull article content here..."
+    },
+    "cover": "/images/iphone-16-pro-max.png",
+    "readTime": 9,
+    "likes": 278,
+    "isTrending": true,
+    "publishDate": "2025-02-05T00:00:00.000Z",
+    "tags": ["آیفون", "پرو مکس", "A17 Pro"],
+    "author": "Tech Team"
+  }
+]

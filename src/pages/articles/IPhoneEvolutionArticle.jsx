@@ -1,700 +1,523 @@
-import { useEffect, useRef } from "react";
+// src/pages/articles/IPhoneEvolutionArticle.jsx
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import { Play, X, ChevronLeft, ChevronRight, ChevronDown, Smartphone, Cpu, Camera, Battery, Award, Clock, Eye, Sparkles, TrendingUp, Zap, Shield } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, EffectCoverflow, Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/effect-coverflow";
 
 gsap.registerPlugin(ScrollTrigger);
 
+// ========== ایمپورت عکس‌ها ==========
+import heroImage from "../../assets/iphone/iphone18-promax-hero.png";
+import iphone14 from "../../assets/iphone/iphone-14.png";
+import iphone14Pro from "../../assets/iphone/iphone-14-pro.png";
+import iphone14ProMax from "../../assets/iphone/iphone-14-pro-max.png";
+import iphone15 from "../../assets/iphone/iphone-15.png";
+import iphone15Pro from "../../assets/iphone/iphone-15-pro.png";
+import iphone15ProMax from "../../assets/iphone/iphone-15-pro-max.png";
+import iphone16 from "../../assets/iphone/iphone-16.png";
+import iphone16Pro from "../../assets/iphone/iphone-16-pro.png";
+import iphone16ProMax from "../../assets/iphone/iphone-16-pro-max.png";
+import iphone17 from "../../assets/iphone/iphone-17.png";
+import iphone17Pro from "../../assets/iphone/iphone-17-pro.png";
+import iphone17ProMax from "../../assets/iphone/iphone-17-pro-max.png";
+
+// ========== داده‌های نسل‌ها ==========
 const GENERATIONS = [
-  {
-    gen: "12",
-    genFa: "۱۲",
-    chip: "A14 Bionic",
-    cpu: 1583,
-    gpu: 9832,
-    camera: "12MP Triple",
-    zoom: "2.5x",
-    body: "Stainless Steel",
-    bodyFa: "فولاد ضدزنگ",
-    slug: "iphone-12-pro-max",
-    img: "/assets/images/iphones/ip12pm/ip12pm-1.jpg",
-    year: "2020",
+  { 
+    id: 14, name: "iPhone 14", nameFa: "آیفون ۱۴", slug: "iphone-14-pro-max",
+    chip: "A15 Bionic", process: "5nm", ram: "6GB", camera: "12MP", zoom: "2x", 
+    body: "Aluminum", bodyFa: "آلومینیوم", display: "6.1″ OLED", refresh: "60Hz", 
+    usb: "Lightning", ai: false, dynamicIsland: false, price: "$799", year: "2022",
+    img: iphone14, imgPro: iphone14Pro, imgProMax: iphone14ProMax,
+    articleLink: "/blog/iphone-14-pro-max",
   },
-  {
-    gen: "13",
-    genFa: "۱۳",
-    chip: "A15 Bionic",
-    cpu: 1707,
-    gpu: 14386,
-    camera: "12MP Triple",
-    zoom: "3x",
-    body: "Stainless Steel",
-    bodyFa: "فولاد ضدزنگ",
-    slug: "iphone-13-pro-max",
-    img: "/assets/images/iphones/ip13pm/ip13pm-1.jpg",
-    year: "2021",
+  { 
+    id: 15, name: "iPhone 15", nameFa: "آیفون ۱۵", slug: "iphone-15-pro-max",
+    chip: "A16 Bionic", process: "4nm", ram: "6GB", camera: "48MP", zoom: "2x", 
+    body: "Aluminum", bodyFa: "آلومینیوم", display: "6.1″ OLED", refresh: "60Hz", 
+    usb: "USB-C 2.0", ai: false, dynamicIsland: true, price: "$799", year: "2023",
+    img: iphone15, imgPro: iphone15Pro, imgProMax: iphone15ProMax,
+    articleLink: "/blog/iphone-15-pro-max",
   },
-  {
-    gen: "14",
-    genFa: "۱۴",
-    chip: "A16 Bionic",
-    cpu: 1879,
-    gpu: 17476,
-    camera: "48MP Triple",
-    zoom: "3x",
-    body: "Stainless Steel",
-    bodyFa: "فولاد ضدزنگ",
-    slug: "iphone-14-pro-max",
-    img: "/assets/images/iphones/ip14pm/ip14pm-1.jpg",
-    year: "2022",
+  { 
+    id: 16, name: "iPhone 16", nameFa: "آیفون ۱۶", slug: "iphone-16-pro-max",
+    chip: "A18", process: "3nm", ram: "8GB", camera: "48MP", zoom: "2x", 
+    body: "Aluminum", bodyFa: "آلومینیوم", display: "6.1″ OLED", refresh: "60Hz", 
+    usb: "USB-C 3.0", ai: true, dynamicIsland: true, price: "$799", year: "2024",
+    img: iphone16, imgPro: iphone16Pro, imgProMax: iphone16ProMax,
+    articleLink: "/blog/iphone-16-pro-max",
   },
-  {
-    gen: "15",
-    genFa: "۱۵",
-    chip: "A17 Pro",
-    cpu: 2297,
-    gpu: 21874,
-    camera: "48MP Triple",
-    zoom: "5x",
-    body: "Titanium",
-    bodyFa: "تیتانیوم",
-    slug: "iphone-15-pro-max",
-    img: "/assets/images/iphones/ip15pm/ip15pm-1.jpg",
-    year: "2023",
+  { 
+    id: 17, name: "iPhone 17", nameFa: "آیفون ۱۷", slug: "iphone-17-pro-max",
+    chip: "A19", process: "3nm (2nd gen)", ram: "8GB", camera: "48MP", zoom: "3x", 
+    body: "Aluminum", bodyFa: "آلومینیوم", display: "6.1″ OLED", refresh: "120Hz", 
+    usb: "USB-C 3.0", ai: true, dynamicIsland: true, price: "$799", year: "2025",
+    img: iphone17, imgPro: iphone17Pro, imgProMax: iphone17ProMax,
+    articleLink: "/blog/iphone-17-pro-max",
   },
-  {
-    gen: "16",
-    genFa: "۱۶",
-    chip: "A18 Pro",
-    cpu: 2897,
-    gpu: 31240,
-    camera: "48MP Triple",
-    zoom: "5x",
-    body: "Titanium",
-    bodyFa: "تیتانیوم",
-    slug: "iphone-16-pro-max",
-    img: "/assets/images/iphones/ip16pm/ip16pm-1.jpg",
-    year: "2024",
-  },
-  {
-    gen: "17",
-    genFa: "۱۷",
-    chip: "A19 Pro",
-    cpu: 3210,
-    gpu: 52795,
-    camera: "48MP Triple",
-    zoom: "4x + 8x",
-    body: "Aluminum + Titanium",
-    bodyFa: "آلومینیوم + تیتانیوم",
-    slug: "iphone-17-pro-max",
-    img: "/assets/images/iphones/ip17pm/ip17pm-1.jpg",
-    year: "2026",
-  },
+];
+
+// ========== ویدیوهای مرتبط ==========
+const relatedVideos = [
+  { id: 1, title: "iPhone 17 Pro Max Full Review", titleFa: "بررسی کامل آیفون ۱۷ پرو مکس", duration: "15:23", views: "1.2M", videoId: "tQdPRHdrCUI", articleLink: "/blog/iphone-17-pro-max" },
+  { id: 2, title: "iPhone 17 vs Samsung S25 Ultra", titleFa: "مقایسه آیفون ۱۷ و سامسونگ S25 اولترا", duration: "18:45", views: "892K", videoId: "DX0HzqxrjEQ", articleLink: "/blog/galaxy-s24-ultra-ai-revolution" },
+  { id: 3, title: "iPhone 16 Pro Max Camera Test", titleFa: "تست دوربین آیفون ۱۶ پرو مکس", duration: "12:10", views: "2.1M", videoId: "hDZrB9V-UTk", articleLink: "/blog/iphone-16-pro-max" },
+  { id: 4, title: "iOS 19 and Apple Intelligence", titleFa: "iOS 19 و Apple Intelligence", duration: "22:30", views: "1.5M", videoId: "-rdqBWYwFTo", articleLink: "/blog/iphone-17-pro-max#apple-intelligence" },
+];
+
+// تایپینگ تیکست‌ها
+const typingTexts = [
+  "iPhone 14 · A15 Bionic",
+  "iPhone 15 · 48MP Camera",
+  "iPhone 16 · Apple Intelligence",
+  "iPhone 17 · ProMotion 120Hz",
 ];
 
 export default function IPhoneEvolutionArticle() {
   const { i18n } = useTranslation();
   const isRtl = i18n.language === "fa";
-
+  
+  const [selectedGen, setSelectedGen] = useState(GENERATIONS[3]);
+  const [showVideoModal, setShowVideoModal] = useState(false);
+  const [activeVideo, setActiveVideo] = useState(null);
+  const [typingIndex, setTypingIndex] = useState(0);
+  const [typingText, setTypingText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+  
   const heroRef = useRef(null);
   const sectionsRef = useRef([]);
-  const tableRowsRef = useRef([]);
-  const cardsRef = useRef([]);
-
-  const addSection = (el) => {
-    if (el && !sectionsRef.current.includes(el)) {
-      sectionsRef.current.push(el);
+  
+  const addSection = (el) => { if (el && !sectionsRef.current.includes(el)) sectionsRef.current.push(el); };
+  
+  // Typing effect
+  useEffect(() => {
+    const currentFullText = typingTexts[typingIndex];
+    let timeout;
+    
+    if (isDeleting) {
+      timeout = setTimeout(() => {
+        setTypingText(currentFullText.substring(0, typingText.length - 1));
+      }, 50);
+      if (typingText === "") {
+        setIsDeleting(false);
+        setTypingIndex((prev) => (prev + 1) % typingTexts.length);
+      }
+    } else {
+      timeout = setTimeout(() => {
+        setTypingText(currentFullText.substring(0, typingText.length + 1));
+      }, 100);
+      if (typingText === currentFullText) {
+        timeout = setTimeout(() => setIsDeleting(true), 2000);
+      }
     }
-  };
-
+    return () => clearTimeout(timeout);
+  }, [typingText, typingIndex, isDeleting]);
+  
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Hero
-      gsap.fromTo(
-        heroRef.current,
-        { opacity: 0, y: 60 },
-        { opacity: 1, y: 0, duration: 1, ease: "power3.out" }
-      );
-
-      // Sections scroll fade
+      gsap.fromTo(heroRef.current, { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 1, ease: "power3.out" });
       sectionsRef.current.forEach((el) => {
         if (!el) return;
-        gsap.fromTo(
-          el,
-          { opacity: 0, y: 40 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: el,
-              start: "top 85%",
-              toggleActions: "play none none none",
-            },
-          }
-        );
+        gsap.fromTo(el, { opacity: 0, y: 40 }, {
+          opacity: 1, y: 0, duration: 0.8, ease: "power2.out",
+          scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none none" }
+        });
       });
-
-      // Table rows stagger
-      const rows = tableRowsRef.current.filter(Boolean);
-      if (rows.length) {
-        gsap.fromTo(
-          rows,
-          { opacity: 0, x: isRtl ? 30 : -30 },
-          {
-            opacity: 1,
-            x: 0,
-            duration: 0.45,
-            stagger: 0.07,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: rows[0],
-              start: "top 85%",
-            },
-          }
-        );
-      }
-
-      // Generation cards stagger
-      const cards = cardsRef.current.filter(Boolean);
-      if (cards.length) {
-        gsap.fromTo(
-          cards,
-          { opacity: 0, scale: 0.9 },
-          {
-            opacity: 1,
-            scale: 1,
-            duration: 0.55,
-            stagger: 0.09,
-            ease: "back.out(1.5)",
-            scrollTrigger: {
-              trigger: cards[0],
-              start: "top 85%",
-            },
-          }
-        );
-      }
     });
-
     return () => ctx.revert();
-  }, [isRtl]);
-
+  }, []);
+  
+  const openVideo = (video) => {
+    setActiveVideo(video);
+    setShowVideoModal(true);
+  };
+  
+  const getText = (en, fa) => isRtl ? fa : en;
+  
+  const allImages = GENERATIONS.flatMap(gen => [gen.img, gen.imgPro, gen.imgProMax].filter(Boolean));
+  
   return (
-    <article
-      dir={isRtl ? "rtl" : "ltr"}
-      className="max-w-4xl mx-auto px-4 py-12 text-gray-900 dark:text-gray-100"
-    >
-      {/* ───── Hero ───── */}
-      <header ref={heroRef} className="mb-16 text-center">
-        <span className="inline-block bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-xs font-semibold px-3 py-1 rounded-full mb-4 tracking-wide">
-          Apple · Pro Max · 2020–2026
-        </span>
-
-        <h1 className="text-3xl md:text-5xl font-extrabold leading-tight mb-4">
-          {isRtl ? "سیر تکامل آیفون پرو مکس" : "iPhone Pro Max Evolution"}
-        </h1>
-        <p className="text-xl md:text-2xl text-blue-500 dark:text-blue-400 font-semibold mb-6">
-          {isRtl ? "از نسل ۱۲ تا ۱۷" : "From Generation 12 to 17"}
-        </p>
-        <p className="text-base text-gray-500 dark:text-gray-400 max-w-2xl mx-auto leading-8">
-          {isRtl
-            ? "شش نسل، شش جهش. بررسی تطبیقی کامل‌ترین خط پرچمدار اپل از منظر تراشه، دوربین، معماری حرارتی و جایگاه رقابتی."
-            : "Six generations, six leaps. A full comparative review of Apple's flagship line from chip, camera, thermal architecture, and competitive positioning."}
-        </p>
-
-        <img
-          src="/assets/images/iphones/ip17pm/ip17pm-1.jpg"
-          alt="iPhone 17 Pro Max"
-          className="mt-10 w-full max-h-[420px] object-cover rounded-2xl shadow-2xl"
-        />
-
-        {/* Meta */}
-        <div className="flex items-center justify-center gap-6 mt-6 text-sm text-gray-400 dark:text-gray-500">
-          <span>📅 {isRtl ? "۱۴۰۵/۰۳/۰۳" : "2026-05-24"}</span>
-          <span>⏱ {isRtl ? "۱۸ دقیقه مطالعه" : "18 min read"}</span>
-          <span>🏷 Apple</span>
+    <article dir={isRtl ? "rtl" : "ltr"} className="w-full bg-transparent">
+      
+      {/* ==================== HERO SECTION - FULL WIDTH ==================== */}
+      <section ref={heroRef} className="relative w-full min-h-[90vh] flex items-center overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <img src={heroImage} alt="iPhone Evolution Hero" className="w-full h-full object-cover object-center scale-105" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
         </div>
-      </header>
-
-      {/* ───── Abstract ───── */}
-      <section
-        ref={addSection}
-        className="mb-14 bg-gray-50 dark:bg-gray-800/60 rounded-2xl p-8 border border-gray-200 dark:border-gray-700"
-      >
-        <h2 className="text-lg font-bold mb-4 text-blue-600 dark:text-blue-400 uppercase tracking-wider">
-          {isRtl ? "چکیده" : "Abstract"}
-        </h2>
-        <p className="leading-9 text-gray-700 dark:text-gray-300">
-          {isRtl
-            ? "آیفون پرو مکس در فاصله ۲۰۲۰ تا ۲۰۲۶ دو دوره متمایز را پشت سر گذاشت: دوره اول (نسل‌های ۱۲ تا ۱۴) با تمرکز بر بهینه‌سازی تدریجی تراشه و دوربین، و دوره دوم (نسل‌های ۱۵ تا ۱۷) با بازنگری بنیادین در متریال بدنه، معماری حرارتی و استراتژی دوربین تله‌فوتو. نسل ۱۷ با A19 Pro و جهش ۶۹ درصدی گرافیکی نسبت به نسل ۱۶، نقطه اوج این مسیر است و تعریف «پرچمدار» را از «بهترین مشخصات» به «توانایی بی‌وقفه» تغییر داده است."
-            : "The iPhone Pro Max went through two distinct phases between 2020 and 2026: the first phase (generations 12–14) focused on incremental chip and camera optimization, and the second phase (generations 15–17) involved a fundamental rethink of body materials, thermal architecture, and telephoto strategy. Generation 17 with A19 Pro and a 69% GPU leap over generation 16 represents the peak of this journey, redefining 'flagship' from 'best specs' to 'sustained capability'."}
-        </p>
-      </section>
-
-      {/* ───── Introduction ───── */}
-      <section ref={addSection} className="mb-14">
-        <h2 className="text-2xl font-bold mb-6">
-          {isRtl ? "مقدمه: دو دوره متمایز" : "Introduction: Two Distinct Eras"}
-        </h2>
-        <p className="leading-9 text-gray-700 dark:text-gray-300 mb-8">
-          {isRtl
-            ? "وقتی اپل در سپتامبر ۲۰۲۰ آیفون ۱۲ پرو مکس را معرفی کرد، کمتر کسی تصور می‌کرد که این خط محصول در عرض شش سال چنین تحول بنیادینی را تجربه کند. مسیر از A14 Bionic تا A19 Pro نه یک خط مستقیم، بلکه داستان دو استراتژی کاملاً متفاوت است."
-            : "When Apple introduced the iPhone 12 Pro Max in September 2020, few anticipated the fundamental transformation this product line would undergo in six years. The journey from A14 Bionic to A19 Pro is not a straight line — it's the story of two completely different strategies."}
-        </p>
-
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="bg-slate-50 dark:bg-slate-800/60 rounded-xl p-6 border border-slate-200 dark:border-slate-700">
-            <div className="flex items-center gap-3 mb-4">
-              <span className="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-sm font-bold">
-                ۱
-              </span>
-              <h3 className="font-bold text-slate-700 dark:text-slate-300">
-                {isRtl ? "دوره اول: نسل ۱۲ تا ۱۴" : "Era 1: Gen 12–14"}
-              </h3>
+        
+        <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
+          <motion.div 
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            className="max-w-2xl"
+          >
+            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 mb-6 border border-white/20">
+              <Award className="w-4 h-4 text-yellow-400" />
+              <span className="text-xs font-black tracking-wider text-white uppercase">APPLE · 2022–2025</span>
             </div>
-            <p className="text-sm leading-8 text-gray-600 dark:text-gray-400">
-              {isRtl
-                ? "بهینه‌سازی تدریجی با حفظ فرم‌فکتور فولادی. هر نسل بهبود قابل اندازه‌گیری در CPU و GPU داشت اما تحول بنیادین رخ نداد. نقطه عطف این دوره، ورود سنسور ۴۸ مگاپیکسل در نسل ۱۴ بود که پایه‌گذار دوره بعدی شد."
-                : "Incremental optimization while maintaining the steel form factor. Each generation had measurable CPU and GPU improvements but no fundamental transformation. The turning point was the 48MP sensor in generation 14, which laid the foundation for the next era."}
-            </p>
-          </div>
-
-          <div className="bg-blue-50 dark:bg-blue-950/60 rounded-xl p-6 border border-blue-200 dark:border-blue-800">
-            <div className="flex items-center gap-3 mb-4">
-              <span className="w-8 h-8 rounded-full bg-blue-200 dark:bg-blue-800 flex items-center justify-center text-sm font-bold text-blue-700 dark:text-blue-300">
-                ۲
-              </span>
-              <h3 className="font-bold text-blue-700 dark:text-blue-300">
-                {isRtl ? "دوره دوم: نسل ۱۵ تا ۱۷" : "Era 2: Gen 15–17"}
-              </h3>
+            
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white mb-4 leading-tight tracking-tight">
+              iPhone <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">Evolution</span>
+            </h1>
+            
+            <div className="h-16 mb-6">
+              <p className="text-xl md:text-2xl text-gray-200 font-semibold">
+                {getText("Latest:", "جدیدترین:")}{" "}
+                <span className="text-blue-400 font-mono border-r-2 border-blue-400 pr-1 font-bold">
+                  {typingText}
+                </span>
+              </p>
             </div>
-            <p className="text-sm leading-8 text-gray-600 dark:text-gray-400">
-              {isRtl
-                ? "بازنگری بنیادین با ورود تیتانیوم در نسل ۱۵، معماری حرارتی پیشرفته در نسل ۱۶، و استراتژی جدید تله‌فوتو در نسل ۱۷. این دوره تعریف «پرچمدار» را از «بهترین مشخصات» به «توانایی بی‌وقفه» تغییر داد."
-                : "Fundamental rethink with titanium in generation 15, advanced thermal architecture in generation 16, and a new telephoto strategy in generation 17. This era shifted the definition of 'flagship' from 'best specs' to 'sustained capability'."}
+            
+            <p className="text-base md:text-lg text-gray-200 max-w-xl leading-relaxed mb-8 font-medium">
+              {getText(
+                "From iPhone 14 to iPhone 17 — A comprehensive analysis of Apple's flagship evolution in chip technology, camera systems, and artificial intelligence.",
+                "از آیفون ۱۴ تا آیفون ۱۷ — تحلیل جامع تکامل پرچم‌دار اپل در فناوری تراشه، سیستم دوربین و هوش مصنوعی"
+              )}
             </p>
+            
+            <div className="flex flex-wrap items-center gap-6 text-sm text-gray-300 font-medium">
+              <div className="flex items-center gap-2"><Clock className="w-4 h-4" />{getText("18 min read", "۱۸ دقیقه مطالعه")}</div>
+              <div className="flex items-center gap-2"><Eye className="w-4 h-4" />{getText("Comprehensive Analysis", "تحلیل جامع")}</div>
+            </div>
+            
+            <div className="mt-10 flex gap-4">
+              <Link to="#explore" className="px-6 py-3 rounded-full bg-blue-600 text-white font-bold hover:bg-blue-700 transition-all shadow-lg hover:shadow-xl">
+                {getText("Explore the Lineup", "مشاهده محصولات")} →
+              </Link>
+              <Link to="#video" className="px-6 py-3 rounded-full bg-white/15 backdrop-blur-md text-white font-bold hover:bg-white/25 transition-all border border-white/30">
+                {getText("Watch Video", "تماشای ویدیو")}
+              </Link>
+            </div>
+          </motion.div>
+        </div>
+        
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 animate-bounce">
+          <div className="w-8 h-12 rounded-full border-2 border-white/40 flex justify-center">
+            <ChevronDown className="w-4 h-4 text-white/70 mt-2" />
           </div>
         </div>
       </section>
-
-      {/* ───── Generation Cards ───── */}
-      <section ref={addSection} className="mb-14">
-        <h2 className="text-2xl font-bold mb-8">
-          {isRtl ? "نگاهی به هر نسل" : "A Look at Each Generation"}
-        </h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-          {GENERATIONS.map((g, i) => (
-            <Link
-              key={g.gen}
-              to={`/products/${g.slug}`}
-              ref={(el) => (cardsRef.current[i] = el)}
-              className="group rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 hover:border-blue-400 dark:hover:border-blue-500 transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
-            >
-              <div className="relative overflow-hidden">
-                <img
-                  src={g.img}
-                  alt={`iPhone ${g.gen} Pro Max`}
-                  className="w-full h-36 object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <span className="absolute top-2 end-2 bg-black/60 text-white text-xs px-2 py-0.5 rounded-full">
-                  {g.year}
-                </span>
-              </div>
-              <div className="p-3 bg-white dark:bg-gray-900">
-                <p className="font-bold text-sm">
-                  {isRtl
-                    ? `آیفون ${g.genFa} پرو مکس`
-                    : `iPhone ${g.gen} Pro Max`}
-                </p>
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
-                  {g.chip}
-                </p>
-                <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">
-                  {isRtl ? g.bodyFa : g.body}
-                </p>
-                <span className="inline-block mt-2 text-xs text-blue-500 dark:text-blue-400 font-medium group-hover:underline">
-                  {isRtl ? "مشاهده محصول ←" : "View Product →"}
-                </span>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      {/* ───── Chip Analysis ───── */}
-      <section ref={addSection} className="mb-14">
-        <h2 className="text-2xl font-bold mb-4">
-          {isRtl
-            ? "تحلیل تراشه: از A14 تا A19 Pro"
-            : "Chip Analysis: A14 to A19 Pro"}
-        </h2>
-        <p className="leading-9 text-gray-700 dark:text-gray-300 mb-8">
-          {isRtl
-            ? "در شش نسل، عملکرد تک‌هسته‌ای ۱۰۳٪ و عملکرد گرافیکی ۴۳۷٪ رشد کرد. اما توزیع این رشد یکنواخت نبود — نسل ۱۷ تنها در GPU جهش ۶۹ درصدی نسبت به نسل قبل داشت که بزرگ‌ترین جهش تک‌نسلی در تاریخ آیفون پرو مکس است."
-            : "Across six generations, single-core performance grew 103% and GPU performance grew 437%. But this growth was not evenly distributed — generation 17 alone saw a 69% GPU leap over the previous generation, the largest single-generation jump in iPhone Pro Max history."}
-        </p>
-
-        <div className="overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
-                {[
-                  isRtl ? "نسل" : "Gen",
-                  isRtl ? "تراشه" : "Chip",
-                  isRtl ? "CPU تک‌هسته" : "Single-Core",
-                  isRtl ? "رشد CPU" : "CPU Growth",
-                  isRtl ? "GPU" : "GPU",
-                  isRtl ? "رشد GPU" : "GPU Growth",
-                ].map((h) => (
-                  <th
-                    key={h}
-                    className="px-4 py-3 text-start font-semibold whitespace-nowrap"
-                  >
-                    {h}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {GENERATIONS.map((g, i) => {
-                const prev = GENERATIONS[i - 1];
-                const cpuGrowth = prev
-                  ? `+${Math.round(((g.cpu - prev.cpu) / prev.cpu) * 100)}%`
-                  : "—";
-                const gpuGrowth = prev
-                  ? `+${Math.round(((g.gpu - prev.gpu) / prev.gpu) * 100)}%`
-                  : "—";
-                const isLatest = g.gen === "17";
-
-                return (
-                  <tr
-                    key={g.gen}
-                    ref={(el) => (tableRowsRef.current[i] = el)}
-                    className={`border-t border-gray-200 dark:border-gray-700 transition-colors ${
-                      isLatest
-                        ? "bg-blue-50 dark:bg-blue-950/50"
-                        : "hover:bg-gray-50 dark:hover:bg-gray-800/50"
-                    }`}
-                  >
-                    <td className="px-4 py-3 font-medium">
-                      <Link
-                        to={`/products/${g.slug}`}
-                        className="text-blue-600 dark:text-blue-400 hover:underline whitespace-nowrap"
-                      >
-                        {isRtl
-                          ? `آیفون ${g.genFa} پرو مکس`
-                          : `iPhone ${g.gen} Pro Max`}
-                      </Link>
-                    </td>
-                    <td className="px-4 py-3 text-gray-500 dark:text-gray-400 whitespace-nowrap">
-                      {g.chip}
-                    </td>
-                    <td className="px-4 py-3 font-mono">
-                      {g.cpu.toLocaleString()}
-                    </td>
-                    <td className="px-4 py-3 text-gray-500 dark:text-gray-400 text-xs">
-                      {cpuGrowth}
-                    </td>
-                    <td className="px-4 py-3 font-mono">
-                      {g.gpu.toLocaleString()}
-                    </td>
-                    <td
-                      className={`px-4 py-3 font-semibold text-xs ${
-                        isLatest
-                          ? "text-green-600 dark:text-green-400"
-                          : "text-gray-500 dark:text-gray-400"
-                      }`}
-                    >
-                      {gpuGrowth}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-
-        {/* Highlight box */}
-        <div className="mt-6 bg-green-50 dark:bg-green-950/50 border border-green-200 dark:border-green-800 rounded-xl p-5 flex gap-4 items-start">
-          <span className="text-2xl">📈</span>
-          <p className="text-sm leading-7 text-gray-700 dark:text-gray-300">
-            {isRtl
-              ? "جهش ۶۹ درصدی GPU در نسل ۱۷ نتیجه مستقیم معماری جدید 3nm نسل دوم است. برای مقایسه، میانگین رشد GPU در نسل‌های ۱۲ تا ۱۶ حدود ۳۵٪ بود."
-              : "The 69% GPU leap in generation 17 is a direct result of the new second-generation 3nm architecture. For comparison, the average GPU growth across generations 12–16 was around 35%."}
-          </p>
-        </div>
-      </section>
-
-      {/* ───── Thermal Architecture ───── */}
-      <section ref={addSection} className="mb-14">
-        <h2 className="text-2xl font-bold mb-4">
-          {isRtl
-            ? "معماری حرارتی: بازگشت به آلومینیوم"
-            : "Thermal Architecture: Return to Aluminum"}
-        </h2>
-        <p className="leading-9 text-gray-700 dark:text-gray-300 mb-8">
-          {isRtl
-            ? "یکی از جنجالی‌ترین تصمیمات اپل در نسل ۱۷، بازگشت به فریم آلومینیومی بود — متریالی که آخرین بار در آیفون ۱۴ استفاده شده بود. اما این بار هدف متفاوت بود: آلومینیوم هدایت حرارتی بهتری نسبت به تیتانیوم دارد و در ترکیب با محفظه بخار نسل جدید، پایداری عملکرد را به ۹۰٪ رساند."
-            : "One of Apple's most controversial decisions in generation 17 was returning to an aluminum frame — a material last used in iPhone 14. But this time the goal was different: aluminum has better thermal conductivity than titanium, and combined with the new-generation vapor chamber, it pushed performance sustainability to 90%."}
-        </p>
-
-        <div className="grid md:grid-cols-3 gap-4 mb-8">
-          {[
-            {
-              label: isRtl ? "نسل ۱۲–۱۴" : "Gen 12–14",
-              material: isRtl ? "فولاد ضدزنگ" : "Stainless Steel",
-              thermal: isRtl ? "خنک‌سازی پایه" : "Basic Cooling",
-              sustained: "~65%",
-              color: "gray",
-            },
-            {
-              label: isRtl ? "نسل ۱۵–۱۶" : "Gen 15–16",
-              material: isRtl ? "تیتانیوم" : "Titanium",
-              thermal: isRtl ? "محفظه بخار" : "Vapor Chamber",
-              sustained: "~78%",
-              color: "blue",
-            },
-            {
-              label: isRtl ? "نسل ۱۷" : "Gen 17",
-              material: isRtl ? "آلومینیوم + تیتانیوم" : "Aluminum + Titanium",
-              thermal: isRtl ? "محفظه بخار نسل ۲" : "Vapor Chamber Gen 2",
-              sustained: "~90%",
-              color: "green",
-            },
-          ].map((item) => (
-            <div
-              key={item.label}
-              className={`rounded-xl p-5 border ${
-                item.color === "green"
-                  ? "bg-green-50 dark:bg-green-950/50 border-green-200 dark:border-green-800"
-                  : item.color === "blue"
-                  ? "bg-blue-50 dark:bg-blue-950/50 border-blue-200 dark:border-blue-800"
-                  : "bg-gray-50 dark:bg-gray-800/60 border-gray-200 dark:border-gray-700"
-              }`}
-            >
-              <p className="font-bold text-sm mb-3">{item.label}</p>
-              <p className="text-xs text-gray-600 dark:text-gray-400 mb-1">
-                {item.material}
-              </p>
-              <p className="text-xs text-gray-500 dark:text-gray-500 mb-3">
-                {item.thermal}
-              </p>
-              <div className="flex items-center gap-2">
-                <div className="flex-1 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                  <div
-                    className={`h-full rounded-full ${
-                      item.color === "green"
-                        ? "bg-green-500"
-                        : item.color === "blue"
-                        ? "bg-blue-500"
-                        : "bg-gray-400"
-                    }`}
-                    style={{ width: item.sustained }}
-                  />
-                </div>
-                <span className="text-xs font-bold">{item.sustained}</span>
-              </div>
-              <p className="text-xs text-gray-400 dark:text-gray-500 mt-2">
-                {isRtl ? "پایداری عملکرد" : "Sustained Performance"}
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ───── Camera Evolution ───── */}
-      <section ref={addSection} className="mb-14">
-        <h2 className="text-2xl font-bold mb-4">
-          {isRtl
-            ? "تکامل دوربین: از ۱۲ مگاپیکسل تا سیستم دوگانه تله‌فوتو"
-            : "Camera Evolution: From 12MP to Dual Telephoto"}
-        </h2>
-        <p className="leading-9 text-gray-700 dark:text-gray-300 mb-8">
-          {isRtl
-            ? "مسیر دوربین آیفون پرو مکس سه فاز داشت: فاز اول (نسل ۱۲–۱۳) با سنسور ۱۲ مگاپیکسل و زوم محدود، فاز دوم (نسل ۱۴–۱۶) با جهش به ۴۸ مگاپیکسل و زوم ۵x، و فاز سوم (نسل ۱۷) با معرفی سیستم دوگانه تله‌فوتو ۴x+۸x."
-            : "The iPhone Pro Max camera journey had three phases: phase one (gen 12–13) with 12MP sensor and limited zoom, phase two (gen 14–16) with the jump to 48MP and 5x zoom, and phase three (gen 17) introducing the dual telephoto 4x+8x system."}
-        </p>
-
-        <div className="space-y-3">
-          {GENERATIONS.map((g) => (
-            <div
-              key={g.gen}
-              className="flex items-center gap-4 p-4 rounded-xl bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700"
-            >
-              <span className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center text-xs font-bold text-blue-700 dark:text-blue-300 shrink-0">
-                {isRtl ? g.genFa : g.gen}
-              </span>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold">
-                  {isRtl ? `آیفون ${g.genFa} پرو مکس` : `iPhone ${g.gen} Pro Max`}
-                </p>
-                <p className="text-xs text-gray-500 dark:text-gray-400">
-                  {g.camera} · {isRtl ? "زوم" : "Zoom"}: {g.zoom}
-                </p>
-              </div>
-              <div className="text-end shrink-0">
-                <span
-                  className={`text-xs font-bold px-2 py-1 rounded-full ${
-                    g.gen === "17"
-                      ? "bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300"
-                      : g.gen >= "14"
-                      ? "bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300"
-                      : "bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400"
-                  }`}
-                >
-                  {g.zoom}
-                </span>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-6 bg-purple-50 dark:bg-purple-950/50 border border-purple-200 dark:border-purple-800 rounded-xl p-5 flex gap-4 items-start">
-          <span className="text-2xl">📷</span>
-          <p className="text-sm leading-7 text-gray-700 dark:text-gray-300">
-            {isRtl
-              ? "سیستم دوگانه تله‌فوتو نسل ۱۷ (۴x + ۸x) اولین بار در تاریخ آیفون دو لنز تله‌فوتو مجزا را ارائه می‌دهد. این تصمیم نتیجه مستقیم بازخورد کاربران حرفه‌ای بود که از شکاف بین ۵x و دیجیتال زوم شکایت داشتند."
-              : "The generation 17 dual telephoto system (4x + 8x) is the first time in iPhone history to offer two separate telephoto lenses. This decision was a direct result of feedback from professional users who complained about the gap between 5x and digital zoom."}
-          </p>
-        </div>
-      </section>
-
-      {/* ───── Full Comparison Table ───── */}
-      <section ref={addSection} className="mb-14">
-        <h2 className="text-2xl font-bold mb-6">
-          {isRtl ? "جدول مقایسه کامل" : "Full Comparison Table"}
-        </h2>
-
-        <div className="overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
-          <table className="w-full text-xs md:text-sm">
-            <thead>
-              <tr className="bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
-                {[
-                  isRtl ? "نسل" : "Gen",
-                  isRtl ? "تراشه" : "Chip",
-                  isRtl ? "دوربین" : "Camera",
-                  isRtl ? "زوم" : "Zoom",
-                  isRtl ? "بدنه" : "Body",
-                  isRtl ? "سال" : "Year",
-                ].map((h) => (
-                  <th key={h} className="px-3 py-3 text-start font-semibold whitespace-nowrap">
-                    {h}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {GENERATIONS.map((g) => (
-                <tr
-                  key={g.gen}
-                  className={`border-t border-gray-200 dark:border-gray-700 transition-colors ${
-                    g.gen === "17"
-                      ? "bg-blue-50 dark:bg-blue-950/50 font-semibold"
-                      : "hover:bg-gray-50 dark:hover:bg-gray-800/50"
-                  }`}
-                >
-                  <td className="px-3 py-3">
-                    <Link
-                      to={`/products/${g.slug}`}
-                      className="text-blue-600 dark:text-blue-400 hover:underline whitespace-nowrap"
-                    >
-                      {isRtl ? `آیفون ${g.genFa} PM` : `iPhone ${g.gen} PM`}
-                    </Link>
-                  </td>
-                  <td className="px-3 py-3 text-gray-600 dark:text-gray-400 whitespace-nowrap">
-                    {g.chip}
-                  </td>
-                  <td className="px-3 py-3 text-gray-600 dark:text-gray-400 whitespace-nowrap">
-                    {g.camera}
-                  </td>
-                  <td className="px-3 py-3 whitespace-nowrap">
-                    <span
-                      className={`px-2 py-0.5 rounded-full text-xs font-medium ${
-                        g.gen === "17"
-                          ? "bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300"
-                          : "bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400"
-                      }`}
-                    >
-                      {g.zoom}
+      
+      {/* ==================== MAIN CONTENT ==================== */}
+      <div className="max-w-7xl mx-auto px-6 py-16">
+        
+        {/* Explore the Lineup - 3D Glass Cards با قوس و شیشه‌ای */}
+        <section id="explore" ref={addSection} className="mb-24">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-black mb-3 bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-500 dark:to-purple-500 bg-clip-text text-transparent tracking-tight">
+              {getText("Explore the Lineup", "مشاهده محصولات")}
+            </h2>
+            <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto font-medium">
+              {getText("Help me choose — Compare every generation side by side", "راهنمای انتخاب — مقایسه همه نسل‌ها در کنار هم")}
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {GENERATIONS.map((gen) => (
+              <motion.div
+                key={gen.id}
+                whileHover={{ y: -12, scale: 1.03 }}
+                className="group relative rounded-3xl overflow-hidden cursor-pointer backdrop-blur-xl bg-white/40 dark:bg-black/30 border border-white/60 dark:border-white/10 shadow-2xl hover:shadow-3xl transition-all duration-500"
+                onClick={() => { setSelectedGen(gen); window.scrollTo({ top: 800, behavior: "smooth" }); }}
+              >
+                {/* Glass effect with inner shadow for depth */}
+                <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-white/10 dark:from-white/10 dark:via-transparent dark:to-white/5" />
+                <div className="absolute inset-0 rounded-3xl shadow-inner shadow-white/30 dark:shadow-black/40" />
+                <div className="relative p-6 text-center">
+                  <div className="w-32 h-32 mx-auto mb-4 flex items-center justify-center transform-gpu transition-all duration-500 group-hover:scale-110 group-hover:-translate-y-2">
+                    <img src={gen.imgProMax} alt={gen.name} className="w-full h-full object-contain drop-shadow-2xl" />
+                  </div>
+                  <h3 className="text-xl font-black text-gray-900 dark:text-white tracking-tight">{getText(gen.name, gen.nameFa)}</h3>
+                  <p className="text-sm font-semibold text-gray-500 dark:text-gray-400">{gen.year}</p>
+                  <div className="mt-3 flex justify-center gap-2">
+                    {gen.ai && <Sparkles className="w-4 h-4 text-yellow-500" />}
+                    {gen.dynamicIsland && <Shield className="w-4 h-4 text-green-500" />}
+                  </div>
+                  <div className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <span className="text-xs font-bold bg-blue-600/30 backdrop-blur-sm px-3 py-1.5 rounded-full text-blue-700 dark:text-blue-300">
+                      {getText("View Details", "جزئیات")} →
                     </span>
-                  </td>
-                  <td className="px-3 py-3 text-gray-600 dark:text-gray-400 whitespace-nowrap">
-                    {isRtl ? g.bodyFa : g.body}
-                  </td>
-                  <td className="px-3 py-3 text-gray-500 dark:text-gray-500">
-                    {g.year}
-                  </td>
-                </tr>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+        
+        {/* 3D Coverflow Gallery - با افکت فرورفتگی شیشه‌ای */}
+        <section ref={addSection} className="mb-24 py-12 rounded-3xl bg-gradient-to-br from-white/40 to-white/10 dark:from-black/30 dark:to-black/10 backdrop-blur-sm border border-white/50 dark:border-white/5 shadow-inner shadow-white/20 dark:shadow-black/20">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl md:text-4xl font-black mb-2 text-gray-900 dark:text-white tracking-tight">
+              {getText("360° Gallery", "گالری سه‌بعدی")}
+            </h2>
+            <p className="text-gray-600 dark:text-gray-400 font-medium">
+              {getText("Experience every detail", "هر جزئیات را تجربه کنید")}
+            </p>
+          </div>
+          
+          <div className="relative px-4">
+            <Swiper
+              modules={[Navigation, Pagination, EffectCoverflow, Autoplay]}
+              effect="coverflow"
+              grabCursor={true}
+              centeredSlides={true}
+              slidesPerView={2}
+              coverflowEffect={{
+                rotate: 25,
+                stretch: 0,
+                depth: 180,
+                modifier: 1.5,
+                slideShadows: true,
+              }}
+              navigation={{
+                nextEl: ".swiper-button-next-custom",
+                prevEl: ".swiper-button-prev-custom",
+              }}
+              pagination={{ clickable: true, el: ".swiper-pagination-custom" }}
+              autoplay={{ delay: 4000, disableOnInteraction: false }}
+              breakpoints={{
+                640: { slidesPerView: 2 },
+                768: { slidesPerView: 3 },
+                1024: { slidesPerView: 4 },
+              }}
+              className="py-12"
+            >
+              {allImages.map((img, idx) => (
+                <SwiperSlide key={idx}>
+                  <div className="group relative rounded-2xl overflow-hidden bg-gradient-to-br from-white/90 to-white/50 dark:from-gray-800/90 dark:to-gray-900/50 backdrop-blur-md p-6 shadow-2xl shadow-black/30 border border-white/60 dark:border-white/15 transform transition-all duration-300 hover:scale-105">
+                    {/* Inner shadow for depth/inset effect - فرورفتگی */}
+                    <div className="absolute inset-0 rounded-2xl shadow-inner shadow-black/25 dark:shadow-white/10 pointer-events-none" />
+                    <img src={img} alt={`iPhone ${idx}`} className="w-full h-64 object-contain drop-shadow-xl" />
+                  </div>
+                </SwiperSlide>
               ))}
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      {/* ───── Verdict ───── */}
-      <section ref={addSection} className="mb-14">
-        <h2 className="text-2xl font-bold mb-6">
-          {isRtl ? "نتیجه‌گیری" : "Verdict"}
-        </h2>
-
-        <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950/60 dark:to-indigo-950/60 rounded-2xl p-8 border border-blue-200 dark:border-blue-800 mb-8">
-          <p className="leading-9 text-gray-700 dark:text-gray-300 mb-6">
-            {isRtl
-              ? "آیفون ۱۷ پرو مکس نه فقط بهترین آیفون تاریخ، بلکه نقطه‌ای است که اپل در آن ثابت کرد «پرچمدار» دیگر به معنای «بیشترین مگاپیکسل» یا «سریع‌ترین تراشه» نیست. پایداری ۹۰٪ عملکرد، سیستم دوگانه تله‌فوتو و معماری حرارتی نسل دوم، این دستگاه را به ابزاری تبدیل کرده که در بلندمدت بهتر از رقبا عمل می‌کند."
-              : "The iPhone 17 Pro Max is not just the best iPhone ever made — it's the point where Apple proved that 'flagship' no longer means 'most megapixels' or 'fastest chip'. The 90% sustained performance, dual telephoto system, and second-generation thermal architecture make this a device that outperforms competitors over the long run."}
-          </p>
-
-          <div className="grid grid-cols-3 gap-4 text-center">
+            </Swiper>
+            
+            <div className="flex justify-center gap-4 mt-8">
+              <button className="swiper-button-prev-custom w-12 h-12 rounded-full bg-white/80 dark:bg-gray-800/80 shadow-lg flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all backdrop-blur-sm border border-white/60 dark:border-white/15">
+                <ChevronLeft size={24} />
+              </button>
+              <div className="swiper-pagination-custom !relative !w-auto flex gap-2 items-center" />
+              <button className="swiper-button-next-custom w-12 h-12 rounded-full bg-white/80 dark:bg-gray-800/80 shadow-lg flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all backdrop-blur-sm border border-white/60 dark:border-white/15">
+                <ChevronRight size={24} />
+              </button>
+            </div>
+          </div>
+        </section>
+        
+        {/* Stats Highlight - کارت‌های شیشه‌ای */}
+        <section ref={addSection} className="mb-20">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
-              {
-                value: "103%",
-                label: isRtl ? "رشد CPU (۶ نسل)" : "CPU Growth (6 gen)",
-              },
-              {
-                value: "437%",
-                label: isRtl ? "رشد GPU (۶ نسل)" : "GPU Growth (6 gen)",
-              },
-              {
-                value: "90%",
-                label: isRtl ? "پایداری عملکرد" : "Sustained Performance",
-              },
-            ].map((stat) => (
-              <div key={stat.label} className="bg-white/60 dark:bg-black/20 rounded-xl p-4">
-                <p className="text-2xl font-extrabold text-blue-600 dark:text-blue-400">
-                  {stat.value}
-                </p>
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-5">
-                  {stat.label}
-                </p>
+              { value: "4", label: getText("Generations", "نسل"), icon: <Smartphone className="w-6 h-6" /> },
+              { value: "103%", label: getText("CPU Growth", "رشد CPU"), icon: <Cpu className="w-6 h-6" /> },
+              { value: "437%", label: getText("GPU Growth", "رشد GPU"), icon: <TrendingUp className="w-6 h-6" /> },
+              { value: "2.5x", label: getText("AI Performance", "عملکرد AI"), icon: <Zap className="w-6 h-6" /> },
+            ].map((stat, idx) => (
+              <motion.div
+                key={idx}
+                whileHover={{ y: -6, scale: 1.02 }}
+                className="relative rounded-2xl overflow-hidden backdrop-blur-xl bg-white/40 dark:bg-black/30 border border-white/60 dark:border-white/10 shadow-xl transition-all duration-300"
+              >
+                <div className="absolute inset-0 rounded-2xl shadow-inner shadow-white/20 dark:shadow-black/30" />
+                <div className="relative p-6 text-center">
+                  <div className="w-14 h-14 rounded-full bg-gradient-to-br from-white/80 to-white/40 dark:from-gray-700/80 dark:to-gray-800/40 flex items-center justify-center mx-auto mb-3 shadow-md">
+                    <div className="text-blue-600 dark:text-blue-400">{stat.icon}</div>
+                  </div>
+                  <p className="text-3xl md:text-4xl font-black bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-500 dark:to-purple-500 bg-clip-text text-transparent">
+                    {stat.value}
+                  </p>
+                  <p className="text-sm font-bold text-gray-700 dark:text-gray-300 mt-1">{stat.label}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+        
+        {/* Selected Model Details - کارت شیشه‌ای با قوس */}
+        <section ref={addSection} className="mb-20">
+          <div className="relative rounded-3xl overflow-hidden backdrop-blur-xl bg-white/50 dark:bg-black/40 border border-white/70 dark:border-white/15 shadow-2xl">
+            <div className="absolute inset-0 rounded-3xl shadow-inner shadow-white/30 dark:shadow-black/40" />
+            <div className="relative grid md:grid-cols-2 gap-8 p-8">
+              <div className="flex items-center justify-center">
+                <img src={selectedGen.imgProMax} alt={selectedGen.name} className="w-full max-h-[400px] object-contain drop-shadow-2xl transform transition-all duration-500 hover:scale-105" />
+              </div>
+              <div>
+                <div className="flex items-center gap-3 mb-4 flex-wrap">
+                  <h3 className="text-3xl font-black text-gray-900 dark:text-white tracking-tight">{getText(selectedGen.name, selectedGen.nameFa)}</h3>
+                  <span className="px-3 py-1 rounded-full text-xs font-black bg-green-500/20 text-green-700 dark:text-green-300 backdrop-blur-sm border border-green-500/30">
+                    {selectedGen.year}
+                  </span>
+                </div>
+                <div className="grid grid-cols-2 gap-4 mb-6">
+                  <div className="bg-white/30 dark:bg-black/20 rounded-xl p-3"><p className="text-xs font-bold text-gray-500 dark:text-gray-400">{getText("Chip", "تراشه")}</p><p className="font-black text-gray-900 dark:text-white">{selectedGen.chip}</p></div>
+                  <div className="bg-white/30 dark:bg-black/20 rounded-xl p-3"><p className="text-xs font-bold text-gray-500 dark:text-gray-400">{getText("Display", "نمایشگر")}</p><p className="font-black text-gray-900 dark:text-white">{selectedGen.display}, {selectedGen.refresh}</p></div>
+                  <div className="bg-white/30 dark:bg-black/20 rounded-xl p-3"><p className="text-xs font-bold text-gray-500 dark:text-gray-400">{getText("Camera", "دوربین")}</p><p className="font-black text-gray-900 dark:text-white">{selectedGen.camera}</p></div>
+                  <div className="bg-white/30 dark:bg-black/20 rounded-xl p-3"><p className="text-xs font-bold text-gray-500 dark:text-gray-400">{getText("Zoom", "زوم")}</p><p className="font-black text-gray-900 dark:text-white">{selectedGen.zoom}</p></div>
+                </div>
+                <Link to={selectedGen.articleLink} className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-blue-600 to-blue-700 text-white font-black hover:shadow-xl transition-all">
+                  {getText("Read Full Review", "مطالعه بررسی کامل")} →
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        {/* Main Video Section */}
+        <section id="video" ref={addSection} className="mb-20">
+          <div className="text-center mb-10">
+            <h2 className="text-4xl md:text-5xl font-black mb-3 text-gray-900 dark:text-white tracking-tight">{getText("Watch the Evolution", "تکامل را ببینید")}</h2>
+            <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto font-medium">
+              {getText("The complete video analysis of iPhone evolution from 2022 to 2025", "تحلیل ویدیویی کامل تکامل آیفون از ۲۰۲۲ تا ۲۰۲۵")}
+            </p>
+          </div>
+          
+          <div className="relative aspect-video rounded-2xl overflow-hidden shadow-2xl group cursor-pointer" onClick={() => openVideo(relatedVideos[0])}>
+            <img src={`https://img.youtube.com/vi/${relatedVideos[0].videoId}/maxresdefault.jpg`} alt="Main Video" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-24 h-24 rounded-full bg-white/90 flex items-center justify-center group-hover:scale-110 transition-transform shadow-2xl">
+                <Play className="w-12 h-12 text-blue-600 ml-1.5" />
+              </div>
+            </div>
+            <div className="absolute bottom-6 left-6 right-6 text-white">
+              <h3 className="text-xl md:text-2xl font-bold">{getText(relatedVideos[0].title, relatedVideos[0].titleFa)}</h3>
+              <p className="text-sm text-gray-200 font-medium">{relatedVideos[0].views} {getText("views", "بازدید")}</p>
+            </div>
+          </div>
+        </section>
+        
+        {/* Related Videos Grid - کارت‌های شیشه‌ای */}
+        <section ref={addSection} className="mb-20">
+          <h2 className="text-2xl md:text-3xl font-black mb-8 text-gray-900 dark:text-white tracking-tight">{getText("More Videos", "ویدیوهای بیشتر")}</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {relatedVideos.slice(1).map((video) => (
+              <div key={video.id} className="group cursor-pointer rounded-xl overflow-hidden backdrop-blur-xl bg-white/40 dark:bg-black/30 border border-white/60 dark:border-white/10 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2" onClick={() => openVideo(video)}>
+                <div className="relative aspect-video">
+                  <img src={`https://img.youtube.com/vi/${video.videoId}/hqdefault.jpg`} alt={getText(video.title, video.titleFa)} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="w-12 h-12 rounded-full bg-white/90 flex items-center justify-center"><Play className="w-5 h-5 text-blue-600 ml-0.5" /></div>
+                  </div>
+                  <span className="absolute bottom-2 right-2 bg-black/70 text-white text-xs font-bold px-2 py-1 rounded">{video.duration}</span>
+                </div>
+                <div className="p-4">
+                  <h3 className="font-black line-clamp-2 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-gray-900 dark:text-white">{getText(video.title, video.titleFa)}</h3>
+                  <p className="text-sm font-medium text-gray-500 dark:text-gray-400 mt-1">{video.views} {getText("views", "بازدید")}</p>
+                  <Link to={video.articleLink} onClick={(e) => e.stopPropagation()} className="inline-block mt-3 text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline">
+                    {getText("Read full article →", "مطالعه مقاله کامل ←")}
+                  </Link>
+                </div>
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* ───── Related Products CTA ───── */}
-      <section ref={addSection} className="mb-8">
-        <h2 className="text-xl font-bold mb-6">
-          {isRtl ? "مشاهده محصولات" : "Browse Products"}
-        </h2>
-        <div className="flex flex-wrap gap-3">
-          {GENERATIONS.map((g) => (
-            <Link
-              key={g.gen}
-              to={`/products/${g.slug}`}
-              className={`px-4 py-2 rounded-full text-sm font-medium border transition-all duration-200 hover:shadow-md ${
-                g.gen === "17"
-                  ? "bg-blue-600 text-white border-blue-600 hover:bg-blue-700"
-                  : "bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:border-blue-400 dark:hover:border-blue-500"
-              }`}
-            >
-              {isRtl ? `آیفون ${g.genFa} پرو مکس` : `iPhone ${g.gen} Pro Max`}
-            </Link>
-          ))}
-        </div>
-      </section>
+        </section>
+        
+        {/* Comparison Table - با طراحی شیشه‌ای */}
+        <section ref={addSection} className="mb-20">
+          <h2 className="text-3xl md:text-4xl font-black text-center mb-4 text-gray-900 dark:text-white tracking-tight">{getText("Specifications Comparison", "مقایسه مشخصات فنی")}</h2>
+          <div className="overflow-x-auto rounded-2xl backdrop-blur-xl bg-white/40 dark:bg-black/30 border border-white/60 dark:border-white/10 shadow-xl">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-white/50 dark:bg-white/5 border-b border-white/40 dark:border-white/10">
+                  <th className="px-6 py-4 text-start font-black text-gray-900 dark:text-white">{getText("Specification", "مشخصه")}</th>
+                  {GENERATIONS.map(gen => <th key={gen.id} className="px-6 py-4 text-start font-black text-gray-900 dark:text-white">{getText(gen.name, gen.nameFa)}</th>)}
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  { label: getText("Year", "سال"), key: "year" },
+                  { label: getText("Chip", "تراشه"), key: "chip" },
+                  { label: getText("Process", "فرآیند"), key: "process" },
+                  { label: "RAM", key: "ram" },
+                  { label: getText("Display", "نمایشگر"), key: "display" },
+                  { label: getText("Refresh Rate", "نرخ تازه‌سازی"), key: "refresh" },
+                  { label: getText("Main Camera", "دوربین اصلی"), key: "camera" },
+                  { label: getText("Optical Zoom", "زوم اپتیکال"), key: "zoom" },
+                  { label: getText("Port", "پورت"), key: "usb" },
+                  { label: "Apple Intelligence", key: "ai" },
+                  { label: "Dynamic Island", key: "dynamicIsland" },
+                ].map((row, idx) => (
+                  <tr key={idx} className="border-t border-white/30 dark:border-white/5 hover:bg-white/30 dark:hover:bg-white/5 transition-colors">
+                    <td className="px-6 py-4 font-black text-gray-800 dark:text-gray-200">{row.label}</td>
+                    {GENERATIONS.map(gen => {
+                      let value = gen[row.key];
+                      if (row.key === "ai") value = value ? "✅" : "❌";
+                      if (row.key === "dynamicIsland") value = value ? "✅" : "❌";
+                      return <td key={gen.id} className="px-6 py-4 font-semibold text-gray-700 dark:text-gray-300">{value}</td>;
+                    })}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+        
+        {/* Final CTA - شیشه‌ای با قوس */}
+        <section ref={addSection}>
+          <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-blue-600/90 via-indigo-600/90 to-purple-600/90 backdrop-blur-sm p-10 md:p-14 text-white text-center shadow-2xl">
+            <div className="absolute inset-0 rounded-3xl shadow-inner shadow-white/30" />
+            <div className="relative">
+              <h2 className="text-3xl md:text-4xl font-black mb-4 tracking-tight">{getText("Ready to Choose?", "آماده انتخاب هستید؟")}</h2>
+              <p className="text-lg text-blue-100 max-w-2xl mx-auto mb-8 font-medium">
+                {getText("Compare all models and find the perfect iPhone for your needs", "همه مدل‌ها را مقایسه کنید و آیفون مناسب خود را پیدا کنید")}
+              </p>
+              <div className="flex flex-wrap justify-center gap-3">
+                {GENERATIONS.map(gen => (
+                  <Link key={gen.id} to={gen.articleLink} className="px-5 py-2 rounded-full bg-white/20 hover:bg-white/30 transition-all text-sm font-bold backdrop-blur-sm border border-white/30">
+                    {getText(gen.name, gen.nameFa)}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      
+      {/* Video Modal */}
+      <AnimatePresence>
+        {showVideoModal && activeVideo && (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4">
+            <button onClick={() => setShowVideoModal(false)} className="absolute top-6 right-6 text-white hover:text-gray-300 transition-colors z-10"><X size={32} /></button>
+            <div className="w-full max-w-5xl aspect-video">
+              <iframe className="w-full h-full rounded-2xl" src={`https://www.youtube.com/embed/${activeVideo.videoId}?autoplay=1&rel=0`} title={activeVideo.title} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
+            </div>
+            <div className="absolute bottom-8 left-0 right-0 text-center text-white text-sm">
+              <Link to={activeVideo.articleLink} onClick={() => setShowVideoModal(false)} className="text-blue-400 hover:underline font-bold">
+                {getText("Read full article", "مطالعه مقاله کامل")} →
+              </Link>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      
+      <style jsx global>{`
+        .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .swiper-pagination-custom .swiper-pagination-bullet {
+          width: 8px;
+          height: 8px;
+          background: #94a3b8;
+          opacity: 0.5;
+        }
+        .swiper-pagination-custom .swiper-pagination-bullet-active {
+          width: 24px;
+          border-radius: 4px;
+          background: #3b82f6;
+          opacity: 1;
+        }
+      `}</style>
     </article>
   );
 }
