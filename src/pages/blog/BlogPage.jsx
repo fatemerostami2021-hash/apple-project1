@@ -1,5 +1,5 @@
 // src/pages/blog/BlogPage.jsx
-import { useState, useEffect, useMemo, useRef } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Helmet } from "react-helmet";
@@ -18,9 +18,11 @@ import {
 } from "react-icons/hi";
 import { FaApple } from "react-icons/fa";
 import { SiSamsung } from "react-icons/si";
-import { articlesData } from "../../data/articlesData";
+import { getArticles } from "../../services/api";
 
-// تایپینگ پیشرفته با افکت حرفه‌ای
+// ─────────────────────────────────────────────
+// کامپوننت تایپینگ
+// ─────────────────────────────────────────────
 function AdvancedTypewriter({ texts, isRtl }) {
   const [displayText, setDisplayText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
@@ -60,11 +62,46 @@ function AdvancedTypewriter({ texts, isRtl }) {
   );
 }
 
+// ─────────────────────────────────────────────
+// دکمه اسکرول به بالا
+// ─────────────────────────────────────────────
+function ScrollToTop() {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const toggleVisibility = () => {
+      setIsVisible(window.scrollY > 500);
+    };
+    window.addEventListener("scroll", toggleVisibility);
+    return () => window.removeEventListener("scroll", toggleVisibility);
+  }, []);
+
+  if (!isVisible) return null;
+
+  return (
+    <button
+      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+      className="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 flex items-center justify-center opacity-80 hover:opacity-100"
+      aria-label="Scroll to top"
+    >
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+      </svg>
+    </button>
+  );
+}
+
+// ─────────────────────────────────────────────
+// کامپوننت اصلی BlogPage
+// ─────────────────────────────────────────────
 export default function BlogPage() {
   const { i18n } = useTranslation();
   const isRtl = i18n.language === "fa";
   const lang = isRtl ? "fa" : "en";
 
+  // State ها
+  const [articles, setArticles] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedBrand, setSelectedBrand] = useState("all");
   const [selectedTag, setSelectedTag] = useState("all");
@@ -73,6 +110,32 @@ export default function BlogPage() {
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
   const articlesPerPage = 9;
+
+  // دریافت مقالات از API
+  useEffect(() => {
+    const fetchArticles = async () => {
+      setLoading(true);
+      try {
+        const data = await getArticles();
+        if (Array.isArray(data)) {
+          console.log(`✅ ${data.length} articles loaded from API`);
+          setArticles(data);
+        } else if (data?.data && Array.isArray(data.data)) {
+          console.log(`✅ ${data.data.length} articles loaded from API`);
+          setArticles(data.data);
+        } else {
+          console.error("Invalid data format:", data);
+          setArticles([]);
+        }
+      } catch (error) {
+        console.error("Error fetching articles:", error);
+        setArticles([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchArticles();
+  }, []);
 
   // تیترهای تایپینگ
   const typingTitles = useMemo(() => [
@@ -85,16 +148,21 @@ export default function BlogPage() {
 
   // تگ‌های داغ
   const allTags = useMemo(() => {
+    if (!Array.isArray(articles)) return [];
     const tags = new Set();
-    articlesData.forEach(article => {
-      article.tags?.forEach(tag => tags.add(tag));
+    articles.forEach(article => {
+      if (article.tags && Array.isArray(article.tags)) {
+        article.tags.forEach(tag => tags.add(tag));
+      }
     });
     return Array.from(tags).sort();
-  }, []);
+  }, [articles]);
 
   // فیلتر مقالات
   const filteredArticles = useMemo(() => {
-    let filtered = [...articlesData];
+    if (!Array.isArray(articles)) return [];
+    
+    let filtered = [...articles];
     
     if (selectedBrand !== "all") {
       filtered = filtered.filter(article => article.brand === selectedBrand);
@@ -102,8 +170,8 @@ export default function BlogPage() {
     
     if (searchTerm.trim()) {
       filtered = filtered.filter(article =>
-        article.title[lang].toLowerCase().includes(searchTerm.toLowerCase()) ||
-        article.excerpt[lang].toLowerCase().includes(searchTerm.toLowerCase())
+        article.title?.[lang]?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        article.excerpt?.[lang]?.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
     
@@ -119,15 +187,15 @@ export default function BlogPage() {
         filtered.sort((a, b) => new Date(a.publishDate) - new Date(b.publishDate));
         break;
       case "mostLiked":
-        filtered.sort((a, b) => b.likes - a.likes);
+        filtered.sort((a, b) => (b.likes || 0) - (a.likes || 0));
         break;
       case "mostRead":
-        filtered.sort((a, b) => b.readTime - a.readTime);
+        filtered.sort((a, b) => (b.readTime || 0) - (a.readTime || 0));
         break;
       default: break;
     }
     return filtered;
-  }, [selectedBrand, searchTerm, selectedTag, sortBy, lang]);
+  }, [articles, selectedBrand, searchTerm, selectedTag, sortBy, lang]);
 
   const totalPages = Math.ceil(filteredArticles.length / articlesPerPage);
   const paginatedArticles = filteredArticles.slice(
@@ -139,17 +207,23 @@ export default function BlogPage() {
     setCurrentPage(1);
   }, [selectedBrand, searchTerm, selectedTag, sortBy]);
 
+  // مقالات داغ
   const trendingArticles = useMemo(() => {
-    return [...articlesData].sort((a, b) => b.likes - a.likes).slice(0, 3);
-  }, []);
+    if (!Array.isArray(articles)) return [];
+    return [...articles].sort((a, b) => (b.likes || 0) - (a.likes || 0)).slice(0, 3);
+  }, [articles]);
 
+  // آمار
   const stats = useMemo(() => {
-    const totalArticles = articlesData.length;
-    const totalLikes = articlesData.reduce((sum, a) => sum + a.likes, 0);
-    const totalReadTime = articlesData.reduce((sum, a) => sum + a.readTime, 0);
-    const brands = [...new Set(articlesData.map(a => a.brand))];
+    if (!Array.isArray(articles)) {
+      return { totalArticles: 0, totalLikes: 0, totalReadTime: 0, brands: 0 };
+    }
+    const totalArticles = articles.length;
+    const totalLikes = articles.reduce((sum, a) => sum + (a.likes || 0), 0);
+    const totalReadTime = articles.reduce((sum, a) => sum + (a.readTime || 0), 0);
+    const brands = [...new Set(articles.map(a => a.brand).filter(Boolean))];
     return { totalArticles, totalLikes, totalReadTime, brands: brands.length };
-  }, []);
+  }, [articles]);
 
   const handleSubscribe = () => {
     if (!email.trim()) return;
@@ -157,6 +231,14 @@ export default function BlogPage() {
     setEmail("");
     setTimeout(() => setSubscribed(false), 3000);
   };
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="w-12 h-12 border-4 border-amber-500 border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -189,11 +271,19 @@ export default function BlogPage() {
         <meta name="description" content={isRtl 
           ? "مقالات تخصصی بررسی آیفون و سامسونگ - آخرین تکنولوژی‌ها و مقایسه‌های حرفه‌ای" 
           : "Professional iPhone and Samsung reviews - Latest technology and expert comparisons"} />
+        <meta name="keywords" content={isRtl 
+          ? "آیفون, سامسونگ, مقایسه گوشی, بررسی تخصصی, تکنولوژی, موبایل" 
+          : "iPhone, Samsung, phone comparison, expert review, technology, mobile"} />
+        <meta property="og:title" content={isRtl ? "مقالات تخصصی تک‌کرانچ" : "TechCrunch Expert Articles"} />
+        <meta property="og:type" content="website" />
+        <meta property="og:description" content={isRtl 
+          ? "مقالات تخصصی بررسی آیفون و سامسونگ - آخرین تکنولوژی‌ها و مقایسه‌های حرفه‌ای" 
+          : "Professional iPhone and Samsung reviews - Latest technology and expert comparisons"} />
+        <html lang={lang} dir={isRtl ? "rtl" : "ltr"} />
       </Helmet>
 
-      {/* ────────────────────────────────────────────── HERO SECTION ────────────────────────────────────────────── */}
+      {/* HERO SECTION */}
       <section className="relative min-h-[65vh] flex items-center justify-center overflow-hidden">
-        {/* Gradient Orbs */}
         <div className="absolute top-20 left-10 w-72 h-72 bg-amber-400/15 rounded-full blur-3xl animate-pulse" />
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl animate-pulse delay-700" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-amber-300/5 rounded-full blur-3xl" />
@@ -204,15 +294,13 @@ export default function BlogPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            {/* Badge - Silver Glass */}
-            <div className="inline-flex items-center gap-2 bg-white/60 dark:bg-white/5 backdrop-blur-xl px-5 py-2 rounded-full mb-6 border border-white/40 dark:border-white/10 shadow-lg hover:shadow-xl transition-all duration-300">
+            <div className="inline-flex items-center gap-2 bg-white/60 dark:bg-white/5 backdrop-blur-xl px-5 py-2 rounded-full mb-6 border border-white/40 dark:border-white/10 shadow-lg">
               <HiOutlineSparkles className="text-amber-600 dark:text-amber-400 animate-pulse" size={16} />
               <span className="text-xs font-black text-gray-700 dark:text-white/80 uppercase tracking-wider">
-                {isRtl ? "بیش از ۵۰ مقاله تخصصی" : "50+ Expert Articles"}
+                {isRtl ? `بیش از ${stats.totalArticles} مقاله تخصصی` : `${stats.totalArticles}+ Expert Articles`}
               </span>
             </div>
 
-            {/* Main Title */}
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-gray-900 dark:text-white mb-6 tracking-tight leading-tight">
               {isRtl ? "مقالات" : "Articles"}
               <span className="bg-gradient-to-r from-amber-500 to-amber-600 bg-clip-text text-transparent ml-3">
@@ -220,7 +308,6 @@ export default function BlogPage() {
               </span>
             </h1>
 
-            {/* Typing Effect - Silver Glass Card */}
             <div className="inline-block bg-white/40 dark:bg-white/5 backdrop-blur-md rounded-2xl px-6 py-4 mb-6 border border-white/30 dark:border-white/10 shadow-lg">
               <div className="text-xl md:text-2xl lg:text-3xl text-gray-700 dark:text-gray-300 font-bold">
                 <span className="inline-block mr-2">
@@ -230,7 +317,6 @@ export default function BlogPage() {
               </div>
             </div>
 
-            {/* Description */}
             <p className="text-base md:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed font-medium">
               {isRtl 
                 ? "بررسی‌های عمیق، مقایسه‌های حرفه‌ای و آخرین اخبار دنیای تکنولوژی"
@@ -238,7 +324,6 @@ export default function BlogPage() {
             </p>
           </motion.div>
 
-          {/* Stats Bar - Silver Glass Cards */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -260,14 +345,13 @@ export default function BlogPage() {
         </div>
       </section>
 
-      {/* ────────────────────────────────────────────── MAIN CONTENT ────────────────────────────────────────────── */}
+      {/* MAIN CONTENT */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="flex flex-col lg:flex-row gap-8">
           
-          {/* ───────────────────── SIDEBAR - Silver Glass Filters ───────────────────── */}
+          {/* SIDEBAR */}
           <aside className="lg:w-80 flex-shrink-0">
             <div className="sticky top-24 space-y-5">
-              
               {/* Search */}
               <div className="bg-white/60 dark:bg-white/5 backdrop-blur-xl rounded-2xl p-4 border border-white/40 dark:border-white/10 shadow-lg">
                 <div className="relative">
@@ -336,7 +420,17 @@ export default function BlogPage() {
                   {isRtl ? "تگ‌های داغ" : "Trending Tags"}
                 </h3>
                 <div className="flex flex-wrap gap-1.5">
-                  {["all", ...allTags.slice(0, 10)].map((tag) => (
+                  <button
+                    onClick={() => setSelectedTag("all")}
+                    className={`px-2.5 py-1 rounded-full text-[10px] font-black transition-all duration-200 ${
+                      selectedTag === "all"
+                        ? "bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-sm"
+                        : "bg-white/40 dark:bg-white/10 text-gray-700 dark:text-gray-300 hover:bg-white/60 dark:hover:bg-white/20"
+                    }`}
+                  >
+                    {isRtl ? "همه" : "All"}
+                  </button>
+                  {allTags.slice(0, 10).map((tag) => (
                     <button
                       key={tag}
                       onClick={() => setSelectedTag(tag)}
@@ -346,7 +440,7 @@ export default function BlogPage() {
                           : "bg-white/40 dark:bg-white/10 text-gray-700 dark:text-gray-300 hover:bg-white/60 dark:hover:bg-white/20"
                       }`}
                     >
-                      {tag === "all" ? (isRtl ? "همه" : "All") : `#${tag}`}
+                      #{tag}
                     </button>
                   ))}
                 </div>
@@ -361,7 +455,7 @@ export default function BlogPage() {
                 <div className="space-y-2">
                   {trendingArticles.map((article, idx) => (
                     <Link
-                      key={article.id}
+                      key={article._id || article.id || idx}
                       to={`/blog/${article.slug}`}
                       className="flex items-center gap-2.5 group hover:bg-white/40 dark:hover:bg-white/10 p-1.5 rounded-xl transition-all duration-200"
                     >
@@ -370,11 +464,11 @@ export default function BlogPage() {
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="text-xs font-black text-gray-800 dark:text-gray-200 group-hover:text-amber-600 transition-colors line-clamp-1">
-                          {article.title[lang]}
+                          {article.title?.[lang] || article.title?.fa || article.title?.en || "Article"}
                         </p>
                         <div className="flex items-center gap-1 text-[10px] font-bold text-gray-400 mt-0.5">
                           <HiOutlineHeart size={9} />
-                          {article.likes.toLocaleString()}
+                          {article.likes?.toLocaleString() || 0}
                         </div>
                       </div>
                     </Link>
@@ -384,7 +478,7 @@ export default function BlogPage() {
             </div>
           </aside>
 
-          {/* ───────────────────── ARTICLES GRID ───────────────────── */}
+          {/* ARTICLES GRID */}
           <div className="flex-1 min-w-0">
             <div className="flex justify-between items-center mb-5">
               <p className="text-sm font-bold text-gray-500 dark:text-gray-400">
@@ -421,7 +515,7 @@ export default function BlogPage() {
                 <AnimatePresence mode="popLayout">
                   {paginatedArticles.map((article) => (
                     <motion.div
-                      key={article.id}
+                      key={article._id || article.id}
                       variants={itemVariants}
                       layout
                       exit={{ opacity: 0, scale: 0.95 }}
@@ -430,16 +524,18 @@ export default function BlogPage() {
                         to={`/blog/${article.slug}`}
                         className="group flex flex-col bg-white/60 dark:bg-white/5 backdrop-blur-xl rounded-2xl overflow-hidden border border-white/40 dark:border-white/10 hover:border-amber-400/60 hover:shadow-2xl hover:shadow-amber-500/10 transition-all duration-300 hover:-translate-y-1.5 h-full"
                       >
-                        {/* Cover Image */}
                         <div className="relative overflow-hidden h-48 flex-shrink-0">
                           <img
-                            src={article.cover}
-                            alt={article.title[lang]}
+                            src={article.cover || "/placeholder-image.jpg"}
+                            alt={article.title?.[lang] || "Article cover"}
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                             loading="lazy"
+                            onError={(e) => {
+                              e.target.src = '/placeholder-image.jpg';
+                            }}
                           />
                           <div className="absolute top-2.5 end-2.5 bg-gradient-to-r from-amber-500 to-amber-600 text-white text-[10px] font-black px-2 py-0.5 rounded-full shadow-md">
-                            {article.brand}
+                            {article.brand || "Tech"}
                           </div>
                           {article.isTrending && (
                             <div className="absolute top-2.5 start-2.5 bg-gradient-to-r from-red-500 to-orange-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full flex items-center gap-1 shadow-md">
@@ -449,27 +545,26 @@ export default function BlogPage() {
                           )}
                         </div>
 
-                        {/* Content */}
                         <div className="p-4 flex flex-col flex-1">
                           <div className="flex items-center gap-3 text-[10px] font-bold text-gray-400 dark:text-gray-500 mb-2.5">
                             <span className="flex items-center gap-1">
                               <HiOutlineCalendar size={11} />
-                              {new Date(article.publishDate).toLocaleDateString(isRtl ? "fa-IR" : "en-US")}
+                              {article.publishDate ? new Date(article.publishDate).toLocaleDateString(isRtl ? "fa-IR" : "en-US") : "TBA"}
                             </span>
                             <span className="flex items-center gap-1">
                               <HiOutlineClock size={11} />
-                              {article.readTime} {isRtl ? "دقیقه" : "min"}
+                              {article.readTime || 5} {isRtl ? "دقیقه" : "min"}
                             </span>
                             <span className="flex items-center gap-1">
                               <HiOutlineHeart size={11} />
-                              {article.likes.toLocaleString()}
+                              {article.likes?.toLocaleString() || 0}
                             </span>
                           </div>
                           <h3 className="text-base font-black text-gray-900 dark:text-white mb-1.5 line-clamp-2 group-hover:text-amber-600 transition-colors leading-snug">
-                            {article.title[lang]}
+                            {article.title?.[lang] || article.title?.fa || article.title?.en || "Article"}
                           </h3>
                           <p className="text-gray-500 dark:text-gray-400 text-xs font-medium line-clamp-2 mb-3 leading-relaxed flex-1">
-                            {article.excerpt[lang]}
+                            {article.excerpt?.[lang] || article.excerpt?.fa || article.excerpt?.en || "Read this article..."}
                           </p>
                           <div className="flex flex-wrap gap-1">
                             {article.tags?.slice(0, 3).map((tag) => (
@@ -489,7 +584,7 @@ export default function BlogPage() {
               </motion.div>
             )}
 
-            {/* Pagination - Silver Glass */}
+            {/* Pagination */}
             {totalPages > 1 && (
               <div className="flex justify-center items-center gap-2 mt-10 flex-wrap">
                 <button
@@ -534,7 +629,7 @@ export default function BlogPage() {
         </div>
       </section>
 
-      {/* ────────────────────────────────────────────── NEWSLETTER ────────────────────────────────────────────── */}
+      {/* NEWSLETTER */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
         <div className="bg-gradient-to-r from-amber-500 to-amber-600 rounded-3xl p-8 md:p-12 text-center text-white shadow-2xl">
           <h2 className="text-3xl md:text-4xl font-black mb-2 tracking-tight">
@@ -565,6 +660,9 @@ export default function BlogPage() {
           </div>
         </div>
       </section>
+
+      {/* Scroll to Top Button */}
+      <ScrollToTop />
     </div>
   );
 }
