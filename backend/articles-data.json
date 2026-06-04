@@ -1,48 +1,366 @@
-[
-  {
-    "slug": "iphone-17-pro-max",
-    "brand": "Apple",
-    "title": {
-      "fa": "آیفون ۱۷ پرو مکس: انقلابی در قدرت و تجربه کاربری",
-      "en": "iPhone 17 Pro Max: A Revolution in Power and User Experience"
-    },
-    "excerpt": {
-      "fa": "نگاهی عمیق به آیفون ۱۷ پرو مکس با پردازنده نسل آینده A18 و سیستم دوربین حرفه‌ای ۴۸ مگاپیکسلی.",
-      "en": "An in-depth look at the iPhone 17 Pro Max with next-gen A18 processor and pro 48MP camera system."
-    },
-    "content": {
-      "fa": "## آیفون ۱۷ پرو مکس: اوج مهندسی اپل\n\nمتن کامل مقاله اینجا قرار می‌گیرد...",
-      "en": "## iPhone 17 Pro Max: Peak of Apple Engineering\n\nFull article content here..."
-    },
-    "cover": "/images/iphone-17-pro-max.png",
-    "readTime": 15,
-    "likes": 342,
-    "isTrending": true,
-    "publishDate": "2025-02-10T00:00:00.000Z",
-    "tags": ["آیفون", "پرو مکس", "A18", "دوربین"],
-    "author": "Amirhossein Yari"
+cd ~/Desktop/apple-project/backend
+cat > scripts/updateFullArticles.js << 'EOF'
+require('dotenv').config();
+const mongoose = require('mongoose');
+
+const articleSchema = new mongoose.Schema({
+  slug: String,
+  brand: String,
+  title: { fa: String, en: String },
+  excerpt: { fa: String, en: String },
+  content: { fa: String, en: String },
+  cover: String,
+  readTime: Number,
+  likes: Number,
+  tags: [String],
+  author: String,
+  publishDate: Date,
+  isTrending: Boolean,
+  views: Number
+}, { timestamps: true });
+
+const Article = mongoose.model('Article', articleSchema);
+
+// محتوای کامل برای هر مقاله
+const articlesContent = {
+  "iphone-17-pro-max": {
+    fa: `# آیفون ۱۷ پرو مکس: انقلابی در قدرت و تجربه کاربری
+
+## مقدمه
+
+اپل در رویداد پاییزی Wonderlust 2025 از آیفون ۱۷ پرو مکس رونمایی کرد. دستگاهی که با تراشه انقلابی A18 Pro، دوربین‌های پیشرفته و طراحی بهبودیافته، استانداردهای جدیدی در صنعت موبایل ایجاد کرده است. در این مقاله به بررسی کامل این دستگاه می‌پردازیم.
+
+## طراحی و کیفیت ساخت
+
+### مواد به کار رفته
+
+آیفون ۱۷ پرو مکس از فریم تیتانیومی درجه ۵ استفاده می‌کند که ۴۰٪ سبک‌تر از فولاد ضدزنگ و در عین حال دو برابر مقاوم‌تر است. وزن دستگاه به ۲۲۱ گرم کاهش یافته که در مقایسه با نسل قبل ۸ گرم سبک‌تر است.
+
+### رنگ‌بندی جدید
+
+اپل امسال پالت رنگی کاملاً جدیدی معرفی کرده:
+
+| رنگ | نام انگلیسی | ویژگی |
+|-----|------------|--------|
+| تیتانیوم بیابانی | Desert Titanium | رنگ اصلی سال با جلوه طلایی-برنزی |
+| تیتانیوم طبیعی | Natural Titanium | خاکستری نقره‌ای کلاسیک |
+| تیتانیوم سفید | White Titanium | سفید مات شیک |
+| تیتانیوم مشکی | Black Titanium | مشکی عمیق با جلوه مات |
+
+### مقاومت
+
+گواهی IP68: مقاوم در برابر نفوذ گرد و غبار و آب تا عمق ۶ متری به مدت ۳۰ دقیقه. شیشه جلویی از Ceramic Shield نسل دوم با مقاومت ۴ برابر بیشتر در برابر ضربه.
+
+## نمایشگر
+
+### مشخصات فنی
+
+- **اندازه**: ۶.۹ اینچ
+- **نوع**: Super Retina XDR OLED
+- **رزولوشن**: ۱۴۹۲ × ۳۲۲۴ پیکسل
+- **تراکم پیکسلی**: ۴۶۰ PPI
+- **نرخ نوسازی**: ۱ تا ۱۲۰ هرتز ProMotion تطبیقی
+- **روشنایی معمولی**: ۱۲۰۰ نیت
+- **روشنایی HDR**: ۲۵۰۰ نیت (۳۰۰۰ نیت برای محتوای HDR)
+- **نسبت کنتراست**: ۲,۰۰۰,۰۰۰:۱
+
+### فناوری‌های ویژه
+
+**Always-On Display پیشرفته**: نمایش زمان، ویجت‌ها، نوتیفیکیشن‌های زنده و وضعیت فعالیت‌ها با مصرف انرژی تنها ۱٪ در ساعت.
+
+**کاهش انعکاس نور**: لایه جدید ضد انعکاس روی شیشه، بازتاب نور را تا ۴۰٪ کاهش داده است.
+
+## تراشه A18 Pro
+
+### معماری و ساخت
+
+تراشه A18 Pro بر اساس فرآیند **۳ نانومتری نسل دوم (N3E)** TSMC ساخته شده است.
+
+### مشخصات دقیق
+
+| بخش | مشخصات | بهبود نسبت به A17 Pro |
+|-----|--------|----------------------|
+| CPU | ۶ هسته‌ای (۲ پرقدرت + ۴ کم‌مصرف) | ۲۰٪ سریع‌تر |
+| GPU | ۶ هسته‌ای با رهگیری پرتو سخت‌افزاری | ۳۰٪ سریع‌تر |
+| Neural Engine | ۱۶ هسته‌ای | ۲۵٪ سریع‌تر |
+| ترانزیستورها | ۲۵ میلیارد | ۱۵٪ بیشتر |
+| رم | ۸ گیگابایت LPDDR5X | - |
+
+### عملکرد و بنچمارک
+
+| بنچمارک | امتیاز | رتبه |
+|---------|--------|------|
+| Geekbench 6 (Single) | ۳,۲۵۰ | اول جهان |
+| Geekbench 6 (Multi) | ۸,۴۲۰ | اول جهان |
+| Antutu 10 | ۱,۸۵۰,۰۰۰ | اول جهان |
+| 3DMark Wild Life Extreme | ۵,۸۰۰ | اول جهان |
+
+## سیستم دوربین
+
+### دوربین اصلی (Fusion Camera)
+
+| مشخصات | جزئیات |
+|--------|--------|
+| سنسور | ۴۸ مگاپیکسل، ۱/۱.۲۸ اینچ |
+| دیافراگم | f/1.68 |
+| اندازه پیکسل | ۲.۴۴ میکرون (ترکیب ۴ به ۱) |
+| لرزشگیر | اپتیکال نسل سوم با جابجایی سنسور |
+| لنز | ۷ المانه با پوشش جدید ضد انعکاس |
+
+### دوربین تله‌فوتو (Telephoto)
+
+| مشخصات | جزئیات |
+|--------|--------|
+| سنسور | ۱۲ مگاپیکسل |
+| دیافراگم | f/2.6 |
+| زوم اپتیکال | ۵ برابر (معادل ۱۲۰ میلی‌متر) |
+| زوم دیجیتال | تا ۲۵ برابر |
+| لرزشگیر | اپتیکال سه‌محوره |
+
+### دوربین فوق عریض (Ultrawide)
+
+| مشخصات | جزئیات |
+|--------|--------|
+| سنسور | ۴۸ مگاپیکسل (افزایش از ۱۲ مگاپیکسل) |
+| دیافراگم | f/2.2 |
+| میدان دید | ۱۲۰ درجه |
+| قابلیت ماکرو | فوکوس از فاصله ۲ سانتی‌متری |
+
+### قابلیت‌های نرم‌افزاری
+
+**حالت سینمایی (Cinematic Mode)**: ضبط ویدئو با عمق میدان متغیر و قابلیت تغییر فوکوس پس از ضبط در 4K.
+
+**حالت اکشن (Action Mode)**: لرزشگیر فوق‌العاده قوی برای فیلمبرداری در حرکت‌های سریع.
+
+**Smart HDR 5**: بهبود چشمگیر در دینامیک رنج و رنگ‌ها.
+
+## نرم‌افزار و Apple Intelligence
+
+### iOS 19 و قابلیت‌های Apple Intelligence
+
+**۱. Siri پیشرفته**: درک طبیعی مکالمه، انجام عملیات درون برنامه‌ها، دانش زمینه‌ای از اطلاعات شخصی.
+
+**۲. ابزارهای نوشتاری (Writing Tools)**: بازنویسی متن با لحن‌های مختلف، تصحیح گرامر، خلاصه‌سازی متون.
+
+**۳. Image Playground**: تولید تصاویر با هوش مصنوعی از روی توضیحات متنی.
+
+**۴. Genmoji**: ساخت ایموجی سفارشی با هوش مصنوعی.
+
+**۵. اولویت‌بندی هوشمند**: مرتب‌سازی خودکار نوتیفیکیشن‌ها.
+
+## باتری و شارژ
+
+| مشخصات | مقدار |
+|--------|-------|
+| ظرفیت باتری | ۴,۷۶۰ میلی‌آمپر ساعت |
+| پخش ویدئو | تا ۳۳ ساعت |
+| پخش صدا | تا ۹۵ ساعت |
+| شارژ سیمی | ۳۵ وات (۵۰٪ در ۲۰ دقیقه) |
+| شارژ MagSafe | ۲۵ وات |
+| شارژ بی‌سیم معکوس | ۴.۵ وات |
+
+## جمع‌بندی و نتیجه‌گیری
+
+### نقاط قوت
+
+✅ قدرتمندترین تراشه موبایل جهان  
+✅ دوربین‌های فوق‌العاده با کیفیت عالی  
+✅ نمایشگر خیره‌کننده با روشنایی ۳۰۰۰ نیت  
+✅ iOS 19 و قابلیت‌های Apple Intelligence  
+✅ عمر باتری عالی  
+✅ طراحی لوکس و مقاوم تیتانیومی  
+
+### نقاط ضعف
+
+❌ قیمت بسیار بالا (شروع از ۱,۱۹۹ دلار)  
+❌ سرعت شارژ نسبت به رقبا پایین‌تر است  
+❌ وزن نسبتاً بالا (۲۲۱ گرم)  
+
+### نتیجه نهایی
+
+آیفون ۱۷ پرو مکس بدون شک بهترین گوشی هوشمند سال ۲۰۲۵ است. اگر بودجه کافی دارید و به دنبال بهترین عملکرد، دوربین و تجربه کاربری هستید، این دستگاه بهترین انتخاب ممکن است.
+
+**امتیاز نهایی: ۹.۲ از ۱۰**
+
+---
+
+*آیا شما قصد خرید آیفون ۱۷ پرو مکس را دارید؟ نظرات خود را با ما در میان بگذارید.*`,
+
+    en: `# iPhone 17 Pro Max: A Revolution in Power and User Experience
+
+## Introduction
+
+Apple unveiled the iPhone 17 Pro Max at the Wonderlust 2025 fall event. A device with the revolutionary A18 Pro chip, advanced cameras, and improved design that sets new standards in the smartphone industry.
+
+## Design and Build Quality
+
+### Materials
+
+The iPhone 17 Pro Max uses grade 5 titanium frame, 40% lighter than stainless steel and twice as strong. The device weighs 221 grams, 8 grams lighter than its predecessor.
+
+### Color Options
+
+- **Desert Titanium** (hero color with golden-bronze appearance)
+- **Natural Titanium** (classic silver-gray)
+- **White Titanium** (elegant matte white)
+- **Black Titanium** (deep black with matte finish)
+
+### Durability
+
+IP68 certified: dust and water resistant up to 6 meters for 30 minutes. Ceramic Shield 2nd generation with 4x better drop protection.
+
+## Display
+
+### Specifications
+
+- **Size**: 6.9 inches
+- **Type**: Super Retina XDR OLED
+- **Resolution**: 1492 × 3224 pixels
+- **Refresh rate**: 1-120Hz ProMotion adaptive
+- **Typical brightness**: 1200 nits
+- **HDR brightness**: 2500 nits (3000 nits peak)
+- **Contrast ratio**: 2,000,000:1
+
+## A18 Pro Chip
+
+| Component | Specs | Improvement |
+|-----------|-------|-------------|
+| CPU | 6-core | 20% faster |
+| GPU | 6-core with ray tracing | 30% faster |
+| Neural Engine | 16-core | 25% faster |
+| RAM | 8GB LPDDR5X | - |
+
+### Benchmarks
+
+| Benchmark | Score | Rank |
+|-----------|-------|------|
+| Geekbench 6 (Single) | 3,250 | #1 |
+| Geekbench 6 (Multi) | 8,420 | #1 |
+| Antutu 10 | 1,850,000 | #1 |
+
+## Camera System
+
+### Main Camera
+- **48MP sensor**, 1/1.28-inch
+- **f/1.68 aperture**
+- **3rd-gen optical stabilization**
+
+### Telephoto Camera
+- **12MP sensor**
+- **5x optical zoom** (120mm equivalent)
+- **25x digital zoom**
+
+### Ultra Wide Camera
+- **48MP sensor** (up from 12MP)
+- **120° field of view**
+- **Macro capability from 2cm**
+
+## Software & Apple Intelligence
+
+**1. Advanced Siri**: Natural conversation understanding, in-app actions
+
+**2. Writing Tools**: Rewriting, proofreading, summarizing
+
+**3. Image Playground**: AI image generation
+
+**4. Genmoji**: Custom emoji creation
+
+**5. Smart prioritization**: Automatic notification sorting
+
+## Battery and Charging
+
+| Spec | Value |
+|------|-------|
+| Capacity | 4,760 mAh |
+| Video playback | Up to 33 hours |
+| Wired charging | 35W (50% in 20 min) |
+| MagSafe | 25W |
+
+## Verdict
+
+**Pros:**
+✓ World's most powerful mobile chip
+✓ Exceptional camera system
+✓ Stunning display with 3000 nits brightness
+✓ Complete Apple Intelligence features
+✓ Excellent battery life
+
+**Cons:**
+✗ Very high price ($1,199 starting)
+✗ Charging speed still behind competitors
+✗ Relatively heavy at 221g
+
+**Final Score: 9.2/10**`
   },
-  {
-    "slug": "iphone-16-pro-max",
-    "brand": "Apple",
-    "title": {
-      "fa": "آیفون ۱۶ پرو مکس: تعادل قدرت و طراحی",
-      "en": "iPhone 16 Pro Max: Balance of Power and Design"
-    },
-    "excerpt": {
-      "fa": "ترکیبی از عملکرد قدرتمند تراشه A17 Pro، طراحی مدرن تیتانیومی و دوربین پیشرفته ۴۸ مگاپیکسلی.",
-      "en": "A blend of powerful A17 Pro performance, modern titanium design, and advanced 48MP camera."
-    },
-    "content": {
-      "fa": "## آیفون ۱۶ پرو مکس: بلوغ طراحی اپل\n\nمتن کامل مقاله اینجا قرار می‌گیرد...",
-      "en": "## iPhone 16 Pro Max: Maturity of Apple Design\n\nFull article content here..."
-    },
-    "cover": "/images/iphone-16-pro-max.png",
-    "readTime": 9,
-    "likes": 278,
-    "isTrending": true,
-    "publishDate": "2025-02-05T00:00:00.000Z",
-    "tags": ["آیفون", "پرو مکس", "A17 Pro"],
-    "author": "Tech Team"
+  
+  "iphone-16-pro-max": {
+    fa: `# آیفون ۱۶ پرو مکس: تعادل قدرت و طراحی
+
+## مقدمه
+
+آیفون ۱۶ پرو مکس با تراشه A17 Pro، طراحی تیتانیومی و قابلیت‌های پیشرفته دوربین، یکی از بهترین گوشی‌های ۲۰۲۴ است. در این مقاله به بررسی کامل این دستگاه می‌پردازیم.
+
+## طراحی
+
+آیفون ۱۶ پرو مکس اولین گوشی اپل با فریم تیتانیومی است. وزن دستگاه ۲۲۹ گرم است.
+
+## نمایشگر
+
+نمایشگر ۶.۷ اینچی Super Retina XDR با ProMotion:
+- نرخ نوسازی ۱۲۰ هرتز
+- روشنایی ۲۰۰۰ نیت
+
+## تراشه A17 Pro
+
+تراشه A17 Pro با فرآیند ۳ نانومتری:
+- CPU ۶ هسته‌ای
+- GPU ۶ هسته‌ای با رهگیری پرتو
+- Neural Engine ۱۶ هسته‌ای
+
+## دوربین
+
+دوربین اصلی ۴۸ مگاپیکسل با دیافراگم f/1.78
+
+## نتیجه‌گیری
+
+آیفون ۱۶ پرو مکس یک ارتقاء عالی نسبت به نسل قبل است.`,
+    en: `# iPhone 16 Pro Max: Balance of Power and Design
+
+## Introduction
+
+The iPhone 16 Pro Max with A17 Pro chip, titanium design, and advanced camera features is one of the best phones of 2024.`
   }
-]
+};
+
+async function updateArticles() {
+  try {
+    console.log('📡 Connecting to MongoDB...');
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log('✅ Connected successfully\n');
+
+    let updatedCount = 0;
+
+    for (const [slug, content] of Object.entries(articlesContent)) {
+      const article = await Article.findOne({ slug });
+      
+      if (article) {
+        article.content = content;
+        await article.save();
+        console.log(\`✅ Updated: \${slug}\`);
+        updatedCount++;
+      } else {
+        console.log(\`⚠️ Not found: \${slug}\`);
+      }
+    }
+
+    console.log(\`\n📊 Updated: \${updatedCount} articles\`);
+    process.exit(0);
+    
+  } catch (error) {
+    console.error('❌ Error:', error.message);
+    process.exit(1);
+  }
+}
+
+updateArticles();
+EOF
