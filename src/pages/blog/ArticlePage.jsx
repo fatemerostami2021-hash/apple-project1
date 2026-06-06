@@ -1,7 +1,6 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Helmet } from "react-helmet";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import {
   HiOutlineClock,
@@ -23,18 +22,12 @@ import {
 } from "react-icons/hi";
 import ArticleContent from "../../components/article/ArticleContent";
 
-// ─────────────────────────────────────────────
-// تابع کمکی برای تعیین مسیر صحیح مقاله
-// ─────────────────────────────────────────────
 function getArticlePath(article) {
   if (article.customPath) return article.customPath;
   if (article.brand === "Apple Watch") return `/apple-products/watch/article/${article.slug}`;
   return `/blog/${article.slug}`;
 }
 
-// ─────────────────────────────────────────────
-// تابع تشخیص نوع مقاله برای نمایش برچسب
-// ─────────────────────────────────────────────
 function getArticleBadge(article, isRtl) {
   if (article.brand === "Comparison") {
     return { text: isRtl ? "مقایسه" : "Comparison", className: "bg-blue-500/20 text-blue-600 dark:text-blue-400" };
@@ -51,9 +44,33 @@ function getArticleBadge(article, isRtl) {
   return null;
 }
 
-// ─────────────────────────────────────────────
-// ShareButtons
-// ─────────────────────────────────────────────
+// تصاویر هیرو اسلایدر برای هر مقاله
+const heroMediaMap = {
+  "iphone-17-pro-max": [
+    { type: "image", src: "/assets/hero-articlepage/iphone_17pro__t1j902iw6kya_large.jpg", alt: "iPhone 17 Pro Max" },
+    { type: "image", src: "/assets/hero-articlepage/nav_iphone_17__bx67weh1ur5y_large.png", alt: "iPhone 17 Pro Max Side" }
+  ],
+  "iphone-16-pro-max": [
+    { type: "image", src: "/assets/hero-articlepage/nav_iphone_16__qsxcpuia0oam_large.png", alt: "iPhone 16 Pro Max" }
+  ],
+  "galaxy-s24-ultra-ai-revolution": [
+    { type: "image", src: "/assets/hero-articlepage/us-galaxy-s26-ultra-s948-sm-s948uzvaxaa-550993899.avif", alt: "Galaxy S26 Ultra" },
+    { type: "image", src: "/assets/hero-articlepage/us-galaxy-s25-s938-536276-sm-s938uzbfxaa-548617513.avif", alt: "Galaxy S25" }
+  ],
+  "z-flip-6-style-durability-review": [
+    { type: "image", src: "/assets/hero-articlepage/us-galaxy-z-fold7-f966-sm-f966udbaxaa-547827740.avif", alt: "Galaxy Z Fold 7" }
+  ],
+  "tab-s10-ultra-vs-ipad-pro-m4": [
+    { type: "image", src: "/assets/hero-articlepage/us-galaxy-book6-pro-16-inch-np960xjge-np960xjg-ka1us-551616681.avif", alt: "Galaxy Book6 Pro" }
+  ],
+  "iphone-15-pro-max": [
+    { type: "image", src: "/assets/hero-articlepage/nav_iphone_16__qsxcpuia0oam_large.png", alt: "iPhone 15 Pro Max" }
+  ],
+  "iphone-14-pro-max": [
+    { type: "image", src: "/assets/hero-articlepage/nav_iphone_16__qsxcpuia0oam_large.png", alt: "iPhone 14 Pro Max" }
+  ]
+};
+
 function ShareButtons({ url, title, isRtl }) {
   const [copied, setCopied] = useState(false);
   const copy = useCallback(() => {
@@ -72,9 +89,6 @@ function ShareButtons({ url, title, isRtl }) {
   );
 }
 
-// ─────────────────────────────────────────────
-// ReadingProgressBar
-// ─────────────────────────────────────────────
 function ReadingProgressBar() {
   const [progress, setProgress] = useState(0);
   useEffect(() => {
@@ -96,13 +110,8 @@ function ReadingProgressBar() {
   return <div className="fixed top-0 left-0 right-0 z-50 h-[3px] bg-gray-200 dark:bg-white/10"><div className="h-full bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 transition-all duration-100" style={{ width: `${progress}%` }} /></div>;
 }
 
-// ─────────────────────────────────────────────
-// FloatingTableOfContents
-// ─────────────────────────────────────────────
 function FloatingTableOfContents({ content, isRtl }) {
-  const [active, setActive] = useState("");
   const [isVisible, setIsVisible] = useState(false);
-  
   const headings = useMemo(() => {
     if (!content) return [];
     const regex = /<h2>(.*?)<\/h2>/g;
@@ -115,11 +124,10 @@ function FloatingTableOfContents({ content, isRtl }) {
   }, [content]);
 
   useEffect(() => {
-    if (!headings.length) return;
     const handleScroll = () => setIsVisible(window.scrollY > 600);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [headings.length]);
+  }, []);
 
   if (headings.length < 2 || !isVisible) return null;
 
@@ -137,9 +145,6 @@ function FloatingTableOfContents({ content, isRtl }) {
   );
 }
 
-// ─────────────────────────────────────────────
-// HeroSlider
-// ─────────────────────────────────────────────
 function HeroSlider({ media, brand, isRtl }) {
   const [index, setIndex] = useState(0);
   const [muted, setMuted] = useState(true);
@@ -184,9 +189,6 @@ function HeroSlider({ media, brand, isRtl }) {
   );
 }
 
-// ─────────────────────────────────────────────
-// VideoSection
-// ─────────────────────────────────────────────
 function VideoSection({ isRtl, articleVideos = [] }) {
   const defaultVideos = [
     { id: "yojtBfY8_lU", title: "iPhone 17 Pro Max Review", channel: "TechZone", duration: "12:34" },
@@ -231,9 +233,6 @@ function VideoSection({ isRtl, articleVideos = [] }) {
   );
 }
 
-// ─────────────────────────────────────────────
-// CommentsSection
-// ─────────────────────────────────────────────
 function CommentsSection({ isRtl, articleSlug }) {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
@@ -271,9 +270,6 @@ function CommentsSection({ isRtl, articleSlug }) {
   );
 }
 
-// ─────────────────────────────────────────────
-// Sidebar
-// ─────────────────────────────────────────────
 function Sidebar({ article, relatedArticles, views, commentsCount, isRtl, lang }) {
   const [likeCount, setLikeCount] = useState(article?.likes || 0);
   const [liked, setLiked] = useState(false);
@@ -313,9 +309,6 @@ function Sidebar({ article, relatedArticles, views, commentsCount, isRtl, lang }
   );
 }
 
-// ─────────────────────────────────────────────
-// ArticlePage اصلی - با API
-// ─────────────────────────────────────────────
 export default function ArticlePage() {
   const { slug } = useParams();
   const { i18n } = useTranslation();
@@ -333,7 +326,6 @@ export default function ArticlePage() {
   const { scrollY } = useScroll();
   const heroOpacity = useTransform(scrollY, [0, 150], [1, 0]);
 
-  // دریافت مقاله از API
   useEffect(() => {
     const fetchArticle = async () => {
       setLoading(true);
@@ -379,12 +371,13 @@ export default function ArticlePage() {
   if (!article) return <div className="min-h-screen flex items-center justify-center"><div className="text-center"><h1 className="text-4xl font-bold mb-4">{isRtl ? "مقاله یافت نشد" : "Article Not Found"}</h1><Link to="/blog" className="text-yellow-500">{isRtl ? "بازگشت به بلاگ" : "Back to Blog"}</Link></div></div>;
 
   const pageUrl = `https://yourdomain.com/blog/${slug}`;
-  const mediaItems = article.media?.length ? article.media.slice(0, 3) : [{ type: "image", src: article.cover, alt: article.title?.[lang] }];
+  
+  // استفاده از تصاویر هیرو از Map یا fallback به cover
+  const mediaItems = heroMediaMap[slug] || [{ type: "image", src: article.cover, alt: article.title?.[lang] }];
 
   return (
     <>
       <ReadingProgressBar />
-      <Helmet><title>{article.title?.[lang]} | Tech Magazine</title></Helmet>
       <FloatingTableOfContents content={article.content?.[lang]} isRtl={isRtl} />
 
       <div className="relative w-full h-[70vh] min-h-[500px] overflow-hidden">
@@ -439,7 +432,12 @@ export default function ArticlePage() {
         </div>
       </div>
 
-      <style jsx global>{`.custom-scrollbar::-webkit-scrollbar { width: 4px; }.custom-scrollbar::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); border-radius: 10px; }.custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(234,179,8,0.5); border-radius: 10px; }`}</style>
+      <style>{`
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(234,179,8,0.5); border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(234,179,8,0.8); }
+      `}</style>
     </>
   );
 }
