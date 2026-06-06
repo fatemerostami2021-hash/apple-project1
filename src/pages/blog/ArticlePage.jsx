@@ -125,7 +125,7 @@ function LoadingSkeleton() {
     <div className="min-h-screen flex items-center justify-center">
       <div className="animate-pulse text-center">
         <div className="w-16 h-16 border-2 border-amber-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-        <p className="text-gray-500">Loading...</p>
+        <p className="text-gray-500">در حال بارگذاری...</p>
       </div>
     </div>
   );
@@ -146,7 +146,7 @@ function ShareButtons({ url, title, isRtl }) {
       <span className="text-xs text-gray-500">{isRtl ? "اشتراک‌گذاری:" : "Share:"}</span>
       <a href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`} target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-amber-500 transition">𝕏</a>
       <a href={`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`} target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-amber-500 transition">TG</a>
-      <button onClick={copy} className="text-gray-600 hover:text-amber-500 transition text-sm">{copied ? "✓" : "Copy"}</button>
+      <button onClick={copy} className="text-gray-600 hover:text-amber-500 transition text-sm">{copied ? "✓" : "کپی لینک"}</button>
     </div>
   );
 }
@@ -231,7 +231,7 @@ function CommentsSection({ isRtl, articleSlug }) {
 
   const handleAdd = () => {
     if (!newComment.trim()) return;
-    const newObj = { id: Date.now(), author: isRtl ? "شما" : "You", date: "Just now", text: newComment, likes: 0 };
+    const newObj = { id: Date.now(), author: isRtl ? "شما" : "You", date: "همین الان", text: newComment, likes: 0 };
     setComments([newObj, ...comments]);
     localStorage.setItem(`comments_${articleSlug}`, JSON.stringify([newObj, ...comments]));
     setNewComment("");
@@ -271,29 +271,29 @@ function Sidebar({ article, views, isRtl }) {
 
   return (
     <div className="lg:sticky lg:top-24 space-y-6">
-      <div className="text-center p-5 rounded-xl bg-gray-50 dark:bg-gray-900/50">
-        <div className="w-14 h-14 mx-auto rounded-full bg-amber-500 flex items-center justify-center text-white text-xl font-bold">
+      <div className="text-center p-5 rounded-xl bg-gradient-to-br from-gray-900/80 to-gray-800/80 backdrop-blur-sm border border-amber-500/30">
+        <div className="w-14 h-14 mx-auto rounded-full bg-gradient-to-r from-amber-500 to-amber-600 flex items-center justify-center text-white text-xl font-bold shadow-lg shadow-amber-500/30">
           {(article?.author?.[0] || "T")}
         </div>
-        <h4 className="mt-2 font-bold text-sm">{article?.author || "Tech Team"}</h4>
+        <h4 className="mt-2 font-bold text-sm text-white">{article?.author || "Tech Team"}</h4>
       </div>
       
-      <div className="flex justify-around p-4 rounded-xl bg-gray-50 dark:bg-gray-900/50">
+      <div className="flex justify-around p-4 rounded-xl bg-gradient-to-br from-gray-900/50 to-gray-800/50 backdrop-blur-sm border border-amber-500/20">
         <div className="text-center">
           <HiOutlineEye className="w-5 h-5 mx-auto text-amber-500" />
-          <p className="font-bold mt-1">{views || 0}</p>
-          <p className="text-[10px] text-gray-500">{isRtl ? "بازدید" : "Views"}</p>
+          <p className="font-bold mt-1 text-white">{views || 0}</p>
+          <p className="text-[10px] text-gray-400">{isRtl ? "بازدید" : "Views"}</p>
         </div>
         <button onClick={() => setLiked(!liked)} className="text-center">
           {liked ? <HiHeart className="w-5 h-5 mx-auto text-amber-500 fill-amber-500" /> : <HiOutlineHeart className="w-5 h-5 mx-auto text-amber-500" />}
-          <p className="font-bold mt-1">{liked ? likeCount + 1 : likeCount}</p>
-          <p className="text-[10px] text-gray-500">{isRtl ? "لایک" : "Likes"}</p>
+          <p className="font-bold mt-1 text-white">{liked ? likeCount + 1 : likeCount}</p>
+          <p className="text-[10px] text-gray-400">{isRtl ? "لایک" : "Likes"}</p>
         </button>
       </div>
 
       <div className="flex flex-wrap gap-2">
         {article?.tags?.slice(0, 8).map(tag => (
-          <span key={tag} className="text-[10px] text-gray-500 border border-gray-300 dark:border-gray-700 px-2 py-0.5 rounded-full">#{tag}</span>
+          <span key={tag} className="text-[10px] text-gray-400 border border-gray-600 px-2 py-0.5 rounded-full hover:border-amber-500 hover:text-amber-400 transition">#{tag}</span>
         ))}
       </div>
     </div>
@@ -306,15 +306,146 @@ function ImageGallery({ images }) {
   
   return (
     <div className="mt-12">
-      <h3 className="text-lg font-bold mb-4">گالری تصاویر</h3>
+      <h3 className="text-lg font-bold mb-4 text-amber-400">گالری تصاویر</h3>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
         {images.slice(0, 8).map((img, idx) => (
-          <img key={idx} src={img} alt={`gallery ${idx}`} className="w-full h-32 object-cover rounded-lg hover:opacity-80 transition" />
+          <img key={idx} src={img} alt={`gallery ${idx}`} className="w-full h-32 object-cover rounded-lg hover:opacity-80 transition hover:scale-105 duration-300 border border-amber-500/30" />
         ))}
       </div>
     </div>
   );
 }
+
+// ================== استایل گلاسی و طلایی ==================
+const glassmorphismStyle = `
+  .article-content {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #f1f5f9;
+    background: rgba(15, 25, 35, 0.5);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 28px;
+    padding: 2rem;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(245, 158, 11, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  .article-content h1 {
+    font-size: 2.8rem;
+    font-weight: 900;
+    font-stretch: expanded;
+    margin: 0 0 1.5rem 0;
+    background: linear-gradient(135deg, #ffffff 0%, #f59e0b 40%, #ffedd5 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
+    letter-spacing: -0.02em;
+  }
+  
+  .article-content h2 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin: 2rem 0 1rem;
+    color: #f59e0b;
+    border-left: 5px solid #f59e0b;
+    padding-left: 1rem;
+    letter-spacing: -0.01em;
+  }
+  
+  .article-content h3 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin: 1.5rem 0 0.75rem;
+    color: #fbbf24;
+  }
+  
+  .article-content p {
+    margin-bottom: 1.2rem;
+    color: #e2e8f0;
+    font-weight: 400;
+    text-align: justify;
+  }
+  
+  .article-content strong, .article-content b {
+    color: #f59e0b;
+    font-weight: 800;
+    text-shadow: 0 0 3px rgba(245, 158, 11, 0.4);
+  }
+  
+  .article-content ul, .article-content ol {
+    background: rgba(245, 158, 11, 0.05);
+    border-radius: 20px;
+    padding: 1rem 1.8rem;
+    margin: 1.2rem 0;
+  }
+  
+  .article-content li {
+    margin: 0.6rem 0;
+    color: #cbd5e1;
+  }
+  
+  .article-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.8rem 0;
+    background: rgba(15, 25, 35, 0.6);
+    backdrop-filter: blur(8px);
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+  }
+  
+  .article-content th {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: white;
+    font-weight: 800;
+    padding: 14px;
+    text-align: center;
+    font-size: 0.95rem;
+  }
+  
+  .article-content td {
+    border: 1px solid rgba(245, 158, 11, 0.2);
+    padding: 12px;
+    color: #e2e8f0;
+    text-align: center;
+  }
+  
+  .article-content a {
+    color: #fbbf24;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  
+  .article-content a:hover {
+    color: #f59e0b;
+    text-decoration: underline;
+  }
+  
+  .article-content blockquote {
+    border-right: 4px solid #f59e0b;
+    background: rgba(245, 158, 11, 0.1);
+    padding: 1rem 1.5rem;
+    margin: 1.5rem 0;
+    border-radius: 16px;
+    font-style: italic;
+    color: #cbd5e1;
+  }
+  
+  @media (max-width: 768px) {
+    .article-content {
+      font-size: 0.95rem;
+      padding: 1.2rem;
+      border-radius: 20px;
+    }
+    .article-content h1 { font-size: 1.8rem; }
+    .article-content h2 { font-size: 1.4rem; }
+    .article-content h3 { font-size: 1.2rem; }
+  }
+`;
 
 // ================== کامپوننت اصلی ==================
 export default function ArticlePage() {
@@ -360,7 +491,7 @@ export default function ArticlePage() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold mb-4">{isRtl ? "مقاله یافت نشد" : "Article Not Found"}</h1>
-          <Link to="/blog" className="text-amber-500">{isRtl ? "بازگشت" : "Back"}</Link>
+          <Link to="/blog" className="text-amber-500 hover:text-amber-400 transition">{isRtl ? "بازگشت" : "Back"}</Link>
         </div>
       </div>
     );
@@ -369,24 +500,23 @@ export default function ArticlePage() {
   const heroImages = getHeroImages(slug);
 
   return (
-    <div className="min-h-screen bg-transparent" dir={isRtl ? "rtl" : "ltr"}>
+    <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950" dir={isRtl ? "rtl" : "ltr"}>
       <ReadingProgressBar />
 
-      {/* Hero Section - Responsive */}
       <div className="relative w-full h-[60vh] md:h-[70vh] lg:h-[80vh] overflow-hidden">
         <HeroSlider images={heroImages} />
         
         <motion.div style={{ opacity: heroOpacity }} className="absolute top-4 left-0 right-0 px-4 z-30">
-          <Link to="/blog" className="inline-flex items-center gap-2 text-sm text-white/80 hover:text-white transition">
+          <Link to="/blog" className="inline-flex items-center gap-2 text-sm text-white/80 hover:text-amber-400 transition">
             {isRtl ? <HiOutlineArrowRight size={14} /> : <HiOutlineArrowLeft size={14} />}
             <span>{isRtl ? "بازگشت" : "Back"}</span>
           </Link>
         </motion.div>
 
-        <div className="absolute bottom-0 left-0 right-0 z-20 pb-8 md:pb-12 lg:pb-16 px-4 bg-gradient-to-t from-black via-transparent to-transparent">
+        <div className="absolute bottom-0 left-0 right-0 z-20 pb-8 md:pb-12 lg:pb-16 px-4 bg-gradient-to-t from-gray-950 via-transparent to-transparent">
           <div className="max-w-4xl mx-auto text-center">
-            <span className="inline-block text-xs font-medium text-amber-400 mb-2">{article.brand}</span>
-            <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold text-white leading-tight drop-shadow-lg">
+            <span className="inline-block text-xs font-bold uppercase tracking-wider text-amber-400 mb-2">{article.brand}</span>
+            <h1 className="text-2xl md:text-4xl lg:text-5xl font-black text-white leading-tight drop-shadow-lg">
               {article.title?.[lang]}
             </h1>
             <div className="flex flex-wrap justify-center gap-3 mt-3 text-xs md:text-sm text-white/60">
@@ -398,45 +528,33 @@ export default function ArticlePage() {
         </div>
       </div>
 
-      {/* Content Area - Responsive Grid */}
       <div className="max-w-6xl mx-auto px-4 py-8 md:py-12">
         <div className="flex flex-col lg:flex-row gap-8">
-          
-          {/* Main Content */}
           <div className="flex-1 min-w-0">
-            {/* Tags & Share */}
-            <div className="flex flex-wrap items-center justify-between gap-4 mb-6 pb-4 border-b border-gray-200 dark:border-gray-800">
+            <div className="flex flex-wrap items-center justify-between gap-4 mb-6 pb-4 border-b border-gray-800">
               <div className="flex flex-wrap gap-2">
                 {article.tags?.slice(0, 5).map(tag => (
-                  <span key={tag} className="text-[10px] font-medium text-gray-500 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-full">#{tag}</span>
+                  <span key={tag} className="text-[10px] font-medium text-gray-400 bg-gray-800/50 px-2 py-1 rounded-full hover:bg-amber-500/20 hover:text-amber-400 transition">#{tag}</span>
                 ))}
               </div>
               <ShareButtons url={window.location.href} title={article.title?.[lang]} isRtl={isRtl} />
             </div>
 
-            {/* Article Content */}
-            <div className="prose prose-sm md:prose-base lg:prose-lg dark:prose-invert max-w-none">
+            <div className="prose prose-sm md:prose-base lg:prose-lg max-w-none">
               <ArticleContent content={article.content?.[lang]} isRtl={isRtl} />
             </div>
 
-            {/* Image Gallery */}
             <ImageGallery images={heroImages} />
-
-            {/* Videos */}
             <VideoSection />
-
-            {/* Comments */}
             <CommentsSection isRtl={isRtl} articleSlug={slug} />
 
-            {/* Footer Link */}
-            <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-800">
+            <div className="mt-8 pt-6 border-t border-gray-800">
               <Link to="/blog" className="text-sm text-gray-500 hover:text-amber-500 transition">
                 {isRtl ? "← بازگشت به بلاگ" : "← Back to Blog"}
               </Link>
             </div>
           </div>
 
-          {/* Sidebar */}
           <div className="lg:w-80 flex-shrink-0">
             <Sidebar article={article} views={views} isRtl={isRtl} />
           </div>
@@ -451,7 +569,8 @@ export default function ArticlePage() {
         @media (max-width: 640px) {
           .swiper-button-next, .swiper-button-prev { display: none !important; }
         }
+        ${glassmorphismStyle}
       `}</style>
     </div>
   );
-} 
+}

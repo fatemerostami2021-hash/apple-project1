@@ -968,3 +968,19 @@ html {
   color: transparent;
   animation: shimmer 3s linear infinite;
 }
+
+/* Glassmorphism Background for entire page */
+.glass-bg {
+  background: rgba(10, 20, 30, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Gold gradient text */
+.gold-text {
+  background: linear-gradient(135deg, #f59e0b, #fbbf24, #d97706);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  font-weight: 900;
+}
