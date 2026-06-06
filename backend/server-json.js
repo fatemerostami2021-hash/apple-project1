@@ -7,7 +7,8 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors({ origin: 'http://localhost:5173' }));
+// CORS - همه پورت‌ها را قبول کن
+app.use(cors());
 app.use(express.json());
 
 // خواندن مقالات از فایل JSON
@@ -24,7 +25,6 @@ try {
   articles = [];
 }
 
-// API Routes
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', articlesCount: articles.length, mode: 'JSON-only' });
 });
@@ -42,11 +42,7 @@ app.get('/api/articles/:slug', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`
-╔════════════════════════════════════════════════╗
-║  🚀 Server running (JSON mode - No MongoDB)   ║
-║  📡 http://localhost:${PORT}                    ║
-║  📚 ${articles.length} articles loaded           ║
-╚════════════════════════════════════════════════╝
-  `);
+  console.log(`\n✅ Server running on http://localhost:${PORT}`);
+  console.log(`📚 Loaded ${articles.length} articles`);
+  console.log(`🔓 CORS enabled for all origins\n`);
 });
