@@ -1,8 +1,16 @@
-const fs = require('fs');
-const { articlesData } = require('../src/data/articlesData.js');
+const mongoose = require('mongoose');
+require('dotenv').config();
+const Article = require('./models/Article');
 
-console.log('Exporting articles...');
-console.log(`Found ${articlesData.length} articles`);
-
-fs.writeFileSync('./articles-backup.json', JSON.stringify(articlesData, null, 2));
-console.log('✅ articles-backup.json created!');
+mongoose.connect(process.env.MONGO_URI)
+  .then(async () => {
+    console.error("✅ Connected to MongoDB");
+    const articles = await Article.find({});
+    console.error(`📄 Found ${articles.length} articles`);
+    console.log(JSON.stringify(articles, null, 2));
+    process.exit();
+  })
+  .catch(err => {
+    console.error("❌ Error:", err);
+    process.exit(1);
+  });
