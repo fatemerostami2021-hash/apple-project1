@@ -2,26 +2,27 @@ const mongoose = require('mongoose');
 
 const articleSchema = new mongoose.Schema({
   slug: { type: String, required: true, unique: true },
-  brand: { type: String, required: true },
-  title: {
-    fa: { type: String, required: true },
-    en: { type: String, required: true }
-  },
-  excerpt: {
-    fa: { type: String, required: true },
-    en: { type: String, required: true }
-  },
-  content: {
-    fa: { type: String, required: true },
-    en: { type: String, required: true }
-  },
-  cover: String,
+  brand: String,
+  publishDate: String,
   readTime: Number,
   likes: { type: Number, default: 0 },
-  isTrending: { type: Boolean, default: false },
-  publishDate: Date,
+  views: { type: Number, default: 0 },
+  author: String,
   tags: [String],
-  author: String
+  gallery: [String],
+  relatedVideos: [{
+    id: String,
+    title: String,
+    duration: String
+  }],
+  title: {
+    fa: String,
+    en: String
+  },
+  content: {
+    fa: String,
+    en: String
+  }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Article', articleSchema);

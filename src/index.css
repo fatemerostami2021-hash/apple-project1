@@ -984,3 +984,69 @@ html {
   color: transparent;
   font-weight: 900;
 }
+/* دکمه‌های ناوبری سفارشی */
+.swiper-button-prev-custom,
+.swiper-button-next-custom {
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.swiper-button-prev-custom:hover,
+.swiper-button-next-custom:hover {
+  background: linear-gradient(135deg, #f59e0b, #d97706) !important;
+  box-shadow: 0 0 25px rgba(245, 158, 11, 0.6);
+}
+
+/* بولت‌های صفحه‌گذاری سفارشی */
+.custom-bullet {
+  background: rgba(255, 255, 255, 0.5) !important;
+  opacity: 0.7;
+  transition: all 0.3s ease;
+  width: 8px;
+  height: 8px;
+  margin: 0 4px;
+  border-radius: 50%;
+}
+
+.custom-bullet:hover {
+  background: #f59e0b !important;
+  transform: scale(1.2);
+}
+
+.swiper-pagination-bullet-active.custom-bullet {
+  background: #f59e0b !important;
+  width: 24px !important;
+  border-radius: 12px !important;
+  opacity: 1;
+}
+
+/* افکت روی عکس‌ها هنگام تغییر اسلاید */
+.swiper-slide-active img {
+  transform: scale(1);
+  transition: transform 6s ease-out;
+}
+
+.swiper-slide-prev img,
+.swiper-slide-next img {
+  transform: scale(1.08);
+  transition: transform 6s ease-out;
+}
+
+/* اوورلی طلایی روی عکس هنگام هاور */
+.swiper-slide:hover::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, transparent 30%, rgba(245, 158, 11, 0.1) 100%);
+  pointer-events: none;
+}
+
+/* انیمیشن محو شدن دکمه‌ها در موبایل */
+@media (max-width: 768px) {
+  .swiper-button-prev-custom,
+  .swiper-button-next-custom {
+    opacity: 0.6;
+    transform: scale(0.8);
+  }
+}
