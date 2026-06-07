@@ -89,6 +89,7 @@ export default function App() {
 
           {/* ✅ مسیرهای اصلی برای همه مقالات (آیفون، سامسونگ، مقایسه) */}
           <Route path="/blog/:slug" element={<ArticlePage />} />
+          <Route path="/article/:slug" element={<ArticlePage />} />
           <Route path="/iphone/:slug" element={<ArticlePage />} />
           
           {/* ✅ مسیر مقایسه - صفحه تکامل آیفون */}
