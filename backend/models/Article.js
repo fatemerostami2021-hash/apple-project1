@@ -9,12 +9,26 @@ const articleSchema = new mongoose.Schema({
   views: { type: Number, default: 0 },
   author: String,
   tags: [String],
-  gallery: [String],
+  
+  // ========== فیلدهای جدید ==========
+  gallery: [{
+    src: String,
+    alt: String,
+    caption: String
+  }],
+  sections: [{
+    id: String,
+    title: {
+      fa: String,
+      en: String
+    }
+  }],
   relatedVideos: [{
     id: String,
     title: String,
     duration: String
   }],
+  
   title: {
     fa: String,
     en: String
