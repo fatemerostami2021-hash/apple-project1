@@ -25,6 +25,7 @@ try {
   articles = [];
 }
 
+// ================== API Routes ==================
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', articlesCount: articles.length, mode: 'JSON-only' });
 });
@@ -41,8 +42,14 @@ app.get('/api/articles/:slug', (req, res) => {
   res.json(article);
 });
 
+// ================== کامنت‌ها ==================
+const commentRoutes = require("./routes/comments");
+app.use("/api/comments", commentRoutes);
+
+// ================== Start Server ==================
 app.listen(PORT, () => {
   console.log(`\n✅ Server running on http://localhost:${PORT}`);
   console.log(`📚 Loaded ${articles.length} articles`);
-  console.log(`🔓 CORS enabled for all origins\n`);
+  console.log(`🔓 CORS enabled for all origins`);
+  console.log(`💬 Comments API enabled at /api/comments\n`);
 });

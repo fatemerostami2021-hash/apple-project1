@@ -182,3 +182,24 @@
     border-right-color: var(--border);
   }
 }
+/* اضافه کردن فونت‌های حرفه‌ای */
+@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Roboto+Mono:wght@400;500;600&display=swap');
+@import url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css');
+
+/* فونت پیش‌فرض برای کل سایت */
+* {
+  font-family: 'Vazirmatn', 'Inter', system-ui, sans-serif;
+}
+
+/* فونت برای کد و محتوای انگلیسی */
+code, pre, .font-mono {
+  font-family: 'Roboto Mono', monospace;
+}
+
+/* بهبود خوانایی */
+body {
+  font-weight: 400;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
