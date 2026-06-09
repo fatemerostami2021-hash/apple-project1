@@ -4,25 +4,23 @@ import { useTranslation } from "react-i18next";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { HiOutlineClock, HiOutlineCalendar, HiOutlineEye, HiOutlineArrowLeft, HiOutlineArrowRight } from "react-icons/hi";
 
-import { getHeroImages, getGalleryImages } from "../../constants/articleData";
-import { useArticle, useViews, useActiveHeading } from "../../hooks/useArticlePage";
-import { ReadingProgressBar, ArticleSkeleton, ErrorState, ShareButtons } from "../../components/ui/ArticleUI";
-import { HeroSlider, AnimatedWave } from "../../components/article/HeroComponents";
-import { Sidebar } from "../../components/article/ArticleSections";
-import ArticleContent from "../../components/article/ArticleContent";
+import { getHeroImages, getGalleryImages } from "../constants/articleData";
+import { useArticle, useViews, useActiveHeading } from "../hooks/useArticlePage";
+import { ReadingProgressBar, ArticleSkeleton, ErrorState, ShareButtons } from "../components/ui/ArticleUI";
+import { HeroSlider, AnimatedWave } from "../components/article/HeroComponents";
+import { Sidebar } from "../components/article/ArticleSections";
+import ArticleContent from "../components/article/ArticleContent";
 
-/* ── Lazy-loaded heavy sections ─────────────────────────── */
 const CinematicGallery = lazy(() =>
-  import("../../components/article/ArticleSections").then((m) => ({ default: m.CinematicGallery }))
+  import("../components/article/ArticleSections").then((m) => ({ default: m.CinematicGallery }))
 );
 const VideoSection = lazy(() =>
-  import("../../components/article/ArticleSections").then((m) => ({ default: m.VideoSection }))
+  import("../components/article/ArticleSections").then((m) => ({ default: m.VideoSection }))
 );
 const CommentsSection = lazy(() =>
-  import("../../components/article/ArticleSections").then((m) => ({ default: m.CommentsSection }))
+  import("../components/article/ArticleSections").then((m) => ({ default: m.CommentsSection }))
 );
 
-/* ── Styles ─────────────────────────────────────────────── */
 const STYLES = `
 @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,700;14..32,800&display=swap');
 
@@ -51,7 +49,7 @@ const STYLES = `
 }
 .ap-article-content { background: rgba(15,20,30,0.35); backdrop-filter: blur(12px); border-radius: 28px; padding: 2rem; border: 1px solid rgba(245,158,11,0.25); box-shadow: 0 20px 40px -15px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05); }
 .ap-article-content h1 { font-size: 2.2rem; font-weight: 800; background: linear-gradient(135deg,#fff 0%,#f59e0b 50%,#ffedd5 100%); background-clip: text; -webkit-background-clip: text; color: transparent; margin-bottom: 1.5rem; }
-.ap-article-content h2 { font-size: 1.6rem; font-weight: 700; margin: 2rem 0 1rem; color: #f59e0b; border-left: 4px solid #f59e0b; padding-left: 1rem; border-radius: 0; }
+.ap-article-content h2 { font-size: 1.6rem; font-weight: 700; margin: 2rem 0 1rem; color: #f59e0b; border-left: 4px solid #f59e0b; padding-left: 1rem; }
 .ap-article-content h3 { font-size: 1.3rem; font-weight: 600; margin: 1.5rem 0 0.75rem; color: #fbbf24; }
 .ap-article-content p  { margin-bottom: 1.2rem; line-height: 1.85; color: #e2e8f0; }
 .ap-article-content strong { color: #f59e0b; font-weight: 800; }
@@ -82,7 +80,6 @@ const STYLES = `
 @media(prefers-reduced-motion:reduce) { .ap-wrap::before { animation: none; } }
 `;
 
-/* ── ArticlePage ─────────────────────────────────────────── */
 export default function ArticlePage() {
   const { slug } = useParams();
   const { i18n } = useTranslation();
@@ -108,7 +105,6 @@ export default function ArticlePage() {
       <style>{STYLES}</style>
       <ReadingProgressBar />
 
-      {/* ── Hero ── */}
       <div className="ap-hero">
         <HeroSlider images={heroImages} lang={lang} />
         <motion.div style={{ opacity: heroOpacity }} className="ap-hero-back-btn">
@@ -121,23 +117,13 @@ export default function ArticlePage() {
           <div className="ap-hero-brand">{article.brand}</div>
           <h1 className="ap-hero-title">{title}</h1>
           <div className="ap-hero-info">
-            <span>
-              <HiOutlineCalendar size={12} className="inline mr-1" aria-hidden="true" />
-              {article.publishDate?.slice(0, 10)}
-            </span>
-            <span>
-              <HiOutlineClock size={12} className="inline mr-1" aria-hidden="true" />
-              {article.readTime} دقیقه
-            </span>
-            <span>
-              <HiOutlineEye size={12} className="inline mr-1" aria-hidden="true" />
-              {views}
-            </span>
+            <span><HiOutlineCalendar size={12} className="inline mr-1" />{article.publishDate?.slice(0, 10)}</span>
+            <span><HiOutlineClock size={12} className="inline mr-1" />{article.readTime} دقیقه</span>
+            <span><HiOutlineEye size={12} className="inline mr-1" />{views}</span>
           </div>
         </div>
       </div>
 
-      {/* ── Body ── */}
       <div className="ap-body">
         <div className="ap-cols">
           <main className="flex-1 min-w-0">
@@ -155,33 +141,19 @@ export default function ArticlePage() {
             </div>
 
             <Suspense fallback={<div className="h-48 bg-gray-900/30 rounded-xl animate-pulse mt-10" />}>
-              {galleryImages.length > 0 && (
-                <CinematicGallery images={galleryImages} isRtl={isRtl} />
-              )}
+              {galleryImages.length > 0 && <CinematicGallery images={galleryImages} isRtl={isRtl} />}
               <VideoSection slug={slug} isRtl={isRtl} />
               <CommentsSection articleSlug={slug} isRtl={isRtl} />
             </Suspense>
 
             <div className="mt-10 pt-4 text-center">
-              <Link
-                to="/blog"
-                className="text-sm text-gray-500 hover:text-amber-500 transition inline-flex items-center gap-2"
-              >
-                {isRtl ? (
-                  <><HiOutlineArrowRight size={14} /><span>بازگشت به بلاگ</span></>
-                ) : (
-                  <><HiOutlineArrowLeft size={14} /><span>Back to Blog</span></>
-                )}
+              <Link to="/blog" className="text-sm text-gray-500 hover:text-amber-500 transition inline-flex items-center gap-2">
+                {isRtl ? <><HiOutlineArrowRight size={14} /><span>بازگشت به بلاگ</span></> : <><HiOutlineArrowLeft size={14} /><span>Back to Blog</span></>}
               </Link>
             </div>
           </main>
 
-          <Sidebar
-            article={article}
-            activeId={activeId}
-            views={views}
-            isRtl={isRtl}
-          />
+          <Sidebar article={article} activeId={activeId} views={views} isRtl={isRtl} />
         </div>
       </div>
 
