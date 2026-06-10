@@ -1,16 +1,24 @@
-const dotenv = require('dotenv');
-dotenv.config();
+import jwt from "jsonwebtoken";
 
-const ADMIN_TOKEN = process.env.ADMIN_TOKEN || 'fatemeh963';
-
-const authMiddleware = (req, res, next) => {
-  const token = req.headers['authorization']?.split(' ')[1];
-  
-  if (!token || token !== ADMIN_TOKEN) {
-    return res.status(401).json({ error: 'Unauthorized - Invalid token' });
+export const requireAuth = (req, res, next) => {
+  const header = req.headers.authorization;
+  if (!header?.startsWith("Bearer ")) {
+    return res.status(401).json({ error: "احراز هویت الزامی است" });
   }
-  
-  next();
+  try {
+    const payload = jwt.verify(header.slice(7), process.env.JWT_SECRET);
+    req.user = payload;
+    next();
+  } catch {
+    res.status(401).json({ error: "توکن نامعتبر" });
+  }
 };
 
-module.exports = authMiddleware;
+export const requireAdmin = (req, res, next) => {
+  requireAuth(req, res, () => {
+    if (req.user?.role !== "admin") {
+      return res.status(403).json({ error: "دسترسی ندارید" });
+    }
+    next();
+  });
+};

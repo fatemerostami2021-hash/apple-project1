@@ -1,43 +1,53 @@
-// src/App.jsx
-import { Routes, Route } from "react-router-dom";
+import { lazy, Suspense, useEffect } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { useTheme } from "./store/theme";
 import Header from "./components/layout/header/Header";
 import Footer from "./components/layout/footer/Footer";
-import ForgotPassword from "./pages/ForgotPassword";
 import FloatingSocialButtons from "./components/layout/FloatingSocialButtons";
-import "./i18n";
-import { useTheme } from "./store/theme";
-import { useTranslation } from "react-i18next";
-import { useEffect } from "react";
-
-import AdminLogin from "./pages/admin/AdminLogin";
-import AdminDashboard from "./pages/admin/AdminDashboard";
-import AdminArticleForm from "./pages/admin/AdminArticleForm";
-
-
-// Pages
-import Home from "./pages/Home";
-import Products from "./pages/Products";
-import ProductDetail from "./pages/ProductDetail";
-import IphonePage from "./pages/apple/IphonePage";
-import BlogPage from "./pages/blog/BlogPage";
-import ArticlePage from "./pages/blog/ArticlePage";
-import About from "./pages/About";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Cart from "./pages/Cart";
-
 import GalaxyBackground from "./components/GalaxyBackground";
-import ProductPage from "./pages/ProductPage";
-import WatchPage from "./pages/apple/WatchPage";
+import "./i18n";
 
-// ✅ مقالات اپل واچ
-import ArticleAppleWatchUltra4 from "./pages/products/watch/article/ArticleAppleWatchUltra4";
-import ArticleAppleWatchUltra3 from "./pages/products/watch/article/ArticleAppleWatchUltra3";
-import ArticleAppleWatchSeries12 from "./pages/products/watch/article/ArticleAppleWatchSeries12";
-import ArticleAppleWatchSE3 from "./pages/products/watch/article/ArticleAppleWatchSE3";
+// Lazy load pages
+const Home = lazy(() => import("./pages/Home"));
+const ProductPage = lazy(() => import("./pages/ProductPage"));
+const CartPage = lazy(() => import("./pages/CartPage"));
+const BlogPage = lazy(() => import("./pages/BlogPage"));
+const ArticlePage = lazy(() => import("./pages/blog/ArticlePage"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+const Products = lazy(() => import("./pages/Products"));
+const ProductDetail = lazy(() => import("./pages/ProductDetail"));
+const IphonePage = lazy(() => import("./pages/apple/IphonePage"));
+const WatchPage = lazy(() => import("./pages/apple/WatchPage"));
+const About = lazy(() => import("./pages/About"));
+const Login = lazy(() => import("./pages/Login"));
+const Register = lazy(() => import("./pages/Register"));
+const Cart = lazy(() => import("./pages/Cart"));
+const ForgotPassword = lazy(() => import("./pages/ForgotPassword"));
+const AdminLogin = lazy(() => import("./pages/admin/AdminLogin"));
+const AdminDashboard = lazy(() => import("./pages/admin/AdminDashboard"));
+const AdminArticleForm = lazy(() => import("./pages/admin/AdminArticleForm"));
 
-// ✅ صفحه مقایسه و تکامل آیفون (مسیر صحیح)
-import IPhoneEvolutionArticle from "./pages/articles/IPhoneEvolutionArticle";
+// Apple Watch Articles
+const ArticleAppleWatchUltra4 = lazy(() => import("./pages/products/watch/article/ArticleAppleWatchUltra4"));
+const ArticleAppleWatchUltra3 = lazy(() => import("./pages/products/watch/article/ArticleAppleWatchUltra3"));
+const ArticleAppleWatchSeries12 = lazy(() => import("./pages/products/watch/article/ArticleAppleWatchSeries12"));
+const ArticleAppleWatchSE3 = lazy(() => import("./pages/products/watch/article/ArticleAppleWatchSE3"));
+const IPhoneEvolutionArticle = lazy(() => import("./pages/articles/IPhoneEvolutionArticle"));
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  return null;
+}
+
+function PageLoader() {
+  return (
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="w-10 h-10 border-2 border-[#D4AF37] border-t-transparent rounded-full animate-spin" />
+    </div>
+  );
+}
 
 export default function App() {
   const { theme } = useTheme();
@@ -61,59 +71,60 @@ export default function App() {
         relative min-h-screen flex flex-col transition-colors duration-300
         ${theme === "dark" ? "bg-transparent text-white" : "bg-[#E8F5FF] text-black"}
       `}
-      style={{ fontFamily: "IRANSans, sans-serif" }}
     >
       <GalaxyBackground theme={theme} />
-      
       <Header />
-
+      
       <main className="flex-1 w-full">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/products/:slug" element={<ProductDetail />} />
-          <Route path="/product/:id" element={<ProductPage />} />
+        <ScrollToTop />
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
+            {/* Main Pages */}
+            <Route path="/" element={<Home />} />
+            <Route path="/product/:id" element={<ProductPage />} />
+            <Route path="/cart" element={<CartPage />} />
+            <Route path="/blog" element={<BlogPage />} />
+            <Route path="/article/:slug" element={<ArticlePage />} />
+            
+            {/* Legacy Routes */}
+            <Route path="/products" element={<Products />} />
+            <Route path="/products/:slug" element={<ProductDetail />} />
+            <Route path="/about" element={<About />} />
+            
+            {/* Apple Products */}
+            <Route path="/apple-products/iphone" element={<IphonePage />} />
+            <Route path="/apple-products/ipad" element={<div className="text-center py-20">iPad Page</div>} />
+            <Route path="/apple-products/macbook" element={<div className="text-center py-20">MacBook Page</div>} />
+            <Route path="/apple-products/watch" element={<WatchPage />} />
+            <Route path="/apple-products/airpods" element={<div className="text-center py-20">AirPods Page</div>} />
 
-          <Route path="/services" element={<div>Services Page</div>} />
-          <Route path="/articles" element={<div>Articles Page</div>} />
-          
-          <Route path="/about" element={<About />} />
+            {/* Apple Watch Articles */}
+            <Route path="/apple-products/watch/article/apple-watch-ultra-4" element={<ArticleAppleWatchUltra4 />} />
+            <Route path="/apple-products/watch/article/apple-watch-ultra-3" element={<ArticleAppleWatchUltra3 />} />
+            <Route path="/apple-products/watch/article/apple-watch-series-12" element={<ArticleAppleWatchSeries12 />} />
+            <Route path="/apple-products/watch/article/apple-watch-se-3" element={<ArticleAppleWatchSE3 />} />
 
-          {/* Admin Panel Routes */}
-<Route path="/admin/login" element={<AdminLogin />} />
-<Route path="/admin/dashboard" element={<AdminDashboard />} />
-<Route path="/admin/articles/new" element={<AdminArticleForm />} />
-<Route path="/admin/articles/edit/:slug" element={<AdminArticleForm />} />
+            {/* Article Routes */}
+            <Route path="/blog/:slug" element={<ArticlePage />} />
+            <Route path="/iphone/:slug" element={<ArticlePage />} />
+            <Route path="/iphone/compare" element={<IPhoneEvolutionArticle />} />
 
-          {/* Apple Products */}
-          <Route path="/apple-products/iphone" element={<IphonePage />} />
-          <Route path="/apple-products/ipad" element={<div>iPad Page</div>} />
-          <Route path="/apple-products/macbook" element={<div>MacBook Page</div>} />
-          <Route path="/apple-products/watch" element={<WatchPage />} />
-          <Route path="/apple-products/airpods" element={<div>AirPods Page</div>} />
+            {/* Auth Routes */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/cart-old" element={<Cart />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
 
-          {/* Apple Watch Articles */}
-          <Route path="/apple-products/watch/article/apple-watch-ultra-4" element={<ArticleAppleWatchUltra4 />} />
-          <Route path="/apple-products/watch/article/apple-watch-ultra-3" element={<ArticleAppleWatchUltra3 />} />
-          <Route path="/apple-products/watch/article/apple-watch-series-12" element={<ArticleAppleWatchSeries12 />} />
-          <Route path="/apple-products/watch/article/apple-watch-se-3" element={<ArticleAppleWatchSE3 />} />
+            {/* Admin Routes */}
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/admin/dashboard" element={<AdminDashboard />} />
+            <Route path="/admin/articles/new" element={<AdminArticleForm />} />
+            <Route path="/admin/articles/edit/:slug" element={<AdminArticleForm />} />
 
-          {/* ✅ مسیرهای اصلی برای همه مقالات (آیفون، سامسونگ، مقایسه) */}
-          <Route path="/blog/:slug" element={<ArticlePage />} />
-          <Route path="/article/:slug" element={<ArticlePage />} />
-          <Route path="/iphone/:slug" element={<ArticlePage />} />
-          
-          {/* ✅ مسیر مقایسه - صفحه تکامل آیفون */}
-          <Route path="/iphone/compare" element={<IPhoneEvolutionArticle />} />
-
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-
-          {/* Main Blog */}
-          <Route path="/blog" element={<BlogPage />} />
-        </Routes>
+            {/* 404 */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
       </main>
 
       <Footer />

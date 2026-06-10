@@ -3,12 +3,14 @@ import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { HiOutlinePencil, HiOutlineTrash, HiOutlinePlus, HiOutlineEye } from 'react-icons/hi';
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 export default function AdminDashboard() {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  const getToken = () => localStorage.getItem('adminToken');
+  const getToken = () => localStorage.getItem('admin_token') || localStorage.getItem('adminToken');
 
   useEffect(() => {
     const token = getToken();
@@ -21,16 +23,17 @@ export default function AdminDashboard() {
 
   const fetchArticles = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/admin/articles', {
+      const res = await fetch(`${API_URL}/api/admin/articles`, {
         headers: { 'Authorization': 'Bearer ' + getToken() }
       });
       if (res.status === 401) {
+        localStorage.removeItem('admin_token');
         localStorage.removeItem('adminToken');
         navigate('/admin/login');
         return;
       }
       const data = await res.json();
-      setArticles(data);
+      setArticles(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error('Error:', error);
     } finally {
@@ -42,7 +45,7 @@ export default function AdminDashboard() {
     if (!confirm('آیا از حذف این مقاله مطمئن هستید؟')) return;
     
     try {
-      const res = await fetch('http://localhost:5000/api/admin/articles/' + slug, {
+      const res = await fetch(`${API_URL}/api/admin/articles/${slug}`, {
         method: 'DELETE',
         headers: { 'Authorization': 'Bearer ' + getToken() }
       });
@@ -55,7 +58,9 @@ export default function AdminDashboard() {
   };
 
   const handleLogout = () => {
+    localStorage.removeItem('admin_token');
     localStorage.removeItem('adminToken');
+    localStorage.removeItem('admin_authenticated');
     navigate('/admin/login');
   };
 
@@ -118,14 +123,14 @@ export default function AdminDashboard() {
                 </div>
                 <div className="flex gap-2">
                   <Link
-                    to={'/article/' + article.slug}
+                    to={`/article/${article.slug}`}
                     target="_blank"
                     className="p-2 rounded-lg text-gray-400 hover:text-amber-500 transition"
                   >
                     <HiOutlineEye size={18} />
                   </Link>
                   <Link
-                    to={'/admin/articles/edit/' + article.slug}
+                    to={`/admin/articles/edit/${article.slug}`}
                     className="p-2 rounded-lg text-gray-400 hover:text-blue-500 transition"
                   >
                     <HiOutlinePencil size={18} />

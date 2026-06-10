@@ -1,0 +1,894 @@
+{
+  "articles": {
+    "count": 15,
+    "data": [
+      {
+        "_id": "6a29471aa180caed968b3475",
+        "slug": "iphone-17-pro-max",
+        "brand": "Apple",
+        "title": {
+          "fa": "آیفون ۱۷ پرو مکس - قدرتمندترین گوشی اپل",
+          "en": "iPhone 17 Pro Max - Apple's Most Powerful Phone"
+        },
+        "content": {
+          "fa": "<h1>آیفون ۱۷ پرو مکس</h1><p>قدرتمندترین آیفون تاریخ با تراشه A19 Pro، دوربین ۴۸ مگاپیکسلی و نمایشگر ۱۲۰ هرتزی.</p><h2>طراحی</h2><p>بدنه تیتانیومی با وزن ۲۲۱ گرم، ۱۰ درصد سبک‌تر از نسل قبل. فریم تخت با لبه‌های خمیده.</p><h2>نمایشگر</h2><p>صفحه نمایش ۶.۹ اینچی OLED با رزولوشن ۱۴۴۰×۳۲۰۰ پیکسل، نرخ ۱۲۰ هرتز ProMotion و روشنایی ۳۰۰۰ نیت.</p><h2>تراشه A19 Pro</h2><p>CPU ۶ هسته‌ای (۲ هسته قدرتمند + ۴ هسته کم‌مصرف) و GPU ۶ هسته‌ای، ۲۰ درصد سریع‌تر از A17 Pro.</p><h2>دوربین</h2><p>دوربین اصلی ۴۸ مگاپیکسل با دیافراگم f/1.78، دوربین اولتراواید ۱۲ مگاپیکسل، دوربین تله‌فوتو ۱۲ مگاپیکسل با زوم اپتیکال ۵ برابر.</p><h2>باتری</h2><p>باتری ۴۸۵۰ میلی‌آمپر ساعتی، شارژ سریع ۳۵ وات (۵۰ درصد در ۲۵ دقیقه).</p>",
+          "en": "<h1>iPhone 17 Pro Max</h1><p>The most powerful iPhone ever with A19 Pro chip, 48MP camera, and 120Hz display.</p><h2>Design</h2><p>Titanium body weighing 221g, 10% lighter. Flat frame with curved edges.</p><h2>Display</h2><p>6.9-inch OLED with 1440×3200 resolution, 120Hz ProMotion, 3000 nits brightness.</p><h2>A19 Pro Chip</h2><p>6-core CPU (2 performance + 4 efficiency) and 6-core GPU, 20% faster than A17 Pro.</p><h2>Camera</h2><p>48MP main camera with f/1.78 aperture, 12MP ultra-wide, 12MP telephoto with 5x optical zoom.</p><h2>Battery</h2><p>4850mAh battery, 35W fast charging (50% in 25 minutes).</p>"
+        },
+        "cover": "/assets/hero-articlepage/iphone_17pro__t1j902iw6kya_large.jpg",
+        "gallery": [
+          "/assets/hero-articlepage/iphone_17pro__t1j902iw6kya_large.jpg"
+        ],
+        "mainVideo": {
+          "id": "tQdPRHdrCUI",
+          "title": "iPhone 17 Pro Max Review",
+          "duration": "14:30"
+        },
+        "relatedVideos": [
+          {
+            "id": "DX0HzqxrjEQ",
+            "title": "iPhone 17 vs S25 Ultra",
+            "duration": "15:10"
+          }
+        ],
+        "readTime": 12,
+        "tags": [
+          "iPhone",
+          "Apple",
+          "Pro Max",
+          "A19"
+        ],
+        "author": "مدیر سایت",
+        "publishDate": "2026-03-15T00:00:00.000Z",
+        "likes": 0,
+        "views": 0,
+        "createdAt": "2026-06-10T11:14:34.233Z",
+        "updatedAt": "2026-06-10T12:11:22.893Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a29471aa180caed968b3478",
+        "slug": "galaxy-s24-ultra-ai-revolution",
+        "brand": "Samsung",
+        "title": {
+          "fa": "گلکسی S24 اولترا - انقلاب هوش مصنوعی",
+          "en": "Galaxy S24 Ultra - AI Revolution"
+        },
+        "content": {
+          "fa": "<h1>گلکسی S24 اولترا</h1><p>سامسونگ با گلکسی S24 اولترا، هوش مصنوعی را به قلب گوشی هوشمند آورده است.</p><h2>Galaxy AI</h2><p>ترجمه زنده تماس‌ها، ویرایش هوشمند عکس‌ها، قابلیت Circle to Search.</p><h2>طراحی</h2><p>بدنه تیتانیومی با فریم تخت، نمایشگر ۶.۸ اینچی Dynamic AMOLED 2X.</p><h2>دوربین</h2><p>دوربین اصلی ۲۰۰ مگاپیکسل، زوم اپتیکال ۱۰ برابر.</p>",
+          "en": "<h1>Galaxy S24 Ultra</h1><p>Samsung brings AI to the heart of the smartphone with Galaxy S24 Ultra.</p><h2>Galaxy AI</h2><p>Live translate during calls, intelligent photo editing, Circle to Search.</p><h2>Design</h2><p>Titanium body with flat frame, 6.8-inch Dynamic AMOLED 2X.</p><h2>Camera</h2><p>200MP main camera, 10x optical zoom.</p>"
+        },
+        "cover": "/assets/hero-articlepage/galaxy-s24.png",
+        "gallery": [
+          "/assets/hero-articlepage/galaxy-s24.png",
+          "/assets/hero-articlepage/galaxy-s24-plus.png"
+        ],
+        "mainVideo": {
+          "id": "DX0HzqxrjEQ",
+          "title": "Galaxy S24 Ultra Review",
+          "duration": "15:10"
+        },
+        "relatedVideos": [
+          {
+            "id": "hDZrB9V-UTk",
+            "title": "iPhone 16 Pro Max Test",
+            "duration": "11:20"
+          }
+        ],
+        "readTime": 10,
+        "tags": [
+          "Samsung",
+          "Galaxy",
+          "AI"
+        ],
+        "author": "مدیر سایت",
+        "publishDate": "2026-02-10T00:00:00.000Z",
+        "likes": 0,
+        "views": 0,
+        "createdAt": "2026-06-10T11:14:34.242Z",
+        "updatedAt": "2026-06-10T12:11:22.895Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a29497bac8e4a9e268dd556",
+        "slug": "iphone-16-pro-max",
+        "brand": "Apple",
+        "title": {
+          "fa": "آیفون ۱۶ پرو مکس - دوربین ۴۸ مگاپیکسلی",
+          "en": "iPhone 16 Pro Max - 48MP Camera"
+        },
+        "content": {
+          "fa": "<h1>آیفون ۱۶ پرو مکس</h1><p>پیشرفت در دوربین و تراشه A18 Pro. دکمه کپچر برای عکاسی حرفه‌ای.</p><h2>دوربین</h2><p>دوربین اصلی ۴۸ مگاپیکسل با دیافراگم f/1.78 و لرزشگیر اپتیکال نسل دوم.</p><h2>تراشه A18 Pro</h2><p>CPU ۶ هسته‌ای و GPU ۶ هسته‌ای با قابلیت رهگیری پرتو.</p><h2>دکمه کپچر</h2><p>دکمه اختصاصی برای عکاسی و فیلمبرداری با لمس حساس به فشار.</p>",
+          "en": "<h1>iPhone 16 Pro Max</h1><p>Camera advancements and A18 Pro chip. Capture button for professional photography.</p><h2>Camera</h2><p>48MP main camera with f/1.78 aperture and second-gen OIS.</p><h2>A18 Pro Chip</h2><p>6-core CPU and 6-core GPU with ray tracing capability.</p><h2>Capture Button</h2><p>Dedicated button for photography with pressure-sensitive touch.</p>"
+        },
+        "cover": "/assets/hero-articlepage/nav_iphone_16__qsxcpuia0oam_large.png",
+        "gallery": [],
+        "mainVideo": {
+          "id": "",
+          "title": "",
+          "duration": ""
+        },
+        "relatedVideos": [],
+        "readTime": 11,
+        "tags": [
+          "iPhone",
+          "Apple",
+          "Camera"
+        ],
+        "author": "مدیر سایت",
+        "publishDate": "2026-03-01T00:00:00.000Z",
+        "likes": 0,
+        "views": 0,
+        "createdAt": "2026-06-10T11:24:43.494Z",
+        "updatedAt": "2026-06-10T12:11:22.891Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a29497bac8e4a9e268dd559",
+        "slug": "iphone-15-pro-max",
+        "brand": "Apple",
+        "title": {
+          "fa": "آیفون ۱۵ پرو مکس - تیتانیوم و USB-C",
+          "en": "iPhone 15 Pro Max - Titanium and USB-C"
+        },
+        "content": {
+          "fa": "<h1>آیفون ۱۵ پرو مکس</h1><p>بدنه تیتانیومی سبک‌تر، پورت USB-C و دکمه اکشن. دوربین با زوم ۵ برابر.</p><h2>بدنه</h2><p>فریم تیتانیومی با وزن ۲۲۱ گرم، ۱۰ درصد سبک‌تر.</p><h2>پورت USB-C</h2><p>سرعت انتقال داده تا ۱۰ گیگابایت بر ثانیه.</p><h2>دکمه اکشن</h2><p>قابل برنامه‌ریزی برای دسترسی سریع به قابلیت‌های مختلف.</p><h2>دوربین</h2><p>زوم اپتیکال ۵ برابر (۱۲۰ میلی‌متر).</p>",
+          "en": "<h1>iPhone 15 Pro Max</h1><p>Lighter titanium body, USB-C port, and Action button. 5x optical zoom.</p><h2>Body</h2><p>Titanium frame weighing 221g, 10% lighter.</p><h2>USB-C Port</h2><p>Data transfer speeds up to 10Gbps.</p><h2>Action Button</h2><p>Customizable for quick access to various features.</p><h2>Camera</h2><p>5x optical zoom (120mm).</p>"
+        },
+        "cover": "/assets/hero-articlepage/iphone-15-pro.png",
+        "gallery": [],
+        "mainVideo": {
+          "id": "",
+          "title": "",
+          "duration": ""
+        },
+        "relatedVideos": [],
+        "readTime": 10,
+        "tags": [
+          "iPhone",
+          "Apple",
+          "USB-C"
+        ],
+        "author": "مدیر سایت",
+        "publishDate": "2026-02-15T00:00:00.000Z",
+        "likes": 0,
+        "views": 0,
+        "createdAt": "2026-06-10T11:24:43.515Z",
+        "updatedAt": "2026-06-10T12:11:22.889Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a29497bac8e4a9e268dd55c",
+        "slug": "iphone-14-pro-max",
+        "brand": "Apple",
+        "title": {
+          "fa": "آیفون ۱۴ پرو مکس - جزیره داینامیک",
+          "en": "iPhone 14 Pro Max - Dynamic Island"
+        },
+        "content": {
+          "fa": "<h1>آیفون ۱۴ پرو مکس</h1><p>معرفی جزیره داینامیک (Dynamic Island) و نمایشگر همیشه روشن. دوربین ۴۸ مگاپیکسلی.</p><h2>جزیره داینامیک</h2><p>جایگزین ناچ با تعاملات پویا و هوشمند.</p><h2>نمایشگر</h2><p>صفحه نمایش Always-On با نرخ بروزرسانی ۱ هرتز.</p><h2>دوربین</h2><p>سنسور اصلی ۴۸ مگاپیکسلی با قابلیت ثبت تصاویر ProRAW.</p><h2>امنیت</h2><p>تشخیص تصادف و SOS اضطراری از طریق ماهواره.</p>",
+          "en": "<h1>iPhone 14 Pro Max</h1><p>Introducing Dynamic Island and Always-On display. 48MP main camera.</p><h2>Dynamic Island</h2><p>Replaces the notch with dynamic and intelligent interactions.</p><h2>Display</h2><p>Always-On display with 1Hz refresh rate.</p><h2>Camera</h2><p>48MP main sensor with ProRAW capability.</p><h2>Safety</h2><p>Crash Detection and Emergency SOS via satellite.</p>"
+        },
+        "cover": "/assets/hero-articlepage/iphone-14-pro-max.png",
+        "gallery": [],
+        "mainVideo": {
+          "id": "",
+          "title": "",
+          "duration": ""
+        },
+        "relatedVideos": [],
+        "readTime": 10,
+        "tags": [
+          "iPhone",
+          "Apple",
+          "Dynamic Island"
+        ],
+        "author": "مدیر سایت",
+        "publishDate": "2026-02-01T00:00:00.000Z",
+        "likes": 0,
+        "views": 0,
+        "createdAt": "2026-06-10T11:24:43.517Z",
+        "updatedAt": "2026-06-10T12:11:22.887Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a29497bac8e4a9e268dd55f",
+        "slug": "iphone-13-pro-max",
+        "brand": "Apple",
+        "title": {
+          "fa": "آیفون ۱۳ پرو مکس - نسل ProMotion",
+          "en": "iPhone 13 Pro Max - ProMotion Generation"
+        },
+        "content": {
+          "fa": "<h1>آیفون ۱۳ پرو مکس</h1><p>اولین آیفون با نمایشگر ۱۲۰ هرتز ProMotion و ناچ کوچک‌تر. باتری فوق‌العاده قدرتمند.</p><h2>نمایشگر</h2><p>صفحه نمایش ۶.۷ اینچی Super Retina XDR با نرخ بروزرسانی ۱۲۰ هرتز و ناچ ۲۰ درصد کوچک‌تر.</p><h2>دوربین</h2><p>حالت سینمایی برای فیلمبرداری با افکت بوکه حرفه‌ای.</p><h2>باتری</h2><p>باتری ۴۳۵۲ میلی‌آمپر ساعتی، بهترین عمر باتری در میان آیفون‌ها.</p>",
+          "en": "<h1>iPhone 13 Pro Max</h1><p>First iPhone with 120Hz ProMotion display and smaller notch. Incredible battery life.</p><h2>Display</h2><p>6.7-inch Super Retina XDR with 120Hz refresh rate and 20% smaller notch.</p><h2>Camera</h2><p>Cinematic mode for professional bokeh effect in videos.</p><h2>Battery</h2><p>4352mAh battery, best battery life among iPhones.</p>"
+        },
+        "cover": "/assets/hero-articlepage/iphone-12-pro.png",
+        "gallery": [],
+        "mainVideo": {
+          "id": "",
+          "title": "",
+          "duration": ""
+        },
+        "relatedVideos": [],
+        "readTime": 9,
+        "tags": [
+          "iPhone",
+          "Apple",
+          "ProMotion"
+        ],
+        "author": "مدیر سایت",
+        "publishDate": "2026-01-15T00:00:00.000Z",
+        "likes": 0,
+        "views": 0,
+        "createdAt": "2026-06-10T11:24:43.519Z",
+        "updatedAt": "2026-06-10T12:11:22.884Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a29497bac8e4a9e268dd562",
+        "slug": "iphone-12-pro-max",
+        "brand": "Apple",
+        "title": {
+          "fa": "آیفون ۱۲ پرو مکس - طراحی جدید و 5G",
+          "en": "iPhone 12 Pro Max - New Design and 5G"
+        },
+        "content": {
+          "fa": "<h1>آیفون ۱۲ پرو مکس</h1><p>اولین آیفون با طراحی لبه تخت و پشتیبانی از 5G. دوربین LiDAR و نمایشگر Super Retina XDR.</p><h2>طراحی</h2><p>بدنه استیل ضد زنگ با لبه‌های تخت، در رنگ‌های طلایی، نقره‌ای، گرافیت و آبی اقیانوسی.</p><h2>دوربین</h2><p>سیستم دوربین سه‌گانه ۱۲ مگاپیکسلی با حسگر LiDAR برای واقعیت افزوده.</p><h2>باتری</h2><p>باتری ۳۶۸۷ میلی‌آمپر ساعتی با شارژ سریع ۲۰ وات.</p>",
+          "en": "<h1>iPhone 12 Pro Max</h1><p>First iPhone with flat-edge design and 5G support. LiDAR camera and Super Retina XDR display.</p><h2>Design</h2><p>Stainless steel body with flat edges in Gold, Silver, Graphite, and Pacific Blue.</p><h2>Camera</h2><p>Triple 12MP camera system with LiDAR sensor for AR.</p><h2>Battery</h2><p>3687mAh battery with 20W fast charging.</p>"
+        },
+        "cover": "/assets/hero-articlepage/iphone-12.png",
+        "gallery": [],
+        "mainVideo": {
+          "id": "",
+          "title": "",
+          "duration": ""
+        },
+        "relatedVideos": [],
+        "readTime": 8,
+        "tags": [
+          "iPhone",
+          "Apple",
+          "5G"
+        ],
+        "author": "مدیر سایت",
+        "publishDate": "2026-01-01T00:00:00.000Z",
+        "likes": 0,
+        "views": 0,
+        "createdAt": "2026-06-10T11:24:43.521Z",
+        "updatedAt": "2026-06-10T12:11:22.868Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a29497bac8e4a9e268dd565",
+        "slug": "iphone-14-to-17-evolution-comparison",
+        "brand": "Apple",
+        "title": {
+          "fa": "مقایسه آیفون ۱۴ تا ۱۷ - چهار نسل تکامل",
+          "en": "iPhone 14 to 17 Comparison - Four Generations"
+        },
+        "content": {
+          "fa": "<h1>مقایسه آیفون ۱۴ تا ۱۷</h1><p>بررسی تحول چهار نسل آیفون از ۱۴ تا ۱۷.</p><h2>جدول مقایسه</h2><table border=\"1\"><tr><th>مدل</th><th>پردازنده</th><th>دوربین</th><th>باتری</th></tr><tr><td>iPhone 14 Pro Max</td><td>A16 Bionic</td><td>48MP</td><td>4323mAh</td></tr><tr><td>iPhone 15 Pro Max</td><td>A17 Pro</td><td>48MP+5x</td><td>4422mAh</td></tr><tr><td>iPhone 16 Pro Max</td><td>A18 Pro</td><td>48MP+ improved</td><td>4676mAh</td></tr><tr><td>iPhone 17 Pro Max</td><td>A19 Pro</td><td>48MP+ upgraded</td><td>4850mAh</td></tr></table>",
+          "en": "<h1>iPhone 14 to 17 Comparison</h1><p>Evolution of four iPhone generations from 14 to 17.</p><h2>Comparison Table</h2><table border=\"1\"><tr><th>Model</th><th>Chip</th><th>Camera</th><th>Battery</th></tr><tr><td>iPhone 14 Pro Max</td><td>A16 Bionic</td><td>48MP</td><td>4323mAh</td></tr><tr><td>iPhone 15 Pro Max</td><td>A17 Pro</td><td>48MP+5x</td><td>4422mAh</td></tr><tr><td>iPhone 16 Pro Max</td><td>A18 Pro</td><td>48MP+ improved</td><td>4676mAh</td></tr><tr><td>iPhone 17 Pro Max</td><td>A19 Pro</td><td>48MP+ upgraded</td><td>4850mAh</td></tr></table>"
+        },
+        "cover": "/assets/hero-articlepage/iphone_17pro__t1j902iw6kya_large.jpg",
+        "gallery": [],
+        "mainVideo": {
+          "id": "",
+          "title": "",
+          "duration": ""
+        },
+        "relatedVideos": [],
+        "readTime": 15,
+        "tags": [
+          "iPhone",
+          "Apple",
+          "Comparison"
+        ],
+        "author": "مدیر سایت",
+        "publishDate": "2026-03-20T00:00:00.000Z",
+        "likes": 0,
+        "views": 0,
+        "createdAt": "2026-06-10T11:24:43.523Z",
+        "updatedAt": "2026-06-10T12:11:22.896Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a29497bac8e4a9e268dd569",
+        "slug": "galaxy-z-flip-6",
+        "brand": "Samsung",
+        "title": {
+          "fa": "گلکسی زد فلیپ ۶ - طراحی و دوام",
+          "en": "Galaxy Z Flip 6 - Design and Durability"
+        },
+        "content": {
+          "fa": "<h2>گلکسی زد فلیپ ۶</h2><p>بررسی طراحی تاشو و دوام</p>",
+          "en": "<h2>Galaxy Z Flip 6</h2><p>Review of foldable design and durability</p>"
+        },
+        "cover": "/assets/hero-articlepage/download.jpg",
+        "gallery": [],
+        "mainVideo": {
+          "id": "",
+          "title": "",
+          "duration": ""
+        },
+        "relatedVideos": [],
+        "readTime": 9,
+        "tags": [
+          "Samsung",
+          "Galaxy",
+          "Foldable"
+        ],
+        "author": "مدیر سایت",
+        "publishDate": "2026-06-10T11:24:43.450Z",
+        "likes": 0,
+        "views": 0,
+        "createdAt": "2026-06-10T11:24:43.526Z",
+        "updatedAt": "2026-06-10T11:24:43.526Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a2954ec95f1013a864c164a",
+        "slug": "5-galaxy-ai-tips-content-creators",
+        "brand": "Samsung",
+        "title": {
+          "fa": "۵ ترفند هوش مصنوعی گلکسی برای تولیدکنندگان محتوا",
+          "en": "5 Galaxy AI Tips for Content Creators"
+        },
+        "content": {
+          "fa": "\n        <h1>۵ ترفند هوش مصنوعی گلکسی برای تولیدکنندگان محتوا</h1>\n        <p>سامسونگ با گلکسی S24 اولترا، قابلیت‌های هوش مصنوعی فوق‌العاده‌ای را ارائه داده که برای تولیدکنندگان محتوا بسیار کاربردی است.</p>\n        \n        <h2>۱. Circle to Search</h2>\n        <p>با دایره کشیدن روی هر چیزی در صفحه، می‌توانید آن را جستجو کنید. برای پیدا کردن ایده‌های طراحی و محتوا عالی است.</p>\n        \n        <h2>۲. Generative Edit</h2>\n        <p>ویرایش هوشمند عکس‌ها با هوش مصنوعی. حذف اشیاء ناخواسته، جابجایی سوژه و پر کردن پس‌زمینه به صورت هوشمند.</p>\n        \n        <h2>۳. Live Translate</h2>\n        <p>ترجمه زنده تماس‌ها و پیام‌ها به ۱۳ زبان مختلف. برای همکاری با تولیدکنندگان بین‌المللی ایده‌آل است.</p>\n        \n        <h2>۴. Note Assist</h2>\n        <p>خلاصه‌سازی خودکار یادداشت‌ها، قالب‌بندی هوشمند و ترجمه یک‌کلیک. برای پژوهش و تولید محتوا بسیار مفید.</p>\n        \n        <h2>۵. Transcript Assist</h2>\n        <p>تبدیل خودکار فایل‌های صوتی به متن، خلاصه‌سازی و ترجمه. برای پادکست‌ها و مصاحبه‌ها عالی است.</p>\n        \n        <h3>نتیجه‌گیری</h3>\n        <p>گلکسی S24 اولترا با این قابلیت‌ها، ابزاری قدرتمند برای تولیدکنندگان محتوا است.</p>\n      ",
+          "en": "\n        <h1>5 Galaxy AI Tips for Content Creators</h1>\n        <p>Samsung's Galaxy S24 Ultra offers incredible AI features that are very useful for content creators.</p>\n        \n        <h2>1. Circle to Search</h2>\n        <p>Circle anything on your screen to search for it. Perfect for finding design and content ideas.</p>\n        \n        <h2>2. Generative Edit</h2>\n        <p>AI-powered photo editing. Remove unwanted objects, move subjects, and intelligently fill backgrounds.</p>\n        \n        <h2>3. Live Translate</h2>\n        <p>Real-time translation of calls and messages into 13 languages. Ideal for collaborating with international creators.</p>\n        \n        <h2>4. Note Assist</h2>\n        <p>Automatic note summarization, smart formatting, and one-click translation. Great for research and content production.</p>\n        \n        <h2>5. Transcript Assist</h2>\n        <p>Automatic transcription of audio files to text, summarization, and translation. Perfect for podcasts and interviews.</p>\n        \n        <h3>Conclusion</h3>\n        <p>The Galaxy S24 Ultra is a powerful tool for content creators with these AI capabilities.</p>\n      "
+        },
+        "cover": "/assets/hero-articlepage/galaxy-s24.png",
+        "gallery": [
+          "/assets/hero-articlepage/galaxy-s24.png",
+          "/assets/hero-articlepage/galaxy-s24-plus.png"
+        ],
+        "mainVideo": {
+          "id": "",
+          "title": "",
+          "duration": ""
+        },
+        "relatedVideos": [],
+        "readTime": 8,
+        "tags": [
+          "Samsung",
+          "Galaxy",
+          "AI",
+          "Content Creator"
+        ],
+        "author": "مدیر سایت",
+        "publishDate": "2026-06-10T12:13:31.961Z",
+        "likes": 0,
+        "views": 0,
+        "createdAt": "2026-06-10T12:13:32.006Z",
+        "updatedAt": "2026-06-10T12:13:32.006Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a2954ec95f1013a864c164d",
+        "slug": "tab-s10-ultra-vs-ipad-pro-m4",
+        "brand": "Samsung",
+        "title": {
+          "fa": "مقایسه تبلت S10 اولترا vs آیپد پرو M4",
+          "en": "Tab S10 Ultra vs iPad Pro M4 Comparison"
+        },
+        "content": {
+          "fa": "\n        <h1>مقایسه تبلت S10 اولترا vs آیپد پرو M4</h1>\n        <p>رقابت سنگین بین دو غول تکنولوژی: سامسونگ و اپل.</p>\n        \n        <h2>مشخصات فنی مقایسه</h2>\n        <table border=\"1\">\n          <tr><th>ویژگی</th><th>Tab S10 Ultra</th><th>iPad Pro M4</th></tr>\n          <tr><td>پردازنده</td><td>MediaTek Dimensity 9300+</td><td>Apple M4</td></tr>\n          <tr><td>رم</td><td>12/16 گیگابایت</td><td>8/16 گیگابایت</td></tr>\n          <tr><td>نمایشگر</td><td>۱۴.۶ اینچ Dynamic AMOLED 2X</td><td>۱۳ اینچ Ultra Retina XDR</td></tr>\n          <tr><td>نرخ بروزرسانی</td><td>۱۲۰ هرتز</td><td>۱۲۰ هرتز ProMotion</td></tr>\n          <tr><td>قلم</td><td>S Pen (رایگان)</td><td>Apple Pencil Pro (جداگانه)</td></tr>\n          <tr><td>قیمت پایه</td><td>$۱۱۹۹</td><td>$۱۲۹۹</td></tr>\n        </table>\n        \n        <h2>کدام را بخریم؟</h2>\n        <p>اگر طراح یا تولیدکننده محتوای حرفه‌ای هستید و به نرم‌افزارهای اختصاصی اپل نیاز دارید، iPad Pro M4 انتخاب بهتری است.</p>\n        <p>اگر به دنبال ارزش خرید بالاتر، قلم رایگان و نمایشگر AMOLED هستید، Tab S10 Ultra گزینه عالی‌ای است.</p>\n      ",
+          "en": "\n        <h1>Tab S10 Ultra vs iPad Pro M4 Comparison</h1>\n        <p>Heavyweight battle between two tech giants: Samsung and Apple.</p>\n        \n        <h2>Specifications Comparison</h2>\n        <table border=\"1\">\n          <tr><th>Feature</th><th>Tab S10 Ultra</th><th>iPad Pro M4</th></tr>\n          <tr><td>Processor</td><td>MediaTek Dimensity 9300+</td><td>Apple M4</td></tr>\n          <tr><td>RAM</td><td>12/16GB</td><td>8/16GB</td></tr>\n          <tr><td>Display</td><td>14.6\" Dynamic AMOLED 2X</td><td>13\" Ultra Retina XDR</td></tr>\n          <tr><td>Refresh Rate</td><td>120Hz</td><td>120Hz ProMotion</td></tr>\n          <tr><td>Stylus</td><td>S Pen (included)</td><td>Apple Pencil Pro (separate)</td></tr>\n          <tr><td>Base Price</td><td>$1199</td><td>$1299</td></tr>\n        </table>\n        \n        <h2>Which one to buy?</h2>\n        <p>If you're a professional designer or content creator needing Apple-exclusive software, the iPad Pro M4 is better.</p>\n        <p>If you want better value, included stylus, and an AMOLED display, the Tab S10 Ultra is an excellent choice.</p>\n      "
+        },
+        "cover": "/assets/hero-articlepage/galaxy-s24-plus.png",
+        "gallery": [],
+        "mainVideo": {
+          "id": "",
+          "title": "",
+          "duration": ""
+        },
+        "relatedVideos": [],
+        "readTime": 10,
+        "tags": [
+          "Samsung",
+          "Apple",
+          "Tablet",
+          "Comparison"
+        ],
+        "author": "مدیر سایت",
+        "publishDate": "2026-06-10T12:13:31.961Z",
+        "likes": 0,
+        "views": 0,
+        "createdAt": "2026-06-10T12:13:32.012Z",
+        "updatedAt": "2026-06-10T12:13:32.012Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a2954ec95f1013a864c1650",
+        "slug": "galaxy-z-flip-6-style-durability-review",
+        "brand": "Samsung",
+        "title": {
+          "fa": "گلکسی زد فلیپ ۶ - بررسی طراحی و دوام",
+          "en": "Galaxy Z Flip 6 - Style and Durability Review"
+        },
+        "content": {
+          "fa": "\n        <h1>گلکسی زد فلیپ ۶ - بررسی طراحی و دوام</h1>\n        <p>سامسونگ گلکسی زد فلیپ ۶ با طراحی شیک و بهبود دوام، یکی از جذاب‌ترین گوشی‌های تاشوی بازار است.</p>\n        \n        <h2>طراحی</h2>\n        <p>بدنه فلزی با لولا بهبود یافته، صفحه نمایش بیرونی بزرگتر ۳.۴ اینچی، وزن ۱۸۷ گرم.</p>\n        \n        <h2>دوام</h2>\n        <p>استاندارد IP48 برای مقاومت در برابر گرد و غبار، لولای جدید با ۲۰۰٬۰۰۰ بار باز و بسته شدن.</p>\n        \n        <h2>قیمت</h2>\n        <p>قیمت پایه: ۱۰۹۹ دلار</p>\n      ",
+          "en": "\n        <h1>Galaxy Z Flip 6 - Style and Durability Review</h1>\n        <p>Samsung Galaxy Z Flip 6 with stylish design and improved durability is one of the most attractive foldable phones.</p>\n        \n        <h2>Design</h2>\n        <p>Metal body with improved hinge, larger 3.4-inch cover display, 187g weight.</p>\n        \n        <h2>Durability</h2>\n        <p>IP48 dust resistance rating, new hinge rated for 200,000 folds.</p>\n        \n        <h2>Price</h2>\n        <p>Base price: $1099</p>\n      "
+        },
+        "cover": "/assets/hero-articlepage/download.jpg",
+        "gallery": [],
+        "mainVideo": {
+          "id": "",
+          "title": "",
+          "duration": ""
+        },
+        "relatedVideos": [],
+        "readTime": 7,
+        "tags": [
+          "Samsung",
+          "Galaxy",
+          "Foldable",
+          "Z Flip"
+        ],
+        "author": "مدیر سایت",
+        "publishDate": "2026-06-10T12:13:31.961Z",
+        "likes": 0,
+        "views": 0,
+        "createdAt": "2026-06-10T12:13:32.014Z",
+        "updatedAt": "2026-06-10T12:13:32.014Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a2954ec95f1013a864c1653",
+        "slug": "iphone-vs-samsung-camera-battle-2025",
+        "brand": "Comparison",
+        "title": {
+          "fa": "جنگ دوربین: آیفون ۱۷ پرو مکس vs گلکسی S24 اولترا ۲۰۲۵",
+          "en": "Camera Battle: iPhone 17 Pro Max vs Galaxy S24 Ultra 2025"
+        },
+        "content": {
+          "fa": "\n        <h1>جنگ دوربین: آیفون ۱۷ پرو مکس vs گلکسی S24 اولترا</h1>\n        <p>مقایسه دوربین دو پرچمدار ۲۰۲۵: اپل و سامسونگ.</p>\n        \n        <h2>مشخصات دوربین</h2>\n        <table border=\"1\">\n          <tr><th>ویژگی</th><th>iPhone 17 Pro Max</th><th>Galaxy S24 Ultra</th></tr>\n          <tr><td>اصلی</td><td>48MP f/1.78</td><td>200MP f/1.7</td></tr>\n          <tr><td>اولتراواید</td><td>12MP f/2.2</td><td>12MP f/2.2</td></tr>\n          <tr><td>تله‌فوتو</td><td>12MP (5x)</td><td>50MP (5x) + 10MP (10x)</td></tr>\n          <tr><td>ویدیو</td><td>8K HDR</td><td>8K</td></tr>\n        </table>\n        \n        <h3>نتیجه‌گیری</h3>\n        <p>دوربین سامسونگ برای عکاسی با زوم بالا و جزئیات بیشتر بهتر است. دوربین آیفون برای رنگ‌های طبیعی و فیلمبرداری حرفه‌تری مناسب است.</p>\n      ",
+          "en": "\n        <h1>Camera Battle: iPhone 17 Pro Max vs Galaxy S24 Ultra 2025</h1>\n        <p>Camera comparison of 2025 flagships: Apple vs Samsung.</p>\n        \n        <h2>Camera Specs</h2>\n        <table border=\"1\">\n          <tr><th>Feature</th><th>iPhone 17 Pro Max</th><th>Galaxy S24 Ultra</th></tr>\n          <tr><td>Main</td><td>48MP f/1.78</td><td>200MP f/1.7</td></tr>\n          <tr><td>Ultrawide</td><td>12MP f/2.2</td><td>12MP f/2.2</td></tr>\n          <tr><td>Telephoto</td><td>12MP (5x)</td><td>50MP (5x) + 10MP (10x)</td></tr>\n          <tr><td>Video</td><td>8K HDR</td><td>8K</td></tr>\n        </table>\n        \n        <h3>Conclusion</h3>\n        <p>Samsung's camera is better for zoom photography and more details. iPhone is better for natural colors and professional video recording.</p>\n      "
+        },
+        "cover": "/assets/hero-articlepage/galaxy-s24-plus.png",
+        "gallery": [],
+        "mainVideo": {
+          "id": "",
+          "title": "",
+          "duration": ""
+        },
+        "relatedVideos": [],
+        "readTime": 9,
+        "tags": [
+          "iPhone",
+          "Samsung",
+          "Camera",
+          "Comparison"
+        ],
+        "author": "مدیر سایت",
+        "publishDate": "2026-06-10T12:13:31.961Z",
+        "likes": 1,
+        "views": 0,
+        "createdAt": "2026-06-10T12:13:32.016Z",
+        "updatedAt": "2026-06-10T18:44:37.201Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a29aeefb1c66941959849a2",
+        "slug": "s24-plus-vs-iphone-15-pro-max-comparison",
+        "brand": "Comparison",
+        "title": {
+          "fa": "مقایسه S24 Plus vs آیفون ۱۵ پرو مکس",
+          "en": "S24 Plus vs iPhone 15 Pro Max Comparison"
+        },
+        "content": {
+          "fa": "<h1>مقایسه S24 Plus vs آیفون ۱۵ پرو مکس</h1><p>مقایسه دو پرچمدار میان‌رده سامسونگ و اپل.</p><h2>مشخصات</h2><table border=\"1\"><tr><th>ویژگی</th><th>S24 Plus</th><th>iPhone 15 Pro Max</th></tr><tr><td>پردازنده</td><td>Snapdragon 8 Gen 3</td><td>A17 Pro</td></tr><tr><td>رم</td><td>12GB</td><td>8GB</td></tr><tr><td>دوربین</td><td>50MP</td><td>48MP</td></tr><tr><td>باتری</td><td>4900mAh</td><td>4422mAh</td></tr></table><h3>نتیجه</h3><p>S24 Plus ارزش خرید بالاتری دارد، اما آیفون در عملکرد و دوربین قدرتمندتر است.</p>",
+          "en": "<h1>S24 Plus vs iPhone 15 Pro Max Comparison</h1><p>Comparison of Samsung and Apple mid-range flagships.</p><h2>Specs</h2><table border=\"1\"><tr><th>Feature</th><th>S24 Plus</th><th>iPhone 15 Pro Max</th></tr><tr><td>Processor</td><td>Snapdragon 8 Gen 3</td><td>A17 Pro</td></tr><tr><td>RAM</td><td>12GB</td><td>8GB</td></tr><tr><td>Camera</td><td>50MP</td><td>48MP</td></tr><tr><td>Battery</td><td>4900mAh</td><td>4422mAh</td></tr></table><h3>Conclusion</h3><p>S24 Plus offers better value, but iPhone is more powerful in performance and camera.</p>"
+        },
+        "cover": "/assets/hero-articlepage/galaxy-s24-plus.png",
+        "gallery": [],
+        "mainVideo": {
+          "id": "",
+          "title": "",
+          "duration": ""
+        },
+        "relatedVideos": [],
+        "readTime": 8,
+        "tags": [
+          "Samsung",
+          "Apple",
+          "Comparison"
+        ],
+        "author": "مدیر سایت",
+        "publishDate": "2026-06-10T18:37:35.182Z",
+        "likes": 0,
+        "views": 0,
+        "createdAt": "2026-06-10T18:37:35.226Z",
+        "updatedAt": "2026-06-10T18:37:35.226Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a29aeefb1c66941959849a5",
+        "slug": "z-flip-6-style-durability-review",
+        "brand": "Samsung",
+        "title": {
+          "fa": "Z Flip 6 - بررسی طراحی و دوام",
+          "en": "Z Flip 6 - Style and Durability Review"
+        },
+        "content": {
+          "fa": "<h1>Z Flip 6 - بررسی طراحی و دوام</h1><p>بررسی گوشی تاشو سامسونگ Z Flip 6.</p><h2>طراحی</h2><p>بدنه فلزی، لولا بهبود یافته، صفحه نمایش بیرونی ۳.۴ اینچی.</p><h2>دوام</h2><p>استاندارد IP48، لولا با ۲۰۰٬۰۰۰ بار باز و بسته شدن.</p>",
+          "en": "<h1>Z Flip 6 - Style and Durability Review</h1><p>Samsung Z Flip 6 foldable phone review.</p><h2>Design</h2><p>Metal body, improved hinge, 3.4-inch cover display.</p><h2>Durability</h2><p>IP48 rating, hinge rated for 200,000 folds.</p>"
+        },
+        "cover": "/assets/hero-articlepage/download.jpg",
+        "gallery": [],
+        "mainVideo": {
+          "id": "",
+          "title": "",
+          "duration": ""
+        },
+        "relatedVideos": [],
+        "readTime": 7,
+        "tags": [
+          "Samsung",
+          "Foldable",
+          "Z Flip"
+        ],
+        "author": "مدیر سایت",
+        "publishDate": "2026-06-10T18:37:35.182Z",
+        "likes": 0,
+        "views": 0,
+        "createdAt": "2026-06-10T18:37:35.241Z",
+        "updatedAt": "2026-06-10T18:37:35.241Z",
+        "__v": 0
+      }
+    ]
+  },
+  "products": {
+    "count": 19,
+    "data": [
+      {
+        "_id": "6a29c1b5d47fb94bfaadd34a",
+        "name": {
+          "fa": "آیفون ۱۷ پرو مکس",
+          "en": "iPhone 17 Pro Max"
+        },
+        "brand": "Apple",
+        "category": "Smartphones",
+        "price": 1399,
+        "thumbnail": "/images/iphone17-pro-max.png",
+        "image": "",
+        "inStock": true,
+        "tags": [],
+        "createdAt": "2026-06-10T19:57:41.624Z",
+        "updatedAt": "2026-06-10T19:57:41.624Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a29c1b5d47fb94bfaadd34e",
+        "name": {
+          "fa": "آیفون ۱۷ پرو",
+          "en": "iPhone 17 Pro"
+        },
+        "brand": "Apple",
+        "category": "Smartphones",
+        "price": 1099,
+        "thumbnail": "/images/iphone17-pro.png",
+        "image": "",
+        "inStock": true,
+        "tags": [],
+        "createdAt": "2026-06-10T19:57:41.633Z",
+        "updatedAt": "2026-06-10T19:57:41.633Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a29c1b5d47fb94bfaadd350",
+        "name": {
+          "fa": "آیفون ۱۶ پرو مکس",
+          "en": "iPhone 16 Pro Max"
+        },
+        "brand": "Apple",
+        "category": "Smartphones",
+        "price": 1199,
+        "thumbnail": "/images/iphone16-pro-max.png",
+        "image": "",
+        "inStock": true,
+        "tags": [],
+        "createdAt": "2026-06-10T19:57:41.634Z",
+        "updatedAt": "2026-06-10T19:57:41.634Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a29c1b5d47fb94bfaadd352",
+        "name": {
+          "fa": "آیفون ۱۶",
+          "en": "iPhone 16"
+        },
+        "brand": "Apple",
+        "category": "Smartphones",
+        "price": 799,
+        "thumbnail": "/images/iphone16.png",
+        "image": "",
+        "inStock": true,
+        "tags": [],
+        "createdAt": "2026-06-10T19:57:41.635Z",
+        "updatedAt": "2026-06-10T19:57:41.635Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a29c1b5d47fb94bfaadd354",
+        "name": {
+          "fa": "آیفون ۱۵ پرو مکس",
+          "en": "iPhone 15 Pro Max"
+        },
+        "brand": "Apple",
+        "category": "Smartphones",
+        "price": 999,
+        "thumbnail": "/images/iphone15-pro-max.png",
+        "image": "",
+        "inStock": true,
+        "tags": [],
+        "createdAt": "2026-06-10T19:57:41.636Z",
+        "updatedAt": "2026-06-10T19:57:41.636Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a29c1b5d47fb94bfaadd356",
+        "name": {
+          "fa": "اپل واچ اولترا ۳",
+          "en": "Apple Watch Ultra 3"
+        },
+        "brand": "Apple",
+        "category": "Wearables",
+        "price": 799,
+        "thumbnail": "/images/apple-watch-ultra.png",
+        "image": "",
+        "inStock": true,
+        "tags": [],
+        "createdAt": "2026-06-10T19:57:41.638Z",
+        "updatedAt": "2026-06-10T19:57:41.638Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a29c1b5d47fb94bfaadd358",
+        "name": {
+          "fa": "اپل واچ سری ۱۰",
+          "en": "Apple Watch Series 10"
+        },
+        "brand": "Apple",
+        "category": "Wearables",
+        "price": 449,
+        "thumbnail": "/images/apple-watch-series10.png",
+        "image": "",
+        "inStock": true,
+        "tags": [],
+        "createdAt": "2026-06-10T19:57:41.639Z",
+        "updatedAt": "2026-06-10T19:57:41.639Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a29c1b5d47fb94bfaadd35a",
+        "name": {
+          "fa": "اپل واچ SE 3",
+          "en": "Apple Watch SE 3"
+        },
+        "brand": "Apple",
+        "category": "Wearables",
+        "price": 249,
+        "thumbnail": "/images/apple-watch-se.png",
+        "image": "",
+        "inStock": true,
+        "tags": [],
+        "createdAt": "2026-06-10T19:57:41.640Z",
+        "updatedAt": "2026-06-10T19:57:41.640Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a29c1b5d47fb94bfaadd35c",
+        "name": {
+          "fa": "ایرپادز پرو ۳",
+          "en": "AirPods Pro 3"
+        },
+        "brand": "Apple",
+        "category": "Accessories",
+        "price": 249,
+        "thumbnail": "/images/airpods-pro.png",
+        "image": "",
+        "inStock": true,
+        "tags": [],
+        "createdAt": "2026-06-10T19:57:41.640Z",
+        "updatedAt": "2026-06-10T19:57:41.640Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a29c1b5d47fb94bfaadd35e",
+        "name": {
+          "fa": "ایرپادز ۴",
+          "en": "AirPods 4"
+        },
+        "brand": "Apple",
+        "category": "Accessories",
+        "price": 129,
+        "thumbnail": "/images/airpods-4.png",
+        "image": "",
+        "inStock": true,
+        "tags": [],
+        "createdAt": "2026-06-10T19:57:41.642Z",
+        "updatedAt": "2026-06-10T19:57:41.642Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a29c1b5d47fb94bfaadd360",
+        "name": {
+          "fa": "مگ سیف شارژر",
+          "en": "MagSafe Charger"
+        },
+        "brand": "Apple",
+        "category": "Accessories",
+        "price": 49,
+        "thumbnail": "/images/magsafe.png",
+        "image": "",
+        "inStock": true,
+        "tags": [],
+        "createdAt": "2026-06-10T19:57:41.643Z",
+        "updatedAt": "2026-06-10T19:57:41.643Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a29c1b5d47fb94bfaadd362",
+        "name": {
+          "fa": "گلکسی S24 اولترا",
+          "en": "Galaxy S24 Ultra"
+        },
+        "brand": "Samsung",
+        "category": "Smartphones",
+        "price": 1299,
+        "thumbnail": "/images/samsung/galaxy-s24-ultra.png",
+        "image": "",
+        "inStock": true,
+        "tags": [],
+        "createdAt": "2026-06-10T19:57:41.644Z",
+        "updatedAt": "2026-06-10T19:57:41.644Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a29c1b5d47fb94bfaadd364",
+        "name": {
+          "fa": "گلکسی S24 پلاس",
+          "en": "Galaxy S24 Plus"
+        },
+        "brand": "Samsung",
+        "category": "Smartphones",
+        "price": 999,
+        "thumbnail": "/images/samsung/galaxy-s24-plus.png",
+        "image": "",
+        "inStock": true,
+        "tags": [],
+        "createdAt": "2026-06-10T19:57:41.644Z",
+        "updatedAt": "2026-06-10T19:57:41.644Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a29c1b5d47fb94bfaadd366",
+        "name": {
+          "fa": "گلکسی S24",
+          "en": "Galaxy S24"
+        },
+        "brand": "Samsung",
+        "category": "Smartphones",
+        "price": 799,
+        "thumbnail": "/images/samsung/galaxy-s24.png",
+        "image": "",
+        "inStock": true,
+        "tags": [],
+        "createdAt": "2026-06-10T19:57:41.645Z",
+        "updatedAt": "2026-06-10T19:57:41.645Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a29c1b5d47fb94bfaadd368",
+        "name": {
+          "fa": "گلکسی زد فلیپ ۶",
+          "en": "Galaxy Z Flip 6"
+        },
+        "brand": "Samsung",
+        "category": "Smartphones",
+        "price": 1099,
+        "thumbnail": "/images/samsung/galaxy-z-flip-6.png",
+        "image": "",
+        "inStock": true,
+        "tags": [],
+        "createdAt": "2026-06-10T19:57:41.646Z",
+        "updatedAt": "2026-06-10T19:57:41.646Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a29c1b5d47fb94bfaadd36a",
+        "name": {
+          "fa": "گلکسی زد فولد ۶",
+          "en": "Galaxy Z Fold 6"
+        },
+        "brand": "Samsung",
+        "category": "Smartphones",
+        "price": 1799,
+        "thumbnail": "/images/samsung/galaxy-z-fold-6.png",
+        "image": "",
+        "inStock": true,
+        "tags": [],
+        "createdAt": "2026-06-10T19:57:41.647Z",
+        "updatedAt": "2026-06-10T19:57:41.647Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a29c1b5d47fb94bfaadd36c",
+        "name": {
+          "fa": "گلکسی واچ ۷",
+          "en": "Galaxy Watch 7"
+        },
+        "brand": "Samsung",
+        "category": "Wearables",
+        "price": 299,
+        "thumbnail": "/images/samsung/galaxy-watch-7.png",
+        "image": "",
+        "inStock": true,
+        "tags": [],
+        "createdAt": "2026-06-10T19:57:41.648Z",
+        "updatedAt": "2026-06-10T19:57:41.648Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a29c1b5d47fb94bfaadd36e",
+        "name": {
+          "fa": "گلکسی واچ اولترا",
+          "en": "Galaxy Watch Ultra"
+        },
+        "brand": "Samsung",
+        "category": "Wearables",
+        "price": 649,
+        "thumbnail": "/images/samsung/galaxy-watch-ultra.png",
+        "image": "",
+        "inStock": true,
+        "tags": [],
+        "createdAt": "2026-06-10T19:57:41.649Z",
+        "updatedAt": "2026-06-10T19:57:41.649Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a29c1b5d47fb94bfaadd370",
+        "name": {
+          "fa": "گلکسی بادز ۳ پرو",
+          "en": "Galaxy Buds 3 Pro"
+        },
+        "brand": "Samsung",
+        "category": "Accessories",
+        "price": 249,
+        "thumbnail": "/images/samsung/galaxy-buds-3-pro.png",
+        "image": "",
+        "inStock": true,
+        "tags": [],
+        "createdAt": "2026-06-10T19:57:41.649Z",
+        "updatedAt": "2026-06-10T19:57:41.649Z",
+        "__v": 0
+      }
+    ]
+  },
+  "users": {
+    "count": 1,
+    "data": [
+      {
+        "_id": "6a29bcddc2c5da0e86c7d60f",
+        "name": "fatemeh rostami",
+        "email": "rostamifatemeh.963@gmail.com",
+        "phone": "09381118470",
+        "bio": "web designer",
+        "role": "user",
+        "isVerified": false,
+        "avatar": "",
+        "createdAt": "2026-06-10T19:37:01.456Z",
+        "updatedAt": "2026-06-10T19:37:38.973Z",
+        "__v": 0,
+        "lastLogin": "2026-06-10T19:37:38.973Z"
+      }
+    ]
+  },
+  "comments": {
+    "count": 0,
+    "data": []
+  },
+  "exportedAt": "2026-06-10T20:22:17.255Z"
+}

@@ -1,39 +1,23 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
-const articleSchema = new mongoose.Schema({
-  slug: { type: String, required: true, unique: true },
-  brand: { type: String, required: true },
-  title: {
-    fa: { type: String, required: true },
-    en: { type: String, required: true }
+const articleSchema = new mongoose.Schema(
+  {
+    slug: { type: String, required: true, unique: true },
+    brand: { type: String, default: "Apple" },
+    title: { type: mongoose.Schema.Types.Mixed, default: { fa: "", en: "" } },
+    content: { type: mongoose.Schema.Types.Mixed, default: { fa: "", en: "" } },
+    cover: { type: String, default: "" },
+    gallery: { type: Array, default: [] },
+    mainVideo: { type: mongoose.Schema.Types.Mixed, default: { id: "", title: "", duration: "" } },
+    relatedVideos: { type: Array, default: [] },
+    readTime: { type: Number, default: 10 },
+    tags: { type: Array, default: [] },
+    author: { type: String, default: "مدیر سایت" },
+    publishDate: { type: Date, default: Date.now },
+    likes: { type: Number, default: 0 },
+    views: { type: Number, default: 0 }
   },
-  excerpt: {
-    fa: { type: String, default: '' },
-    en: { type: String, default: '' }
-  },
-  content: {
-    fa: { type: String, required: true },
-    en: { type: String, required: true }
-  },
-  cover: { type: String, default: '' },
-  gallery: { type: [String], default: [] },  // 👈 تغییر: آرایه از استرینگ
-  mainVideo: {
-    id: { type: String, default: '' },
-    title: { type: String, default: '' },
-    duration: { type: String, default: '' }
-  },
-  relatedVideos: [{
-    id: String,
-    title: String,
-    duration: String
-  }],
-  readTime: { type: Number, default: 10 },
-  likes: { type: Number, default: 0 },
-  views: { type: Number, default: 0 },
-  isTrending: { type: Boolean, default: false },
-  publishDate: { type: Date, default: Date.now },
-  tags: [String],
-  author: { type: String, default: 'مدیر سایت' }
-}, { timestamps: true });
+  { timestamps: true }
+);
 
-module.exports = mongoose.model('Article', articleSchema);
+export default mongoose.model("Article", articleSchema);

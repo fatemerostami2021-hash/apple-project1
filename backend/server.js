@@ -1,66 +1,119 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const dotenv = require('dotenv');
+import express from "express";
+import mongoose from "mongoose";
+import cors from "cors";
+import helmet from "helmet";
+import morgan from "morgan";
+import rateLimit from "express-rate-limit";
+import dotenv from "dotenv";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 dotenv.config();
 
-const app = express();
+/* ── import routes ── */
+import productRoutes  from "./routes/products.js";
+import samsungRoutes  from "./routes/samsung.js";
+import articleRoutes  from "./routes/articles.js";
+import commentRoutes  from "./routes/comments.js";
+import adminRoutes    from "./routes/admin.js";
+import slideRoutes    from "./routes/slides.js";
+import authRoutes     from "./routes/auth.js";
 
-app.use(express.json());
+const app  = express();
+const PORT = process.env.PORT || 5000;
 
-// CORS تنظیمات - قبول همه origins (برای توسعه)
+/* ══════════════════════════════════════════════
+   Security Headers
+══════════════════════════════════════════════ */
+app.use(helmet({ crossOriginEmbedderPolicy: false }));
+
+/* ══════════════════════════════════════════════
+   CORS
+══════════════════════════════════════════════ */
+const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || "http://localhost:5173,http://localhost:5174")
+  .split(",")
+  .map((o) => o.trim());
+
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://localhost:5174', 'http://127.0.0.1:5173', 'http://127.0.0.1:5174'],
+  origin: (origin, cb) => {
+    if (!origin || ALLOWED_ORIGINS.includes(origin)) return cb(null, true);
+    cb(new Error(`Origin ${origin} not allowed by CORS`));
+  },
   credentials: true,
 }));
 
-const connectDB = async () => {
-  try {
-    await mongoose.connect(process.env.MONGODB_URI);
-    console.log('✅ MongoDB Atlas connected');
-  } catch (error) {
-    console.error('❌ MongoDB error:', error.message);
-    process.exit(1);
+/* ══════════════════════════════════════════════
+   Rate Limiting
+══════════════════════════════════════════════ */
+const generalLimit = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 200,
+  message: { error: "درخواست‌های زیاد — کمی صبر کنید" },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+app.use(generalLimit);
+app.use(morgan("dev"));
+app.use(express.json({ limit: "5mb" }));
+app.use(express.urlencoded({ extended: true }));
+
+/* ══════════════════════════════════════════════
+   Static files
+══════════════════════════════════════════════ */
+app.use("/uploads", express.static(path.join(__dirname, "public/uploads")));
+
+/* ══════════════════════════════════════════════
+   Routes — توجه: مسیرها با /api شروع می‌شوند
+══════════════════════════════════════════════ */
+app.use("/api/products",  productRoutes);
+app.use("/api/samsung",   samsungRoutes);
+app.use("/api/articles",  articleRoutes);
+app.use("/api/comments",  commentRoutes);
+app.use("/api/admin",     adminRoutes);
+app.use("/api/slides",    slideRoutes);
+app.use("/api/auth",      authRoutes);
+
+/* Health check */
+app.get("/api/health", (req, res) => {
+  res.json({ status: "OK", message: "Server is running", time: new Date() });
+});
+
+/* ══════════════════════════════════════════════
+   Global Error Handler
+══════════════════════════════════════════════ */
+app.use((err, req, res, next) => {
+  const status  = err.status  || 500;
+  const message = err.message || "خطای سرور";
+  if (process.env.NODE_ENV !== "production") {
+    console.error(`[${req.method}] ${req.path} →`, err.message);
   }
-};
-
-connectDB();
-
-// ========== Routes ==========
-app.get('/api/health', (req, res) => {
-  res.json({ status: 'OK', message: 'Server is running' });
+  res.status(status).json({ error: message });
 });
 
-// Article routes
-const articleRoutes = require('./routes/articles');
-app.use('/api/articles', articleRoutes);
-
-// Like routes
-const likeRoutes = require('./routes/like');
-app.use('/api/articles', likeRoutes);
-
-// Views routes
-const viewsRoutes = require('./routes/views');
-app.use('/api/articles', viewsRoutes);
-
-// Comment routes
-const commentRoutes = require('./routes/comments');
-app.use('/api/comments', commentRoutes);
-
-// Admin routes
-const authMiddleware = require('./middleware/auth');
-const adminRoutes = require('./routes/admin');
-app.use('/api/admin', authMiddleware, adminRoutes);
-
-// Upload routes
-const uploadRoutes = require('./routes/upload');
-app.use('/api/upload', uploadRoutes);
-
-// Serve static files from uploads
-app.use('/uploads', express.static('public/uploads'));
-
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
+/* 404 Handler */
+app.use((req, res) => {
+  res.status(404).json({ error: `مسیر ${req.path} یافت نشد` });
 });
+
+/* ══════════════════════════════════════════════
+   اتصال به MongoDB
+══════════════════════════════════════════════ */
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/apple-store";
+
+mongoose
+  .connect(MONGODB_URI)
+  .then(() => {
+    console.log("✅ MongoDB متصل شد");
+    app.listen(PORT, () => {
+      console.log(`🚀 سرور روی پورت ${PORT} اجرا شد`);
+      console.log(`📡 API: http://localhost:${PORT}/api/health`);
+    });
+  })
+  .catch((err) => {
+    console.error("❌ خطا در اتصال MongoDB:", err.message);
+    process.exit(1);
+  });
