@@ -666,3 +666,34 @@
 .samsung-heading:hover::after{
   opacity:1;
 }
+
+.samsung-card-description {
+  font-size: 0.8rem;
+  color: #666;
+  line-height: 1.4;
+  margin-bottom: 0.75rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.samsung-card-quote {
+  font-size: 0.75rem;
+  font-style: italic;
+  color: #888;
+  margin-bottom: 1rem;
+  padding: 0.5rem 0;
+  border-top: 1px solid rgba(0,0,0,0.05);
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+html.dark .samsung-card-description {
+  color: #aaa;
+}
+
+html.dark .samsung-card-quote {
+  color: #888;
+  border-top-color: rgba(255,255,255,0.1);
+  border-bottom-color: rgba(255,255,255,0.1);
+}

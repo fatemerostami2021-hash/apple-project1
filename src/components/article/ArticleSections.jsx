@@ -1,8 +1,9 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { HiOutlineEye, HiHeart } from "react-icons/hi";
 import { motion } from "framer-motion";
-import { getMainVideo, getRelatedVideos } from "../../constants/articleData";
+import { getMainVideo, getRelatedVideos } from "../../constants/ArticleData";
 import { useComments, useLike } from "../../hooks/useArticlePage";
+import { API_BASE } from "../../constants/ArticleData";
 
 /* ── CinematicGallery ────────────────────────────────────── */
 export function CinematicGallery({ images, isRtl }) {
@@ -159,7 +160,6 @@ export function CommentsSection({ articleSlug, isRtl }) {
         <span className="text-gray-500 font-normal text-base">({comments.length})</span>
       </h3>
 
-      {/* Form */}
       <form onSubmit={handleSubmit} className="mb-6 p-4 rounded-xl bg-gray-900/50 border border-gray-800 space-y-2">
         <input
           type="text"
@@ -195,7 +195,6 @@ export function CommentsSection({ articleSlug, isRtl }) {
         </div>
       </form>
 
-      {/* List */}
       {loading ? (
         <div className="space-y-2">
           {[1, 2].map((i) => (
@@ -230,7 +229,7 @@ export function Sidebar({ article, activeId, views, isRtl }) {
   const { liked, count, toggle } = useLike(article?.slug, article?.likes || 0);
   const [sections, setSections] = useState([]);
 
-  useState(() => {
+  useEffect(() => {
     if (!article?.content?.fa) return;
     const parser = new DOMParser();
     const doc = parser.parseFromString(article.content.fa, "text/html");
@@ -240,7 +239,7 @@ export function Sidebar({ article, activeId, views, isRtl }) {
         title: h.textContent,
       }))
     );
-  });
+  }, [article]);
 
   const scrollTo = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -248,7 +247,6 @@ export function Sidebar({ article, activeId, views, isRtl }) {
 
   return (
     <aside className="lg:sticky lg:top-24 space-y-5 w-full lg:w-72 flex-shrink-0">
-      {/* Author */}
       <div className="text-center p-4 rounded-xl bg-gray-900/50 border border-amber-500/20">
         <div className="w-14 h-14 mx-auto rounded-full bg-gradient-to-br from-amber-500 to-amber-700 flex items-center justify-center text-black text-xl font-black">
           {(article?.author?.[0] || "T").toUpperCase()}
@@ -256,7 +254,6 @@ export function Sidebar({ article, activeId, views, isRtl }) {
         <h4 className="mt-2 font-bold text-white text-sm">{article?.author || "Tech Team"}</h4>
       </div>
 
-      {/* Stats */}
       <div className="flex justify-around p-3 rounded-xl bg-gray-900/50 border border-amber-500/20">
         <div className="text-center">
           <HiOutlineEye className="w-5 h-5 mx-auto text-amber-500" aria-hidden="true" />
@@ -277,7 +274,6 @@ export function Sidebar({ article, activeId, views, isRtl }) {
         </button>
       </div>
 
-      {/* Table of contents */}
       {sections.length > 0 && (
         <nav className="p-3 rounded-xl bg-gray-900/30 border border-gray-800" aria-label="فهرست مطالب">
           <p className="text-xs font-bold text-amber-500 mb-2 uppercase tracking-wider">
@@ -301,7 +297,6 @@ export function Sidebar({ article, activeId, views, isRtl }) {
         </nav>
       )}
 
-      {/* Tags */}
       {article?.tags?.length > 0 && (
         <div className="flex flex-wrap gap-1.5" role="list" aria-label="تگ‌ها">
           {article.tags.slice(0, 8).map((t) => (

@@ -1,9 +1,10 @@
-const express = require('express');
-const router = express.Router();
-const Comment = require('../models/Comment');
+import express from "express";
+import Comment from "../models/Comment.js";
 
-// دریافت کامنت‌های یک مقاله
-router.get('/:articleSlug', async (req, res) => {
+const router = express.Router();
+
+/* GET /api/comments/:articleSlug — دریافت کامنت‌های یک مقاله */
+router.get("/:articleSlug", async (req, res) => {
   try {
     const comments = await Comment.find({ articleSlug: req.params.articleSlug })
       .sort({ createdAt: -1 });
@@ -13,16 +14,16 @@ router.get('/:articleSlug', async (req, res) => {
   }
 });
 
-// افزودن کامنت جدید
-router.post('/', async (req, res) => {
+/* POST /api/comments — افزودن کامنت جدید */
+router.post("/", async (req, res) => {
   try {
     const { articleSlug, author, text } = req.body;
     if (!text || !text.trim()) {
-      return res.status(400).json({ error: 'متن کامنت نمی‌تواند خالی باشد' });
+      return res.status(400).json({ error: "متن کامنت نمی‌تواند خالی باشد" });
     }
     const comment = new Comment({
       articleSlug,
-      author: author?.trim() || 'کاربر',
+      author: author?.trim() || "کاربر",
       text: text.trim()
     });
     await comment.save();
@@ -32,8 +33,8 @@ router.post('/', async (req, res) => {
   }
 });
 
-// حذف کامنت (فقط برای مدیریت)
-router.delete('/:id', async (req, res) => {
+/* DELETE /api/comments/:id — حذف کامنت (فقط برای مدیریت) */
+router.delete("/:id", async (req, res) => {
   try {
     await Comment.findByIdAndDelete(req.params.id);
     res.json({ success: true });
@@ -42,4 +43,4 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;
