@@ -1,40 +1,14 @@
-import express from "express";
-import jwt from "jsonwebtoken";
-import Article from "../models/Article.js";
-import Product from "../models/Product.js";
-import Comment from "../models/Comment.js";
-
+import express from 'express';
 const router = express.Router();
+import Article from '../models/Article.js';
+import Product from '../models/Product.js';
+import Comment from '../models/Comment.js';
+import authMiddleware from '../middleware/auth.js';
 
-/* ────────────────────────────────────────── */
-/* احراز هویت ادمین (ورود)                    */
-/* ────────────────────────────────────────── */
-router.post("/login", async (req, res) => {
-  const { token } = req.body;
-  
-  // توکن ساده برای ادمین (در پروژه واقعی از credential استفاده کن)
-  const ADMIN_TOKEN = process.env.ADMIN_TOKEN || "fatemeh963";
-  
-  if (token !== ADMIN_TOKEN) {
-    return res.status(401).json({ error: "توکن نامعتبر است" });
-  }
-  
-  // ساخت JWT برای جلسات بعدی
-  const jwtToken = jwt.sign(
-    { role: "admin", name: "Admin" },
-    process.env.JWT_SECRET || "secret-key",
-    { expiresIn: "7d" }
-  );
-  
-  res.json({ success: true, token: jwtToken });
-});
+// ============ ARTICLES ============
 
-/* ────────────────────────────────────────── */
-/* مدیریت مقالات                              */
-/* ────────────────────────────────────────── */
-
-// دریافت همه مقالات (برای پنل مدیریت)
-router.get("/articles", async (req, res) => {
+// دریافت همه مقالات
+router.get('/articles', authMiddleware, async (req, res) => {
   try {
     const articles = await Article.find({}).sort({ createdAt: -1 });
     res.json(articles);
@@ -43,56 +17,84 @@ router.get("/articles", async (req, res) => {
   }
 });
 
+// دریافت یک مقاله
+router.get('/articles/:slug', authMiddleware, async (req, res) => {
+  try {
+    const article = await Article.findOne({ slug: req.params.slug });
+    if (!article) return res.status(404).json({ error: 'Article not found' });
+    res.json(article);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // ایجاد مقاله جدید
-router.post("/articles", async (req, res) => {
+router.post('/articles', authMiddleware, async (req, res) => {
   try {
     const { slug, brand, title, content, cover, gallery, mainVideo, relatedVideos, readTime, tags, author } = req.body;
     
     const existing = await Article.findOne({ slug });
-    if (existing) return res.status(400).json({ error: "Slug already exists" });
+    if (existing) return res.status(400).json({ error: 'Slug already exists' });
     
     const article = new Article({
       slug,
-      brand: brand || "Apple",
-      title: title || { fa: "", en: "" },
-      content: content || { fa: "", en: "" },
-      cover: cover || "",
+      brand: brand || 'Apple',
+      title: title || { fa: '', en: '' },
+      content: content || { fa: '', en: '' },
+      cover: cover || '',
       gallery: gallery || [],
-      mainVideo: mainVideo || { id: "", title: "", duration: "" },
+      mainVideo: mainVideo || { id: '', title: '', duration: '' },
       relatedVideos: relatedVideos || [],
       readTime: readTime || 10,
       tags: tags || [],
-      author: author || "مدیر سایت",
+      author: author || 'مدیر سایت',
       publishDate: new Date()
     });
     
     await article.save();
     res.json({ success: true, article });
   } catch (error) {
+    console.error('Error:', error);
     res.status(500).json({ error: error.message });
   }
 });
 
-// به‌روزرسانی مقاله
-router.put("/articles/:slug", async (req, res) => {
+// ویرایش مقاله
+router.put('/articles/:slug', authMiddleware, async (req, res) => {
   try {
+    const { brand, title, content, cover, gallery, mainVideo, relatedVideos, readTime, tags, author } = req.body;
+    
     const article = await Article.findOneAndUpdate(
       { slug: req.params.slug },
-      { ...req.body, updatedAt: new Date() },
+      {
+        brand,
+        title,
+        content,
+        cover,
+        gallery: gallery || [],
+        mainVideo,
+        relatedVideos: relatedVideos || [],
+        readTime,
+        tags,
+        author,
+        updatedAt: new Date()
+      },
       { new: true, runValidators: false }
     );
-    if (!article) return res.status(404).json({ error: "Article not found" });
+    
+    if (!article) return res.status(404).json({ error: 'Article not found' });
     res.json({ success: true, article });
   } catch (error) {
+    console.error('Error:', error);
     res.status(500).json({ error: error.message });
   }
 });
 
 // حذف مقاله
-router.delete("/articles/:slug", async (req, res) => {
+router.delete('/articles/:slug', authMiddleware, async (req, res) => {
   try {
     const article = await Article.findOneAndDelete({ slug: req.params.slug });
-    if (!article) return res.status(404).json({ error: "Article not found" });
+    if (!article) return res.status(404).json({ error: 'Article not found' });
     await Comment.deleteMany({ articleSlug: req.params.slug });
     res.json({ success: true });
   } catch (error) {
@@ -100,12 +102,10 @@ router.delete("/articles/:slug", async (req, res) => {
   }
 });
 
-/* ────────────────────────────────────────── */
-/* مدیریت محصولات                            */
-/* ────────────────────────────────────────── */
+// ============ PRODUCTS ============
 
 // دریافت همه محصولات
-router.get("/products", async (req, res) => {
+router.get('/products', authMiddleware, async (req, res) => {
   try {
     const products = await Product.find({}).sort({ createdAt: -1 });
     res.json(products);
@@ -114,37 +114,81 @@ router.get("/products", async (req, res) => {
   }
 });
 
-// ایجاد محصول جدید
-router.post("/products", async (req, res) => {
+// دریافت یک محصول
+router.get('/products/:id', authMiddleware, async (req, res) => {
   try {
-    const product = new Product(req.body);
-    await product.save();
-    res.status(201).json({ success: true, product });
+    const product = await Product.findById(req.params.id);
+    if (!product) return res.status(404).json({ error: 'Product not found' });
+    res.json(product);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 });
 
-// به‌روزرسانی محصول
-router.put("/products/:id", async (req, res) => {
+// ایجاد محصول جدید
+router.post('/products', authMiddleware, async (req, res) => {
   try {
-    const product = await Product.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true, runValidators: true }
-    );
-    if (!product) return res.status(404).json({ error: "Product not found" });
+    const { name, slug, brand, category, price, thumbnail, images, description, inStock, tags } = req.body;
+    
+    const existing = await Product.findOne({ slug });
+    if (existing) return res.status(400).json({ error: 'Slug already exists' });
+    
+    const product = new Product({
+      name: name || { fa: '', en: '' },
+      slug,
+      brand,
+      category: category || 'Phone',
+      price: parseFloat(price),
+      thumbnail: thumbnail || '',
+      images: images || [],
+      description: description || { fa: '', en: '' },
+      inStock: inStock !== false,
+      tags: tags || []
+    });
+    
+    await product.save();
     res.json({ success: true, product });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    console.error('Error:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// ویرایش محصول
+router.put('/products/:id', authMiddleware, async (req, res) => {
+  try {
+    const { name, brand, category, price, thumbnail, images, description, inStock, tags } = req.body;
+    
+    const product = await Product.findByIdAndUpdate(
+      req.params.id,
+      {
+        name,
+        brand,
+        category,
+        price: parseFloat(price),
+        thumbnail,
+        images: images || [],
+        description,
+        inStock,
+        tags,
+        updatedAt: new Date()
+      },
+      { new: true, runValidators: false }
+    );
+    
+    if (!product) return res.status(404).json({ error: 'Product not found' });
+    res.json({ success: true, product });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: error.message });
   }
 });
 
 // حذف محصول
-router.delete("/products/:id", async (req, res) => {
+router.delete('/products/:id', authMiddleware, async (req, res) => {
   try {
     const product = await Product.findByIdAndDelete(req.params.id);
-    if (!product) return res.status(404).json({ error: "Product not found" });
+    if (!product) return res.status(404).json({ error: 'Product not found' });
     res.json({ success: true });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -152,3 +196,20 @@ router.delete("/products/:id", async (req, res) => {
 });
 
 export default router;
+
+// GET /api/admin/stats - دریافت آمار کلی
+router.get('/stats', async (req, res) => {
+  try {
+    // در اینجا باید تعداد محصولات، مقالات، سفارشات و کاربران را از دیتابیس بگیرید
+    // فعلاً داده‌های نمونه برمی‌گردانیم
+    res.json({
+      products: 31,
+      articles: 28,
+      orders: 0,
+      users: 1
+    });
+  } catch (error) {
+    console.error('❌ Error fetching stats:', error);
+    res.status(500).json({ error: error.message });
+  }
+});

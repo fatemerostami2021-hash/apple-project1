@@ -4,12 +4,16 @@ import { motion } from 'framer-motion';
 import { 
   HiOutlineUpload, HiOutlinePhotograph, HiOutlineVideoCamera, 
   HiOutlinePlus, HiOutlineX, HiOutlineEye, HiOutlineCode,
-  HiOutlineSave, HiOutlineTrash
+  HiOutlineSave, HiOutlineTrash, HiOutlineArrowLeft
 } from 'react-icons/hi';
+
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 export default function AdminArticleForm() {
   const { slug } = useParams();
   const navigate = useNavigate();
+  const { i18n } = useTranslation();
+  const isRTL = i18n.language === 'fa';
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [activeTab, setActiveTab] = useState('edit');
@@ -40,8 +44,8 @@ export default function AdminArticleForm() {
 
   const fetchArticle = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/api/admin/articles/${slug}`, {
-        headers: { 'Authorization': 'Bearer ' + getToken() }
+      const res = await fetch(`${API_URL}/api/admin/articles/${slug}`, {
+        headers: { Authorization: `Bearer ${getToken()}` }
       });
       if (res.ok) {
         const data = await res.json();
@@ -70,9 +74,9 @@ export default function AdminArticleForm() {
     formData.append('image', file);
     
     try {
-      const res = await fetch(`http://localhost:5000/api/upload/image?type=${type}`, {
+      const res = await fetch(`${API_URL}/api/upload/image?type=${type}`, {
         method: 'POST',
-        headers: { 'Authorization': 'Bearer ' + getToken() },
+        headers: { Authorization: `Bearer ${getToken()}` },
         body: formData
       });
       const data = await res.json();
@@ -131,21 +135,21 @@ export default function AdminArticleForm() {
 
     const method = slug ? 'PUT' : 'POST';
     const url = slug 
-      ? `http://localhost:5000/api/admin/articles/${slug}`
-      : 'http://localhost:5000/api/admin/articles';
+      ? `${API_URL}/api/admin/articles/${slug}`
+      : `${API_URL}/api/admin/articles`;
 
     try {
       const res = await fetch(url, {
         method,
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + getToken()
+          Authorization: `Bearer ${getToken()}`
         },
         body: JSON.stringify(formData)
       });
       
       if (res.ok) {
-        navigate('/admin/dashboard');
+        navigate('/admin/articles');
       } else {
         const error = await res.json();
         alert('خطا: ' + (error.error || 'مشکلی پیش آمد'));
@@ -157,93 +161,96 @@ export default function AdminArticleForm() {
     setLoading(false);
   };
 
+  const inp = "w-full px-3 md:px-4 py-2.5 md:py-3 rounded-xl bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border border-gray-200 dark:border-gray-800 text-gray-900 dark:text-white focus:outline-none focus:border-[#D4AF37] focus:ring-2 focus:ring-[#D4AF37]/20 transition text-sm";
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 py-8">
-      <div className="max-w-6xl mx-auto px-4">
+    <div className="min-h-screen bg-transparent transition-colors duration-300 p-3 md:p-6">
+      <div className="max-w-6xl mx-auto">
+        {/* Back Button */}
+        <button
+          onClick={() => navigate('/admin/articles')}
+          className="flex items-center gap-2 text-gray-500 dark:text-gray-400 hover:text-[#D4AF37] transition mb-4 text-sm"
+        >
+          <HiOutlineArrowLeft className={isRTL ? 'rotate-180' : ''} />
+          {isRTL ? 'بازگشت' : 'Back'}
+        </button>
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-gray-900/40 backdrop-blur-sm rounded-2xl border border-amber-500/20 overflow-hidden"
+          className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-2xl border border-gray-200 dark:border-gray-800 overflow-hidden"
         >
-          {/* Header with Tabs */}
-          <div className="border-b border-gray-800 px-6 py-4">
-            <div className="flex justify-between items-center">
-              <h1 className="text-xl font-bold bg-gradient-to-r from-amber-400 to-amber-600 bg-clip-text text-transparent">
-                {slug ? '✏️ ویرایش مقاله' : '✨ مقاله جدید'}
-              </h1>
-              <div className="flex gap-2">
-                <button
-                  onClick={() => setActiveTab('edit')}
-                  className={`px-4 py-2 rounded-lg transition flex items-center gap-2 ${
-                    activeTab === 'edit' 
-                      ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' 
-                      : 'text-gray-400 hover:text-white'
-                  }`}
-                >
-                  <HiOutlineCode size={16} />
-                  ویرایش
-                </button>
-                <button
-                  onClick={() => setActiveTab('preview')}
-                  className={`px-4 py-2 rounded-lg transition flex items-center gap-2 ${
-                    activeTab === 'preview' 
-                      ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' 
-                      : 'text-gray-400 hover:text-white'
-                  }`}
-                >
-                  <HiOutlineEye size={16} />
-                  پیش‌نمایش
-                </button>
-              </div>
+          {/* Header */}
+          <div className="flex flex-wrap justify-between items-center gap-3 p-4 md:p-6 border-b border-gray-200 dark:border-gray-800">
+            <h1 className="text-xl md:text-2xl font-black text-gray-900 dark:text-white">
+              {slug ? '✏️ ویرایش مقاله' : '✨ مقاله جدید'}
+            </h1>
+            <div className="flex gap-2">
+              <button
+                onClick={() => setActiveTab('edit')}
+                className={`px-3 md:px-4 py-1.5 md:py-2 rounded-lg transition flex items-center gap-1.5 text-xs md:text-sm ${
+                  activeTab === 'edit' 
+                    ? 'bg-[#D4AF37]/20 text-[#D4AF37] border border-[#D4AF37]/30' 
+                    : 'text-gray-400 hover:text-white'
+                }`}
+              >
+                <HiOutlineCode size={16} />
+                {isRTL ? 'ویرایش' : 'Edit'}
+              </button>
+              <button
+                onClick={() => setActiveTab('preview')}
+                className={`px-3 md:px-4 py-1.5 md:py-2 rounded-lg transition flex items-center gap-1.5 text-xs md:text-sm ${
+                  activeTab === 'preview' 
+                    ? 'bg-[#D4AF37]/20 text-[#D4AF37] border border-[#D4AF37]/30' 
+                    : 'text-gray-400 hover:text-white'
+                }`}
+              >
+                <HiOutlineEye size={16} />
+                {isRTL ? 'پیش‌نمایش' : 'Preview'}
+              </button>
             </div>
           </div>
 
-          <div className="p-6">
+          <div className="p-4 md:p-6">
             {activeTab === 'preview' ? (
               // Preview Mode
               <div className="space-y-6">
-                {/* Cover Image Preview */}
                 {formData.cover && (
                   <div className="relative rounded-xl overflow-hidden">
-                    <img src={formData.cover} alt="cover" className="w-full h-64 object-cover" />
+                    <img src={formData.cover} alt="cover" className="w-full h-48 md:h-64 object-cover" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-                    <div className="absolute bottom-0 left-0 right-0 p-6">
-                      <h1 className="text-3xl font-bold text-white">{formData.title.fa || 'عنوان فارسی'}</h1>
-                      <div className="flex gap-3 mt-2 text-sm text-gray-300">
+                    <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6">
+                      <h1 className="text-2xl md:text-3xl font-bold text-white">{formData.title.fa || 'عنوان فارسی'}</h1>
+                      <div className="flex flex-wrap gap-3 mt-2 text-xs md:text-sm text-gray-300">
                         <span>{formData.brand}</span>
                         <span>•</span>
-                        <span>{formData.readTime} دقیقه مطالعه</span>
+                        <span>{formData.readTime} {isRTL ? 'دقیقه مطالعه' : 'min read'}</span>
                       </div>
                     </div>
                   </div>
                 )}
-                
-                {/* Content Preview */}
-                <div className="prose prose-invert max-w-none">
-                  <div dangerouslySetInnerHTML={{ __html: formData.content.fa }} />
+                <div className="prose prose-sm md:prose-base dark:prose-invert max-w-none">
+                  <div dangerouslySetInnerHTML={{ __html: formData.content.fa || formData.content.en }} />
                 </div>
-                
-                {/* Gallery Preview */}
                 {formData.gallery.length > 0 && (
                   <div>
-                    <h3 className="text-lg font-bold text-amber-400 mb-3">گالری تصاویر</h3>
-                    <div className="grid grid-cols-3 gap-3">
+                    <h3 className="text-lg font-bold text-[#D4AF37] mb-3">{isRTL ? 'گالری تصاویر' : 'Gallery'}</h3>
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                       {formData.gallery.map((img, idx) => (
-                        <img key={idx} src={img} alt="" className="rounded-lg h-32 w-full object-cover" />
+                        <img key={idx} src={img} alt="" className="rounded-lg h-24 md:h-32 w-full object-cover" />
                       ))}
                     </div>
                   </div>
                 )}
-                
-                {/* Video Preview */}
                 {formData.mainVideo.id && (
                   <div>
-                    <h3 className="text-lg font-bold text-amber-400 mb-3">ویدیو بررسی</h3>
+                    <h3 className="text-lg font-bold text-[#D4AF37] mb-3">{isRTL ? 'ویدیو بررسی' : 'Video Review'}</h3>
                     <div className="aspect-video rounded-xl overflow-hidden">
                       <iframe 
                         src={`https://www.youtube.com/embed/${formData.mainVideo.id}`} 
                         className="w-full h-full"
                         title={formData.mainVideo.title}
+                        allowFullScreen
                       />
                     </div>
                   </div>
@@ -251,61 +258,61 @@ export default function AdminArticleForm() {
               </div>
             ) : (
               // Edit Mode Form
-              <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Basic Info */}
-                <div className="grid grid-cols-2 gap-4">
+              <form onSubmit={handleSubmit} className="space-y-4 md:space-y-5">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm text-gray-400 mb-1">اسلاگ (آدرس یکتا)</label>
+                    <label className="block text-sm text-gray-400 mb-1.5">{isRTL ? 'اسلاگ (آدرس یکتا)' : 'Slug'}</label>
                     <input
                       type="text"
                       value={formData.slug}
                       onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
-                      className="w-full px-4 py-2.5 rounded-xl bg-gray-800/50 border border-gray-700 text-white focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/20 transition"
+                      className={inp}
                       required
                       disabled={!!slug}
                       placeholder="iphone-17-pro-max"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm text-gray-400 mb-1">برند</label>
+                    <label className="block text-sm text-gray-400 mb-1.5">{isRTL ? 'برند' : 'Brand'}</label>
                     <input
                       type="text"
                       value={formData.brand}
                       onChange={(e) => setFormData({ ...formData, brand: e.target.value })}
-                      className="w-full px-4 py-2.5 rounded-xl bg-gray-800/50 border border-gray-700 text-white focus:outline-none focus:border-amber-500 transition"
+                      className={inp}
+                      placeholder="Apple"
                     />
                   </div>
                 </div>
 
-                {/* Titles */}
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm text-gray-400 mb-1">عنوان فارسی</label>
+                    <label className="block text-sm text-gray-400 mb-1.5">{isRTL ? 'عنوان فارسی' : 'Title (FA)'}</label>
                     <input
                       type="text"
                       value={formData.title.fa}
                       onChange={(e) => setFormData({ ...formData, title: { ...formData.title, fa: e.target.value } })}
-                      className="w-full px-4 py-2.5 rounded-xl bg-gray-800/50 border border-gray-700 text-white focus:outline-none focus:border-amber-500 transition"
+                      className={inp}
+                      placeholder={isRTL ? 'عنوان فارسی' : 'Persian title'}
                     />
                   </div>
                   <div>
-                    <label className="block text-sm text-gray-400 mb-1">عنوان انگلیسی</label>
+                    <label className="block text-sm text-gray-400 mb-1.5">{isRTL ? 'عنوان انگلیسی' : 'Title (EN)'}</label>
                     <input
                       type="text"
                       value={formData.title.en}
                       onChange={(e) => setFormData({ ...formData, title: { ...formData.title, en: e.target.value } })}
-                      className="w-full px-4 py-2.5 rounded-xl bg-gray-800/50 border border-gray-700 text-white focus:outline-none focus:border-amber-500 transition"
+                      className={inp}
+                      placeholder="English title"
                     />
                   </div>
                 </div>
 
-                {/* Cover Image */}
                 <div>
-                  <label className="block text-sm text-gray-400 mb-1">📸 عکس شاخص (کاور)</label>
-                  <div className="flex items-center gap-4">
+                  <label className="block text-sm text-gray-400 mb-1.5">{isRTL ? '📸 عکس شاخص (کاور)' : 'Cover Image'}</label>
+                  <div className="flex flex-wrap items-center gap-4">
                     {formData.cover && (
                       <div className="relative">
-                        <img src={formData.cover} alt="cover" className="w-20 h-20 object-cover rounded-lg" />
+                        <img src={formData.cover} alt="cover" className="w-16 h-16 md:w-20 md:h-20 object-cover rounded-lg" />
                         <button
                           type="button"
                           onClick={() => setFormData({ ...formData, cover: '' })}
@@ -315,21 +322,20 @@ export default function AdminArticleForm() {
                         </button>
                       </div>
                     )}
-                    <label className="px-5 py-2.5 bg-amber-500/10 border border-amber-500/30 rounded-xl cursor-pointer hover:bg-amber-500/20 transition flex items-center gap-2">
+                    <label className="px-4 py-2.5 bg-[#D4AF37]/10 border border-[#D4AF37]/30 rounded-xl cursor-pointer hover:bg-[#D4AF37]/20 transition flex items-center gap-2 text-sm">
                       <input type="file" accept="image/*" onChange={handleCoverUpload} className="hidden" />
-                      <HiOutlineUpload size={18} className="text-amber-400" />
-                      <span className="text-amber-400 text-sm">{uploading ? 'در حال آپلود...' : 'انتخاب عکس'}</span>
+                      <HiOutlineUpload size={18} className="text-[#D4AF37]" />
+                      <span className="text-[#D4AF37] text-xs md:text-sm">{uploading ? 'در حال آپلود...' : 'انتخاب عکس'}</span>
                     </label>
                   </div>
                 </div>
 
-                {/* Gallery */}
                 <div>
-                  <label className="block text-sm text-gray-400 mb-1">🖼️ گالری تصاویر</label>
+                  <label className="block text-sm text-gray-400 mb-1.5">{isRTL ? '🖼️ گالری تصاویر' : 'Image Gallery'}</label>
                   <div className="flex flex-wrap gap-3 mb-3">
                     {formData.gallery.map((img, idx) => (
                       <div key={idx} className="relative">
-                        <img src={img} alt="" className="w-20 h-20 object-cover rounded-lg" />
+                        <img src={img} alt="" className="w-16 h-16 md:w-20 md:h-20 object-cover rounded-lg" />
                         <button
                           type="button"
                           onClick={() => removeGalleryImage(idx)}
@@ -339,149 +345,147 @@ export default function AdminArticleForm() {
                         </button>
                       </div>
                     ))}
-                    <label className="w-20 h-20 flex flex-col items-center justify-center border-2 border-dashed border-gray-600 rounded-xl cursor-pointer hover:border-amber-500 transition group">
+                    <label className="w-16 h-16 md:w-20 md:h-20 flex flex-col items-center justify-center border-2 border-dashed border-gray-600 rounded-xl cursor-pointer hover:border-[#D4AF37] transition group">
                       <input type="file" accept="image/*" multiple onChange={handleGalleryUpload} className="hidden" />
-                      <HiOutlinePlus size={24} className="text-gray-500 group-hover:text-amber-400" />
-                      <span className="text-[10px] text-gray-500 mt-1">افزودن</span>
+                      <HiOutlinePlus size={24} className="text-gray-500 group-hover:text-[#D4AF37]" />
+                      <span className="text-[8px] md:text-[10px] text-gray-500 mt-0.5">{isRTL ? 'افزودن' : 'Add'}</span>
                     </label>
                   </div>
                 </div>
 
-                {/* Main Video */}
-                <div className="bg-gray-800/30 rounded-xl p-4 border border-gray-700">
-                  <h3 className="text-sm font-bold text-amber-400 mb-3">🎬 ویدیو اصلی</h3>
-                  <div className="grid grid-cols-3 gap-3">
+                <div className="bg-white/50 dark:bg-gray-800/50 rounded-xl p-4 border border-gray-200 dark:border-gray-800">
+                  <h3 className="text-sm font-bold text-[#D4AF37] mb-3">{isRTL ? '🎬 ویدیو اصلی' : 'Main Video'}</h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     <input
                       type="text"
                       value={formData.mainVideo.id}
                       onChange={(e) => setFormData({ ...formData, mainVideo: { ...formData.mainVideo, id: e.target.value } })}
                       placeholder="YouTube ID"
-                      className="px-3 py-2 rounded-lg bg-gray-800/50 border border-gray-700 text-white text-sm focus:outline-none focus:border-amber-500"
+                      className={inp}
                     />
                     <input
                       type="text"
                       value={formData.mainVideo.title}
                       onChange={(e) => setFormData({ ...formData, mainVideo: { ...formData.mainVideo, title: e.target.value } })}
-                      placeholder="عنوان"
-                      className="px-3 py-2 rounded-lg bg-gray-800/50 border border-gray-700 text-white text-sm focus:outline-none focus:border-amber-500"
+                      placeholder={isRTL ? 'عنوان' : 'Title'}
+                      className={inp}
                     />
                     <input
                       type="text"
                       value={formData.mainVideo.duration}
                       onChange={(e) => setFormData({ ...formData, mainVideo: { ...formData.mainVideo, duration: e.target.value } })}
-                      placeholder="مدت"
-                      className="px-3 py-2 rounded-lg bg-gray-800/50 border border-gray-700 text-white text-sm focus:outline-none focus:border-amber-500"
+                      placeholder={isRTL ? 'مدت' : 'Duration'}
+                      className={inp}
                     />
                   </div>
                 </div>
 
-                {/* Related Videos */}
-                <div className="bg-gray-800/30 rounded-xl p-4 border border-gray-700">
+                <div className="bg-white/50 dark:bg-gray-800/50 rounded-xl p-4 border border-gray-200 dark:border-gray-800">
                   <div className="flex justify-between items-center mb-3">
-                    <h3 className="text-sm font-bold text-amber-400">📺 ویدیوهای مرتبط</h3>
-                    <button type="button" onClick={addRelatedVideo} className="text-xs text-amber-500 hover:text-amber-400 flex items-center gap-1">
-                      <HiOutlinePlus size={14} /> افزودن
+                    <h3 className="text-sm font-bold text-[#D4AF37]">{isRTL ? '📺 ویدیوهای مرتبط' : 'Related Videos'}</h3>
+                    <button type="button" onClick={addRelatedVideo} className="text-xs text-[#D4AF37] hover:text-[#C5A027] flex items-center gap-1">
+                      <HiOutlinePlus size={14} /> {isRTL ? 'افزودن' : 'Add'}
                     </button>
                   </div>
                   {formData.relatedVideos.map((video, idx) => (
-                    <div key={idx} className="grid grid-cols-4 gap-2 mb-2 items-center">
+                    <div key={idx} className="grid grid-cols-1 sm:grid-cols-4 gap-2 mb-2 items-center">
                       <input
                         type="text"
                         value={video.id}
                         onChange={(e) => updateRelatedVideo(idx, 'id', e.target.value)}
                         placeholder="YouTube ID"
-                        className="px-2 py-1.5 rounded bg-gray-800/50 border border-gray-700 text-white text-xs"
+                        className={`${inp} col-span-1`}
                       />
                       <input
                         type="text"
                         value={video.title}
                         onChange={(e) => updateRelatedVideo(idx, 'title', e.target.value)}
-                        placeholder="عنوان"
-                        className="px-2 py-1.5 rounded bg-gray-800/50 border border-gray-700 text-white text-xs col-span-2"
+                        placeholder={isRTL ? 'عنوان' : 'Title'}
+                        className={`${inp} col-span-2`}
                       />
                       <input
                         type="text"
                         value={video.duration}
                         onChange={(e) => updateRelatedVideo(idx, 'duration', e.target.value)}
-                        placeholder="مدت"
-                        className="px-2 py-1.5 rounded bg-gray-800/50 border border-gray-700 text-white text-xs"
+                        placeholder={isRTL ? 'مدت' : 'Duration'}
+                        className={`${inp} col-span-1`}
                       />
-                      <button type="button" onClick={() => removeRelatedVideo(idx)} className="text-red-500 text-sm">✕</button>
+                      <button type="button" onClick={() => removeRelatedVideo(idx)} className="text-red-500 text-sm col-span-1 sm:col-span-auto">✕</button>
                     </div>
                   ))}
                 </div>
 
-                {/* Content */}
                 <div>
-                  <label className="block text-sm text-gray-400 mb-1">📝 محتوا (HTML) - فارسی</label>
+                  <label className="block text-sm text-gray-400 mb-1.5">{isRTL ? '📝 محتوا (HTML) - فارسی' : 'Content (HTML) - FA'}</label>
                   <textarea
                     value={formData.content.fa}
                     onChange={(e) => setFormData({ ...formData, content: { ...formData.content, fa: e.target.value } })}
-                    rows={12}
-                    className="w-full px-4 py-3 rounded-xl bg-gray-800/50 border border-gray-700 text-white focus:outline-none focus:border-amber-500 font-mono text-sm"
+                    rows={10}
+                    className={`${inp} font-mono text-xs md:text-sm resize-none`}
                     placeholder="<h1>عنوان مقاله</h1><p>متن مقاله...</p>"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm text-gray-400 mb-1">📝 محتوا (HTML) - انگلیسی</label>
+                  <label className="block text-sm text-gray-400 mb-1.5">{isRTL ? '📝 محتوا (HTML) - انگلیسی' : 'Content (HTML) - EN'}</label>
                   <textarea
                     value={formData.content.en}
                     onChange={(e) => setFormData({ ...formData, content: { ...formData.content, en: e.target.value } })}
                     rows={8}
-                    className="w-full px-4 py-3 rounded-xl bg-gray-800/50 border border-gray-700 text-white focus:outline-none focus:border-amber-500 font-mono text-sm"
+                    className={`${inp} font-mono text-xs md:text-sm resize-none`}
+                    placeholder="<h1>Article Title</h1><p>Article content...</p>"
                   />
                 </div>
 
-                {/* Extra Info */}
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm text-gray-400 mb-1">⏱️ زمان مطالعه (دقیقه)</label>
+                    <label className="block text-sm text-gray-400 mb-1.5">{isRTL ? '⏱️ زمان مطالعه (دقیقه)' : 'Read Time (min)'}</label>
                     <input
                       type="number"
                       value={formData.readTime}
                       onChange={(e) => setFormData({ ...formData, readTime: parseInt(e.target.value) })}
-                      className="w-full px-4 py-2.5 rounded-xl bg-gray-800/50 border border-gray-700 text-white focus:outline-none focus:border-amber-500"
+                      className={inp}
+                      min="1"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm text-gray-400 mb-1">👤 نویسنده</label>
+                    <label className="block text-sm text-gray-400 mb-1.5">{isRTL ? '👤 نویسنده' : 'Author'}</label>
                     <input
                       type="text"
                       value={formData.author}
                       onChange={(e) => setFormData({ ...formData, author: e.target.value })}
-                      className="w-full px-4 py-2.5 rounded-xl bg-gray-800/50 border border-gray-700 text-white focus:outline-none focus:border-amber-500"
+                      className={inp}
+                      placeholder={isRTL ? 'مدیر سایت' : 'Admin'}
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm text-gray-400 mb-1">🏷️ تگ‌ها (با کاما جدا کنید)</label>
+                  <label className="block text-sm text-gray-400 mb-1.5">{isRTL ? '🏷️ تگ‌ها (با کاما جدا کنید)' : 'Tags (comma separated)'}</label>
                   <input
                     type="text"
                     value={formData.tags.join(', ')}
                     onChange={(e) => setFormData({ ...formData, tags: e.target.value.split(',').map(t => t.trim()).filter(Boolean) })}
-                    className="w-full px-4 py-2.5 rounded-xl bg-gray-800/50 border border-gray-700 text-white focus:outline-none focus:border-amber-500"
-                    placeholder="آیفون, اپل, بررسی"
+                    className={inp}
+                    placeholder={isRTL ? 'آیفون, اپل, بررسی' : 'iPhone, Apple, Review'}
                   />
                 </div>
 
-                {/* Action Buttons */}
-                <div className="flex gap-3 pt-4 border-t border-gray-800">
+                <div className="flex flex-wrap gap-3 pt-4 border-t border-gray-200 dark:border-gray-800">
                   <button
                     type="submit"
                     disabled={loading}
-                    className="px-6 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 text-black rounded-xl font-bold hover:from-amber-600 hover:to-amber-700 transition disabled:opacity-50 flex items-center gap-2"
+                    className="px-5 md:px-6 py-2.5 bg-[#D4AF37] text-black rounded-xl font-bold hover:bg-[#C5A027] transition disabled:opacity-50 flex items-center gap-2 text-sm"
                   >
                     <HiOutlineSave size={18} />
-                    {loading ? 'در حال ذخیره...' : (slug ? 'به‌روزرسانی' : 'ذخیره مقاله')}
+                    {loading ? (isRTL ? 'در حال ذخیره...' : 'Saving...') : (slug ? (isRTL ? 'به‌روزرسانی' : 'Update') : (isRTL ? 'ذخیره مقاله' : 'Save Article'))}
                   </button>
                   <button
                     type="button"
-                    onClick={() => navigate('/admin/dashboard')}
-                    className="px-6 py-2.5 bg-gray-800 text-gray-300 rounded-xl hover:bg-gray-700 transition"
+                    onClick={() => navigate('/admin/articles')}
+                    className="px-5 md:px-6 py-2.5 bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl hover:bg-gray-300 dark:hover:bg-gray-700 transition text-sm"
                   >
-                    انصراف
+                    {isRTL ? 'انصراف' : 'Cancel'}
                   </button>
                 </div>
               </form>
