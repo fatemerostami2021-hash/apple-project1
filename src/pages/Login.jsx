@@ -1,12 +1,13 @@
+// src/pages/Login.jsx
 import { useState, useEffect, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Helmet } from "react-helmet";
 import { motion, useMotionValue, useTransform, animate } from "framer-motion";
-import { FaApple, FaEnvelope, FaLock, FaEye, FaEyeSlash, FaGoogle, FaGithub, FaArrowRight, FaArrowLeft, FaShieldAlt, FaServer, FaCloud, FaNetworkWired, FaExternalLinkAlt, FaPhone } from "react-icons/fa";
+import { FaApple, FaEnvelope, FaLock, FaEye, FaEyeSlash, FaGoogle, FaGithub, FaArrowRight, FaArrowLeft, FaShieldAlt, FaServer, FaCloud, FaNetworkWired, FaExternalLinkAlt } from "react-icons/fa";
+import { HiOutlineSparkles } from "react-icons/hi";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
-
+// رنگ‌های تم
 const colors = {
   gold: "#D4AF37",
   goldHover: "#F3D27A",
@@ -19,6 +20,7 @@ const colors = {
   blueGlow: "rgba(56, 189, 248, 0.30)",
 };
 
+// لینک‌های معتبر
 const trustedLinks = [
   { name: "Limoowp", url: "https://limoowp.com/", icon: <FaServer size={12} />, color: "gold" },
   { name: "Samanehha", url: "https://www.samanehha.com/", icon: <FaCloud size={12} />, color: "blue" },
@@ -27,6 +29,7 @@ const trustedLinks = [
   { name: "NIC", url: "https://new.nic.ir/", icon: <FaNetworkWired size={12} />, color: "gold" },
 ];
 
+// ── Particle field (cinematic background) ──────────────────────
 function ParticleField() {
   const canvasRef = useRef(null);
   useEffect(() => {
@@ -100,6 +103,7 @@ function ParticleField() {
   return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" aria-hidden="true" />;
 }
 
+// ── Magnetic button wrapper ─────────────────────────────────────
 function MagneticBtn({ children, className, onClick, type = "button", disabled }) {
   const ref = useRef(null);
   const x = useMotionValue(0);
@@ -134,6 +138,7 @@ function MagneticBtn({ children, className, onClick, type = "button", disabled }
   );
 }
 
+// ── Cinematic Input ─────────────────────────────────────────────
 function CinemaInput({ label, icon: Icon, type, value, onChange, placeholder, required, children }) {
   const [focused, setFocused] = useState(false);
   const [filled, setFilled] = useState(false);
@@ -187,43 +192,27 @@ function CinemaInput({ label, icon: Icon, type, value, onChange, placeholder, re
   );
 }
 
+// ── Main Login ──────────────────────────────────────────────────
 export default function Login() {
   const { i18n } = useTranslation();
-  const navigate = useNavigate();
   const isRtl = i18n.language === "fa";
   const [showPassword, setShowPassword] = useState(false);
-  const [identifier, setIdentifier] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
-    setError("");
-    
-    try {
-      const res = await fetch(`${API_URL}/api/auth/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ identifier, password })
-      });
-      
-      const data = await res.json();
-      
-      if (res.ok && data.success) {
-        localStorage.setItem("user_token", data.token);
-        localStorage.setItem("user", JSON.stringify(data.user));
-        navigate("/");
-      } else {
-        setError(data.error || "ایمیل/شماره یا رمز عبور اشتباه است");
-      }
-    } catch (err) {
-      setError("خطا در ارتباط با سرور");
-    } finally {
+    setTimeout(() => {
       setIsLoading(false);
-    }
+      setSuccess(true);
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 1500);
+    }, 1800);
   };
 
   return (
@@ -234,11 +223,13 @@ export default function Login() {
 
       <ParticleField />
 
+      {/* Ambient glows */}
       <div className="pointer-events-none absolute top-0 left-1/4 w-[600px] h-[600px] rounded-full blur-[120px]" style={{ backgroundColor: colors.goldGlow }} />
       <div className="pointer-events-none absolute bottom-0 right-1/4 w-[500px] h-[500px] rounded-full blur-[100px]" style={{ backgroundColor: colors.blueGlow }} />
 
       <div className="relative max-w-md w-full z-10">
 
+        {/* Logo */}
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} className="text-center mb-8">
           <motion.div animate={{ rotate: [0, 5, -5, 0] }} transition={{ duration: 6, repeat: Infinity }} className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[rgba(26,29,36,0.8)] backdrop-blur-xl border border-[rgba(212,175,55,0.3)] mb-4 shadow-lg" style={{ boxShadow: `0 0 20px ${colors.goldGlow}` }}>
             <FaApple className="text-[#D4AF37]" size={28} />
@@ -246,6 +237,7 @@ export default function Login() {
           <p className="text-xs font-black uppercase tracking-[0.3em] text-[#D4AF37]/80">TechCrunch</p>
         </motion.div>
 
+        {/* Login Card */}
         <motion.div
           initial={{ opacity: 0, y: 40, scale: 0.96 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -259,6 +251,7 @@ export default function Login() {
 
           <div className="relative p-8 md:p-10">
 
+            {/* Header */}
             <div className="mb-8">
               <motion.h2 initial={{ opacity: 0, x: -16 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.15 }} className="text-3xl font-black tracking-tight mb-1" style={{ color: "#F8FAFC" }}>
                 {isRtl ? "خوش آمدید" : "Welcome back"}<span className="text-[#D4AF37]">.</span>
@@ -268,90 +261,73 @@ export default function Login() {
               </motion.p>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <CinemaInput 
-                label={isRtl ? "ایمیل یا شماره موبایل" : "Email or Phone"} 
-                icon={FaEnvelope} 
-                type="text" 
-                value={identifier} 
-                onChange={(e) => setIdentifier(e.target.value)} 
-                placeholder={isRtl ? "example@email.com یا 0912XXX" : "email@example.com or phone number"} 
-                required 
-              />
-              <CinemaInput 
-                label={isRtl ? "رمز عبور" : "Password"} 
-                icon={FaLock} 
-                type={showPassword ? "text" : "password"} 
-                value={password} 
-                onChange={(e) => setPassword(e.target.value)} 
-                placeholder="••••••••" 
-                required
-              >
-                <button type="button" onClick={() => setShowPassword(!showPassword)} className="text-[#C0C7D1] hover:text-[#D4AF37] transition-colors">
-                  {showPassword ? <FaEyeSlash size={15} /> : <FaEye size={15} />}
-                </button>
-              </CinemaInput>
+            {success ? (
+              <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} className="text-center py-8">
+                <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 200 }} className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: "rgba(212,175,55,0.15)", border: `1px solid ${colors.gold}`, boxShadow: `0 0 20px ${colors.goldGlow}` }}>
+                  <svg className="w-8 h-8 text-[#D4AF37]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>
+                </motion.div>
+                <p className="font-black text-lg" style={{ color: "#F8FAFC" }}>{isRtl ? "ورود موفق!" : "Signed in!"}</p>
+                <p className="text-sm mt-1" style={{ color: colors.silver }}>{isRtl ? "در حال انتقال..." : "Redirecting..."}</p>
+              </motion.div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <CinemaInput label={isRtl ? "ایمیل" : "Email address"} icon={FaEnvelope} type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" required />
+                <CinemaInput label={isRtl ? "رمز عبور" : "Password"} icon={FaLock} type={showPassword ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" required>
+                  <button type="button" onClick={() => setShowPassword(!showPassword)} className="text-[#C0C7D1] hover:text-[#D4AF37] transition-colors">{showPassword ? <FaEyeSlash size={15} /> : <FaEye size={15} />}</button>
+                </CinemaInput>
 
-              {error && (
-                <p className="text-red-400 text-sm text-center">{error}</p>
-              )}
+                <div className="flex items-center justify-between pt-1">
+                  <label className="flex items-center gap-2 cursor-pointer group">
+                    <div onClick={() => setRememberMe(!rememberMe)} className={`w-4 h-4 rounded border transition-all duration-200 flex items-center justify-center cursor-pointer ${rememberMe ? "border-[#D4AF37]" : "border-[rgba(192,199,209,0.3)] group-hover:border-[#D4AF37]"}`} style={{ backgroundColor: rememberMe ? colors.gold : "transparent" }}>
+                      {rememberMe && <svg className="w-2.5 h-2.5 text-[#0B0B0F]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>}
+                    </div>
+                    <span className="text-xs" style={{ color: colors.silver }}>{isRtl ? "مرا به خاطر بسپار" : "Remember me"}</span>
+                  </label>
+                  <Link to="/forgot-password" className="text-xs font-semibold transition-colors hover:opacity-80" style={{ color: colors.blue }}>{isRtl ? "فراموشی رمز" : "Forgot password?"}</Link>
+                </div>
 
-              <div className="flex items-center justify-between pt-1">
-                <label className="flex items-center gap-2 cursor-pointer group">
-                  <div onClick={() => setRememberMe(!rememberMe)} className={`w-4 h-4 rounded border transition-all duration-200 flex items-center justify-center cursor-pointer ${rememberMe ? "border-[#D4AF37]" : "border-[rgba(192,199,209,0.3)] group-hover:border-[#D4AF37]"}`} style={{ backgroundColor: rememberMe ? colors.gold : "transparent" }}>
-                    {rememberMe && <svg className="w-2.5 h-2.5 text-[#0B0B0F]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>}
-                  </div>
-                  <span className="text-xs" style={{ color: colors.silver }}>{isRtl ? "مرا به خاطر بسپار" : "Remember me"}</span>
-                </label>
-                <Link to="/forgot-password" className="text-xs font-semibold transition-colors hover:opacity-80" style={{ color: colors.blue }}>
-                  {isRtl ? "فراموشی رمز" : "Forgot password?"}
+                <MagneticBtn type="submit" disabled={isLoading} className="relative w-full py-3.5 rounded-xl font-black text-sm tracking-wide overflow-hidden group disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-300 mt-3" style={{ background: `linear-gradient(135deg, ${colors.gold}, ${colors.goldHover})`, color: colors.darkBg, boxShadow: `0 4px 15px ${colors.goldGlow}` }}>
+                  <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+                  <span className="relative flex items-center justify-center gap-2">
+                    {isLoading ? <svg className="w-5 h-5 animate-spin" viewBox="0 0 24 24" fill="none"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" /></svg> : <>{isRtl ? "ورود به حساب" : "Sign in"}{isRtl ? <FaArrowLeft size={14} /> : <FaArrowRight size={14} />}</>}
+                  </span>
+                </MagneticBtn>
+
+                <div className="relative my-6 flex items-center gap-3">
+                  <div className="flex-1 h-px" style={{ backgroundColor: colors.silverBorder }} />
+                  <span className="text-[11px] uppercase tracking-widest" style={{ color: colors.silver }}>{isRtl ? "یا" : "or"}</span>
+                  <div className="flex-1 h-px" style={{ backgroundColor: colors.silverBorder }} />
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <a href="mailto:rostamifatemeh.963@gmail.com" className="flex items-center justify-center gap-2 py-2.5 rounded-xl border text-sm font-bold transition-all duration-200" style={{ backgroundColor: "rgba(26, 29, 36, 0.5)", borderColor: colors.silverBorder, color: colors.silver }}>
+                    <FaGoogle className="text-red-400" size={15} /> Google
+                  </a>
+                  <a href="https://github.com/rostamifatemeh963" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 py-2.5 rounded-xl border text-sm font-bold transition-all duration-200" style={{ backgroundColor: "rgba(26, 29, 36, 0.5)", borderColor: colors.silverBorder, color: colors.silver }}>
+                    <FaGithub size={15} /> GitHub
+                  </a>
+                </div>
+              </form>
+            )}
+
+            {/* ✅ لینک به صفحه ثبت نام - کاربر را به Register هدایت می‌کند */}
+            {!success && (
+              <p className="text-center mt-7 text-sm" style={{ color: colors.silver }}>
+                {isRtl ? "حساب کاربری ندارید؟" : "New here?"}{" "}
+                <Link 
+                  to="/register" 
+                  className="font-black transition-colors hover:opacity-80 inline-flex items-center gap-1"
+                  style={{ color: colors.gold }}
+                >
+                  {isRtl ? "ثبت نام رایگان" : "Create account"}
+                  {isRtl ? <FaArrowLeft size={12} /> : <FaArrowRight size={12} />}
                 </Link>
-              </div>
-
-              <MagneticBtn type="submit" disabled={isLoading} className="relative w-full py-3.5 rounded-xl font-black text-sm tracking-wide overflow-hidden group disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-300 mt-3" style={{ background: `linear-gradient(135deg, ${colors.gold}, ${colors.goldHover})`, color: colors.darkBg, boxShadow: `0 4px 15px ${colors.goldGlow}` }}>
-                <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/30 to-transparent" />
-                <span className="relative flex items-center justify-center gap-2">
-                  {isLoading ? (
-                    <svg className="w-5 h-5 animate-spin" viewBox="0 0 24 24" fill="none">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
-                    </svg>
-                  ) : (
-                    <>{isRtl ? "ورود به حساب" : "Sign in"}{isRtl ? <FaArrowLeft size={14} /> : <FaArrowRight size={14} />}</>
-                  )}
-                </span>
-              </MagneticBtn>
-
-              <div className="relative my-6 flex items-center gap-3">
-                <div className="flex-1 h-px" style={{ backgroundColor: colors.silverBorder }} />
-                <span className="text-[11px] uppercase tracking-widest" style={{ color: colors.silver }}>{isRtl ? "یا" : "or"}</span>
-                <div className="flex-1 h-px" style={{ backgroundColor: colors.silverBorder }} />
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                <a href="mailto:rostamifatemeh.963@gmail.com" className="flex items-center justify-center gap-2 py-2.5 rounded-xl border text-sm font-bold transition-all duration-200" style={{ backgroundColor: "rgba(26, 29, 36, 0.5)", borderColor: colors.silverBorder, color: colors.silver }}>
-                  <FaGoogle className="text-red-400" size={15} /> Google
-                </a>
-                <a href="https://github.com/rostamifatemeh963" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 py-2.5 rounded-xl border text-sm font-bold transition-all duration-200" style={{ backgroundColor: "rgba(26, 29, 36, 0.5)", borderColor: colors.silverBorder, color: colors.silver }}>
-                  <FaGithub size={15} /> GitHub
-                </a>
-              </div>
-            </form>
-
-            <p className="text-center mt-7 text-sm" style={{ color: colors.silver }}>
-              {isRtl ? "حساب کاربری ندارید؟" : "New here?"}{" "}
-              <Link 
-                to="/register" 
-                className="font-black transition-colors hover:opacity-80 inline-flex items-center gap-1"
-                style={{ color: colors.gold }}
-              >
-                {isRtl ? "ثبت نام رایگان" : "Create account"}
-                {isRtl ? <FaArrowLeft size={12} /> : <FaArrowRight size={12} />}
-              </Link>
-            </p>
+              </p>
+            )}
           </div>
         </motion.div>
 
+        {/* Trusted Links */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="mt-6">
           <div className="flex flex-wrap items-center justify-center gap-3">
             {trustedLinks.map((link, idx) => (
@@ -367,6 +343,7 @@ export default function Login() {
           </p>
         </motion.div>
 
+        {/* Bottom caption */}
         <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }} className="text-center mt-5 text-[11px]" style={{ color: "rgba(192, 199, 209, 0.4)" }}>
           {isRtl ? "با ورود، شرایط و سیاست حریم خصوصی را می‌پذیرید" : "By signing in you agree to our Terms & Privacy Policy"}
         </motion.p>

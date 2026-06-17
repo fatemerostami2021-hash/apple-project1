@@ -1,0 +1,290 @@
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+dotenv.config();
+
+const articleSchema = new mongoose.Schema({}, { strict: false });
+const Article = mongoose.model('Article', articleSchema, 'articles');
+
+const articles = [
+  // ========== آیفون ==========
+  {
+    title: { 
+      en: 'iPhone 18 Pro Max Review', 
+      fa: 'بررسی آیفون ۱۸ پرو مکس' 
+    },
+    slug: 'iphone-18-promax-review',
+    brand: 'Apple',
+    category: 'Review',
+    content: {
+      en: 'The iPhone 18 Pro Max represents the pinnacle of Apple\'s engineering. With groundbreaking AI capabilities, an advanced camera system, and the new A18 Bionic chip, this device redefines what a smartphone can do.',
+      fa: 'آیفون ۱۸ پرو مکس اوج مهندسی اپل را نشان می‌دهد. با قابلیت‌های پیشگامانه هوش مصنوعی، سیستم دوربین پیشرفته و تراشه جدید A18 Bionic، این دستگاه تعریف جدیدی از گوشی هوشمند ارائه می‌دهد.'
+    },
+    excerpt: {
+      en: 'The most advanced iPhone ever with A18 Bionic and AI capabilities.',
+      fa: 'پیشرفته‌ترین آیفون تاریخ با تراشه A18 Bionic و قابلیت‌های هوش مصنوعی.'
+    },
+    tags: ['iPhone', 'Apple', 'Review', 'A18 Bionic'],
+    publishDate: '2026-01-15',
+    readTime: 8,
+    active: true,
+    featured: true
+  },
+  {
+    title: { 
+      en: 'iPhone 16 Review', 
+      fa: 'بررسی آیفون ۱۶' 
+    },
+    slug: 'iphone-16-review',
+    brand: 'Apple',
+    category: 'Review',
+    content: {
+      en: 'The iPhone 16 brings powerful upgrades including the A17 chip, improved battery life, and a refined design.',
+      fa: 'آیفون ۱۶ ارتقاءهای قدرتمندی از جمله تراشه A17، عمر باتری بهبود یافته و طراحی ظریف را به ارمغان می‌آورد.'
+    },
+    excerpt: {
+      en: 'Powerful upgrades with A17 chip and improved battery.',
+      fa: 'ارتقاءهای قدرتمند با تراشه A17 و باتری بهبود یافته.'
+    },
+    tags: ['iPhone', 'Apple', 'Review'],
+    publishDate: '2026-01-10',
+    readTime: 6,
+    active: true,
+    featured: true
+  },
+  {
+    title: { 
+      en: 'iPhone 16 Pro Review', 
+      fa: 'بررسی آیفون ۱۶ پرو' 
+    },
+    slug: 'iphone-16-pro-review',
+    brand: 'Apple',
+    category: 'Review',
+    content: {
+      en: 'The iPhone 16 Pro delivers professional-grade features with a stunning titanium design, advanced camera system, and the powerful A17 Pro chip.',
+      fa: 'آیفون ۱۶ پرو ویژگی‌های حرفه‌ای را با طراحی خیره‌کننده تیتانیوم، سیستم دوربین پیشرفته و تراشه قدرتمند A17 Pro ارائه می‌دهد.'
+    },
+    excerpt: {
+      en: 'Professional features with titanium design and A17 Pro.',
+      fa: 'ویژگی‌های حرفه‌ای با طراحی تیتانیوم و A17 Pro.'
+    },
+    tags: ['iPhone', 'Apple', 'Review', 'Pro'],
+    publishDate: '2026-01-12',
+    readTime: 7,
+    active: true,
+    featured: true
+  },
+  {
+    title: { 
+      en: 'iPhone 15 Review', 
+      fa: 'بررسی آیفون ۱۵' 
+    },
+    slug: 'iphone-15-review',
+    brand: 'Apple',
+    category: 'Review',
+    content: {
+      en: 'The iPhone 15 introduces Dynamic Island to the standard model, along with a powerful A16 chip and an improved camera system.',
+      fa: 'آیفون ۱۵ داینامیک آیلند را به مدل استاندارد معرفی می‌کند، همراه با تراشه قدرتمند A16 و سیستم دوربین بهبود یافته.'
+    },
+    excerpt: {
+      en: 'Dynamic Island comes to the standard iPhone with A16 chip.',
+      fa: 'داینامیک آیلند به آیفون استاندارد با تراشه A16 آمد.'
+    },
+    tags: ['iPhone', 'Apple', 'Review'],
+    publishDate: '2026-01-08',
+    readTime: 5,
+    active: true,
+    featured: true
+  },
+  // ========== آیپد ==========
+  {
+    title: { 
+      en: 'iPad Air Review', 
+      fa: 'بررسی آیپد ایر' 
+    },
+    slug: 'ipad-air-review',
+    brand: 'Apple',
+    category: 'Review',
+    content: {
+      en: 'The iPad Air offers the perfect balance of power and portability with the M2 chip.',
+      fa: 'آیپد ایر تعادل کامل بین قدرت و قابلیت حمل را با تراشه M2 ارائه می‌دهد.'
+    },
+    excerpt: {
+      en: 'Perfect balance of power and portability with M2 chip.',
+      fa: 'تعادل کامل بین قدرت و قابلیت حمل با تراشه M2.'
+    },
+    tags: ['iPad', 'Apple', 'Review', 'M2'],
+    publishDate: '2026-01-05',
+    readTime: 5,
+    active: true,
+    featured: true
+  },
+  {
+    title: { 
+      en: 'iPad Pro Review', 
+      fa: 'بررسی آیپد پرو' 
+    },
+    slug: 'ipad-pro-review',
+    brand: 'Apple',
+    category: 'Review',
+    content: {
+      en: 'The iPad Pro with M4 chip is the ultimate tablet experience.',
+      fa: 'آیپد پرو با تراشه M4 نهایی‌ترین تجربه تبلت است.'
+    },
+    excerpt: {
+      en: 'Ultimate tablet experience with M4 chip.',
+      fa: 'نهایی‌ترین تجربه تبلت با تراشه M4.'
+    },
+    tags: ['iPad', 'Apple', 'Review', 'M4', 'Pro'],
+    publishDate: '2026-01-06',
+    readTime: 6,
+    active: true,
+    featured: true
+  },
+  // ========== مک‌بوک ==========
+  {
+    title: { 
+      en: 'MacBook Air M3 Review', 
+      fa: 'بررسی مک‌بوک ایر M3' 
+    },
+    slug: 'macbook-air-m3-review',
+    brand: 'Apple',
+    category: 'Review',
+    content: {
+      en: 'The MacBook Air M3 is the perfect laptop with incredible performance and all-day battery life.',
+      fa: 'مک‌بوک ایر M3 لپ‌تاپ ایده‌آل با عملکرد فوق‌العاده و عمر باتری تمام روز است.'
+    },
+    excerpt: {
+      en: 'The perfect laptop with M3 chip and all-day battery.',
+      fa: 'لپ‌تاپ ایده‌آل با تراشه M3 و باتری تمام روز.'
+    },
+    tags: ['MacBook', 'Apple', 'Review', 'M3'],
+    publishDate: '2026-01-04',
+    readTime: 6,
+    active: true,
+    featured: true
+  },
+  // ========== ایرپاد ==========
+  {
+    title: { 
+      en: 'AirPods Max Review', 
+      fa: 'بررسی ایرپادز مکس' 
+    },
+    slug: 'airpods-max-review',
+    brand: 'Apple',
+    category: 'Review',
+    content: {
+      en: 'The AirPods Max deliver exceptional audio quality with active noise cancellation.',
+      fa: 'ایرپادز مکس کیفیت صدای استثنایی با حذف نویز فعال را ارائه می‌دهند.'
+    },
+    excerpt: {
+      en: 'Exceptional audio quality with active noise cancellation.',
+      fa: 'کیفیت صدای استثنایی با حذف نویز فعال.'
+    },
+    tags: ['AirPods', 'Apple', 'Review', 'Headphones'],
+    publishDate: '2026-01-03',
+    readTime: 4,
+    active: true,
+    featured: true
+  },
+  {
+    title: { 
+      en: 'AirPods Pro Review', 
+      fa: 'بررسی ایرپادز پرو' 
+    },
+    slug: 'airpods-pro-review',
+    brand: 'Apple',
+    category: 'Review',
+    content: {
+      en: 'The AirPods Pro offer industry-leading active noise cancellation with the H2 chip.',
+      fa: 'ایرپادز پرو حذف نویز فعال پیشرو در صنعت را با تراشه H2 ارائه می‌دهند.'
+    },
+    excerpt: {
+      en: 'Industry-leading noise cancellation with H2 chip.',
+      fa: 'حذف نویز پیشرو در صنعت با تراشه H2.'
+    },
+    tags: ['AirPods', 'Apple', 'Review', 'Pro'],
+    publishDate: '2026-01-02',
+    readTime: 4,
+    active: true,
+    featured: true
+  },
+  // ========== سامسونگ ==========
+  {
+    title: { 
+      en: 'Galaxy S25 Ultra Review', 
+      fa: 'بررسی گلکسی اس۲۵ اولترا' 
+    },
+    slug: 'galaxy-s25-ultra-review',
+    brand: 'Samsung',
+    category: 'Review',
+    content: {
+      en: 'The Galaxy S25 Ultra is Samsung\'s most advanced smartphone with a 200MP camera and Snapdragon 8 Gen 4.',
+      fa: 'گلکسی اس۲۵ اولترا پیشرفته‌ترین گوشی سامسونگ با دوربین ۲۰۰ مگاپیکسلی و Snapdragon 8 Gen 4 است.'
+    },
+    excerpt: {
+      en: 'Samsung\'s most advanced smartphone with 200MP camera.',
+      fa: 'پیشرفته‌ترین گوشی سامسونگ با دوربین ۲۰۰ مگاپیکسلی.'
+    },
+    tags: ['Samsung', 'Galaxy S25', 'Review', 'Android'],
+    publishDate: '2026-01-01',
+    readTime: 8,
+    active: true,
+    featured: true
+  },
+  {
+    title: { 
+      en: 'Galaxy Z Fold 5 Review', 
+      fa: 'بررسی گلکسی زد فولد ۵' 
+    },
+    slug: 'galaxy-z-fold-5-review',
+    brand: 'Samsung',
+    category: 'Review',
+    content: {
+      en: 'The Galaxy Z Fold 5 is Samsung\'s latest foldable flagship with a refined hinge and improved durability.',
+      fa: 'گلکسی زد فولد ۵ جدیدترین پرچمدار تاشو سامسونگ با لولای بهبود یافته و دوام بالاتر است.'
+    },
+    excerpt: {
+      en: 'The ultimate multitasking device with refined foldable design.',
+      fa: 'نهایی‌ترین دستگاه چندوظیفه‌ای با طراحی تاشو ظریف.'
+    },
+    tags: ['Samsung', 'Z Fold 5', 'Review', 'Foldable'],
+    publishDate: '2026-01-07',
+    readTime: 7,
+    active: true,
+    featured: true
+  }
+];
+
+async function seedArticles() {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI);
+    console.log('✅ Connected to MongoDB');
+    
+    let added = 0;
+    let skipped = 0;
+    
+    for (const article of articles) {
+      const existing = await Article.findOne({ slug: article.slug });
+      if (!existing) {
+        await Article.create(article);
+        console.log(`✅ اضافه شد: ${article.slug}`);
+        added++;
+      } else {
+        console.log(`⏩ موجود است: ${article.slug}`);
+        skipped++;
+      }
+    }
+    
+    console.log(`\n📊 خلاصه:`);
+    console.log(`✅ ${added} مقاله جدید اضافه شد`);
+    console.log(`⏩ ${skipped} مقاله موجود بود`);
+    console.log(`📚 مجموع مقالات: ${await Article.countDocuments()}`);
+    
+    await mongoose.disconnect();
+  } catch (error) {
+    console.error('❌ Error:', error.message);
+    await mongoose.disconnect();
+  }
+}
+
+seedArticles();

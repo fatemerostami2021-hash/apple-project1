@@ -1,0 +1,170 @@
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+dotenv.config();
+import Slide from './models/Slide.js';
+
+const slides = [
+  {
+    title: { en: 'Galaxy S24 Ultra', fa: 'گلکسی اس۲۴ اولترا' },
+    subtitle: { en: 'Galaxy AI in your hands', fa: 'هوش مصنوعی در دستان شما' },
+    description: { en: '200MP Camera | Galaxy AI | S Pen', fa: 'دوربین ۲۰۰ مگاپیکسلی | هوش مصنوعی Galaxy AI | قلم S Pen' },
+    image: '/images/hero-slider-home/hero-1.png',
+    brand: 'Samsung',
+    articleSlug: 'galaxy-s24-ultra-review',
+    order: 1,
+    active: true
+  },
+  {
+    title: { en: 'Apple Ecosystem', fa: 'اکوسیستم اپل' },
+    subtitle: { en: 'Seamless experience across all devices', fa: 'تجربه یکپارچه در تمام دستگاه‌ها' },
+    description: { en: 'Handoff | Universal Clipboard | Sidecar', fa: 'Handoff | کلیپ‌بورد همگانی | Sidecar' },
+    image: '/images/hero-slider-home/hero-2.png',
+    brand: 'Apple',
+    articleSlug: 'apple-ecosystem-guide',
+    order: 2,
+    active: true
+  },
+  {
+    title: { en: 'Apple Watch Series 9', fa: 'اپل واچ سری ۹' },
+    subtitle: { en: 'Smarter. Brighter. More powerful.', fa: 'باهوش‌تر، درخشان‌تر، قدرتمندتر' },
+    description: { en: 'S9 SIP | Always-On Display | Double Tap', fa: 'S9 SIP | نمایشگر همیشه روشن | ضربه دوگانه' },
+    image: '/images/hero-slider-home/hero-3.png',
+    brand: 'Apple',
+    articleSlug: 'apple-watch-series-9-review',
+    order: 3,
+    active: true
+  },
+  {
+    title: { en: 'iPhone 13 Product Red', fa: 'آیفون ۱۳ پروداکت رد' },
+    subtitle: { en: 'Special color, unlimited power', fa: 'رنگ خاص، قدرت بی‌پایان' },
+    description: { en: 'A15 Bionic | Dual Camera | 5G', fa: 'A15 Bionic | دوربین دوگانه | 5G' },
+    image: '/images/hero-slider-home/hero-4.png',
+    brand: 'Apple',
+    articleSlug: 'iphone-13-red-review',
+    order: 4,
+    active: true
+  },
+  {
+    title: { en: 'iPhone 15 Pro', fa: 'آیفون ۱۵ پرو' },
+    subtitle: { en: 'Titanium. Lightest and strongest Pro', fa: 'ساخته شده از تیتانیوم' },
+    description: { en: 'A17 Pro | Titanium | USB-C', fa: 'A17 Pro | تیتانیوم | USB-C' },
+    image: '/images/hero-slider-home/hero-5.png',
+    brand: 'Apple',
+    articleSlug: 'iphone-15-pro-review',
+    order: 5,
+    active: true
+  },
+  {
+    title: { en: 'Samsung Flagships', fa: 'پرچمداران سامسونگ' },
+    subtitle: { en: 'The pinnacle of Android technology', fa: 'اوج تکنولوژی اندروید' },
+    description: { en: 'Snapdragon 8 Gen 3 | Dynamic AMOLED 2X', fa: 'Snapdragon 8 Gen 3 | Dynamic AMOLED 2X' },
+    image: '/images/hero-slider-home/hero-6.png',
+    brand: 'Samsung',
+    articleSlug: 'samsung-flagships-2024',
+    order: 6,
+    active: true
+  },
+  {
+    title: { en: 'MacBook Pro Series', fa: 'مک‌بوک پرو' },
+    subtitle: { en: 'For the pros. M3 chip power.', fa: 'برای حرفه‌ای‌ها. قدرت تراشه M3' },
+    description: { en: 'M3 | M3 Pro | M3 Max | 22hr battery', fa: 'M3 | M3 Pro | M3 Max | ۲۲ ساعت باتری' },
+    image: '/images/hero-slider-home/hero-7.png',
+    brand: 'Apple',
+    articleSlug: 'macbook-pro-m3-review',
+    order: 7,
+    active: true
+  },
+  {
+    title: { en: 'iPad Pro M2', fa: 'آیپد پرو M2' },
+    subtitle: { en: 'Your next computer', fa: 'کامپیوتر بعدی شما' },
+    description: { en: 'M2 chip | Apple Pencil hover', fa: 'تراشه M2 | Apple Pencil hover' },
+    image: '/images/hero-slider-home/hero-8.png',
+    brand: 'Apple',
+    articleSlug: 'ipad-pro-m2-review',
+    order: 8,
+    active: true
+  },
+  {
+    title: { en: 'iPhone 17 Pro Max', fa: 'آیفون ۱۷ پرو مکس' },
+    subtitle: { en: 'Future of iPhone design', fa: 'آینده طراحی آیفون' },
+    description: { en: 'Concept design | Under-display camera', fa: 'کانسپت طراحی | دوربین زیر نمایشگر' },
+    image: '/images/hero-slider-home/hero-9.png',
+    brand: 'Concept',
+    articleSlug: 'iphone-17-design-concept',
+    order: 9,
+    active: true
+  },
+  {
+    title: { en: 'Dual-View Concept', fa: 'کانسپت نمای دوگانه' },
+    subtitle: { en: 'Circular camera module design', fa: 'طراحی ماژول دوربین دایره‌ای' },
+    description: { en: 'Circular camera | Integrated design', fa: 'ماژول دوربین دایره‌ای | طراحی یکپارچه' },
+    image: '/images/hero-slider-home/hero-10.png',
+    brand: 'Concept',
+    articleSlug: 'iphone-17-dual-view',
+    order: 10,
+    active: true
+  },
+  {
+    title: { en: 'Full Apple Setup', fa: 'ست کامل اپل' },
+    subtitle: { en: 'Complete Apple workspace', fa: 'میز کار کامل اپل' },
+    description: { en: 'Mac Studio | Studio Display', fa: 'Mac Studio | Studio Display' },
+    image: '/images/hero-slider-home/hero-11.png',
+    brand: 'Apple',
+    articleSlug: 'apple-full-setup-guide',
+    order: 11,
+    active: true
+  },
+  {
+    title: { en: 'Galaxy S24 Series', fa: 'سری گلکسی اس۲۴' },
+    subtitle: { en: 'Choose your best', fa: 'انتخاب بهترین' },
+    description: { en: 'S24 | S24+ | S24 Ultra', fa: 'S24 | S24+ | S24 Ultra' },
+    image: '/images/hero-slider-home/hero-12.png',
+    brand: 'Samsung',
+    articleSlug: 'galaxy-s24-series-comparison',
+    order: 12,
+    active: true
+  },
+  {
+    title: { en: 'iPad Pro Creative', fa: 'آیپد پرو خلاق' },
+    subtitle: { en: 'For artists and designers', fa: 'برای هنرمندان و طراحان' },
+    description: { en: 'Apple Pencil Pro | Procreate', fa: 'Apple Pencil Pro | Procreate' },
+    image: '/images/hero-slider-home/hero-13.png',
+    brand: 'Apple',
+    articleSlug: 'ipad-pro-creative-tools',
+    order: 13,
+    active: true
+  },
+  {
+    title: { en: 'Watch Collection', fa: 'کلکسیون اپل واچ' },
+    subtitle: { en: 'Styles and models for every taste', fa: 'تنوعی از بندها و مدل‌ها' },
+    description: { en: 'Series 9 | Ultra 2 | SE', fa: 'سری ۹ | اولترا ۲ | SE' },
+    image: '/images/hero-slider-home/hero-14.png',
+    brand: 'Apple',
+    articleSlug: 'apple-watch-collection-guide',
+    order: 14,
+    active: true
+  }
+];
+
+async function seedSlides() {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI);
+    console.log('✅ Connected to MongoDB');
+    
+    // پاک کردن اسلایدهای قبلی
+    await Slide.deleteMany({});
+    console.log('🗑️ Slides cleared');
+    
+    // اضافه کردن اسلایدهای جدید
+    const result = await Slide.insertMany(slides);
+    console.log(`✅ ${result.length} slides added successfully`);
+    
+    await mongoose.disconnect();
+    console.log('✅ Disconnected from MongoDB');
+  } catch (error) {
+    console.error('❌ Error:', error.message);
+    await mongoose.disconnect();
+  }
+}
+
+seedSlides();

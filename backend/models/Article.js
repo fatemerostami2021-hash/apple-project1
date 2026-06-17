@@ -1,23 +1,30 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
-const articleSchema = new mongoose.Schema(
-  {
-    slug: { type: String, required: true, unique: true },
-    brand: { type: String, default: "Apple" },
-    title: { type: mongoose.Schema.Types.Mixed, default: { fa: "", en: "" } },
-    content: { type: mongoose.Schema.Types.Mixed, default: { fa: "", en: "" } },
-    cover: { type: String, default: "" },
-    gallery: { type: Array, default: [] },
-    mainVideo: { type: mongoose.Schema.Types.Mixed, default: { id: "", title: "", duration: "" } },
-    relatedVideos: { type: Array, default: [] },
-    readTime: { type: Number, default: 10 },
-    tags: { type: Array, default: [] },
-    author: { type: String, default: "مدیر سایت" },
-    publishDate: { type: Date, default: Date.now },
-    likes: { type: Number, default: 0 },
-    views: { type: Number, default: 0 }
+const articleSchema = new mongoose.Schema({
+  id: { type: String, unique: true },
+  title: {
+    en: { type: String, required: true },
+    fa: { type: String, required: true }
   },
-  { timestamps: true }
-);
+  slug: { type: String, required: true, unique: true },
+  brand: { type: String, default: 'Apple' },
+  category: { type: String, default: 'Review' },
+  content: {
+    en: { type: String, default: '' },
+    fa: { type: String, default: '' }
+  },
+  excerpt: {
+    en: { type: String, default: '' },
+    fa: { type: String, default: '' }
+  },
+  cover: { type: String, default: '' },
+  gallery: [{ type: String }],
+  tags: [{ type: String }],
+  publishDate: { type: String, default: () => new Date().toISOString().slice(0, 10) },
+  readTime: { type: Number, default: 5 },
+  active: { type: Boolean, default: true },
+  featured: { type: Boolean, default: false },
+  views: { type: Number, default: 0 }
+}, { timestamps: true });
 
-export default mongoose.model("Article", articleSchema);
+export default mongoose.model('Article', articleSchema);

@@ -1,5 +1,3 @@
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
-
 import { lazy, Suspense } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
