@@ -34,6 +34,9 @@ import CheckoutPage from "./pages/CheckoutPage";
 import GalaxyBackground from "./components/GalaxyBackground";
 import ProductPage from "./pages/ProductPage";
 import WatchPage from "./pages/apple/WatchPage";
+import IpadPage from "./pages/apple/IpadPage";
+import MacbookPage from "./pages/apple/MacbookPage";
+import AirpodsPage from "./pages/apple/AirpodsPage";
 
 // مقالات اپل واچ
 import ArticleAppleWatchUltra4 from "./pages/products/watch/article/ArticleAppleWatchUltra4";
@@ -64,7 +67,7 @@ export default function App() {
     <div
       className={`
         relative min-h-screen flex flex-col transition-colors duration-300
-        ${theme === "dark" ? "bg-transparent text-white" : "bg-[#E8F5FF] text-black"}
+        ${theme === "dark" ? "bg-[#2D2D2D] text-white" : "bg-[#E8F5FF] text-black"}
       `}
       style={{ fontFamily: "IRANSans, sans-serif" }}
     >
@@ -97,6 +100,7 @@ export default function App() {
           <Route path="/blog/:slug" element={<ArticlePage />} />
           <Route path="/article/:slug" element={<ArticlePage />} />
           <Route path="/iphone/:slug" element={<ArticlePage />} />
+          <Route path="/articles/:slug" element={<ArticlePage />} />
           
           {/* ===== صفحات دیگر ===== */}
           <Route path="/services" element={<div>Services Page</div>} />
@@ -105,8 +109,10 @@ export default function App() {
           {/* ===== اپل واچ ===== */}
           <Route path="/apple-products/watch" element={<WatchPage />} />
           <Route path="/apple-products/iphone" element={<IphonePage />} />
-          <Route path="/apple-products/ipad" element={<div>iPad Page</div>} />
-          <Route path="/apple-products/macbook" element={<div>MacBook Page</div>} />
+          <Route path="/apple-products/ipad" element={<IpadPage />} />
+          <Route path="/apple-products/macbook" element={<MacbookPage />} />
+          <Route path="/apple-products/airpods" element={<AirpodsPage />} />
+          <Route path="/apple-products/macbook" element={<MacbookPage />} />
           <Route path="/apple-products/airpods" element={<div>AirPods Page</div>} />
 
           {/* ===== مقالات اپل واچ ===== */}

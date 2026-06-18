@@ -1,60 +1,197 @@
-import React, { useCallback } from "react";
-import { useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import React, { useCallback, useState } from "react";
 import { motion } from "framer-motion";
-import { HiOutlineShoppingCart, HiOutlineEye } from "react-icons/hi";
+import { useTranslation } from "react-i18next";
+import { Link, useNavigate } from "react-router-dom";
+import { HiOutlineHeart, HiOutlineShoppingBag, HiOutlineCheck, HiOutlineEye, HiOutlineNewspaper, HiOutlineArrowRight } from "react-icons/hi";
 import { useCart } from "../../hooks/useCart";
+import { articleMap } from "./articleMap";
 
-const PH = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23f5f5f5'/%3E%3C/svg%3E";
+const ProductCard = ({ product, onQuickView }) => {
+  const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
+  const { add } = useCart();
+  const [isLiked, setIsLiked] = useState(false);
+  const [isAdded, setIsAdded] = useState(false);
+  
+  const isRTL = i18n.language === "fa";
+  const lang = i18n.language === "fa" ? "fa" : "en";
 
-const ProductCard = React.memo(({ product, onQuickView }) => {
-  const { i18n, t } = useTranslation();
-  const navigate     = useNavigate();
-  const { add }      = useCart();
-  const lang  = i18n.language;
-  const isRTL = lang === "fa";
+  // دریافت متن بر اساس زبان
+  const getLangText = (data) => {
+    if (!data) return '';
+    if (typeof data === 'string') return data;
+    return data[lang] || data.en || data.fa || '';
+  };
 
-  const name  = typeof product?.name === "object" ? (product.name[lang] || product.name.en || "") : (product?.name || "");
-  const thumb = product?.thumbnail || product?.image || PH;
-  const price = typeof product?.price === "number" ? `$${product.price.toLocaleString()}` : (product?.price || "");
-  const id    = product?._id || product?.id;
+  // نام محصول
+  const productName = getLangText(product.name);
+  
+  // شناسه محصول
+  const productId = product._id || product.id;
+  const productSlug = product.slug || productId;
+  
+  // بررسی وجود مقاله مرتبط
+  const articleSlug = articleMap[productSlug] || productSlug;
+  const hasArticle = articleSlug !== productSlug;
 
-  const handleView = useCallback((e) => { e.stopPropagation(); if (onQuickView) onQuickView(product); else if (id) navigate(`/product/${id}`); }, [product, onQuickView, navigate, id]);
-  const handleNav  = useCallback(() => { if (id) navigate(`/product/${id}`); }, [navigate, id]);
-  const handleCart = useCallback((e) => { e.stopPropagation(); add(product); }, [add, product]);
+  // قیمت
+  const price = product.price || 0;
+
+  // دکمه افزودن به سبد خرید
+  const handleAddToCart = useCallback((e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    add(product, 1);
+    setIsAdded(true);
+    setTimeout(() => setIsAdded(false), 2000);
+  }, [add, product]);
+
+  // دکمه مشاهده → به مقاله یا محصول
+  const handleView = useCallback((e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (hasArticle) {
+      navigate(`/articles/${articleSlug}`);
+    } else {
+      navigate(`/product/${productSlug}`);
+    }
+  }, [hasArticle, articleSlug, productSlug, navigate]);
+
+  // دکمه لایک
+  const handleLike = useCallback((e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsLiked(!isLiked);
+  }, [isLiked]);
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }}
-      whileHover={{ y: -8, scale: 1.02 }} transition={{ duration: 0.4, ease: "easeOut" }}
-      onClick={handleNav}
-      className={`group relative cursor-pointer rounded-3xl p-5 overflow-hidden bg-white/80 dark:bg-neutral-900/60 backdrop-blur-xl border border-neutral-200 dark:border-[#D4AF37]/20 shadow-sm hover:shadow-[0_20px_50px_rgba(212,175,55,0.12)] transition-all duration-500 ${isRTL ? "text-right" : "text-center"}`}>
+      whileHover={{ y: -8 }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
+      className="group bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-200/50 dark:border-white/10 hover:border-amber-400/50 dark:hover:border-amber-500/50"
+    >
+      {/* ===== Image Section ===== */}
+      <Link to={hasArticle ? `/articles/${articleSlug}` : `/product/${productSlug}`} className="block">
+        <div className="relative overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900">
+          <img
+            src={product.thumbnail || product.image || product.cover || '/images/placeholder.png'}
+            alt={productName || 'Product'}
+            className="w-full h-48 md:h-56 object-contain p-4 md:p-6 transition duration-500 group-hover:scale-110"
+            loading="lazy"
+            onError={(e) => { e.currentTarget.src = '/images/placeholder.png'; }}
+          />
 
-      <div className="h-36 mb-4 flex items-center justify-center bg-neutral-50 dark:bg-neutral-800 rounded-2xl overflow-hidden">
-        <motion.img src={thumb} alt={name} whileHover={{ scale: 1.1, y: -3 }} transition={{ duration: 0.4 }}
-          className="h-28 w-full object-contain" loading="lazy" decoding="async"
-          onError={(e) => { e.target.src = PH; }} draggable={false} />
-      </div>
+          {/* ===== Badges ===== */}
+          <div className="absolute top-3 left-3 flex flex-col gap-2">
+            {product.isNew && (
+              <span className="bg-gradient-to-r from-green-500 to-green-600 text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-md">
+                {isRTL ? "جدید" : "NEW"}
+              </span>
+            )}
+            {product.discount && (
+              <span className="bg-gradient-to-r from-red-500 to-red-600 text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-md">
+                -{product.discount}% {isRTL ? "تخفیف" : "OFF"}
+              </span>
+            )}
+            {hasArticle && (
+              <span className="bg-gradient-to-r from-amber-500 to-amber-600 text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-md flex items-center gap-1">
+                <HiOutlineNewspaper size={10} />
+                {isRTL ? "مقاله" : "Article"}
+              </span>
+            )}
+          </div>
 
-      <div className="space-y-1">
-        <p className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest">{product?.brand}</p>
-        <h3 className="text-sm font-extrabold text-neutral-900 dark:text-[#D4AF37] line-clamp-2 leading-tight">{name}</h3>
-        <p className="text-base font-black text-neutral-900 dark:text-[#D4AF37] pt-1">{price}</p>
-        <div className="pt-2 flex gap-2">
-          <motion.button whileTap={{ scale: 0.96 }} onClick={handleCart}
-            className="flex-1 py-2 rounded-xl bg-neutral-900 dark:bg-[#D4AF37] text-white dark:text-black font-bold text-xs flex items-center justify-center gap-1 hover:opacity-90 transition">
-            <HiOutlineShoppingCart size={13} />
-            {isRTL ? "سبد" : "Add"}
-          </motion.button>
-          <motion.button whileTap={{ scale: 0.96 }} onClick={handleView}
-            className="w-9 h-9 rounded-xl border border-neutral-200 dark:border-neutral-700 flex items-center justify-center hover:border-[#D4AF37] transition" aria-label="view">
-            <HiOutlineEye size={14} className="text-neutral-500 dark:text-neutral-400" />
-          </motion.button>
+          {/* ===== Like Button ===== */}
+          <button
+            onClick={handleLike}
+            className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/80 dark:bg-black/50 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110"
+          >
+            <HiOutlineHeart className={`w-4 h-4 ${isLiked ? "text-red-500 fill-red-500" : "text-gray-600 dark:text-gray-400"}`} />
+          </button>
+
+          {/* ===== Quick View Overlay ===== */}
+          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (onQuickView) onQuickView(product);
+              }}
+              className="px-4 py-2 bg-white/90 dark:bg-black/80 text-black dark:text-white rounded-xl text-sm font-bold backdrop-blur-sm hover:scale-105 transition"
+            >
+              {isRTL ? "مشاهده سریع" : "Quick View"}
+            </button>
+          </div>
         </div>
+      </Link>
+
+      {/* ===== Content Section ===== */}
+      <div className="p-4 text-center">
+        {/* Brand */}
+        <p className="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">
+          {product.brand || 'Apple'}
+        </p>
+
+        {/* Title */}
+        <Link to={hasArticle ? `/articles/${articleSlug}` : `/product/${productSlug}`}>
+          <h3 className="text-sm md:text-base font-bold text-gray-900 dark:text-white mt-1 mb-1 line-clamp-1 hover:text-amber-500 dark:hover:text-amber-400 transition-colors">
+            {productName}
+          </h3>
+        </Link>
+
+        {/* Price */}
+        <div className="mt-2 flex items-center justify-center gap-2">
+          <span className="text-lg md:text-xl font-bold text-amber-500 dark:text-amber-400">
+            {price?.toLocaleString()}
+            <span className="text-[10px] font-normal text-gray-400 mr-1">{isRTL ? 'تومان' : 'Toman'}</span>
+          </span>
+          {product.oldPrice && (
+            <span className="text-xs line-through text-gray-400">
+              {product.oldPrice.toLocaleString()}
+            </span>
+          )}
+        </div>
+
+        {/* ===== Buttons ===== */}
+        <div className="mt-3 flex gap-2">
+          {/* ✅ دکمه مشاهده → مقاله یا محصول */}
+          <button
+            onClick={handleView}
+            className="flex-1 px-3 py-2 bg-amber-500 text-black rounded-xl hover:bg-amber-600 transition text-xs font-bold flex items-center justify-center gap-1 group"
+          >
+            <HiOutlineEye size={14} className="group-hover:scale-110 transition" />
+            {hasArticle ? (isRTL ? 'مقاله' : 'Article') : (isRTL ? 'مشاهده' : 'View')}
+            {hasArticle && <HiOutlineArrowRight size={12} className="group-hover:translate-x-1 transition" />}
+          </button>
+
+          {/* ✅ دکمه خرید → سبد خرید */}
+          <button
+            onClick={handleAddToCart}
+            className={`flex-1 px-3 py-2 rounded-xl transition text-xs font-bold flex items-center justify-center gap-1 ${
+              isAdded
+                ? 'bg-green-500 text-white'
+                : 'bg-gray-900 dark:bg-amber-500 text-white dark:text-black hover:opacity-90'
+            }`}
+          >
+            {isAdded ? (
+              <><HiOutlineCheck size={14} /> {isRTL ? 'افزوده شد' : 'Added'}</>
+            ) : (
+              <><HiOutlineShoppingBag size={14} /> {isRTL ? 'خرید' : 'Buy'}</>
+            )}
+          </button>
+        </div>
+
+        {/* ===== Article Badge (در صورت وجود) ===== */}
+        {hasArticle && (
+          <div className="mt-2 flex items-center justify-center gap-1">
+            <span className="text-[8px] font-bold text-amber-500 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/30">
+              📄 {isRTL ? 'مقاله مرتبط' : 'Related Article'}
+            </span>
+          </div>
+        )}
       </div>
     </motion.div>
   );
-});
+};
 
-ProductCard.displayName = "ProductCard";
 export default ProductCard;
