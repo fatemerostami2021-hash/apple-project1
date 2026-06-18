@@ -9,13 +9,14 @@ import "swiper/css/navigation";
 import { useTranslation } from "react-i18next";
 import { useState, useEffect, useCallback, useRef } from "react";
 import { motion } from "framer-motion";
-import { HiOutlineShoppingBag, HiOutlineSparkles, HiOutlineEye } from "react-icons/hi";
+import { HiOutlineShoppingBag, HiOutlineSparkles, HiOutlineEye, HiOutlineArrowRight } from "react-icons/hi";
 
 import HeroBackground from "../../animations/HeroBackground";
 import WaveCircleText from "../../animations/WaveCircleText";
 import { useTheme } from "../../store/theme";
 import { fadeIn } from "../../animations/variants";
 import { useSlides } from "../../hooks/useSlides";
+import { articleMap } from "../product/articleMap";
 
 // کامپوننت TypingText
 const TypingText = ({ texts, className }) => {
@@ -38,13 +39,13 @@ const TypingText = ({ texts, className }) => {
       } else {
         timeout = setTimeout(() => {
           setIsDeleting(true);
-        }, 2500);
+        }, 3000);
       }
     } else {
       if (currentText.length > 0) {
         timeout = setTimeout(() => {
           setCurrentText(currentFullText.slice(0, currentText.length - 1));
-        }, 40);
+        }, 50);
       } else {
         setIsDeleting(false);
         setCurrentTextIndex((prev) => (prev + 1) % texts.length);
@@ -57,7 +58,7 @@ const TypingText = ({ texts, className }) => {
   return (
     <span className={className}>
       {currentText}
-      <span className="inline-block w-[2px] h-8 bg-yellow-400 animate-pulse ml-1" />
+      <span className="inline-block w-[3px] h-10 bg-amber-400 animate-pulse ml-1" />
     </span>
   );
 };
@@ -71,7 +72,6 @@ const HeroSlider = () => {
   const currentLang = i18n.resolvedLanguage || i18n.language || "fa";
   const isRTL = currentLang.startsWith("fa");
 
-  // ✅ استفاده از useSlides برای دریافت از دیتابیس
   const { slides: slidesFromDB, loading } = useSlides();
   const [slides, setSlides] = useState([]);
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
@@ -82,37 +82,56 @@ const HeroSlider = () => {
   const frame = useRef();
   const swiperRef = useRef(null);
   const progressInterval = useRef(null);
-  const autoplayDelay = 4000;
+  const autoplayDelay = 5000;
 
-  // تنظیم اسلایدها از دیتابیس
+  // تنظیم اسلایدها از دیتابیس با لینک‌های صحیح
   useEffect(() => {
     if (slidesFromDB && slidesFromDB.length > 0) {
-      // تبدیل به فرمت مورد نیاز
-      const formattedSlides = slidesFromDB.map((slide, index) => ({
-        id: slide._id || `slide-${index}`,
-        brand: slide.brand || 'Apple',
-        title: isRTL ? slide.title?.fa : slide.title?.en,
-        subtitle: isRTL ? slide.subtitle?.fa : slide.subtitle?.en,
-        description: isRTL ? slide.description?.fa : slide.description?.en,
-        image: slide.image || '/images/placeholder.png',
-        articleSlug: slide.articleSlug || '',
-        productId: slide.productId?._id || slide.productId || null,
-        buttonText: {
-          en: slide.buttonText?.en || 'Buy Now',
-          fa: slide.buttonText?.fa || 'خرید'
-        },
-        order: slide.order || index,
-        active: slide.active !== false
-      }));
+      const formattedSlides = slidesFromDB.map((slide, index) => {
+        // دریافت اسلاگ صحیح مقاله از articleMap
+        let articleSlug = slide.articleSlug || '';
+        
+        // اگر مقاله‌ای تنظیم نشده، از نقشه استفاده کن
+        if (!articleSlug) {
+          const productSlug = slide.productId?.slug || slide.productId || '';
+          articleSlug = articleMap[productSlug] || '';
+        }
+        
+        // اگر هنوز مقاله‌ای نیست، از عنوان اسلاید استفاده کن
+        if (!articleSlug) {
+          const title = slide.title?.en || slide.title || '';
+          // تبدیل عنوان به اسلاگ
+          articleSlug = title
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/^-|-$/g, '');
+        }
+
+        return {
+          id: slide._id || `slide-${index}`,
+          brand: slide.brand || 'Apple',
+          title: isRTL ? slide.title?.fa : slide.title?.en,
+          subtitle: isRTL ? slide.subtitle?.fa : slide.subtitle?.en,
+          description: isRTL ? slide.description?.fa : slide.description?.en,
+          image: slide.image || '/images/placeholder.png',
+          articleSlug: articleSlug,
+          productId: slide.productId?._id || slide.productId || null,
+          buttonText: {
+            en: slide.buttonText?.en || 'Buy Now',
+            fa: slide.buttonText?.fa || 'خرید'
+          },
+          order: slide.order || index,
+          active: slide.active !== false
+        };
+      });
       
-      // مرتب‌سازی بر اساس order
       const sorted = formattedSlides
         .filter(s => s.active)
         .sort((a, b) => a.order - b.order);
       
       setSlides(sorted);
     } else {
-      // اسلایدهای پیش‌فرض اگر دیتابیس خالی بود
+      // اسلایدهای پیش‌فرض
       setSlides([
         {
           id: 'default-1',
@@ -121,7 +140,7 @@ const HeroSlider = () => {
           subtitle: isRTL ? 'قدرتمندترین آیفون تاریخ' : 'The most powerful iPhone ever',
           image: '/assets/iphone/iphone-17-pro-max.png',
           buttonText: { en: 'Buy Now', fa: 'خرید' },
-          articleSlug: 'iphone-17-pro-max-review'
+          articleSlug: 'iphone-17-pro-max'
         },
         {
           id: 'default-2',
@@ -130,7 +149,7 @@ const HeroSlider = () => {
           subtitle: isRTL ? 'بهترین تجربه گلکسی' : 'The ultimate Galaxy experience',
           image: '/assets/galexy-series-s/galaxy-s24-ultra.png',
           buttonText: { en: 'Buy Now', fa: 'خرید' },
-          articleSlug: 'galaxy-s24-ultra-review'
+          articleSlug: 'galaxy-s24-ultra-ai-revolution'
         }
       ]);
     }
@@ -205,7 +224,7 @@ const HeroSlider = () => {
   if (loading || slides.length === 0) {
     return (
       <div className="w-full h-[580px] md:h-[760px] flex items-center justify-center bg-gray-100 dark:bg-gray-900">
-        <div className="text-2xl font-bold text-gray-600 dark:text-gray-400">
+        <div className="text-2xl font-black text-gray-600 dark:text-gray-400">
           ⏳ {isRTL ? "در حال بارگذاری..." : "Loading..."}
         </div>
       </div>
@@ -228,10 +247,9 @@ const HeroSlider = () => {
       <HeroBackground darkMode={darkMode} />
       <WaveCircleText darkMode={darkMode} />
 
-      {/* Progress Bar */}
       <div className="absolute top-0 left-0 right-0 z-50 h-1 bg-white/20">
         <motion.div
-          className="h-full bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 rounded-r-full"
+          className="h-full bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 rounded-r-full"
           style={{ width: `${progress}%` }}
           transition={{ duration: 0.016 }}
         />
@@ -275,7 +293,6 @@ const HeroSlider = () => {
                 ${isRTL ? "flex-row-reverse text-right" : "flex-row text-left"}
               `}
             >
-              {/* TEXT SIDE */}
               <motion.div
                 variants={fadeIn(isRTL ? "left" : "right", 0.3)}
                 initial="hidden"
@@ -284,59 +301,58 @@ const HeroSlider = () => {
                 transition={{ type: "spring", stiffness: 280, damping: 20 }}
                 className="hero-card relative z-30 w-full md:w-[52%] lg:w-[40%] p-8 md:p-12"
               >
-                <div className="flex items-center gap-2 mb-3">
-                  <HiOutlineSparkles className="text-yellow-400 text-xs" />
-                  <p className="hero-brand text-[10px] md:text-xs">{slide.brand}</p>
+                <div className="flex items-center gap-3 mb-4">
+                  <HiOutlineSparkles className="text-amber-400 text-sm" />
+                  <p className="hero-brand text-[11px] font-extrabold tracking-[0.25em] uppercase">
+                    {slide.brand}
+                  </p>
                 </div>
 
-                <div className="min-h-[120px] md:min-h-[140px]">
+                <div className="min-h-[140px] md:min-h-[160px]">
                   <TypingText
                     texts={getTypingTexts(slide)}
-                    className="hero-title text-3xl md:text-5xl lg:text-6xl font-black tracking-tight
-                               bg-gradient-to-r from-yellow-400 via-amber-500 to-yellow-600 
+                    className="hero-title text-4xl md:text-6xl lg:text-7xl font-black tracking-tight
+                               bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-600 
                                bg-clip-text text-transparent
-                               drop-shadow-[0_0_15px_rgba(255,215,0,0.5)]"
+                               drop-shadow-[0_0_20px_rgba(255,215,0,0.4)]"
                   />
                 </div>
 
-                <p className="hero-subtitle mt-5 text-sm md:text-base lg:text-lg">
+                <p className="hero-subtitle mt-4 text-base md:text-lg lg:text-xl font-bold opacity-90">
                   {slide.subtitle}
                 </p>
 
                 {slide.description && (
-                  <p className="text-xs text-gray-400 mt-2 opacity-70">
+                  <p className="text-sm text-gray-400 mt-2 opacity-70 font-medium">
                     {slide.description}
                   </p>
                 )}
 
-                {/* Buttons */}
-                <div className="flex flex-wrap gap-3 mt-8">
-                  {/* دکمه خرید */}
+                <div className="flex flex-wrap gap-4 mt-8">
                   <button
                     onClick={() => handleBuy(slide.productId)}
-                    className="hero-btn px-8 py-3.5 rounded-full text-sm font-bold tracking-wide transition-all duration-300 group flex items-center gap-2"
+                    className="hero-btn px-8 py-4 rounded-full text-sm font-black tracking-wide transition-all duration-300 group flex items-center gap-2"
                   >
                     <span>{getButtonText(slide)}</span>
-                    <HiOutlineShoppingBag className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    <HiOutlineShoppingBag className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </button>
 
-                  {/* دکمه مشاهده مقاله */}
                   {slide.articleSlug && (
                     <button
                       onClick={() => handleViewArticle(slide.articleSlug)}
-                      className="px-6 py-3.5 rounded-full text-sm font-bold tracking-wide transition-all duration-300 
-                                 bg-transparent border-2 border-yellow-500/50 text-yellow-400 
-                                 hover:bg-yellow-500 hover:text-black hover:border-yellow-500
-                                 flex items-center gap-2"
+                      className="px-7 py-4 rounded-full text-sm font-black tracking-wide transition-all duration-300 
+                                 bg-transparent border-2 border-amber-500/50 text-amber-400 
+                                 hover:bg-amber-500 hover:text-black hover:border-amber-500
+                                 flex items-center gap-2 group"
                     >
-                      <HiOutlineEye className="w-4 h-4" />
+                      <HiOutlineEye className="w-5 h-5 group-hover:scale-110 transition" />
                       <span>{isRTL ? 'مشاهده مقاله' : 'View Article'}</span>
+                      <HiOutlineArrowRight className="w-4 h-4 group-hover:translate-x-1 transition" />
                     </button>
                   )}
                 </div>
               </motion.div>
 
-              {/* IMAGE SIDE */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.9, x: isRTL ? 50 : -50 }}
                 animate={{ opacity: 1, scale: 1, x: 0 }}
@@ -346,7 +362,6 @@ const HeroSlider = () => {
                   ${isRTL ? "justify-start" : "justify-end"}
                 `}
               >
-                {/* Glow Effect */}
                 <div
                   className="absolute w-[45%] h-[45%] blur-[90px] opacity-30 pointer-events-none"
                   style={{
@@ -386,40 +401,37 @@ const HeroSlider = () => {
         ))}
       </Swiper>
 
-      {/* Navigation Buttons */}
       <button
         className="hero-prev absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-40
-                   w-10 h-10 md:w-12 md:h-12 rounded-full bg-black/40 backdrop-blur-md border border-white/20
-                   flex items-center justify-center text-white hover:text-yellow-400 hover:bg-black/60
-                   hover:border-yellow-400/50 hover:scale-110 transition-all duration-300 opacity-0
+                   w-12 h-12 md:w-14 md:h-14 rounded-full bg-black/40 backdrop-blur-md border border-white/20
+                   flex items-center justify-center text-white hover:text-amber-400 hover:bg-black/60
+                   hover:border-amber-400/50 hover:scale-110 transition-all duration-300 opacity-0
                    group-hover:opacity-100 focus:opacity-100"
         aria-label={isRTL ? "بعدی" : "Previous"}
       >
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isRTL ? "M9 5l7 7-7 7" : "M15 19l-7-7 7-7"} />
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d={isRTL ? "M9 5l7 7-7 7" : "M15 19l-7-7 7-7"} />
         </svg>
       </button>
       
       <button
         className="hero-next absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-40
-                   w-10 h-10 md:w-12 md:h-12 rounded-full bg-black/40 backdrop-blur-md border border-white/20
-                   flex items-center justify-center text-white hover:text-yellow-400 hover:bg-black/60
-                   hover:border-yellow-400/50 hover:scale-110 transition-all duration-300 opacity-0
+                   w-12 h-12 md:w-14 md:h-14 rounded-full bg-black/40 backdrop-blur-md border border-white/20
+                   flex items-center justify-center text-white hover:text-amber-400 hover:bg-black/60
+                   hover:border-amber-400/50 hover:scale-110 transition-all duration-300 opacity-0
                    group-hover:opacity-100 focus:opacity-100"
         aria-label={isRTL ? "قبلی" : "Next"}
       >
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isRTL ? "M15 19l-7-7 7-7" : "M9 5l7 7-7 7"} />
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d={isRTL ? "M15 19l-7-7 7-7" : "M9 5l7 7-7 7"} />
         </svg>
       </button>
 
-      {/* Pagination */}
       <div className="hero-pagination absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3 z-30" />
 
-      {/* Slide Counter */}
       <div className="absolute bottom-8 right-8 z-30 hidden lg:block">
-        <div className="bg-black/40 backdrop-blur-md rounded-full px-4 py-2">
-          <span className="text-white text-sm font-mono">
+        <div className="bg-black/40 backdrop-blur-md rounded-full px-5 py-2.5">
+          <span className="text-white text-sm font-mono font-bold">
             {String(activeIndex + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}
           </span>
         </div>
@@ -427,62 +439,65 @@ const HeroSlider = () => {
 
       <style>{`
         .hero-card {
-          border-radius: 26px;
-          backdrop-filter: blur(22px) saturate(160%);
-          -webkit-backdrop-filter: blur(22px) saturate(160%);
-          background: rgba(255,255,255,0.05);
-          border: 1px solid rgba(255,255,255,0.12);
-          box-shadow: 0 20px 60px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.15);
-          transition: all .35s ease;
+          border-radius: 28px;
+          backdrop-filter: blur(24px) saturate(180%);
+          -webkit-backdrop-filter: blur(24px) saturate(180%);
+          background: rgba(255,255,255,0.06);
+          border: 1px solid rgba(255,255,255,0.15);
+          box-shadow: 0 25px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.15);
+          transition: all .4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
         html.dark .hero-card {
-          background: rgba(20,20,20,0.35);
+          background: rgba(20,20,20,0.4);
           border: 1px solid rgba(255,255,255,0.08);
         }
         .hero-card:hover {
-          transform: translateY(-6px) scale(1.01);
-          box-shadow: 0 35px 80px rgba(0,0,0,0.55);
+          transform: translateY(-8px) scale(1.01);
+          box-shadow: 0 40px 80px rgba(0,0,0,0.6);
         }
         .hero-brand {
-          letter-spacing: .35em;
-          font-weight: 600;
+          letter-spacing: .4em;
+          font-weight: 900;
           text-transform: uppercase;
-          opacity: .7;
+          opacity: .8;
+          color: #fbbf24;
         }
         .hero-subtitle {
           line-height: 1.8;
-          opacity: .82;
-          max-width: 38ch;
+          opacity: .9;
+          max-width: 40ch;
         }
         .hero-btn {
-          background: black;
+          background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
           color: white;
-          box-shadow: 0 10px 30px rgba(0,0,0,.35);
+          box-shadow: 0 12px 35px rgba(0,0,0,.4);
+          font-weight: 900;
         }
         .hero-btn:hover {
-          transform: translateY(-2px) scale(1.05);
+          transform: translateY(-3px) scale(1.04);
+          box-shadow: 0 20px 50px rgba(0,0,0,.5);
         }
         html.dark .hero-btn {
-          background: white;
+          background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
           color: black;
         }
         .hero-pagination .swiper-pagination-bullet {
-          width: 6px;
-          height: 6px;
+          width: 8px;
+          height: 8px;
           background: #888;
-          opacity: .4;
+          opacity: .5;
           transition: all .3s ease;
           margin: 0 !important;
           cursor: pointer;
         }
         .hero-pagination .swiper-pagination-bullet-active {
-          width: 28px;
-          border-radius: 10px;
-          background: #000;
+          width: 32px;
+          border-radius: 12px;
+          background: #fbbf24;
           opacity: 1;
         }
         html.dark .hero-pagination .swiper-pagination-bullet-active {
-          background: #fff;
+          background: #fbbf24;
         }
         .swiper {
           overflow: visible !important;
@@ -503,20 +518,20 @@ const HeroSlider = () => {
             padding: 24px;
           }
           .hero-title {
-            font-size: 1.8rem;
+            font-size: 2rem !important;
           }
           .hero-subtitle {
             max-width: 100%;
-            font-size: 0.85rem;
+            font-size: 0.9rem !important;
           }
           .hero-btn {
-            padding: 8px 16px;
+            padding: 10px 20px;
             font-size: 12px;
           }
         }
         @media (max-width: 640px) {
           .hero-title {
-            font-size: 1.5rem;
+            font-size: 1.5rem !important;
           }
           .hero-card {
             padding: 16px;

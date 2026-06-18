@@ -115,3 +115,68 @@ router.get('/categories', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+// ============================================================
+// دریافت همه دسته‌بندی‌ها
+// ============================================================
+router.get('/categories', async (req, res) => {
+  try {
+    const categories = await Product.distinct('category');
+    res.json({ success: true, categories });
+  } catch (error) {
+    console.error('❌ Error fetching categories:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// ============================================================
+// دریافت همه برندها
+// ============================================================
+router.get('/brands', async (req, res) => {
+  try {
+    const brands = await Product.distinct('brand');
+    res.json({ success: true, brands });
+  } catch (error) {
+    console.error('❌ Error fetching brands:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// GET /api/products/categories - دریافت همه دسته‌بندی‌ها و برندها
+router.get('/categories', async (req, res) => {
+  try {
+    const Product = req.app.get('Product') || mongoose.model('Product', new mongoose.Schema({}, { strict: false }), 'products');
+    const categories = await Product.distinct('category');
+    const brands = await Product.distinct('brand');
+    
+    const result = [
+      { id: 'All', label: { en: 'All', fa: 'همه' } },
+      ...brands.map(b => ({ id: b, label: { en: b, fa: b } })),
+      ...categories.map(c => ({ 
+        id: c, 
+        label: { 
+          en: c, 
+          fa: c === 'Phone' ? 'گوشی' : 
+               c === 'Tablet' ? 'تبلت' : 
+               c === 'Laptop' ? 'لپ‌تاپ' : 
+               c === 'Watch' ? 'ساعت' : 
+               c === 'Accessory' ? 'لوازم جانبی' : 
+               c === 'Comparison' ? 'مقایسه' :
+               c === 'Tips' ? 'نکات' :
+               c === 'Guide' ? 'راهنما' :
+               c === 'Concept' ? 'کانسپت' : c 
+        } 
+      }))
+    ];
+    
+    // حذف موارد تکراری
+    const unique = result.filter((item, index, self) => 
+      index === self.findIndex(f => f.id === item.id)
+    );
+    
+    res.json(unique);
+  } catch (error) {
+    console.error('❌ Error fetching categories:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
