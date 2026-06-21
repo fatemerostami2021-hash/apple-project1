@@ -1,0 +1,2243 @@
+{
+  "products": [
+    {
+      "_id": "6a3151ccfaf09f17f53e5fb5",
+      "name": {
+        "en": "Galaxy S24",
+        "fa": "گلکسی اس۲۴"
+      },
+      "slug": "galaxy-s24",
+      "brand": "Samsung",
+      "category": "Phone",
+      "price": 75000000,
+      "thumbnail": "/assets/galexy-series-s/galaxy-s24.png",
+      "inStock": true,
+      "description": {
+        "en": "Compact flagship",
+        "fa": "پرچمدار جمع‌وجور"
+      },
+      "__v": 0,
+      "articleSlug": "galaxy-s24-ultra-ai-revolution"
+    },
+    {
+      "_id": "6a3151ccfaf09f17f53e5fb6",
+      "name": {
+        "en": "Galaxy S24 Plus",
+        "fa": "گلکسی اس۲۴ پلاس"
+      },
+      "slug": "galaxy-s24-plus",
+      "brand": "Samsung",
+      "category": "Phone",
+      "price": 95000000,
+      "thumbnail": "/assets/galexy-series-s/galaxy-s24-plus.png",
+      "inStock": true,
+      "__v": 0,
+      "articleSlug": "s24-plus-vs-iphone-15-pro-max-comparison"
+    },
+    {
+      "_id": "6a3151ccfaf09f17f53e5fb7",
+      "name": {
+        "en": "Galaxy S24 Ultra",
+        "fa": "گلکسی اس۲۴ اولترا"
+      },
+      "slug": "galaxy-s24-ultra",
+      "brand": "Samsung",
+      "category": "Phone",
+      "price": 120000000,
+      "thumbnail": "/assets/galexy-series-s/galaxy-s24-ultra.png",
+      "inStock": true,
+      "description": {
+        "en": "The ultimate Galaxy",
+        "fa": "بهترین گلکسی"
+      },
+      "__v": 0,
+      "articleSlug": "galaxy-s24-ultra-ai-revolution"
+    },
+    {
+      "_id": "6a3151ccfaf09f17f53e5fb8",
+      "name": {
+        "en": "Galaxy S25 Ultra",
+        "fa": "گلکسی اس۲۵ اولترا"
+      },
+      "slug": "galaxy-s25-ultra",
+      "brand": "Samsung",
+      "category": "Phone",
+      "price": 135000000,
+      "thumbnail": "/assets/galexy-series-s/galaxy-s-25-ultra.png",
+      "inStock": true,
+      "__v": 0,
+      "articleSlug": "galaxy-s25-ultra-review"
+    },
+    {
+      "_id": "6a3151ccfaf09f17f53e5fb9",
+      "name": {
+        "en": "Galaxy S26",
+        "fa": "گلکسی اس۲۶"
+      },
+      "slug": "galaxy-s26",
+      "brand": "Samsung",
+      "category": "Phone",
+      "price": 100000000,
+      "thumbnail": "/assets/galexy-series-s/galaxy-s-26.png",
+      "inStock": true,
+      "__v": 0,
+      "articleSlug": "galaxy-s26-review"
+    },
+    {
+      "_id": "6a3151ccfaf09f17f53e5fba",
+      "name": {
+        "en": "Galaxy Z Fold 6",
+        "fa": "گلکسی زد فولد ۶"
+      },
+      "slug": "galaxy-z-fold-6",
+      "brand": "Samsung",
+      "category": "Phone",
+      "price": 150000000,
+      "thumbnail": "/assets/galexy-series-s/galaxy-z-fold6.png",
+      "inStock": true,
+      "description": {
+        "en": "Foldable flagship",
+        "fa": "پرچمدار تاشو"
+      },
+      "__v": 0,
+      "articleSlug": "z-flip-6-style-durability-review"
+    },
+    {
+      "_id": "6a3151ccfaf09f17f53e5fbb",
+      "name": {
+        "en": "Galaxy Z Flip 6",
+        "fa": "گلکسی زد فلیپ ۶"
+      },
+      "slug": "galaxy-z-flip-6",
+      "brand": "Samsung",
+      "category": "Phone",
+      "price": 110000000,
+      "thumbnail": "/assets/galexy-series-s/galaxy-z-flip6.png",
+      "inStock": true,
+      "__v": 0,
+      "articleSlug": "z-flip-6-style-durability-review"
+    },
+    {
+      "_id": "6a3151ccfaf09f17f53e5fbc",
+      "name": {
+        "en": "Galaxy Z Modelle",
+        "fa": "گلکسی زد مدل"
+      },
+      "slug": "galaxy-z-modelle",
+      "brand": "Samsung",
+      "category": "Phone",
+      "price": 90000000,
+      "thumbnail": "/assets/galexy-series-s/galaxy-z-modelle.png",
+      "inStock": true,
+      "__v": 0,
+      "articleSlug": "z-flip-6-style-durability-review"
+    },
+    {
+      "_id": "6a3151ccfaf09f17f53e5fbd",
+      "name": {
+        "en": "Galaxy Tab S10 Ultra",
+        "fa": "گلکسی تب اس۱۰ اولترا"
+      },
+      "slug": "galaxy-tab-s10-ultra",
+      "brand": "Samsung",
+      "category": "Tablet",
+      "price": 85000000,
+      "thumbnail": "/assets/galexy-series-s/galaxy-tab-s10-ultra.png",
+      "inStock": true,
+      "__v": 0,
+      "articleSlug": "tab-s10-ultra-vs-ipad-pro-m4"
+    },
+    {
+      "_id": "6a3151ccfaf09f17f53e5fbe",
+      "name": {
+        "en": "Galaxy Tab S4",
+        "fa": "گلکسی تب اس۴"
+      },
+      "slug": "galaxy-tab-s4",
+      "brand": "Samsung",
+      "category": "Tablet",
+      "price": 45000000,
+      "thumbnail": "/assets/galexy-series-s/galaxy-tab-s4.png",
+      "inStock": true,
+      "__v": 0,
+      "articleSlug": "tab-s10-ultra-vs-ipad-pro-m4"
+    },
+    {
+      "_id": "6a3151ccfaf09f17f53e5fbf",
+      "name": {
+        "en": "Galaxy Tab Pro",
+        "fa": "گلکسی تب پرو"
+      },
+      "slug": "galaxy-tab-pro",
+      "brand": "Samsung",
+      "category": "Tablet",
+      "price": 55000000,
+      "thumbnail": "/assets/galexy-series-s/galaxy-tab-pr0.png",
+      "inStock": true,
+      "__v": 0,
+      "articleSlug": "tab-s10-ultra-vs-ipad-pro-m4"
+    },
+    {
+      "_id": "6a3151ccfaf09f17f53e5fc0",
+      "name": {
+        "en": "Galaxy A Series",
+        "fa": "گلکسی ای"
+      },
+      "slug": "galaxy-a-series",
+      "brand": "Samsung",
+      "category": "Phone",
+      "price": 35000000,
+      "thumbnail": "/assets/galexy-series-s/galaxy-A.png",
+      "inStock": true,
+      "__v": 0,
+      "articleSlug": "galaxy-s24-ultra-ai-revolution"
+    },
+    {
+      "_id": "6a3151ccfaf09f17f53e5fc1",
+      "name": {
+        "en": "Galaxy Note",
+        "fa": "گلکسی نوت"
+      },
+      "slug": "galaxy-note",
+      "brand": "Samsung",
+      "category": "Phone",
+      "price": 80000000,
+      "thumbnail": "/assets/galexy-series-s/galaxy-note.png",
+      "inStock": true,
+      "__v": 0,
+      "articleSlug": "galaxy-s24-ultra-ai-revolution"
+    },
+    {
+      "_id": "6a3151ccfaf09f17f53e5fc2",
+      "name": {
+        "en": "Galaxy Note Collection",
+        "fa": "مجموعه گلکسی نوت"
+      },
+      "slug": "galaxy-note-collection",
+      "brand": "Samsung",
+      "category": "Phone",
+      "price": 90000000,
+      "thumbnail": "/assets/galexy-series-s/galaxy-note-collection.png",
+      "inStock": true,
+      "__v": 0,
+      "articleSlug": "galaxy-s24-ultra-ai-revolution"
+    },
+    {
+      "_id": "6a3151ccfaf09f17f53e5fc3",
+      "name": {
+        "en": "Galaxy M17 5G",
+        "fa": "گلکسی ام۱۷ ۵جی"
+      },
+      "slug": "galaxy-m17-5g",
+      "brand": "Samsung",
+      "category": "Phone",
+      "price": 40000000,
+      "thumbnail": "/assets/galexy-series-s/galaxy-m-17-5G.png",
+      "inStock": true,
+      "__v": 0,
+      "articleSlug": "galaxy-s24-ultra-ai-revolution"
+    },
+    {
+      "_id": "6a3151ccfaf09f17f53e5fc4",
+      "name": {
+        "en": "Galaxy Book",
+        "fa": "گلکسی بوک"
+      },
+      "slug": "galaxy-book",
+      "brand": "Samsung",
+      "category": "Laptop",
+      "price": 95000000,
+      "thumbnail": "/assets/galexy-series-s/galaxy-book.png",
+      "inStock": true,
+      "__v": 0,
+      "articleSlug": "galaxy-s24-ultra-ai-revolution"
+    },
+    {
+      "_id": "6a3151ccfaf09f17f53e5fc5",
+      "name": {
+        "en": "Galaxy Book 6",
+        "fa": "گلکسی بوک ۶"
+      },
+      "slug": "galaxy-book-6",
+      "brand": "Samsung",
+      "category": "Laptop",
+      "price": 110000000,
+      "thumbnail": "/assets/galexy-series-s/galaxy-book-6.png",
+      "inStock": true,
+      "__v": 0,
+      "articleSlug": "galaxy-s24-ultra-ai-revolution"
+    },
+    {
+      "_id": "6a32a43ab1158ceb971b63a0",
+      "name": {
+        "en": "iPhone 17 Pro Max",
+        "fa": "آیفون ۱۷ پرو مکس"
+      },
+      "slug": "iphone-17-pro-max",
+      "brand": "Apple",
+      "category": "Phone",
+      "price": 85000000,
+      "thumbnail": "/assets/iphone/iphone-17-pro-max.png",
+      "inStock": true,
+      "description": {
+        "en": "The most powerful iPhone ever with A17 Pro chip and titanium design.",
+        "fa": "قدرتمندترین آیفون تاریخ با تراشه A17 Pro و طراحی تیتانیومی."
+      },
+      "tags": [
+        "iPhone",
+        "Apple",
+        "Pro Max"
+      ],
+      "featured": true,
+      "__v": 0,
+      "articleSlug": "iphone-17-pro-max"
+    },
+    {
+      "_id": "6a32a43ab1158ceb971b63a1",
+      "name": {
+        "en": "iPhone 17 Pro",
+        "fa": "آیفون ۱۷ پرو"
+      },
+      "slug": "iphone-17-pro",
+      "brand": "Apple",
+      "category": "Phone",
+      "price": 70000000,
+      "thumbnail": "/assets/iphone/iphone-17-pro.png",
+      "inStock": true,
+      "description": {
+        "en": "Professional performance in a compact design.",
+        "fa": "عملکرد حرفه‌ای در طراحی جمع‌وجور."
+      },
+      "tags": [
+        "iPhone",
+        "Apple",
+        "Pro"
+      ],
+      "__v": 0,
+      "articleSlug": "iphone-17-pro-review"
+    },
+    {
+      "_id": "6a32a43ab1158ceb971b63a2",
+      "name": {
+        "en": "iPhone 17",
+        "fa": "آیفون ۱۷"
+      },
+      "slug": "iphone-17",
+      "brand": "Apple",
+      "category": "Phone",
+      "price": 55000000,
+      "thumbnail": "/assets/iphone/iphone-17.png",
+      "inStock": true,
+      "description": {
+        "en": "The perfect balance of performance and value.",
+        "fa": "تعادل کامل بین عملکرد و ارزش."
+      },
+      "tags": [
+        "iPhone",
+        "Apple"
+      ],
+      "__v": 0,
+      "articleSlug": "iphone-17-review"
+    },
+    {
+      "_id": "6a32a43ab1158ceb971b63a3",
+      "name": {
+        "en": "iPhone 16 Pro Max",
+        "fa": "آیفون ۱۶ پرو مکس"
+      },
+      "slug": "iphone-16-pro-max",
+      "brand": "Apple",
+      "category": "Phone",
+      "price": 65000000,
+      "thumbnail": "/assets/iphone/iphone-16-pro-max.png",
+      "inStock": true,
+      "description": {
+        "en": "Big screen, big performance.",
+        "fa": "صفحه بزرگ، عملکرد بزرگ."
+      },
+      "tags": [
+        "iPhone",
+        "Apple",
+        "Pro Max"
+      ],
+      "__v": 0,
+      "articleSlug": "iphone-16-pro-max"
+    },
+    {
+      "_id": "6a32a43ab1158ceb971b63a4",
+      "name": {
+        "en": "iPhone 16",
+        "fa": "آیفون ۱۶"
+      },
+      "slug": "iphone-16",
+      "brand": "Apple",
+      "category": "Phone",
+      "price": 45000000,
+      "thumbnail": "/assets/iphone/iphone-16.png",
+      "inStock": true,
+      "description": {
+        "en": "The latest iPhone with innovative features.",
+        "fa": "جدیدترین آیفون با ویژگی‌های نوآورانه."
+      },
+      "tags": [
+        "iPhone",
+        "Apple"
+      ],
+      "__v": 0,
+      "articleSlug": "iphone-16-review"
+    },
+    {
+      "_id": "6a32a43ab1158ceb971b63a5",
+      "name": {
+        "en": "MacBook Pro M4",
+        "fa": "مک‌بوک پرو M4"
+      },
+      "slug": "macbook-pro-m4",
+      "brand": "Apple",
+      "category": "Laptop",
+      "price": 120000000,
+      "thumbnail": "/images/mac-pro-m4.png",
+      "inStock": true,
+      "description": {
+        "en": "The most powerful MacBook ever with M4 chip.",
+        "fa": "قدرتمندترین مک‌بوک تاریخ با تراشه M4."
+      },
+      "tags": [
+        "MacBook",
+        "Apple",
+        "Pro",
+        "M4"
+      ],
+      "__v": 0,
+      "articleSlug": "macbook-pro-m3-review"
+    },
+    {
+      "_id": "6a32a43ab1158ceb971b63a6",
+      "name": {
+        "en": "MacBook Air M3",
+        "fa": "مک‌بوک ایر M3"
+      },
+      "slug": "macbook-air-m3",
+      "brand": "Apple",
+      "category": "Laptop",
+      "price": 75000000,
+      "thumbnail": "/assets/macbook/macboo-air-m3--.png",
+      "inStock": true,
+      "description": {
+        "en": "Ultra-thin, ultra-fast with M3 chip.",
+        "fa": "فوق‌نازک، فوق‌سریع با تراشه M3."
+      },
+      "tags": [
+        "MacBook",
+        "Apple",
+        "Air",
+        "M3"
+      ],
+      "__v": 0,
+      "articleSlug": "macbook-air-m3-review"
+    },
+    {
+      "_id": "6a32a43ab1158ceb971b63a7",
+      "name": {
+        "en": "iPad Pro M4",
+        "fa": "آیپد پرو M4"
+      },
+      "slug": "ipad-pro-m4",
+      "brand": "Apple",
+      "category": "Tablet",
+      "price": 55000000,
+      "thumbnail": "/assets/ipad/ipad-pro.png",
+      "inStock": true,
+      "description": {
+        "en": "The ultimate tablet experience with M4 chip.",
+        "fa": "نهایی‌ترین تجربه تبلت با تراشه M4."
+      },
+      "tags": [
+        "iPad",
+        "Apple",
+        "Pro",
+        "M4"
+      ],
+      "__v": 0,
+      "articleSlug": "ipad-pro-review"
+    },
+    {
+      "_id": "6a32a43ab1158ceb971b63a8",
+      "name": {
+        "en": "iPad Air",
+        "fa": "آیپد ایر"
+      },
+      "slug": "ipad-air",
+      "brand": "Apple",
+      "category": "Tablet",
+      "price": 35000000,
+      "thumbnail": "/assets/ipad/ipad-air.png",
+      "inStock": true,
+      "description": {
+        "en": "Powerful and portable.",
+        "fa": "قدرتمند و قابل حمل."
+      },
+      "tags": [
+        "iPad",
+        "Apple",
+        "Air"
+      ],
+      "__v": 0,
+      "articleSlug": "ipad-air-review"
+    },
+    {
+      "_id": "6a32a43ab1158ceb971b63a9",
+      "name": {
+        "en": "AirPods Pro 3",
+        "fa": "ایرپادز پرو ۳"
+      },
+      "slug": "airpods-pro-3",
+      "brand": "Apple",
+      "category": "Accessory",
+      "price": 15000000,
+      "thumbnail": "/assets/airpod/apple-airpod.png",
+      "inStock": true,
+      "description": {
+        "en": "The best wireless earbuds with noise cancellation.",
+        "fa": "بهترین ایربادز بی‌سیم با حذف نویز."
+      },
+      "tags": [
+        "AirPods",
+        "Apple",
+        "Pro"
+      ],
+      "__v": 0,
+      "articleSlug": "airpods-pro-review"
+    },
+    {
+      "_id": "6a32a43ab1158ceb971b63aa",
+      "name": {
+        "en": "AirPods Max",
+        "fa": "ایرپادز مکس"
+      },
+      "slug": "airpods-max",
+      "brand": "Apple",
+      "category": "Accessory",
+      "price": 22000000,
+      "thumbnail": "/assets/airpod/airpod-max.png",
+      "inStock": true,
+      "description": {
+        "en": "Premium over-ear headphones with exceptional sound.",
+        "fa": "هدفون روی گوشی ممتاز با صدای استثنایی."
+      },
+      "tags": [
+        "AirPods",
+        "Apple",
+        "Max"
+      ],
+      "__v": 0,
+      "articleSlug": "airpods-max-review"
+    },
+    {
+      "_id": "6a32a43ab1158ceb971b63ab",
+      "name": {
+        "en": "Apple Watch Ultra 3",
+        "fa": "اپل واچ اولترا ۳"
+      },
+      "slug": "apple-watch-ultra-3",
+      "brand": "Apple",
+      "category": "Watch",
+      "price": 38000000,
+      "thumbnail": "/assets/iphone/hero-endframe.png",
+      "inStock": true,
+      "description": {
+        "en": "The ultimate sports and adventure smartwatch.",
+        "fa": "نهایی‌ترین ساعت هوشمند ورزشی و ماجراجویی."
+      },
+      "tags": [
+        "Apple Watch",
+        "Apple",
+        "Ultra"
+      ],
+      "__v": 0,
+      "articleSlug": "apple-watch-ultra-3"
+    },
+    {
+      "_id": "6a32a43ab1158ceb971b63ac",
+      "name": {
+        "en": "Apple Watch Series 10",
+        "fa": "اپل واچ سری ۱۰"
+      },
+      "slug": "apple-watch-series-10",
+      "brand": "Apple",
+      "category": "Watch",
+      "price": 25000000,
+      "thumbnail": "/assets/iphone/hero-endframe.png",
+      "inStock": true,
+      "description": {
+        "en": "The perfect everyday smartwatch.",
+        "fa": "ساعت هوشمند ایده‌آل روزمره."
+      },
+      "tags": [
+        "Apple Watch",
+        "Apple",
+        "Series 10"
+      ],
+      "__v": 0,
+      "articleSlug": "apple-watch-series-12"
+    },
+    {
+      "_id": "6a32a43ab1158ceb971b63ad",
+      "name": {
+        "en": "Apple Watch SE 3",
+        "fa": "اپل واچ SE ۳"
+      },
+      "slug": "apple-watch-se-3",
+      "brand": "Apple",
+      "category": "Watch",
+      "price": 15000000,
+      "thumbnail": "/assets/iphone/hero-endframe.png",
+      "inStock": true,
+      "description": {
+        "en": "The best value Apple Watch with essential features.",
+        "fa": "بهترین ارزش اپل واچ با ویژگی‌های ضروری."
+      },
+      "tags": [
+        "Apple Watch",
+        "Apple",
+        "SE"
+      ],
+      "__v": 0,
+      "articleSlug": "apple-watch-se-3"
+    }
+  ],
+  "articles": [
+    {
+      "_id": "6a3272fcc97c4b9c71cd57f4",
+      "slug": "iphone-18-promax-review",
+      "title": {
+        "en": "iPhone 18 Pro Max Review",
+        "fa": "بررسی آیفون ۱۸ پرو مکس"
+      },
+      "brand": "Apple",
+      "category": "Review",
+      "content": {
+        "en": "The iPhone 18 Pro Max represents the pinnacle of Apple's engineering...",
+        "fa": "آیفون ۱۸ پرو مکس اوج مهندسی اپل..."
+      },
+      "excerpt": {
+        "en": "The most advanced iPhone ever.",
+        "fa": "پیشرفته‌ترین آیفون تاریخ."
+      },
+      "tags": [
+        "iPhone",
+        "Apple",
+        "Review"
+      ],
+      "publishDate": "2026-01-15",
+      "readTime": 8,
+      "active": true,
+      "featured": true,
+      "__v": 0,
+      "cover": "/assets/iphone/iphone-18-promax.png"
+    },
+    {
+      "_id": "6a3272fcc97c4b9c71cd57f5",
+      "slug": "iphone-16-review",
+      "title": {
+        "en": "iPhone 16 Review",
+        "fa": "بررسی آیفون ۱۶"
+      },
+      "brand": "Apple",
+      "category": "Review",
+      "content": {
+        "en": "The iPhone 16 brings powerful upgrades...",
+        "fa": "آیفون ۱۶ ارتقاءهای قدرتمندی را به ارمغان می‌آورد..."
+      },
+      "excerpt": {
+        "en": "Powerful upgrades with A17 chip.",
+        "fa": "ارتقاءهای قدرتمند با تراشه A17."
+      },
+      "tags": [
+        "iPhone",
+        "Apple",
+        "Review"
+      ],
+      "publishDate": "2026-01-10",
+      "readTime": 6,
+      "active": true,
+      "featured": true,
+      "__v": 0,
+      "cover": "/assets/iphone/iphone-16.png"
+    },
+    {
+      "_id": "6a3272fcc97c4b9c71cd57f6",
+      "slug": "iphone-16-pro-review",
+      "title": {
+        "en": "iPhone 16 Pro Review",
+        "fa": "بررسی آیفون ۱۶ پرو"
+      },
+      "brand": "Apple",
+      "category": "Review",
+      "content": {
+        "en": "Professional features with titanium design...",
+        "fa": "ویژگی‌های حرفه‌ای با طراحی تیتانیوم..."
+      },
+      "excerpt": {
+        "en": "Professional features with A17 Pro.",
+        "fa": "ویژگی‌های حرفه‌ای با A17 Pro."
+      },
+      "tags": [
+        "iPhone",
+        "Apple",
+        "Review",
+        "Pro"
+      ],
+      "publishDate": "2026-01-12",
+      "readTime": 7,
+      "active": true,
+      "featured": true,
+      "__v": 0,
+      "cover": "/assets/iphone/iphone-16-pro.png"
+    },
+    {
+      "_id": "6a3272fcc97c4b9c71cd57f7",
+      "slug": "iphone-15-review",
+      "title": {
+        "en": "iPhone 15 Review",
+        "fa": "بررسی آیفون ۱۵"
+      },
+      "brand": "Apple",
+      "category": "Review",
+      "content": {
+        "en": "Dynamic Island comes to standard iPhone...",
+        "fa": "داینامیک آیلند به آیفون استاندارد آمد..."
+      },
+      "excerpt": {
+        "en": "Dynamic Island with A16 chip.",
+        "fa": "داینامیک آیلند با تراشه A16."
+      },
+      "tags": [
+        "iPhone",
+        "Apple",
+        "Review"
+      ],
+      "publishDate": "2026-01-08",
+      "readTime": 5,
+      "active": true,
+      "featured": true,
+      "__v": 0,
+      "cover": "/assets/iphone/iphone-15.png"
+    },
+    {
+      "_id": "6a3272fcc97c4b9c71cd57f8",
+      "slug": "ipad-air-review",
+      "title": {
+        "en": "iPad Air Review",
+        "fa": "بررسی آیپد ایر"
+      },
+      "brand": "Apple",
+      "category": "Review",
+      "content": {
+        "en": "Perfect balance with M2 chip...",
+        "fa": "تعادل کامل با تراشه M2..."
+      },
+      "excerpt": {
+        "en": "Balance of power with M2.",
+        "fa": "تعادل قدرت با M2."
+      },
+      "tags": [
+        "iPad",
+        "Apple",
+        "Review"
+      ],
+      "publishDate": "2026-01-05",
+      "readTime": 5,
+      "active": true,
+      "featured": true,
+      "__v": 0,
+      "cover": "/assets/ipad/ipad-air.png"
+    },
+    {
+      "_id": "6a3272fcc97c4b9c71cd57f9",
+      "slug": "ipad-pro-review",
+      "title": {
+        "en": "iPad Pro Review",
+        "fa": "بررسی آیپد پرو"
+      },
+      "brand": "Apple",
+      "category": "Review",
+      "content": {
+        "en": "Ultimate tablet with M4 chip...",
+        "fa": "نهایی‌ترین تبلت با تراشه M4..."
+      },
+      "excerpt": {
+        "en": "Ultimate tablet experience.",
+        "fa": "نهایی‌ترین تجربه تبلت."
+      },
+      "tags": [
+        "iPad",
+        "Apple",
+        "Review",
+        "Pro"
+      ],
+      "publishDate": "2026-01-06",
+      "readTime": 6,
+      "active": true,
+      "featured": true,
+      "__v": 0,
+      "cover": "/assets/ipad/ipad-pro.png"
+    },
+    {
+      "_id": "6a3272fcc97c4b9c71cd57fa",
+      "slug": "macbook-air-m3-review",
+      "title": {
+        "en": "MacBook Air M3 Review",
+        "fa": "بررسی مک‌بوک ایر M3"
+      },
+      "brand": "Apple",
+      "category": "Review",
+      "content": {
+        "en": "Perfect laptop with M3 chip...",
+        "fa": "لپ‌تاپ ایده‌آل با تراشه M3..."
+      },
+      "excerpt": {
+        "en": "Perfect laptop with M3.",
+        "fa": "لپ‌تاپ ایده‌آل با M3."
+      },
+      "tags": [
+        "MacBook",
+        "Apple",
+        "Review"
+      ],
+      "publishDate": "2026-01-04",
+      "readTime": 6,
+      "active": true,
+      "featured": true,
+      "__v": 0,
+      "cover": "/assets/macbook/macboo-air-m3--.png"
+    },
+    {
+      "_id": "6a3272fcc97c4b9c71cd57fb",
+      "slug": "airpods-max-review",
+      "title": {
+        "en": "AirPods Max Review",
+        "fa": "بررسی ایرپادز مکس"
+      },
+      "brand": "Apple",
+      "category": "Review",
+      "content": {
+        "en": "Exceptional audio with ANC...",
+        "fa": "صدای استثنایی با ANC..."
+      },
+      "excerpt": {
+        "en": "Exceptional audio quality.",
+        "fa": "کیفیت صدای استثنایی."
+      },
+      "tags": [
+        "AirPods",
+        "Apple",
+        "Review"
+      ],
+      "publishDate": "2026-01-03",
+      "readTime": 4,
+      "active": true,
+      "featured": true,
+      "__v": 0,
+      "cover": "/assets/airpod/airpod-max.png"
+    },
+    {
+      "_id": "6a3272fcc97c4b9c71cd57fc",
+      "slug": "airpods-pro-review",
+      "title": {
+        "en": "AirPods Pro Review",
+        "fa": "بررسی ایرپادز پرو"
+      },
+      "brand": "Apple",
+      "category": "Review",
+      "content": {
+        "en": "Industry-leading ANC with H2...",
+        "fa": "ANC پیشرو در صنعت با H2..."
+      },
+      "excerpt": {
+        "en": "Industry-leading ANC.",
+        "fa": "ANC پیشرو در صنعت."
+      },
+      "tags": [
+        "AirPods",
+        "Apple",
+        "Review",
+        "Pro"
+      ],
+      "publishDate": "2026-01-02",
+      "readTime": 4,
+      "active": true,
+      "featured": true,
+      "__v": 0,
+      "cover": "/assets/airpod/apple-airpod.png"
+    },
+    {
+      "_id": "6a3272fcc97c4b9c71cd57fd",
+      "slug": "galaxy-s25-ultra-review",
+      "title": {
+        "en": "Galaxy S25 Ultra Review",
+        "fa": "بررسی گلکسی اس۲۵ اولترا"
+      },
+      "brand": "Samsung",
+      "category": "Review",
+      "content": {
+        "en": "Most advanced Samsung with 200MP...",
+        "fa": "پیشرفته‌ترین سامسونگ با ۲۰۰MP..."
+      },
+      "excerpt": {
+        "en": "Most advanced Samsung.",
+        "fa": "پیشرفته‌ترین سامسونگ."
+      },
+      "tags": [
+        "Samsung",
+        "Galaxy",
+        "Review"
+      ],
+      "publishDate": "2026-01-01",
+      "readTime": 8,
+      "active": true,
+      "featured": true,
+      "__v": 0,
+      "cover": "/assets/galexy-series-s/galaxy-s-25-ultra.png"
+    },
+    {
+      "_id": "6a3272fcc97c4b9c71cd57fe",
+      "slug": "galaxy-z-fold-5-review",
+      "title": {
+        "en": "Galaxy Z Fold 5 Review",
+        "fa": "بررسی گلکسی زد فولد ۵"
+      },
+      "brand": "Samsung",
+      "category": "Review",
+      "content": {
+        "en": "Ultimate foldable multitasking device...",
+        "fa": "نهایی‌ترین دستگاه تاشو..."
+      },
+      "excerpt": {
+        "en": "Ultimate foldable device.",
+        "fa": "نهایی‌ترین دستگاه تاشو."
+      },
+      "tags": [
+        "Samsung",
+        "Foldable",
+        "Review"
+      ],
+      "publishDate": "2026-01-07",
+      "readTime": 7,
+      "active": true,
+      "featured": true,
+      "__v": 0,
+      "cover": "/assets/galexy-series-s/galaxy-z-fold6.png"
+    },
+    {
+      "_id": "6a3273c6b003c2715d92151f",
+      "slug": "iphone-17-pro-max",
+      "title": {
+        "en": "iPhone 17 Pro Max: A Revolution",
+        "fa": "آیفون ۱۷ پرو مکس: انقلابی"
+      },
+      "brand": "Apple",
+      "category": "Review",
+      "content": {
+        "en": "The iPhone 17 Pro Max is a revolution...",
+        "fa": "آیفون ۱۷ پرو مکس یک انقلاب است..."
+      },
+      "excerpt": {
+        "en": "A revolution in power.",
+        "fa": "انقلابی در قدرت."
+      },
+      "tags": [
+        "iPhone",
+        "Apple",
+        "Review"
+      ],
+      "publishDate": "2025-12-20",
+      "readTime": 8,
+      "active": true,
+      "featured": true,
+      "__v": 0,
+      "cover": "/assets/iphone/iphone-17-pro-max.png"
+    },
+    {
+      "_id": "6a3273c6b003c2715d921520",
+      "slug": "iphone-16-pro-max",
+      "title": {
+        "en": "iPhone 16 Pro Max: Balance of Power",
+        "fa": "آیفون ۱۶ پرو مکس: تعادل قدرت"
+      },
+      "brand": "Apple",
+      "category": "Review",
+      "content": {
+        "en": "Balance of power and design...",
+        "fa": "تعادل قدرت و طراحی..."
+      },
+      "excerpt": {
+        "en": "Balance of power.",
+        "fa": "تعادل قدرت."
+      },
+      "tags": [
+        "iPhone",
+        "Apple",
+        "Review"
+      ],
+      "publishDate": "2025-11-15",
+      "readTime": 7,
+      "active": true,
+      "featured": true,
+      "__v": 0,
+      "cover": "/assets/iphone/iphone-16-pro-max.png"
+    },
+    {
+      "_id": "6a3273c6b003c2715d921521",
+      "slug": "iphone-15-pro-max",
+      "title": {
+        "en": "iPhone 15 Pro Max: The Beginning of Titanium",
+        "fa": "آیفون ۱۵ پرو مکس: آغاز تیتانیوم"
+      },
+      "brand": "Apple",
+      "category": "Review",
+      "content": {
+        "en": "The beginning of titanium era...",
+        "fa": "آغاز عصر تیتانیوم..."
+      },
+      "excerpt": {
+        "en": "Titanium era begins.",
+        "fa": "عصر تیتانیوم آغاز شد."
+      },
+      "tags": [
+        "iPhone",
+        "Apple",
+        "Review"
+      ],
+      "publishDate": "2025-10-10",
+      "readTime": 6,
+      "active": true,
+      "featured": true,
+      "__v": 0,
+      "cover": "/assets/iphone/iphone-15-pro-max.png"
+    },
+    {
+      "_id": "6a3273c6b003c2715d921522",
+      "slug": "iphone-14-pro-max",
+      "title": {
+        "en": "iPhone 14 Pro Max: Dynamic Island",
+        "fa": "آیفون ۱۴ پرو مکس: داینامیک آیلند"
+      },
+      "brand": "Apple",
+      "category": "Review",
+      "content": {
+        "en": "Dynamic Island changes everything...",
+        "fa": "داینامیک آیلند همه چیز را تغییر داد..."
+      },
+      "excerpt": {
+        "en": "Dynamic Island innovation.",
+        "fa": "نوآوری داینامیک آیلند."
+      },
+      "tags": [
+        "iPhone",
+        "Apple",
+        "Review"
+      ],
+      "publishDate": "2025-09-05",
+      "readTime": 6,
+      "active": true,
+      "featured": true,
+      "__v": 0,
+      "cover": "/assets/iphone/iphone-14-pro-max.png"
+    },
+    {
+      "_id": "6a3273c6b003c2715d921523",
+      "slug": "iphone-13-pro-max",
+      "title": {
+        "en": "iPhone 13 Pro Max: Battery King",
+        "fa": "آیفون ۱۳ پرو مکس: پادشاه باتری"
+      },
+      "brand": "Apple",
+      "category": "Review",
+      "content": {
+        "en": "The battery king with ProMotion...",
+        "fa": "پادشاه باتری با ProMotion..."
+      },
+      "excerpt": {
+        "en": "Battery king.",
+        "fa": "پادشاه باتری."
+      },
+      "tags": [
+        "iPhone",
+        "Apple",
+        "Review"
+      ],
+      "publishDate": "2025-08-01",
+      "readTime": 5,
+      "active": true,
+      "featured": true,
+      "__v": 0,
+      "cover": "/assets/iphone/iphone-13-pro-max.png"
+    },
+    {
+      "_id": "6a3273c6b003c2715d921524",
+      "slug": "iphone-12-pro-max",
+      "title": {
+        "en": "iPhone 12 Pro Max: The Dawn of 5G",
+        "fa": "آیفون ۱۲ پرو مکس: طلوع 5G"
+      },
+      "brand": "Apple",
+      "category": "Review",
+      "content": {
+        "en": "The dawn of 5G and MagSafe...",
+        "fa": "طلوع 5G و MagSafe..."
+      },
+      "excerpt": {
+        "en": "Dawn of 5G.",
+        "fa": "طلوع 5G."
+      },
+      "tags": [
+        "iPhone",
+        "Apple",
+        "Review"
+      ],
+      "publishDate": "2025-07-01",
+      "readTime": 5,
+      "active": true,
+      "featured": true,
+      "__v": 0,
+      "cover": "/assets/iphone/iphone-12-pro-max.png"
+    },
+    {
+      "_id": "6a3273c6b003c2715d921525",
+      "slug": "galaxy-s24-ultra-ai-revolution",
+      "title": {
+        "en": "Galaxy S24 Ultra: The AI Revolution",
+        "fa": "گلکسی اس۲۴ اولترا: انقلاب هوش مصنوعی"
+      },
+      "brand": "Samsung",
+      "category": "Review",
+      "content": {
+        "en": "The AI revolution in your pocket...",
+        "fa": "انقلاب هوش مصنوعی در جیب شما..."
+      },
+      "excerpt": {
+        "en": "AI revolution.",
+        "fa": "انقلاب هوش مصنوعی."
+      },
+      "tags": [
+        "Samsung",
+        "Galaxy",
+        "AI"
+      ],
+      "publishDate": "2025-12-01",
+      "readTime": 7,
+      "active": true,
+      "featured": true,
+      "__v": 0,
+      "cover": "/assets/galexy-series-s/galaxy-s24-ultra.png"
+    },
+    {
+      "_id": "6a3273c6b003c2715d921526",
+      "slug": "s24-plus-vs-iphone-15-pro-max-comparison",
+      "title": {
+        "en": "Value Battle: S24 Plus vs iPhone 15 Pro Max",
+        "fa": "نبرد ارزش: S24 Plus در مقابل آیفون ۱۵ پرو مکس"
+      },
+      "brand": "Samsung",
+      "category": "Comparison",
+      "content": {
+        "en": "Value battle between S24 Plus and iPhone 15 Pro Max...",
+        "fa": "نبرد ارزش بین S24 Plus و آیفون ۱۵ پرو مکس..."
+      },
+      "excerpt": {
+        "en": "Value battle.",
+        "fa": "نبرد ارزش."
+      },
+      "tags": [
+        "Samsung",
+        "Apple",
+        "Comparison"
+      ],
+      "publishDate": "2025-11-25",
+      "readTime": 10,
+      "active": true,
+      "featured": true,
+      "__v": 0,
+      "cover": "/assets/galexy-series-s/galaxy-s24-plus.png"
+    },
+    {
+      "_id": "6a3273c6b003c2715d921527",
+      "slug": "5-galaxy-ai-tips-content-creators",
+      "title": {
+        "en": "5 Galaxy AI Tips for Content Creators",
+        "fa": "۵ نکته Galaxy AI برای تولیدکنندگان محتوا"
+      },
+      "brand": "Samsung",
+      "category": "Tips",
+      "content": {
+        "en": "5 Galaxy AI tips for content creators...",
+        "fa": "۵ نکته Galaxy AI برای تولیدکنندگان محتوا..."
+      },
+      "excerpt": {
+        "en": "AI tips for creators.",
+        "fa": "نکات هوش مصنوعی برای تولیدکنندگان."
+      },
+      "tags": [
+        "Samsung",
+        "Galaxy AI",
+        "Tips"
+      ],
+      "publishDate": "2025-11-10",
+      "readTime": 6,
+      "active": true,
+      "featured": true,
+      "__v": 0,
+      "cover": "/assets/galexy-series-s/galaxy-s-25-ultra.png"
+    },
+    {
+      "_id": "6a3273c6b003c2715d921528",
+      "slug": "z-flip-6-style-durability-review",
+      "title": {
+        "en": "Z Flip 6: Why New Generation Loves This Foldable?",
+        "fa": "Z Flip 6: چرا نسل جدید عاشق این تاشو است؟"
+      },
+      "brand": "Samsung",
+      "category": "Review",
+      "content": {
+        "en": "Z Flip 6 review...",
+        "fa": "بررسی Z Flip 6..."
+      },
+      "excerpt": {
+        "en": "Why Gen Z loves Z Flip 6.",
+        "fa": "چرا نسل Z عاشق Z Flip 6 است."
+      },
+      "tags": [
+        "Samsung",
+        "Z Flip",
+        "Foldable"
+      ],
+      "publishDate": "2025-10-20",
+      "readTime": 6,
+      "active": true,
+      "featured": true,
+      "__v": 0,
+      "cover": "/assets/galexy-series-s/galaxy-z-flip6.png"
+    },
+    {
+      "_id": "6a3273c6b003c2715d921529",
+      "slug": "tab-s10-ultra-vs-ipad-pro-m4",
+      "title": {
+        "en": "Tablet for Video Editing: Tab S10 Ultra or iPad Pro M4?",
+        "fa": "تبلت برای تدوین ویدیو: Tab S10 Ultra یا iPad Pro M4؟"
+      },
+      "brand": "Samsung",
+      "category": "Comparison",
+      "content": {
+        "en": "Tablet comparison for video editing...",
+        "fa": "مقایسه تبلت برای تدوین ویدیو..."
+      },
+      "excerpt": {
+        "en": "Which tablet for video editing?",
+        "fa": "کدام تبلت برای تدوین ویدیو؟"
+      },
+      "tags": [
+        "Samsung",
+        "Apple",
+        "Comparison",
+        "Tablet"
+      ],
+      "publishDate": "2025-10-05",
+      "readTime": 8,
+      "active": true,
+      "featured": true,
+      "__v": 0,
+      "cover": "/assets/galexy-series-s/galaxy-tab-s10-ultra.png"
+    },
+    {
+      "_id": "6a3273c6b003c2715d92152a",
+      "slug": "iphone-vs-samsung-camera-battle-2025",
+      "title": {
+        "en": "Camera Battle 2025: Apple vs Samsung",
+        "fa": "نبرد دوربین ۲۰۲۵: اپل در مقابل سامسونگ"
+      },
+      "brand": "Apple",
+      "category": "Comparison",
+      "content": {
+        "en": "Camera battle between Apple and Samsung in 2025...",
+        "fa": "نبرد دوربین بین اپل و سامسونگ در سال ۲۰۲۵..."
+      },
+      "excerpt": {
+        "en": "Camera battle 2025.",
+        "fa": "نبرد دوربین ۲۰۲۵."
+      },
+      "tags": [
+        "Apple",
+        "Samsung",
+        "Comparison",
+        "Camera"
+      ],
+      "publishDate": "2025-09-15",
+      "readTime": 10,
+      "active": true,
+      "featured": true,
+      "__v": 0,
+      "cover": "/images/hero-slider-home/hero-5.png"
+    },
+    {
+      "_id": "6a3273c6b003c2715d92152b",
+      "slug": "iphone-14-to-17-evolution-comparison",
+      "title": {
+        "en": "iPhone 14 to 17: Four Years of Evolution",
+        "fa": "آیفون ۱۴ تا ۱۷: چهار سال تکامل"
+      },
+      "brand": "Apple",
+      "category": "Comparison",
+      "content": {
+        "en": "Four years of iPhone evolution...",
+        "fa": "چهار سال تکامل آیفون..."
+      },
+      "excerpt": {
+        "en": "Four years of evolution.",
+        "fa": "چهار سال تکامل."
+      },
+      "tags": [
+        "iPhone",
+        "Apple",
+        "Comparison"
+      ],
+      "publishDate": "2025-08-20",
+      "readTime": 12,
+      "active": true,
+      "featured": true,
+      "__v": 0,
+      "cover": "/assets/iphone/iphone-14-pro-max.png"
+    },
+    {
+      "_id": "6a3295a50a354e5ea6e3ff3e",
+      "slug": "apple-watch-ultra-4",
+      "title": {
+        "en": "Apple Watch Ultra 4: The Ultimate Adventure Smartwatch",
+        "fa": "اپل واچ اولترا ۴: ساعت هوشمند نهایی ماجراجویی"
+      },
+      "brand": "Apple",
+      "category": "Watch",
+      "content": {
+        "en": "The Apple Watch Ultra 4 is the most rugged and feature-packed smartwatch ever made. With a titanium case, sapphire crystal display, and advanced health sensors, it's built for the most extreme conditions.",
+        "fa": "اپل واچ اولترا ۴ مقاوم‌ترین و پرامکانات‌ترین ساعت هوشمند ساخته شده است. با بدنه تیتانیومی، نمایشگر کریستال یاقوت و سنسورهای پیشرفته سلامتی، برای سخت‌ترین شرایط ساخته شده است."
+      },
+      "excerpt": {
+        "en": "The ultimate smartwatch for adventurers and athletes.",
+        "fa": "نهایی‌ترین ساعت هوشمند برای ماجراجویان و ورزشکاران."
+      },
+      "cover": "/assets/watch/apple-watch-ultra-4.png",
+      "tags": [
+        "Apple Watch",
+        "Ultra",
+        "Adventure",
+        "Titanium"
+      ],
+      "publishDate": "2025-01-15",
+      "readTime": 8,
+      "active": true,
+      "featured": true,
+      "__v": 0
+    },
+    {
+      "_id": "6a3295a50a354e5ea6e3ff3f",
+      "slug": "apple-watch-ultra-3",
+      "title": {
+        "en": "Apple Watch Ultra 3: The Ultimate Sports Smartwatch",
+        "fa": "اپل واچ اولترا ۳: ساعت هوشمند نهایی ورزشی"
+      },
+      "brand": "Apple",
+      "category": "Watch",
+      "content": {
+        "en": "The Apple Watch Ultra 3 is the ultimate smartwatch for sports enthusiasts. Featuring advanced fitness tracking, GPS, and a durable design, it's perfect for athletes of all levels.",
+        "fa": "اپل واچ اولترا ۳ نهایی‌ترین ساعت هوشمند برای علاقه‌مندان به ورزش است. با ردیابی پیشرفته تناسب اندام، GPS و طراحی مقاوم، برای ورزشکاران در تمام سطوح عالی است."
+      },
+      "excerpt": {
+        "en": "The ultimate sports smartwatch with advanced fitness tracking.",
+        "fa": "نهایی‌ترین ساعت هوشمند ورزشی با ردیابی پیشرفته تناسب اندام."
+      },
+      "cover": "/assets/watch/apple-watch-ultra-3.png",
+      "tags": [
+        "Apple Watch",
+        "Ultra",
+        "Sports",
+        "Fitness"
+      ],
+      "publishDate": "2025-01-10",
+      "readTime": 7,
+      "active": true,
+      "featured": true,
+      "__v": 0
+    },
+    {
+      "_id": "6a3295a50a354e5ea6e3ff40",
+      "slug": "apple-watch-series-12",
+      "title": {
+        "en": "Apple Watch Series 12: The Perfect Balance of Style and Function",
+        "fa": "اپل واچ سری ۱۲: تعادل کامل بین سبک و عملکرد"
+      },
+      "brand": "Apple",
+      "category": "Watch",
+      "content": {
+        "en": "The Apple Watch Series 12 offers the perfect balance of style and function. With a stunning always-on display, comprehensive health features, and a sleek design, it's the ideal everyday companion.",
+        "fa": "اپل واچ سری ۱۲ تعادل کامل بین سبک و عملکرد را ارائه می‌دهد. با نمایشگر خیره‌کننده همیشه روشن، ویژگی‌های جامع سلامتی و طراحی زیبا، همراه ایده‌آل روزمره است."
+      },
+      "excerpt": {
+        "en": "The perfect balance of style and function for everyday use.",
+        "fa": "تعادل کامل بین سبک و عملکرد برای استفاده روزمره."
+      },
+      "cover": "/assets/watch/apple-watch-series-12.png",
+      "tags": [
+        "Apple Watch",
+        "Series 12",
+        "Lifestyle",
+        "Health"
+      ],
+      "publishDate": "2025-01-05",
+      "readTime": 6,
+      "active": true,
+      "featured": true,
+      "__v": 0
+    },
+    {
+      "_id": "6a3295a50a354e5ea6e3ff41",
+      "slug": "apple-watch-se-3",
+      "title": {
+        "en": "Apple Watch SE 3: The Best Budget Apple Smartwatch",
+        "fa": "اپل واچ SE ۳: بهترین ساعت هوشمند اقتصادی اپل"
+      },
+      "brand": "Apple",
+      "category": "Watch",
+      "content": {
+        "en": "The Apple Watch SE 3 is the best budget smartwatch from Apple. It offers all the essential features you need at an affordable price, making it perfect for first-time smartwatch users.",
+        "fa": "اپل واچ SE ۳ بهترین ساعت هوشمند اقتصادی از اپل است. تمام ویژگی‌های ضروری مورد نیاز شما را با قیمتی مناسب ارائه می‌دهد و برای کاربران جدید ساعت هوشمند عالی است."
+      },
+      "excerpt": {
+        "en": "The best budget smartwatch with essential features.",
+        "fa": "بهترین ساعت هوشمند اقتصادی با ویژگی‌های ضروری."
+      },
+      "cover": "/assets/watch/apple-watch-se-3.png",
+      "tags": [
+        "Apple Watch",
+        "SE",
+        "Budget",
+        "Essential"
+      ],
+      "publishDate": "2025-01-01",
+      "readTime": 5,
+      "active": true,
+      "featured": true,
+      "__v": 0
+    },
+    {
+      "_id": "6a33e8e7b94cbfcae9d351a6",
+      "slug": "apple-ecosystem-guide",
+      "title": {
+        "en": "Apple Ecosystem Guide",
+        "fa": "راهنمای اکوسیستم اپل"
+      },
+      "brand": "Apple",
+      "category": "Guide",
+      "content": {
+        "en": "Complete guide to Apple ecosystem...",
+        "fa": "راهنمای کامل اکوسیستم اپل..."
+      },
+      "excerpt": {
+        "en": "Seamless integration across all Apple devices.",
+        "fa": "ادغام یکپارچه در تمام دستگاه‌های اپل."
+      },
+      "tags": [
+        "Apple",
+        "Ecosystem",
+        "Guide"
+      ],
+      "publishDate": "2025-01-15",
+      "readTime": 6,
+      "active": true,
+      "featured": true,
+      "cover": "/assets/iphone/hero-endframe.png",
+      "__v": 0
+    },
+    {
+      "_id": "6a33e8e7b94cbfcae9d351a7",
+      "slug": "apple-watch-series-9-review",
+      "title": {
+        "en": "Apple Watch Series 9 Review",
+        "fa": "بررسی اپل واچ سری ۹"
+      },
+      "brand": "Apple",
+      "category": "Review",
+      "content": {
+        "en": "Apple Watch Series 9 review...",
+        "fa": "بررسی اپل واچ سری ۹..."
+      },
+      "excerpt": {
+        "en": "Smarter, brighter, more powerful.",
+        "fa": "باهوش‌تر، درخشان‌تر، قدرتمندتر."
+      },
+      "tags": [
+        "Apple Watch",
+        "Apple",
+        "Review"
+      ],
+      "publishDate": "2025-01-10",
+      "readTime": 5,
+      "active": true,
+      "featured": true,
+      "cover": "/assets/watch/apple-watch-ultra-4.png",
+      "__v": 0
+    },
+    {
+      "_id": "6a33e8e7b94cbfcae9d351a8",
+      "slug": "iphone-13-red-review",
+      "title": {
+        "en": "iPhone 13 Product Red Review",
+        "fa": "بررسی آیفون ۱۳ پروداکت رد"
+      },
+      "brand": "Apple",
+      "category": "Review",
+      "content": {
+        "en": "iPhone 13 Product Red review...",
+        "fa": "بررسی آیفون ۱۳ پروداکت رد..."
+      },
+      "excerpt": {
+        "en": "Special color, unlimited power.",
+        "fa": "رنگ خاص، قدرت بی‌پایان."
+      },
+      "tags": [
+        "iPhone",
+        "Apple",
+        "Review"
+      ],
+      "publishDate": "2025-01-08",
+      "readTime": 4,
+      "active": true,
+      "featured": true,
+      "cover": "/assets/iphone/iphone-13-pro-max.png",
+      "__v": 0
+    },
+    {
+      "_id": "6a33e8e7b94cbfcae9d351a9",
+      "slug": "iphone-15-pro-review",
+      "title": {
+        "en": "iPhone 15 Pro Review",
+        "fa": "بررسی آیفون ۱۵ پرو"
+      },
+      "brand": "Apple",
+      "category": "Review",
+      "content": {
+        "en": "iPhone 15 Pro review...",
+        "fa": "بررسی آیفون ۱۵ پرو..."
+      },
+      "excerpt": {
+        "en": "Titanium. Lightest and strongest Pro ever.",
+        "fa": "تیتانیوم. سبک‌ترین و قوی‌ترین پرو تاریخ."
+      },
+      "tags": [
+        "iPhone",
+        "Apple",
+        "Review"
+      ],
+      "publishDate": "2025-01-05",
+      "readTime": 6,
+      "active": true,
+      "featured": true,
+      "cover": "/assets/iphone/iphone-15-pro-max.png",
+      "__v": 0
+    },
+    {
+      "_id": "6a33e8e7b94cbfcae9d351aa",
+      "slug": "samsung-flagships-2024",
+      "title": {
+        "en": "Samsung Flagships 2024",
+        "fa": "پرچمداران سامسونگ ۲۰۲۴"
+      },
+      "brand": "Samsung",
+      "category": "Guide",
+      "content": {
+        "en": "Samsung flagships guide...",
+        "fa": "راهنمای پرچمداران سامسونگ..."
+      },
+      "excerpt": {
+        "en": "The pinnacle of Android technology.",
+        "fa": "اوج تکنولوژی اندروید."
+      },
+      "tags": [
+        "Samsung",
+        "Flagship",
+        "Guide"
+      ],
+      "publishDate": "2025-01-01",
+      "readTime": 7,
+      "active": true,
+      "featured": true,
+      "cover": "/assets/galexy-series-s/galaxy-s24-ultra.png",
+      "__v": 0
+    },
+    {
+      "_id": "6a33e8e7b94cbfcae9d351ab",
+      "slug": "macbook-pro-m3-review",
+      "title": {
+        "en": "MacBook Pro M3 Review",
+        "fa": "بررسی مک‌بوک پرو M3"
+      },
+      "brand": "Apple",
+      "category": "Review",
+      "content": {
+        "en": "MacBook Pro M3 review...",
+        "fa": "بررسی مک‌بوک پرو M3..."
+      },
+      "excerpt": {
+        "en": "For the pros. M3 chip power.",
+        "fa": "برای حرفه‌ای‌ها. قدرت تراشه M3."
+      },
+      "tags": [
+        "MacBook",
+        "Apple",
+        "Review"
+      ],
+      "publishDate": "2025-01-01",
+      "readTime": 8,
+      "active": true,
+      "featured": true,
+      "cover": "/assets/macbook/macboo-air-m3--.png",
+      "__v": 0
+    },
+    {
+      "_id": "6a33e8e7b94cbfcae9d351ac",
+      "slug": "ipad-pro-m2-review",
+      "title": {
+        "en": "iPad Pro M2 Review",
+        "fa": "بررسی آیپد پرو M2"
+      },
+      "brand": "Apple",
+      "category": "Review",
+      "content": {
+        "en": "iPad Pro M2 review...",
+        "fa": "بررسی آیپد پرو M2..."
+      },
+      "excerpt": {
+        "en": "Your next computer.",
+        "fa": "کامپیوتر بعدی شما."
+      },
+      "tags": [
+        "iPad",
+        "Apple",
+        "Review"
+      ],
+      "publishDate": "2025-01-01",
+      "readTime": 5,
+      "active": true,
+      "featured": true,
+      "cover": "/assets/ipad/ipad-pro.png",
+      "__v": 0
+    },
+    {
+      "_id": "6a33e8e7b94cbfcae9d351ad",
+      "slug": "iphone-17-dual-view",
+      "title": {
+        "en": "iPhone 17 Dual View Concept",
+        "fa": "کانسپت نمای دوگانه آیفون ۱۷"
+      },
+      "brand": "Concept",
+      "category": "Concept",
+      "content": {
+        "en": "Dual view concept...",
+        "fa": "کانسپت نمای دوگانه..."
+      },
+      "excerpt": {
+        "en": "Circular camera module design.",
+        "fa": "طراحی ماژول دوربین دایره‌ای."
+      },
+      "tags": [
+        "iPhone",
+        "Concept",
+        "Design"
+      ],
+      "publishDate": "2025-01-01",
+      "readTime": 3,
+      "active": true,
+      "featured": true,
+      "cover": "/assets/iphone/hero-endframe.png",
+      "__v": 0
+    },
+    {
+      "_id": "6a33e8e7b94cbfcae9d351ae",
+      "slug": "apple-full-setup-guide",
+      "title": {
+        "en": "Apple Full Setup Guide",
+        "fa": "راهنمای ست کامل اپل"
+      },
+      "brand": "Apple",
+      "category": "Guide",
+      "content": {
+        "en": "Complete Apple setup guide...",
+        "fa": "راهنمای کامل ست اپل..."
+      },
+      "excerpt": {
+        "en": "Complete Apple workspace.",
+        "fa": "میز کار کامل اپل."
+      },
+      "tags": [
+        "Apple",
+        "Setup",
+        "Guide"
+      ],
+      "publishDate": "2025-01-01",
+      "readTime": 4,
+      "active": true,
+      "featured": true,
+      "cover": "/assets/iphone/hero-endframe.png",
+      "__v": 0
+    },
+    {
+      "_id": "6a33e8e7b94cbfcae9d351af",
+      "slug": "galaxy-s24-series-comparison",
+      "title": {
+        "en": "Galaxy S24 Series Comparison",
+        "fa": "مقایسه سری گلکسی اس۲۴"
+      },
+      "brand": "Samsung",
+      "category": "Comparison",
+      "content": {
+        "en": "Galaxy S24 series comparison...",
+        "fa": "مقایسه سری گلکسی اس۲۴..."
+      },
+      "excerpt": {
+        "en": "Choose your best Galaxy.",
+        "fa": "بهترین گلکسی خود را انتخاب کنید."
+      },
+      "tags": [
+        "Samsung",
+        "Galaxy S24",
+        "Comparison"
+      ],
+      "publishDate": "2025-01-01",
+      "readTime": 6,
+      "active": true,
+      "featured": true,
+      "cover": "/assets/galexy-series-s/galaxy-s24-ultra.png",
+      "__v": 0
+    },
+    {
+      "_id": "6a33e8e7b94cbfcae9d351b0",
+      "slug": "apple-watch-collection-guide",
+      "title": {
+        "en": "Apple Watch Collection Guide",
+        "fa": "راهنمای کلکسیون اپل واچ"
+      },
+      "brand": "Apple",
+      "category": "Guide",
+      "content": {
+        "en": "Apple Watch collection guide...",
+        "fa": "راهنمای کلکسیون اپل واچ..."
+      },
+      "excerpt": {
+        "en": "Styles and models for every taste.",
+        "fa": "تنوعی از بندها و مدل‌ها."
+      },
+      "tags": [
+        "Apple Watch",
+        "Collection",
+        "Guide"
+      ],
+      "publishDate": "2025-01-01",
+      "readTime": 4,
+      "active": true,
+      "featured": true,
+      "cover": "/assets/watch/apple-watch-ultra-4.png",
+      "__v": 0
+    },
+    {
+      "_id": "6a3797085a64c13b73de5023",
+      "slug": "galaxy-s26-review",
+      "brand": "Samsung",
+      "title": {
+        "en": "Galaxy S26 Review: The Future of Samsung",
+        "fa": "بررسی گلکسی S26: آینده سامسونگ"
+      },
+      "excerpt": {
+        "en": "The Galaxy S26 brings cutting-edge AI features and a revolutionary camera system.",
+        "fa": "گلکسی S26 با ویژگی‌های پیشرفته هوش مصنوعی و سیستم دوربین انقلابی."
+      },
+      "content": {
+        "en": "<h1>Galaxy S26 Review</h1><p>The Galaxy S26 is Samsung's most advanced smartphone yet. With the new Exynos 2400 chip and a 200MP camera, it redefines what a smartphone can do.</p>",
+        "fa": "<h1>بررسی گلکسی S26</h1><p>گلکسی S26 پیشرفته‌ترین گوشی سامسونگ تا به امروز است. با تراشه جدید Exynos 2400 و دوربین ۲۰۰ مگاپیکسلی،定义了 یک گوشی هوشمند.</p>"
+      },
+      "tags": [
+        "Samsung",
+        "Galaxy S26",
+        "Review",
+        "AI"
+      ],
+      "publishDate": "2026-06-21",
+      "readTime": 8,
+      "active": true,
+      "featured": true,
+      "cover": "/assets/galexy-series-s/galaxy-s26.png",
+      "__v": 0
+    },
+    {
+      "_id": "6a3797085a64c13b73de5024",
+      "slug": "iphone-17-pro-review",
+      "brand": "Apple",
+      "title": {
+        "en": "iPhone 17 Pro Review: AI at Its Peak",
+        "fa": "بررسی آیفون ۱۷ پرو: هوش مصنوعی در اوج"
+      },
+      "excerpt": {
+        "en": "iPhone 17 Pro with A19 Pro chip and advanced AI features.",
+        "fa": "آیفون ۱۷ پرو با تراشه A19 Pro و ویژگی‌های پیشرفته هوش مصنوعی."
+      },
+      "content": {
+        "en": "<h1>iPhone 17 Pro Review</h1><p>The iPhone 17 Pro brings advanced AI capabilities to your pocket. With the A19 Pro chip, machine learning tasks are faster than ever.</p>",
+        "fa": "<h1>بررسی آیفون ۱۷ پرو</h1><p>آیفون ۱۷ پرو قابلیت‌های پیشرفته هوش مصنوعی را به جیب شما می‌آورد. با تراشه A19 Pro، وظایف یادگیری ماشین سریع‌تر از همیشه هستند.</p>"
+      },
+      "tags": [
+        "iPhone",
+        "Apple",
+        "iPhone 17 Pro",
+        "AI"
+      ],
+      "publishDate": "2026-06-21",
+      "readTime": 7,
+      "active": true,
+      "featured": true,
+      "cover": "/assets/iphone/iphone-17-pro.png",
+      "__v": 0
+    },
+    {
+      "_id": "6a3797085a64c13b73de5025",
+      "slug": "iphone-17-review",
+      "brand": "Apple",
+      "title": {
+        "en": "iPhone 17 Review: The Next Generation",
+        "fa": "بررسی آیفون ۱۷: نسل بعدی"
+      },
+      "excerpt": {
+        "en": "iPhone 17 with next-generation A19 chip and advanced AI features.",
+        "fa": "آیفون ۱۷ با تراشه نسل بعدی A19 و ویژگی‌های پیشرفته هوش مصنوعی."
+      },
+      "content": {
+        "en": "<h1>iPhone 17 Review</h1><p>The iPhone 17 represents the next generation of smartphones with the A19 chip and enhanced AI capabilities.</p>",
+        "fa": "<h1>بررسی آیفون ۱۷</h1><p>آیفون ۱۷ نماینده نسل بعدی گوشی‌های هوشمند با تراشه A19 و قابلیت‌های پیشرفته هوش مصنوعی است.</p>"
+      },
+      "tags": [
+        "iPhone",
+        "Apple",
+        "iPhone 17",
+        "AI"
+      ],
+      "publishDate": "2026-06-21",
+      "readTime": 6,
+      "active": true,
+      "featured": true,
+      "cover": "/assets/iphone/iphone-17.png",
+      "__v": 0
+    }
+  ],
+  "slides": [
+    {
+      "_id": "6a31b8cf3cf4228cb2792848",
+      "title": {
+        "en": "Galaxy S24 Ultra",
+        "fa": "گلکسی اس۲۴ اولترا"
+      },
+      "subtitle": {
+        "en": "Galaxy AI in your hands",
+        "fa": "هوش مصنوعی در دستان شما"
+      },
+      "description": {
+        "en": "200MP Camera | Galaxy AI | S Pen",
+        "fa": "دوربین ۲۰۰ مگاپیکسلی | هوش مصنوعی Galaxy AI | قلم S Pen"
+      },
+      "image": "/images/hero-slider-home/hero-1.png",
+      "brand": "Samsung",
+      "articleSlug": "galaxy-s24-ultra-ai-revolution",
+      "buttonText": {
+        "en": "Buy Now",
+        "fa": "خرید"
+      },
+      "order": 1,
+      "active": true,
+      "__v": 0,
+      "createdAt": "2026-06-16T20:57:51.408Z",
+      "updatedAt": "2026-06-16T20:57:51.408Z",
+      "productId": "6a3151ccfaf09f17f53e5fb5"
+    },
+    {
+      "_id": "6a31b8cf3cf4228cb2792849",
+      "title": {
+        "en": "Apple Ecosystem",
+        "fa": "اکوسیستم اپل"
+      },
+      "subtitle": {
+        "en": "Seamless experience across all devices",
+        "fa": "تجربه یکپارچه در تمام دستگاه‌ها"
+      },
+      "description": {
+        "en": "Handoff | Universal Clipboard | Sidecar",
+        "fa": "Handoff | کلیپ‌بورد همگانی | Sidecar"
+      },
+      "image": "/images/hero-slider-home/hero-2.png",
+      "brand": "Apple",
+      "articleSlug": "iphone-17-pro-max",
+      "buttonText": {
+        "en": "Buy Now",
+        "fa": "خرید"
+      },
+      "order": 2,
+      "active": true,
+      "__v": 0,
+      "createdAt": "2026-06-16T20:57:51.409Z",
+      "updatedAt": "2026-06-16T20:57:51.409Z"
+    },
+    {
+      "_id": "6a31b8cf3cf4228cb279284a",
+      "title": {
+        "en": "Apple Watch Series 9",
+        "fa": "اپل واچ سری ۹"
+      },
+      "subtitle": {
+        "en": "Smarter. Brighter. More powerful.",
+        "fa": "باهوش‌تر، درخشان‌تر، قدرتمندتر"
+      },
+      "description": {
+        "en": "S9 SIP | Always-On Display | Double Tap",
+        "fa": "S9 SIP | نمایشگر همیشه روشن | ضربه دوگانه"
+      },
+      "image": "/images/hero-slider-home/hero-3.png",
+      "brand": "Apple",
+      "articleSlug": "apple-watch-se-3",
+      "buttonText": {
+        "en": "Buy Now",
+        "fa": "خرید"
+      },
+      "order": 3,
+      "active": true,
+      "__v": 0,
+      "createdAt": "2026-06-16T20:57:51.409Z",
+      "updatedAt": "2026-06-16T20:57:51.409Z"
+    },
+    {
+      "_id": "6a31b8cf3cf4228cb279284b",
+      "title": {
+        "en": "iPhone 13 Product Red",
+        "fa": "آیفون ۱۳ پروداکت رد"
+      },
+      "subtitle": {
+        "en": "Special color, unlimited power",
+        "fa": "رنگ خاص، قدرت بی‌پایان"
+      },
+      "description": {
+        "en": "A15 Bionic | Dual Camera | 5G",
+        "fa": "A15 Bionic | دوربین دوگانه | 5G"
+      },
+      "image": "/images/hero-slider-home/hero-4.png",
+      "brand": "Apple",
+      "articleSlug": "iphone-17-pro-max",
+      "buttonText": {
+        "en": "Buy Now",
+        "fa": "خرید"
+      },
+      "order": 4,
+      "active": true,
+      "__v": 0,
+      "createdAt": "2026-06-16T20:57:51.409Z",
+      "updatedAt": "2026-06-16T20:57:51.409Z"
+    },
+    {
+      "_id": "6a31b8cf3cf4228cb279284c",
+      "title": {
+        "en": "iPhone 15 Pro",
+        "fa": "آیفون ۱۵ پرو"
+      },
+      "subtitle": {
+        "en": "Titanium. Lightest and strongest Pro",
+        "fa": "ساخته شده از تیتانیوم"
+      },
+      "description": {
+        "en": "A17 Pro | Titanium | USB-C",
+        "fa": "A17 Pro | تیتانیوم | USB-C"
+      },
+      "image": "/images/hero-slider-home/hero-5.png",
+      "brand": "Apple",
+      "articleSlug": "iphone-17-pro-max",
+      "buttonText": {
+        "en": "Buy Now",
+        "fa": "خرید"
+      },
+      "order": 5,
+      "active": true,
+      "__v": 0,
+      "createdAt": "2026-06-16T20:57:51.409Z",
+      "updatedAt": "2026-06-16T20:57:51.409Z"
+    },
+    {
+      "_id": "6a31b8cf3cf4228cb279284d",
+      "title": {
+        "en": "Samsung Flagships",
+        "fa": "پرچمداران سامسونگ"
+      },
+      "subtitle": {
+        "en": "The pinnacle of Android technology",
+        "fa": "اوج تکنولوژی اندروید"
+      },
+      "description": {
+        "en": "Snapdragon 8 Gen 3 | Dynamic AMOLED 2X",
+        "fa": "Snapdragon 8 Gen 3 | Dynamic AMOLED 2X"
+      },
+      "image": "/images/hero-slider-home/hero-6.png",
+      "brand": "Samsung",
+      "articleSlug": "galaxy-s24-ultra-ai-revolution",
+      "buttonText": {
+        "en": "Buy Now",
+        "fa": "خرید"
+      },
+      "order": 6,
+      "active": true,
+      "__v": 0,
+      "createdAt": "2026-06-16T20:57:51.409Z",
+      "updatedAt": "2026-06-16T20:57:51.409Z"
+    },
+    {
+      "_id": "6a31b8cf3cf4228cb279284e",
+      "title": {
+        "en": "MacBook Pro Series",
+        "fa": "مک‌بوک پرو"
+      },
+      "subtitle": {
+        "en": "For the pros. M3 chip power.",
+        "fa": "برای حرفه‌ای‌ها. قدرت تراشه M3"
+      },
+      "description": {
+        "en": "M3 | M3 Pro | M3 Max | 22hr battery",
+        "fa": "M3 | M3 Pro | M3 Max | ۲۲ ساعت باتری"
+      },
+      "image": "/images/hero-slider-home/hero-7.png",
+      "brand": "Apple",
+      "articleSlug": "macbook-air-m3-review",
+      "buttonText": {
+        "en": "Buy Now",
+        "fa": "خرید"
+      },
+      "order": 7,
+      "active": true,
+      "__v": 0,
+      "createdAt": "2026-06-16T20:57:51.409Z",
+      "updatedAt": "2026-06-16T20:57:51.409Z"
+    },
+    {
+      "_id": "6a31b8cf3cf4228cb279284f",
+      "title": {
+        "en": "iPad Pro M2",
+        "fa": "آیپد پرو M2"
+      },
+      "subtitle": {
+        "en": "Your next computer",
+        "fa": "کامپیوتر بعدی شما"
+      },
+      "description": {
+        "en": "M2 chip | Apple Pencil hover",
+        "fa": "تراشه M2 | Apple Pencil hover"
+      },
+      "image": "/images/hero-slider-home/hero-8.png",
+      "brand": "Apple",
+      "articleSlug": "ipad-air-review",
+      "buttonText": {
+        "en": "Buy Now",
+        "fa": "خرید"
+      },
+      "order": 8,
+      "active": true,
+      "__v": 0,
+      "createdAt": "2026-06-16T20:57:51.409Z",
+      "updatedAt": "2026-06-16T20:57:51.409Z"
+    },
+    {
+      "_id": "6a31b8cf3cf4228cb2792850",
+      "title": {
+        "en": "iPhone 17 Pro Max",
+        "fa": "آیفون ۱۷ پرو مکس"
+      },
+      "subtitle": {
+        "en": "Future of iPhone design",
+        "fa": "آینده طراحی آیفون"
+      },
+      "description": {
+        "en": "Concept design | Under-display camera",
+        "fa": "کانسپت طراحی | دوربین زیر نمایشگر"
+      },
+      "image": "/images/hero-slider-home/hero-9.png",
+      "brand": "Concept",
+      "articleSlug": "iphone-17-pro-max",
+      "buttonText": {
+        "en": "Buy Now",
+        "fa": "خرید"
+      },
+      "order": 9,
+      "active": true,
+      "__v": 0,
+      "createdAt": "2026-06-16T20:57:51.409Z",
+      "updatedAt": "2026-06-16T20:57:51.409Z",
+      "productId": "6a32a43ab1158ceb971b63a0"
+    },
+    {
+      "_id": "6a31b8cf3cf4228cb2792851",
+      "title": {
+        "en": "Dual-View Concept",
+        "fa": "کانسپت نمای دوگانه"
+      },
+      "subtitle": {
+        "en": "Circular camera module design",
+        "fa": "طراحی ماژول دوربین دایره‌ای"
+      },
+      "description": {
+        "en": "Circular camera | Integrated design",
+        "fa": "ماژول دوربین دایره‌ای | طراحی یکپارچه"
+      },
+      "image": "/images/hero-slider-home/hero-10.png",
+      "brand": "Concept",
+      "articleSlug": "iphone-17-pro-max",
+      "buttonText": {
+        "en": "Buy Now",
+        "fa": "خرید"
+      },
+      "order": 10,
+      "active": true,
+      "__v": 0,
+      "createdAt": "2026-06-16T20:57:51.410Z",
+      "updatedAt": "2026-06-16T20:57:51.410Z"
+    },
+    {
+      "_id": "6a31b8cf3cf4228cb2792852",
+      "title": {
+        "en": "Full Apple Setup",
+        "fa": "ست کامل اپل"
+      },
+      "subtitle": {
+        "en": "Complete Apple workspace",
+        "fa": "میز کار کامل اپل"
+      },
+      "description": {
+        "en": "Mac Studio | Studio Display",
+        "fa": "Mac Studio | Studio Display"
+      },
+      "image": "/images/hero-slider-home/hero-11.png",
+      "brand": "Apple",
+      "articleSlug": "iphone-17-pro-max",
+      "buttonText": {
+        "en": "Buy Now",
+        "fa": "خرید"
+      },
+      "order": 11,
+      "active": true,
+      "__v": 0,
+      "createdAt": "2026-06-16T20:57:51.410Z",
+      "updatedAt": "2026-06-16T20:57:51.410Z"
+    },
+    {
+      "_id": "6a31b8cf3cf4228cb2792853",
+      "title": {
+        "en": "Galaxy S24 Series",
+        "fa": "سری گلکسی اس۲۴"
+      },
+      "subtitle": {
+        "en": "Choose your best",
+        "fa": "انتخاب بهترین"
+      },
+      "description": {
+        "en": "S24 | S24+ | S24 Ultra",
+        "fa": "S24 | S24+ | S24 Ultra"
+      },
+      "image": "/images/hero-slider-home/hero-12.png",
+      "brand": "Samsung",
+      "articleSlug": "galaxy-s24-ultra-ai-revolution",
+      "buttonText": {
+        "en": "Buy Now",
+        "fa": "خرید"
+      },
+      "order": 12,
+      "active": true,
+      "__v": 0,
+      "createdAt": "2026-06-16T20:57:51.410Z",
+      "updatedAt": "2026-06-16T20:57:51.410Z",
+      "productId": "6a3151ccfaf09f17f53e5fb5"
+    },
+    {
+      "_id": "6a31b8cf3cf4228cb2792854",
+      "title": {
+        "en": "iPad Pro Creative",
+        "fa": "آیپد پرو خلاق"
+      },
+      "subtitle": {
+        "en": "For artists and designers",
+        "fa": "برای هنرمندان و طراحان"
+      },
+      "description": {
+        "en": "Apple Pencil Pro | Procreate",
+        "fa": "Apple Pencil Pro | Procreate"
+      },
+      "image": "/images/hero-slider-home/hero-13.png",
+      "brand": "Apple",
+      "articleSlug": "ipad-pro-review",
+      "buttonText": {
+        "en": "Buy Now",
+        "fa": "خرید"
+      },
+      "order": 13,
+      "active": true,
+      "__v": 0,
+      "createdAt": "2026-06-16T20:57:51.410Z",
+      "updatedAt": "2026-06-16T20:57:51.410Z"
+    },
+    {
+      "_id": "6a31b8cf3cf4228cb2792855",
+      "title": {
+        "en": "Watch Collection",
+        "fa": "کلکسیون اپل واچ"
+      },
+      "subtitle": {
+        "en": "Styles and models for every taste",
+        "fa": "تنوعی از بندها و مدل‌ها"
+      },
+      "description": {
+        "en": "Series 9 | Ultra 2 | SE",
+        "fa": "سری ۹ | اولترا ۲ | SE"
+      },
+      "image": "/images/hero-slider-home/hero-14.png",
+      "brand": "Apple",
+      "articleSlug": "apple-watch-se-3",
+      "buttonText": {
+        "en": "Buy Now",
+        "fa": "خرید"
+      },
+      "order": 14,
+      "active": true,
+      "__v": 0,
+      "createdAt": "2026-06-16T20:57:51.410Z",
+      "updatedAt": "2026-06-16T20:57:51.410Z"
+    }
+  ],
+  "users": [
+    {
+      "_id": "6a37b2edbce011e54ed5154b",
+      "name": "Fatemeh Rostami",
+      "email": "fatimarostami963369@gmail.com",
+      "password": "$2b$10$ve8DjWQgbuOi2my8xh9TPeoGaGPmWvBITGAsBlEj2hSqyLVe8U0Ae",
+      "phone": "",
+      "role": "admin",
+      "isActive": true,
+      "createdAt": "2026-06-21T09:46:21.263Z",
+      "updatedAt": "2026-06-21T10:07:04.571Z",
+      "__v": 0,
+      "lastLogin": "2026-06-21T10:07:04.571Z"
+    }
+  ],
+  "meta": {
+    "totalProducts": 31,
+    "totalArticles": 42,
+    "totalSlides": 14,
+    "totalUsers": 1,
+    "exportedAt": "2026-06-21T10:14:12.030Z"
+  }
+}
