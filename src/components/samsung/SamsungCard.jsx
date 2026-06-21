@@ -18,19 +18,8 @@ const SamsungCard = ({ product }) => {
 
   // نقشه slug محصول به slug مقاله
   const getArticleSlug = (productSlug) => {
-    const articleMap = {
-      'galaxy-s24': 'galaxy-s24-review',
-      'galaxy-s24-plus': 'galaxy-s24-plus-review',
-      'galaxy-s24-ultra': 'galaxy-s24-ultra-review',
-      'galaxy-s25-ultra': 'galaxy-s25-ultra-review',
-      'galaxy-s26': 'galaxy-s26-review',
-      'galaxy-z-fold-6': 'galaxy-z-fold-6-review',
-      'galaxy-z-flip-6': 'galaxy-z-flip-6-review',
-      'galaxy-tab-s10-ultra': 'galaxy-tab-s10-ultra-review',
-      'galaxy-book': 'galaxy-book-review',
-      'galaxy-book-6': 'galaxy-book-6-review',
-    };
-    return articleMap[productSlug] || productSlug;
+  // ✅ استفاده از product.article از دیتابیس
+    return product.article || product.articleSlug || productSlug;
   };
 
   const articleSlug = getArticleSlug(product.slug);

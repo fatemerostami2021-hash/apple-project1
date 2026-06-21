@@ -16,7 +16,6 @@ import WaveCircleText from "../../animations/WaveCircleText";
 import { useTheme } from "../../store/theme";
 import { fadeIn } from "../../animations/variants";
 import { useSlides } from "../../hooks/useSlides";
-import { articleMap } from "../product/articleMap";
 
 // کامپوننت TypingText
 const TypingText = ({ texts, className }) => {
@@ -94,7 +93,7 @@ const HeroSlider = () => {
         // اگر مقاله‌ای تنظیم نشده، از نقشه استفاده کن
         if (!articleSlug) {
           const productSlug = slide.productId?.slug || slide.productId || '';
-          articleSlug = articleMap[productSlug] || '';
+          articleSlug = slide.articleSlug || slide.article || productSlug || '';
         }
         
         // اگر هنوز مقاله‌ای نیست، از عنوان اسلاید استفاده کن

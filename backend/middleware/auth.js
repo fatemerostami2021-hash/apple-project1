@@ -1,16 +1,16 @@
-const dotenv = require('dotenv');
-dotenv.config();
-
-const ADMIN_TOKEN = process.env.ADMIN_TOKEN || 'fatemeh963';
-
-const authMiddleware = (req, res, next) => {
-  const token = req.headers['authorization']?.split(' ')[1];
+export default function authMiddleware(req, res, next) {
+  const token = req.headers.authorization?.split(' ')[1];
   
-  if (!token || token !== ADMIN_TOKEN) {
-    return res.status(401).json({ error: 'Unauthorized - Invalid token' });
+  // توکن ادمین ساده
+  if (token === 'fatemeh963') {
+    req.user = { role: 'admin', name: 'Fatemeh' };
+    return next();
   }
   
-  next();
-};
-
-module.exports = authMiddleware;
+  // اگر توکن وجود نداشت یا نامعتبر بود
+  if (!token) {
+    return res.status(401).json({ error: 'Unauthorized - No token provided' });
+  }
+  
+  return res.status(403).json({ error: 'Forbidden - Invalid token' });
+}

@@ -1,56 +1,32 @@
-const express = require('express');
+import express from "express";
+import Article from "../models/Article.js";
+
 const router = express.Router();
-const Article = require('../models/Article');
 
-// افزایش لایک
-router.post('/:slug/like', async (req, res) => {
+/* POST /api/like/:slug — افزایش لایک یک مقاله */
+router.post("/:slug", async (req, res, next) => {
   try {
-    const article = await Article.findOne({ slug: req.params.slug });
-    
-    if (!article) {
-      return res.status(404).json({ error: 'Article not found' });
-    }
-    
-    article.likes = (article.likes || 0) + 1;
-    await article.save();
-    
-    res.json({ success: true, likes: article.likes });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+    const article = await Article.findOneAndUpdate(
+      { slug: req.params.slug },
+      { $inc: { likes: 1 } },
+      { new: true }
+    );
+    if (!article) return res.status(404).json({ error: "مقاله یافت نشد" });
+    res.json({ likes: article.likes });
+  } catch (err) { next(err); }
 });
 
-// کاهش لایک
-router.post('/:slug/unlike', async (req, res) => {
+/* DELETE /api/like/:slug — کاهش لایک (آنلایک) */
+router.delete("/:slug", async (req, res, next) => {
   try {
-    const article = await Article.findOne({ slug: req.params.slug });
-    
-    if (!article) {
-      return res.status(404).json({ error: 'Article not found' });
-    }
-    
-    article.likes = Math.max(0, (article.likes || 0) - 1);
-    await article.save();
-    
-    res.json({ success: true, likes: article.likes });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+    const article = await Article.findOneAndUpdate(
+      { slug: req.params.slug },
+      { $inc: { likes: -1 } },
+      { new: true }
+    );
+    if (!article) return res.status(404).json({ error: "مقاله یافت نشد" });
+    res.json({ likes: Math.max(0, article.likes) });
+  } catch (err) { next(err); }
 });
 
-// دریافت تعداد لایک
-router.get('/:slug/likes', async (req, res) => {
-  try {
-    const article = await Article.findOne({ slug: req.params.slug });
-    
-    if (!article) {
-      return res.status(404).json({ error: 'Article not found' });
-    }
-    
-    res.json({ likes: article.likes || 0 });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-module.exports = router;
+export default router;

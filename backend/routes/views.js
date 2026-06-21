@@ -1,32 +1,19 @@
-const express = require('express');
+import express from "express";
+import Article from "../models/Article.js";
+
 const router = express.Router();
-const Article = require('../models/Article');
 
-// ثبت بازدید
-router.post('/:slug/view', async (req, res) => {
+/* POST /api/views/:slug — افزایش بازدید یک مقاله */
+router.post("/:slug", async (req, res, next) => {
   try {
-    const article = await Article.findOne({ slug: req.params.slug });
-    if (!article) return res.status(404).json({ error: 'Article not found' });
-    
-    article.views = (article.views || 0) + 1;
-    await article.save();
-    
-    res.json({ success: true, views: article.views });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+    const article = await Article.findOneAndUpdate(
+      { slug: req.params.slug },
+      { $inc: { views: 1 } },
+      { new: true }
+    );
+    if (!article) return res.status(404).json({ error: "مقاله یافت نشد" });
+    res.json({ views: article.views });
+  } catch (err) { next(err); }
 });
 
-// دریافت بازدید
-router.get('/:slug/views', async (req, res) => {
-  try {
-    const article = await Article.findOne({ slug: req.params.slug });
-    if (!article) return res.status(404).json({ error: 'Article not found' });
-    
-    res.json({ views: article.views || 0 });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-module.exports = router;
+export default router;

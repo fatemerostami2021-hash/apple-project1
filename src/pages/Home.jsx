@@ -23,7 +23,6 @@ import "swiper/css/pagination";
 
 import { useProducts } from "../hooks/useProducts";
 import { useCart } from "../hooks/useCart";
-import { articleMap } from "../components/product/articleMap";
 import { getLangText, getProductName } from "../utils/helpers";
 
 /* ════════════════════════════════════════
@@ -88,7 +87,7 @@ const Home = () => {
 
   const handleViewProduct = useCallback((product) => {
     const slug = product.slug || product._id || product.id;
-    const articleSlug = articleMap[slug] || slug;
+    const articleSlug = product.article || product.articleSlug || slug;
     
     if (articleSlug && articleSlug !== slug) {
       navigate(`/articles/${articleSlug}`);
@@ -205,7 +204,7 @@ const Home = () => {
                 appleProducts.slice(0, 10).map((product, index) => {
                   const isAdded = addedToCart[product._id || product.id];
                   const productSlug = product.slug || product._id || product.id;
-                  const articleSlug = articleMap[productSlug] || productSlug;
+                  const articleSlug = product.article || product.articleSlug || productSlug;
                   const hasArticle = articleSlug !== productSlug;
                   const productName = getProductName(product, lang);
 

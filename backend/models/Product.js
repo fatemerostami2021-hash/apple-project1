@@ -61,6 +61,5 @@ const productSchema = new mongoose.Schema(
 
 /* index ترکیبی برای فیلتر سریع */
 productSchema.index({ brand: 1, category: 1 });
-productSchema.index({ slug: 1 });
 
 export default mongoose.model("Product", productSchema);

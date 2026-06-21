@@ -5,7 +5,6 @@ import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { HiOutlineShoppingCart, HiOutlineEye, HiOutlineCheck, HiOutlineArrowRight, HiOutlineNewspaper } from 'react-icons/hi';
 import { useCart } from '../hooks/useCart';
-import { articleMap } from '../components/product/articleMap';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
@@ -54,7 +53,7 @@ const SamsungProducts = () => {
 
   const handleViewProduct = useCallback((product) => {
     const slug = product.slug || product._id || product.id;
-    const articleSlug = articleMap[slug] || slug;
+    const articleSlug = product.article || product.articleSlug || slug;
     
     if (articleSlug && articleSlug !== slug) {
       navigate(`/articles/${articleSlug}`);
@@ -145,7 +144,7 @@ const SamsungProducts = () => {
             {filteredProducts.map((product, index) => {
               const productId = product._id || product.id;
               const productSlug = product.slug || productId;
-              const articleSlug = articleMap[productSlug] || productSlug;
+              const articleSlug = product.article || product.articleSlug || productSlug;
               const hasArticle = articleSlug !== productSlug;
               const isAdded = addedToCart[productId];
 

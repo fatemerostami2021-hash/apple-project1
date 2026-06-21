@@ -1,31 +1,66 @@
-import mongoose from "mongoose";
-import bcrypt from "bcryptjs";
+import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs';
 
 const userSchema = new mongoose.Schema(
   {
-    name: { type: String, required: true },
-    email: { type: String, required: true, unique: true, lowercase: true },
-    phone: { type: String, unique: true, sparse: true },
-    password: { type: String, required: true },
-    bio: { type: String, default: "" },
-    role: { type: String, enum: ["user", "admin"], default: "user" },
-    isVerified: { type: Boolean, default: false },
-    lastLogin: { type: Date },
-    avatar: { type: String, default: "" },
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+      maxlength: 100,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+      lowercase: true,
+    },
+    password: {
+      type: String,
+      required: true,
+      minlength: 6,
+    },
+    phone: {
+      type: String,
+      trim: true,
+      default: '',
+    },
+    role: {
+      type: String,
+      enum: ['user', 'admin'],
+      default: 'user',
+    },
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
+    lastLogin: {
+      type: Date,
+    },
+    resetPasswordToken: {
+      type: String,
+    },
+    resetPasswordExpires: {
+      type: Date,
+    },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  }
 );
 
-// هش کردن رمز قبل از ذخیره
-userSchema.pre("save", async function(next) {
-  if (!this.isModified("password")) return next();
-  this.password = await bcrypt.hash(this.password, 10);
-  next();
-});
+// ✅ ایندکس‌ها (فقط یک بار)
+userSchema.index({ email: 1 });
 
-// متد مقایسه رمز
-userSchema.methods.comparePassword = async function(candidatePassword) {
-  return bcrypt.compare(candidatePassword, this.password);
+// ✅ حذف pre('save') - هش کردن رمز در کنترلر انجام می‌شود
+// این middleware حذف شد تا خطای next برطرف شود
+
+// ✅ متد مقایسه رمز
+userSchema.methods.comparePassword = function (candidatePassword) {
+  return bcrypt.compareSync(candidatePassword, this.password);
 };
 
-export default mongoose.model("User", userSchema);
+const User = mongoose.model('User', userSchema);
+
+export default User;
