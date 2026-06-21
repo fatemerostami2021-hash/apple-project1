@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
 import { HiOutlineHeart, HiOutlineShoppingBag, HiOutlineCheck, HiOutlineEye, HiOutlineNewspaper, HiOutlineArrowRight } from "react-icons/hi";
 import { useCart } from "../../hooks/useCart";
-import { articleMap } from "./articleMap";
 
 const ProductCard = ({ product, onQuickView }) => {
   const { t, i18n } = useTranslation();
@@ -31,7 +30,7 @@ const ProductCard = ({ product, onQuickView }) => {
   const productSlug = product.slug || productId;
   
   // بررسی وجود مقاله مرتبط
-  const articleSlug = articleMap[productSlug] || productSlug;
+  const articleSlug = product.article || product.articleSlug || productSlug;
   const hasArticle = articleSlug !== productSlug;
 
   // قیمت

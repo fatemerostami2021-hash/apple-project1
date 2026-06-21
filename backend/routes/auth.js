@@ -1,137 +1,179 @@
-import express from "express";
-import jwt from "jsonwebtoken";
-import User from "../models/User.js";
+import express from 'express';
+import bcrypt from 'bcryptjs';
+import User from '../models/User.js';
+import { generateToken } from '../utils/jwt.js';
+import { validateEmail, validatePassword } from '../utils/validation.js';
 
 const router = express.Router();
 
-// ──────────────────────────────────────────────
-// ثبت نام کاربر جدید
-// POST /api/auth/register
-// ──────────────────────────────────────────────
-router.post("/register", async (req, res) => {
+// ============================================================
+// ثبت‌نام
+// ============================================================
+router.post('/register', async (req, res) => {
   try {
-    const { name, email, phone, password, bio } = req.body;
+    console.log('📝 Register request:', req.body);
     
-    // بررسی وجود کاربر
-    const existingUser = await User.findOne({ $or: [{ email }, { phone }] });
-    if (existingUser) {
+    const { name, email, password, phone } = req.body;
+
+    if (!name || !email || !password) {
       return res.status(400).json({ 
-        error: existingUser.email === email 
-          ? "این ایمیل قبلاً ثبت شده است" 
-          : "این شماره تلفن قبلاً ثبت شده است" 
+        success: false, 
+        error: 'نام، ایمیل و رمز عبور الزامی است' 
       });
     }
-    
-    // ایجاد کاربر جدید
+
+    if (!validateEmail(email)) {
+      return res.status(400).json({ 
+        success: false, 
+        error: 'ایمیل نامعتبر است' 
+      });
+    }
+
+    if (!validatePassword(password)) {
+      return res.status(400).json({ 
+        success: false, 
+        error: 'رمز عبور باید حداقل ۶ کاراکتر باشد' 
+      });
+    }
+
+    const existingUser = await User.findOne({ email: email.trim().toLowerCase() });
+    if (existingUser) {
+      return res.status(400).json({ 
+        success: false, 
+        error: 'این ایمیل قبلاً ثبت شده است' 
+      });
+    }
+
+    // ✅ هش کردن رمز در اینجا
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
     const user = new User({
-      name,
-      email,
-      phone: phone || undefined,
-      password,
-      bio: bio || "",
+      name: name.trim(),
+      email: email.trim().toLowerCase(),
+      password: hashedPassword,
+      phone: phone || '',
+      role: 'user',
+      isActive: true
     });
-    
+
     await user.save();
-    
-    // ساخت توکن JWT
-    const token = jwt.sign(
-      { id: user._id, email: user.email, role: user.role },
-      process.env.JWT_SECRET || "secret-key",
-      { expiresIn: "30d" }
-    );
-    
+    console.log('✅ User created:', user._id);
+
+    const token = generateToken(user);
+
     res.status(201).json({
       success: true,
+      message: 'ثبت‌نام با موفقیت انجام شد',
       token,
       user: {
         id: user._id,
         name: user.name,
         email: user.email,
-        phone: user.phone,
-        role: user.role,
-      },
+        role: user.role
+      }
     });
+
   } catch (error) {
-    console.error("Register error:", error);
-    res.status(500).json({ error: "خطا در ثبت نام" });
+    console.error('❌ Register error:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: 'خطا در ثبت‌نام: ' + error.message 
+    });
   }
 });
 
-// ──────────────────────────────────────────────
-// ورود کاربر
-// POST /api/auth/login
-// ──────────────────────────────────────────────
-router.post("/login", async (req, res) => {
+// ============================================================
+// ورود
+// ============================================================
+router.post('/login', async (req, res) => {
   try {
-    const { identifier, password } = req.body;
+    console.log('🔑 Login request:', req.body);
     
-    // جستجو با ایمیل یا شماره تلفن
-    const user = await User.findOne({
-      $or: [
-        { email: identifier.toLowerCase() },
-        { phone: identifier },
-      ],
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({ 
+        success: false, 
+        error: 'ایمیل و رمز عبور الزامی است' 
+      });
+    }
+
+    if (!validateEmail(email)) {
+      return res.status(400).json({ 
+        success: false, 
+        error: 'ایمیل نامعتبر است' 
+      });
+    }
+
+    const user = await User.findOne({ 
+      email: email.trim().toLowerCase() 
     });
     
     if (!user) {
-      return res.status(401).json({ error: "ایمیل/شماره یا رمز عبور اشتباه است" });
+      return res.status(401).json({ 
+        success: false, 
+        error: 'ایمیل یا رمز عبور اشتباه است' 
+      });
     }
-    
-    // بررسی رمز
-    const isValid = await user.comparePassword(password);
-    if (!isValid) {
-      return res.status(401).json({ error: "ایمیل/شماره یا رمز عبور اشتباه است" });
+
+    if (user.isActive === false) {
+      return res.status(403).json({ 
+        success: false, 
+        error: 'حساب کاربری شما غیرفعال شده است' 
+      });
     }
-    
-    // به‌روزرسانی آخرین ورود
+
+    // ✅ مقایسه رمز با bcrypt
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      return res.status(401).json({ 
+        success: false, 
+        error: 'ایمیل یا رمز عبور اشتباه است' 
+      });
+    }
+
     user.lastLogin = new Date();
     await user.save();
-    
-    // ساخت توکن
-    const token = jwt.sign(
-      { id: user._id, email: user.email, role: user.role },
-      process.env.JWT_SECRET || "secret-key",
-      { expiresIn: "30d" }
-    );
-    
+
+    const token = generateToken(user);
+
     res.json({
       success: true,
+      message: 'ورود با موفقیت انجام شد',
       token,
       user: {
         id: user._id,
         name: user.name,
         email: user.email,
-        phone: user.phone,
-        role: user.role,
-      },
+        role: user.role
+      }
     });
+
   } catch (error) {
-    console.error("Login error:", error);
-    res.status(500).json({ error: "خطا در ورود" });
+    console.error('❌ Login error:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: 'خطا در ورود: ' + error.message 
+    });
   }
 });
 
-// ──────────────────────────────────────────────
-// دریافت اطلاعات کاربر جاری (با توکن)
-// GET /api/auth/me
-// ──────────────────────────────────────────────
-router.get("/me", async (req, res) => {
+// ============================================================
+// خروج
+// ============================================================
+router.post('/logout', async (req, res) => {
   try {
-    const token = req.headers.authorization?.split(" ")[1];
-    if (!token) {
-      return res.status(401).json({ error: "توکن یافت نشد" });
-    }
-    
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || "secret-key");
-    const user = await User.findById(decoded.id).select("-password");
-    
-    if (!user) {
-      return res.status(404).json({ error: "کاربر یافت نشد" });
-    }
-    
-    res.json({ user });
+    res.json({
+      success: true,
+      message: 'خروج با موفقیت انجام شد'
+    });
   } catch (error) {
-    res.status(401).json({ error: "توکن نامعتبر است" });
+    console.error('❌ Logout error:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: 'خطا در خروج' 
+    });
   }
 });
 

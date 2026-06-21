@@ -1,11 +1,10 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 const commentSchema = new mongoose.Schema({
   articleSlug: { type: String, required: true, index: true },
-  author: { type: String, default: 'کاربر' },
-  text: { type: String, required: true },
-  likes: { type: Number, default: 0 },
-  createdAt: { type: Date, default: Date.now }
-});
+  author:      { type: String, default: "مهمان", trim: true, maxlength: 60 },
+  text:        { type: String, required: true, trim: true, maxlength: 1000 },
+  approved:    { type: Boolean, default: true },
+}, { timestamps: true });
 
-module.exports = mongoose.model('Comment', commentSchema);
+export default mongoose.models.Comment || mongoose.model("Comment", commentSchema);

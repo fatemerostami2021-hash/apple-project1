@@ -1,45 +1,45 @@
-const express = require('express');
+import express from "express";
+import Comment from "../models/Comment.js";
+
 const router = express.Router();
-const Comment = require('../models/Comment');
 
-// دریافت کامنت‌های یک مقاله
-router.get('/:articleSlug', async (req, res) => {
+/* GET /api/comments/:articleSlug — همه کامنت‌های یک مقاله */
+router.get("/:articleSlug", async (req, res, next) => {
   try {
-    const comments = await Comment.find({ articleSlug: req.params.articleSlug })
-      .sort({ createdAt: -1 });
+    const comments = await Comment.find({
+      articleSlug: req.params.articleSlug,
+      approved: true,
+    })
+      .sort({ createdAt: -1 })
+      .lean();
     res.json(comments);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+  } catch (err) { next(err); }
 });
 
-// افزودن کامنت جدید
-router.post('/', async (req, res) => {
+/* POST /api/comments/:articleSlug — ثبت کامنت جدید */
+router.post("/:articleSlug", async (req, res, next) => {
   try {
-    const { articleSlug, author, text } = req.body;
+    const { author, text } = req.body;
     if (!text || !text.trim()) {
-      return res.status(400).json({ error: 'متن کامنت نمی‌تواند خالی باشد' });
+      return res.status(400).json({ error: "متن نظر الزامی است" });
     }
-    const comment = new Comment({
-      articleSlug,
-      author: author?.trim() || 'کاربر',
-      text: text.trim()
+
+    const comment = await Comment.create({
+      articleSlug: req.params.articleSlug,
+      author: author?.trim() || "مهمان",
+      text: text.trim(),
     });
-    await comment.save();
-    res.json(comment);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+
+    res.status(201).json(comment);
+  } catch (err) { next(err); }
 });
 
-// حذف کامنت (فقط برای مدیریت)
-router.delete('/:id', async (req, res) => {
+/* DELETE /api/comments/:id — حذف کامنت (ادمین) */
+router.delete("/:id", async (req, res, next) => {
   try {
     await Comment.findByIdAndDelete(req.params.id);
-    res.json({ success: true });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+    res.json({ ok: true });
+  } catch (err) { next(err); }
 });
 
-module.exports = router;
+export default router;
