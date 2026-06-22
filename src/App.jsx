@@ -51,37 +51,38 @@ import IPhoneEvolutionArticle from "./pages/articles/IPhoneEvolutionArticle";
 
 export default function App() {
   const { theme } = useTheme();
-    const { i18n } = useTranslation();
+  const { i18n } = useTranslation();
 
-      useEffect(() => {
-          document.documentElement.dir = i18n.language === "fa" ? "rtl" : "ltr";
-            }, [i18n.language]);
+  useEffect(() => {
+    document.documentElement.dir = i18n.language === "fa" ? "rtl" : "ltr";
+  }, [i18n.language]);
 
-              useEffect(() => {
-                  if (theme === "dark") {
-                        document.documentElement.classList.add("dark");
-                            } else {
-                                  document.documentElement.classList.remove("dark");
-                                      }
-                                        }, [theme]);
+  useEffect(() => {
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [theme]);
 
-                                          return (
-                                              <div
-                                                    className={`
-                                                            relative min-h-screen flex flex-col transition-colors duration-300
-                                                                    ${theme === "dark" ? "bg-[#2D2D2D] text-white" : "bg-[#E8F5FF] text-black"}
-                                                                          `}
-                                                                                style={{ fontFamily: "IRANSans, sans-serif" }}
-                                                                                    >
-                                                                                          <GalaxyBackground theme={theme} />
-                                                                                                
-                                                                                                      <Header />
+  return (
+    <div
+      className={`
+        relative min-h-screen flex flex-col transition-colors duration-300
+        ${theme === "dark" ? "bg-transparent text-white" : "bg-[#E8F5FF] text-black"}
+      `}
+      style={{ fontFamily: "IRANSans, sans-serif" }}
+    >
+      {/* ✅ کهکشان حالا از پشت این div دیده می‌شه چون دیگه bg-[#2D2D2D] مانعش نیست */}
+      <GalaxyBackground theme={theme} />
 
-                                                                                                            <main className="flex-1 w-full">
-                                                                                                                    <Routes>
-                                                                                                                              {/* ===== صفحات اصلی ===== */}
-                                                                                                                                        <Route path="/" element={<Home />} />
-                                                                                                                                                  <Route path="/products" element={<Products />} />
+      <Header />
+
+      <main className="flex-1 w-full">
+        <Routes>
+          {/* ===== صفحات اصلی ===== */}
+          <Route path="/" element={<Home />} />
+          <Route path="/products" element={<Products />} />
           <Route path="/samsung" element={<SamsungPage />} />
           <Route path="/accessories" element={<AccessoriesPage />} />
           <Route path="/accessories/cases" element={<AccessoriesPage />} />
@@ -89,72 +90,69 @@ export default function App() {
           <Route path="/accessories/protection" element={<AccessoriesPage />} />
           <Route path="/accessories/cables" element={<AccessoriesPage />} />
           <Route path="/accessories/audio" element={<AccessoriesPage />} />
-                                                                                                                                                            <Route path="/products/:slug" element={<ProductDetail />} />
-                                                                                                                                                                      <Route path="/product/:id" element={<ProductPage />} />
-                                                                                                                                                                                <Route path="/about" element={<About />} />
-                                                                                                                                                                                          
-                                                                                                                                                                                                    {/* ===== احراز هویت ===== */}
-                                                                                                                                                                                                              <Route path="/login" element={<Login />} />
-                                                                                                                                                                                                                        <Route path="/register" element={<Register />} />
-                                                                                                                                                                                                                                  <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/products/:slug" element={<ProductDetail />} />
+          <Route path="/product/:id" element={<ProductPage />} />
+          <Route path="/about" element={<About />} />
 
-                                                                                                                                                                                                                                            {/* ===== سبد خرید و تسویه ===== */}
-                                                                                                                                                                                                                                                      <Route path="/cart" element={<Cart />} />
-                                                                                                                                                                                                                                                                <Route path="/checkout" element={<CheckoutPage />} />
+          {/* ===== احراز هویت ===== */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
 
-                                                                                                                                                                                                                                                                          {/* ===== بلاگ - مسیر دقیق قبل از مسیر داینامیک ===== */}
-                                                                                                                                                                                                                                                                                    <Route path="/blog" element={<BlogPage />} />
-                                                                                                                                                                                                                                                                                              
-                                                                                                                                                                                                                                                                                                        {/* ===== مقالات - مسیرهای داینامیک ===== */}
-                                                                                                                                                                                                                                                                                                                  <Route path="/blog/:slug" element={<ArticlePage />} />
-                                                                                                                                                                                                                                                                                                                            <Route path="/article/:slug" element={<ArticlePage />} />
-                                                                                                                                                                                                                                                                                                                                      <Route path="/iphone/:slug" element={<ArticlePage />} />
-                                                                                                                                                                                                                                                                                                                                                <Route path="/articles/:slug" element={<ArticlePage />} />
-                                                                                                                                                                                                                                                                                                                                                          
-                                                                                                                                                                                                                                                                                                                                                                    {/* ===== صفحات دیگر ===== */}
-                                                                                                                                                                                                                                                                                                                                                                              <Route path="/services" element={<div>Services Page</div>} />
-                                                                                                                                                                                                                                                                                                                                                                                        <Route path="/articles" element={<div>Articles Page</div>} />
+          {/* ===== سبد خرید و تسویه ===== */}
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
 
-                                                                                                                                                                                                                                                                                                                                                                                                  {/* ===== اپل واچ ===== */}
-                                                                                                                                                                                                                                                                                                                                                                                                            <Route path="/apple-products/watch" element={<WatchPage />} />
-                                                                                                                                                                                                                                                                                                                                                                                                                      <Route path="/apple-products/iphone" element={<IphonePage />} />
-                                                                                                                                                                                                                                                                                                                                                                                                                                <Route path="/apple-products/ipad" element={<IpadPage />} />
-                                                                                                                                                                                                                                                                                                                                                                                                                                          <Route path="/apple-products/macbook" element={<MacbookPage />} />
-                                                                                                                                                                                                                                                                                                                                                                                                                                                    <Route path="/apple-products/airpods" element={<AirpodsPage />} />
-                                                                                                                                                                                                                                                                                                                                                                                                                                                              <Route path="/apple-products/macbook" element={<MacbookPage />} />
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <Route path="/apple-products/airpods" element={<div>AirPods Page</div>} />
+          {/* ===== بلاگ - مسیر دقیق قبل از مسیر داینامیک ===== */}
+          <Route path="/blog" element={<BlogPage />} />
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  {/* ===== مقالات اپل واچ ===== */}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <Route path="/apple-products/watch/article/apple-watch-ultra-4" element={<ArticleAppleWatchUltra4 />} />
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      <Route path="/apple-products/watch/article/apple-watch-ultra-3" element={<ArticleAppleWatchUltra3 />} />
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <Route path="/apple-products/watch/article/apple-watch-series-12" element={<ArticleAppleWatchSeries12 />} />
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <Route path="/apple-products/watch/article/apple-watch-se-3" element={<ArticleAppleWatchSE3 />} />
+          {/* ===== مقالات - مسیرهای داینامیک ===== */}
+          <Route path="/blog/:slug" element={<ArticlePage />} />
+          <Route path="/article/:slug" element={<ArticlePage />} />
+          <Route path="/iphone/:slug" element={<ArticlePage />} />
+          <Route path="/articles/:slug" element={<ArticlePage />} />
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    {/* ===== صفحه مقایسه آیفون ===== */}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              <Route path="/iphone/compare" element={<IPhoneEvolutionArticle />} />
+          {/* ===== صفحات دیگر ===== */}
+          <Route path="/services" element={<div>Services Page</div>} />
+          <Route path="/articles" element={<div>Articles Page</div>} />
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {/* ===== پنل ادمین ===== */}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  <Route path="/admin/login" element={<AdminLogin />} />
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <Route path="/admin/dashboard" element={<AdminDashboard />} />
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      <Route path="/admin/articles/new" element={<AdminArticleForm />} />
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      <Route path="/admin/articles" element={<AdminArticles />} />
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <Route path="/admin/articles/edit/:slug" element={<AdminArticleForm />} />
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <Route path="/admin/products/new" element={<AdminProductForm />} />
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <Route path="/admin/products/edit/:id" element={<AdminProductForm />} />
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <Route path="/admin/products" element={<AdminProducts />} />
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              <Route path="/admin/slides" element={<AdminSlides />} />
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <Route path="/admin/slides/new" element={<AdminSlideForm />} />
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  <Route path="/admin/slides/edit/:id" element={<AdminSlideForm />} />
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  <Route path="/admin/orders" element={<AdminOrders />} />
+          {/* ===== اپل واچ ===== */}
+          <Route path="/apple-products/watch" element={<WatchPage />} />
+          <Route path="/apple-products/iphone" element={<IphonePage />} />
+          <Route path="/apple-products/ipad" element={<IpadPage />} />
+          <Route path="/apple-products/macbook" element={<MacbookPage />} />
+          <Route path="/apple-products/airpods" element={<AirpodsPage />} />
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            {/* ===== صفحه 404 ===== */}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      <Route path="*" element={<div className="text-center py-20 text-2xl text-gray-500">404 - صفحه یافت نشد</div>} />
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              </Routes>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </main>
+          {/* ===== مقالات اپل واچ ===== */}
+          <Route path="/apple-products/watch/article/apple-watch-ultra-4" element={<ArticleAppleWatchUltra4 />} />
+          <Route path="/apple-products/watch/article/apple-watch-ultra-3" element={<ArticleAppleWatchUltra3 />} />
+          <Route path="/apple-products/watch/article/apple-watch-series-12" element={<ArticleAppleWatchSeries12 />} />
+          <Route path="/apple-products/watch/article/apple-watch-se-3" element={<ArticleAppleWatchSE3 />} />
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <Footer />
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <FloatingSocialButtons />
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      );
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+          {/* ===== صفحه مقایسه آیفون ===== */}
+          <Route path="/iphone/compare" element={<IPhoneEvolutionArticle />} />
+
+          {/* ===== پنل ادمین ===== */}
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/articles/new" element={<AdminArticleForm />} />
+          <Route path="/admin/articles" element={<AdminArticles />} />
+          <Route path="/admin/articles/edit/:slug" element={<AdminArticleForm />} />
+          <Route path="/admin/products/new" element={<AdminProductForm />} />
+          <Route path="/admin/products/edit/:id" element={<AdminProductForm />} />
+          <Route path="/admin/products" element={<AdminProducts />} />
+          <Route path="/admin/slides" element={<AdminSlides />} />
+          <Route path="/admin/slides/new" element={<AdminSlideForm />} />
+          <Route path="/admin/slides/edit/:id" element={<AdminSlideForm />} />
+          <Route path="/admin/orders" element={<AdminOrders />} />
+
+          {/* ===== صفحه 404 ===== */}
+          <Route path="*" element={<div className="text-center py-20 text-2xl text-gray-500">404 - صفحه یافت نشد</div>} />
+        </Routes>
+      </main>
+
+      <Footer />
+      <FloatingSocialButtons />
+    </div>
+  );
+}
