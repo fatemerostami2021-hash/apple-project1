@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { 
   HiOutlineUpload, HiOutlinePhotograph, HiOutlineVideoCamera, 
@@ -70,17 +71,18 @@ export default function AdminArticleForm() {
 
   const uploadImage = async (file, type) => {
     setUploading(true);
-    const formData = new FormData();
-    formData.append('image', file);
+    const fd = new FormData();
+    fd.append('image', file);
     
     try {
       const res = await fetch(`${API_URL}/api/upload/image?type=${type}`, {
         method: 'POST',
         headers: { Authorization: `Bearer ${getToken()}` },
-        body: formData
+        body: fd
       });
       const data = await res.json();
       if (data.success) return data.url;
+      return null;
     } catch (error) {
       console.error('Upload error:', error);
       return null;
@@ -93,40 +95,46 @@ export default function AdminArticleForm() {
     const file = e.target.files[0];
     if (!file) return;
     const url = await uploadImage(file, 'covers');
-    if (url) setFormData({ ...formData, cover: url });
+    if (url) setFormData(prev => ({ ...prev, cover: url }));
   };
 
   const handleGalleryUpload = async (e) => {
     const files = Array.from(e.target.files);
     for (const file of files) {
       const url = await uploadImage(file, 'gallery');
-      if (url) setFormData({ ...formData, gallery: [...formData.gallery, url] });
+      if (url) setFormData(prev => ({ ...prev, gallery: [...prev.gallery, url] }));
     }
   };
 
   const removeGalleryImage = (index) => {
-    const newGallery = [...formData.gallery];
-    newGallery.splice(index, 1);
-    setFormData({ ...formData, gallery: newGallery });
-  };
-
-  const addRelatedVideo = () => {
-    setFormData({
-      ...formData,
-      relatedVideos: [...formData.relatedVideos, { id: '', title: '', duration: '' }]
+    setFormData(prev => {
+      const newGallery = [...prev.gallery];
+      newGallery.splice(index, 1);
+      return { ...prev, gallery: newGallery };
     });
   };
 
+  const addRelatedVideo = () => {
+    setFormData(prev => ({
+      ...prev,
+      relatedVideos: [...prev.relatedVideos, { id: '', title: '', duration: '' }]
+    }));
+  };
+
   const updateRelatedVideo = (index, field, value) => {
-    const newVideos = [...formData.relatedVideos];
-    newVideos[index][field] = value;
-    setFormData({ ...formData, relatedVideos: newVideos });
+    setFormData(prev => {
+      const newVideos = [...prev.relatedVideos];
+      newVideos[index] = { ...newVideos[index], [field]: value };
+      return { ...prev, relatedVideos: newVideos };
+    });
   };
 
   const removeRelatedVideo = (index) => {
-    const newVideos = [...formData.relatedVideos];
-    newVideos.splice(index, 1);
-    setFormData({ ...formData, relatedVideos: newVideos });
+    setFormData(prev => {
+      const newVideos = [...prev.relatedVideos];
+      newVideos.splice(index, 1);
+      return { ...prev, relatedVideos: newVideos };
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -166,7 +174,6 @@ export default function AdminArticleForm() {
   return (
     <div className="min-h-screen bg-transparent transition-colors duration-300 p-3 md:p-6">
       <div className="max-w-6xl mx-auto">
-        {/* Back Button */}
         <button
           onClick={() => navigate('/admin/articles')}
           className="flex items-center gap-2 text-gray-500 dark:text-gray-400 hover:text-[#D4AF37] transition mb-4 text-sm"
@@ -180,7 +187,6 @@ export default function AdminArticleForm() {
           animate={{ opacity: 1, y: 0 }}
           className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-2xl border border-gray-200 dark:border-gray-800 overflow-hidden"
         >
-          {/* Header */}
           <div className="flex flex-wrap justify-between items-center gap-3 p-4 md:p-6 border-b border-gray-200 dark:border-gray-800">
             <h1 className="text-xl md:text-2xl font-black text-gray-900 dark:text-white">
               {slug ? '✏️ ویرایش مقاله' : '✨ مقاله جدید'}
@@ -213,7 +219,6 @@ export default function AdminArticleForm() {
 
           <div className="p-4 md:p-6">
             {activeTab === 'preview' ? (
-              // Preview Mode
               <div className="space-y-6">
                 {formData.cover && (
                   <div className="relative rounded-xl overflow-hidden">
@@ -257,7 +262,6 @@ export default function AdminArticleForm() {
                 )}
               </div>
             ) : (
-              // Edit Mode Form
               <form onSubmit={handleSubmit} className="space-y-4 md:space-y-5">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
@@ -265,7 +269,7 @@ export default function AdminArticleForm() {
                     <input
                       type="text"
                       value={formData.slug}
-                      onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
+                      onChange={(e) => setFormData(prev => ({ ...prev, slug: e.target.value }))}
                       className={inp}
                       required
                       disabled={!!slug}
@@ -277,7 +281,7 @@ export default function AdminArticleForm() {
                     <input
                       type="text"
                       value={formData.brand}
-                      onChange={(e) => setFormData({ ...formData, brand: e.target.value })}
+                      onChange={(e) => setFormData(prev => ({ ...prev, brand: e.target.value }))}
                       className={inp}
                       placeholder="Apple"
                     />
@@ -290,7 +294,7 @@ export default function AdminArticleForm() {
                     <input
                       type="text"
                       value={formData.title.fa}
-                      onChange={(e) => setFormData({ ...formData, title: { ...formData.title, fa: e.target.value } })}
+                      onChange={(e) => setFormData(prev => ({ ...prev, title: { ...prev.title, fa: e.target.value } }))}
                       className={inp}
                       placeholder={isRTL ? 'عنوان فارسی' : 'Persian title'}
                     />
@@ -300,7 +304,7 @@ export default function AdminArticleForm() {
                     <input
                       type="text"
                       value={formData.title.en}
-                      onChange={(e) => setFormData({ ...formData, title: { ...formData.title, en: e.target.value } })}
+                      onChange={(e) => setFormData(prev => ({ ...prev, title: { ...prev.title, en: e.target.value } }))}
                       className={inp}
                       placeholder="English title"
                     />
@@ -315,7 +319,7 @@ export default function AdminArticleForm() {
                         <img src={formData.cover} alt="cover" className="w-16 h-16 md:w-20 md:h-20 object-cover rounded-lg" />
                         <button
                           type="button"
-                          onClick={() => setFormData({ ...formData, cover: '' })}
+                          onClick={() => setFormData(prev => ({ ...prev, cover: '' }))}
                           className="absolute -top-2 -right-2 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center text-white text-xs"
                         >
                           <HiOutlineTrash size={10} />
@@ -359,21 +363,21 @@ export default function AdminArticleForm() {
                     <input
                       type="text"
                       value={formData.mainVideo.id}
-                      onChange={(e) => setFormData({ ...formData, mainVideo: { ...formData.mainVideo, id: e.target.value } })}
+                      onChange={(e) => setFormData(prev => ({ ...prev, mainVideo: { ...prev.mainVideo, id: e.target.value } }))}
                       placeholder="YouTube ID"
                       className={inp}
                     />
                     <input
                       type="text"
                       value={formData.mainVideo.title}
-                      onChange={(e) => setFormData({ ...formData, mainVideo: { ...formData.mainVideo, title: e.target.value } })}
+                      onChange={(e) => setFormData(prev => ({ ...prev, mainVideo: { ...prev.mainVideo, title: e.target.value } }))}
                       placeholder={isRTL ? 'عنوان' : 'Title'}
                       className={inp}
                     />
                     <input
                       type="text"
                       value={formData.mainVideo.duration}
-                      onChange={(e) => setFormData({ ...formData, mainVideo: { ...formData.mainVideo, duration: e.target.value } })}
+                      onChange={(e) => setFormData(prev => ({ ...prev, mainVideo: { ...prev.mainVideo, duration: e.target.value } }))}
                       placeholder={isRTL ? 'مدت' : 'Duration'}
                       className={inp}
                     />
@@ -419,7 +423,7 @@ export default function AdminArticleForm() {
                   <label className="block text-sm text-gray-400 mb-1.5">{isRTL ? '📝 محتوا (HTML) - فارسی' : 'Content (HTML) - FA'}</label>
                   <textarea
                     value={formData.content.fa}
-                    onChange={(e) => setFormData({ ...formData, content: { ...formData.content, fa: e.target.value } })}
+                    onChange={(e) => setFormData(prev => ({ ...prev, content: { ...prev.content, fa: e.target.value } }))}
                     rows={10}
                     className={`${inp} font-mono text-xs md:text-sm resize-none`}
                     placeholder="<h1>عنوان مقاله</h1><p>متن مقاله...</p>"
@@ -430,7 +434,7 @@ export default function AdminArticleForm() {
                   <label className="block text-sm text-gray-400 mb-1.5">{isRTL ? '📝 محتوا (HTML) - انگلیسی' : 'Content (HTML) - EN'}</label>
                   <textarea
                     value={formData.content.en}
-                    onChange={(e) => setFormData({ ...formData, content: { ...formData.content, en: e.target.value } })}
+                    onChange={(e) => setFormData(prev => ({ ...prev, content: { ...prev.content, en: e.target.value } }))}
                     rows={8}
                     className={`${inp} font-mono text-xs md:text-sm resize-none`}
                     placeholder="<h1>Article Title</h1><p>Article content...</p>"
@@ -443,7 +447,7 @@ export default function AdminArticleForm() {
                     <input
                       type="number"
                       value={formData.readTime}
-                      onChange={(e) => setFormData({ ...formData, readTime: parseInt(e.target.value) })}
+                      onChange={(e) => setFormData(prev => ({ ...prev, readTime: parseInt(e.target.value) || 0 }))}
                       className={inp}
                       min="1"
                     />
@@ -453,7 +457,7 @@ export default function AdminArticleForm() {
                     <input
                       type="text"
                       value={formData.author}
-                      onChange={(e) => setFormData({ ...formData, author: e.target.value })}
+                      onChange={(e) => setFormData(prev => ({ ...prev, author: e.target.value }))}
                       className={inp}
                       placeholder={isRTL ? 'مدیر سایت' : 'Admin'}
                     />
@@ -465,7 +469,7 @@ export default function AdminArticleForm() {
                   <input
                     type="text"
                     value={formData.tags.join(', ')}
-                    onChange={(e) => setFormData({ ...formData, tags: e.target.value.split(',').map(t => t.trim()).filter(Boolean) })}
+                    onChange={(e) => setFormData(prev => ({ ...prev, tags: e.target.value.split(',').map(t => t.trim()).filter(Boolean) }))}
                     className={inp}
                     placeholder={isRTL ? 'آیفون, اپل, بررسی' : 'iPhone, Apple, Review'}
                   />

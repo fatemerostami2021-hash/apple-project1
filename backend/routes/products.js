@@ -1,182 +1,71 @@
-import express from 'express';
-const router = express.Router();
-import Product from '../models/Product.js';
+import express from "express";
+import Product from "../models/Product.js";
+import mongoose from "mongoose";
 
-// GET /api/products
-router.get('/', async (req, res) => {
+const router = express.Router();
+
+// ============================================================
+// GET /api/products - دریافت محصولات با فیلتر
+// ============================================================
+router.get("/", async (req, res, next) => {
   try {
     const { brand, category, page = 1, limit = 50 } = req.query;
     const filter = {};
-    
-    if (brand && brand !== 'All') {
-      filter.brand = new RegExp(`^${brand}$`, 'i');
-    }
-    if (category && category !== 'All') {
-      filter.category = new RegExp(`^${category}$`, 'i');
-    }
+    if (brand)    filter.brand    = new RegExp(`^${brand}$`, "i");
+    if (category) filter.category = new RegExp(`^${category}$`, "i");
 
-    const pageNum = parseInt(page, 10);
-    const limitNum = Math.min(parseInt(limit, 10), 50);
-    const skip = (pageNum - 1) * limitNum;
-
+    const skip = (Number(page) - 1) * Number(limit);
     const [products, total] = await Promise.all([
-      Product.find(filter).skip(skip).limit(limitNum).lean(),
+      Product.find(filter).skip(skip).limit(Number(limit)).lean(),
       Product.countDocuments(filter),
     ]);
-    
-    res.json({ products, total, page: pageNum, limit: limitNum });
+
+    res.json({ products, total, page: Number(page), limit: Number(limit) });
+  } catch (err) { next(err); }
+});
+
+// ============================================================
+// ⚠️ مسیرهای خاص (categories, brands) باید قبل از :id بیایند
+// ============================================================
+
+// GET /api/products/categories - دریافت همه دسته‌بندی‌ها
+router.get("/categories", async (req, res, next) => {
+  try {
+    const categories = await Product.distinct("category");
+    res.json({ success: true, categories });
   } catch (err) {
-    console.error('❌ Error fetching products:', err);
-    res.status(500).json({ error: err.message });
+    console.error("❌ Error fetching categories:", err);
+    next(err);
   }
 });
 
-// GET /api/products/:id
-router.get('/:id', async (req, res) => {
+// GET /api/products/brands - دریافت همه برندها
+router.get("/brands", async (req, res, next) => {
   try {
+    const brands = await Product.distinct("brand");
+    res.json({ success: true, brands });
+  } catch (err) {
+    console.error("❌ Error fetching brands:", err);
+    next(err);
+  }
+});
+
+// ============================================================
+// GET /api/products/:id - دریافت یک محصول با ID (باید آخر باشد)
+// ============================================================
+router.get("/:id", async (req, res, next) => {
+  try {
+    // بررسی اینکه ID معتبر است
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(400).json({ error: "Invalid product ID" });
+    }
+    
     const product = await Product.findById(req.params.id);
     if (!product) {
-      return res.status(404).json({ error: 'Product not found' });
+      return res.status(404).json({ error: "Product not found" });
     }
     res.json(product);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// GET /api/products/slug/:slug
-router.get('/slug/:slug', async (req, res) => {
-  try {
-    const product = await Product.findOne({ slug: req.params.slug });
-    if (!product) {
-      return res.status(404).json({ error: 'Product not found' });
-    }
-    res.json(product);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+  } catch (err) { next(err); }
 });
 
 export default router;
-
-// GET /api/products/categories - دریافت همه دسته‌بندی‌ها
-router.get('/categories', async (req, res) => {
-  try {
-    const categories = await Product.distinct('category');
-    const brands = await Product.distinct('brand');
-    
-    const result = [
-      ...brands.map(b => ({ id: b, label: { en: b, fa: b } })),
-      ...categories.map(c => ({ id: c, label: { en: c, fa: c === 'Phone' ? 'گوشی' : c === 'Tablet' ? 'تبلت' : c === 'Laptop' ? 'لپ‌تاپ' : c === 'Watch' ? 'ساعت' : c } }))
-    ];
-    
-    // حذف موارد تکراری
-    const unique = result.filter((item, index, self) => 
-      index === self.findIndex(f => f.id === item.id)
-    );
-    
-    res.json(unique);
-  } catch (error) {
-    console.error('❌ Error fetching categories:', error);
-    res.status(500).json({ error: error.message });
-  }
-});
-
-// GET /api/products/categories - دریافت همه دسته‌بندی‌ها و برندها
-router.get('/categories', async (req, res) => {
-  try {
-    const categories = await Product.distinct('category');
-    const brands = await Product.distinct('brand');
-    
-    const result = [
-      { id: 'All', label: { en: 'All', fa: 'همه' } },
-      ...brands.map(b => ({ id: b, label: { en: b, fa: b } })),
-      ...categories.map(c => ({ 
-        id: c, 
-        label: { 
-          en: c, 
-          fa: c === 'Phone' ? 'گوشی' : 
-               c === 'Tablet' ? 'تبلت' : 
-               c === 'Laptop' ? 'لپ‌تاپ' : 
-               c === 'Watch' ? 'ساعت' : 
-               c === 'Accessory' ? 'لوازم جانبی' : c 
-        } 
-      }))
-    ];
-    
-    // حذف موارد تکراری
-    const unique = result.filter((item, index, self) => 
-      index === self.findIndex(f => f.id === item.id)
-    );
-    
-    res.json(unique);
-  } catch (error) {
-    console.error('❌ Error fetching categories:', error);
-    res.status(500).json({ error: error.message });
-  }
-});
-
-// ============================================================
-// دریافت همه دسته‌بندی‌ها
-// ============================================================
-router.get('/categories', async (req, res) => {
-  try {
-    const categories = await Product.distinct('category');
-    res.json({ success: true, categories });
-  } catch (error) {
-    console.error('❌ Error fetching categories:', error);
-    res.status(500).json({ error: error.message });
-  }
-});
-
-// ============================================================
-// دریافت همه برندها
-// ============================================================
-router.get('/brands', async (req, res) => {
-  try {
-    const brands = await Product.distinct('brand');
-    res.json({ success: true, brands });
-  } catch (error) {
-    console.error('❌ Error fetching brands:', error);
-    res.status(500).json({ error: error.message });
-  }
-});
-
-// GET /api/products/categories - دریافت همه دسته‌بندی‌ها و برندها
-router.get('/categories', async (req, res) => {
-  try {
-    const Product = req.app.get('Product') || mongoose.model('Product', new mongoose.Schema({}, { strict: false }), 'products');
-    const categories = await Product.distinct('category');
-    const brands = await Product.distinct('brand');
-    
-    const result = [
-      { id: 'All', label: { en: 'All', fa: 'همه' } },
-      ...brands.map(b => ({ id: b, label: { en: b, fa: b } })),
-      ...categories.map(c => ({ 
-        id: c, 
-        label: { 
-          en: c, 
-          fa: c === 'Phone' ? 'گوشی' : 
-               c === 'Tablet' ? 'تبلت' : 
-               c === 'Laptop' ? 'لپ‌تاپ' : 
-               c === 'Watch' ? 'ساعت' : 
-               c === 'Accessory' ? 'لوازم جانبی' : 
-               c === 'Comparison' ? 'مقایسه' :
-               c === 'Tips' ? 'نکات' :
-               c === 'Guide' ? 'راهنما' :
-               c === 'Concept' ? 'کانسپت' : c 
-        } 
-      }))
-    ];
-    
-    // حذف موارد تکراری
-    const unique = result.filter((item, index, self) => 
-      index === self.findIndex(f => f.id === item.id)
-    );
-    
-    res.json(unique);
-  } catch (error) {
-    console.error('❌ Error fetching categories:', error);
-    res.status(500).json({ error: error.message });
-  }
-});

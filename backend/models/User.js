@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema(
     email: {
       type: String,
       required: true,
-      unique: true,
+      unique: true,  // ✅ این خودش ایندکس می‌سازد
       trim: true,
       lowercase: true,
     },
@@ -50,11 +50,8 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-// ✅ ایندکس‌ها (فقط یک بار)
-userSchema.index({ email: 1 });
-
-// ✅ حذف pre('save') - هش کردن رمز در کنترلر انجام می‌شود
-// این middleware حذف شد تا خطای next برطرف شود
+// ✅ فقط ایندکس role (برای جستجوی سریع‌تر کاربران بر اساس نقش)
+userSchema.index({ role: 1 });
 
 // ✅ متد مقایسه رمز
 userSchema.methods.comparePassword = function (candidatePassword) {

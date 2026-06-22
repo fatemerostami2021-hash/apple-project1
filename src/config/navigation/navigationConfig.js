@@ -110,27 +110,27 @@ export const navigationConfig = [
       {
         id: "cases",
         labelKey: "menu.acc.cases",
-        path: "/accessories?category=cases",
+        path: "/accessories/cases",
       },
       {
         id: "chargers",
         labelKey: "menu.acc.chargers",
-        path: "/accessories?category=chargers",
+        path: "/accessories/chargers",
       },
       {
         id: "protection",
         labelKey: "menu.acc.protection",
-        path: "/accessories?category=protection",
+        path: "/accessories/protection",
       },
       {
         id: "cables",
         labelKey: "menu.acc.cables",
-        path: "/accessories?category=cables",
+        path: "/accessories/cables",
       },
       {
         id: "audio",
         labelKey: "menu.acc.audio",
-        path: "/accessories?category=audio",
+        path: "/accessories/audio",
       },
     ],
   },
