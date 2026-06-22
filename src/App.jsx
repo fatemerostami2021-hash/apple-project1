@@ -37,6 +37,8 @@ import WatchPage from "./pages/apple/WatchPage";
 import IpadPage from "./pages/apple/IpadPage";
 import MacbookPage from "./pages/apple/MacbookPage";
 import AirpodsPage from "./pages/apple/AirpodsPage";
+import SamsungPage from "./pages/samsung/SamsungPage";
+import AccessoriesPage from "./pages/accessories/AccessoriesPage";
 
 // مقالات اپل واچ
 import ArticleAppleWatchUltra4 from "./pages/products/watch/article/ArticleAppleWatchUltra4";
@@ -80,6 +82,13 @@ export default function App() {
                                                                                                                               {/* ===== صفحات اصلی ===== */}
                                                                                                                                         <Route path="/" element={<Home />} />
                                                                                                                                                   <Route path="/products" element={<Products />} />
+          <Route path="/samsung" element={<SamsungPage />} />
+          <Route path="/accessories" element={<AccessoriesPage />} />
+          <Route path="/accessories/cases" element={<AccessoriesPage />} />
+          <Route path="/accessories/chargers" element={<AccessoriesPage />} />
+          <Route path="/accessories/protection" element={<AccessoriesPage />} />
+          <Route path="/accessories/cables" element={<AccessoriesPage />} />
+          <Route path="/accessories/audio" element={<AccessoriesPage />} />
                                                                                                                                                             <Route path="/products/:slug" element={<ProductDetail />} />
                                                                                                                                                                       <Route path="/product/:id" element={<ProductPage />} />
                                                                                                                                                                                 <Route path="/about" element={<About />} />
