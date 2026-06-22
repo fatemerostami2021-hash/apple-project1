@@ -51,11 +51,12 @@ const SamsungProducts = () => {
     }, 2000);
   }, [add]);
 
-  const handleViewProduct = useCallback((product) => {
+  // ✅ تابع مشاهده - اگر مقاله دارد به مقاله، وگرنه به محصول
+  const handleView = useCallback((product) => {
     const slug = product.slug || product._id || product.id;
-    const articleSlug = product.article || product.articleSlug || slug;
+    const articleSlug = product.article || product.articleSlug;
     
-    if (articleSlug && articleSlug !== slug) {
+    if (articleSlug) {
       navigate(`/articles/${articleSlug}`);
     } else {
       navigate(`/product/${slug}`);
@@ -69,7 +70,6 @@ const SamsungProducts = () => {
     return products.filter(p => p.category === selectedCategory);
   }, [products, selectedCategory]);
 
-  // ===== Skeleton Loader =====
   if (loading) {
     return (
       <div className="min-h-screen bg-transparent py-10">
@@ -144,8 +144,8 @@ const SamsungProducts = () => {
             {filteredProducts.map((product, index) => {
               const productId = product._id || product.id;
               const productSlug = product.slug || productId;
-              const articleSlug = product.article || product.articleSlug || productSlug;
-              const hasArticle = articleSlug !== productSlug;
+              const articleSlug = product.article || product.articleSlug;
+              const hasArticle = Boolean(articleSlug);
               const isAdded = addedToCart[productId];
 
               return (
@@ -192,18 +192,27 @@ const SamsungProducts = () => {
                         {product.price?.toLocaleString()}
                         <span className="text-xs font-normal text-gray-400 mr-1">{isRTL ? 'تومان' : 'Toman'}</span>
                       </span>
+                      {hasArticle && (
+                        <span className="text-[8px] font-bold text-amber-500 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/30 flex items-center gap-1">
+                          <HiOutlineNewspaper size={10} />
+                          {isRTL ? 'مقاله' : 'Article'}
+                        </span>
+                      )}
                     </div>
 
                     {/* ===== Buttons ===== */}
                     <div className="mt-3 flex gap-2">
+                      {/* ✅ یک دکمه واحد: اگر مقاله دارد → "مشاهده مقاله"، وگرنه → "مشاهده" */}
                       <button
-                        onClick={() => handleViewProduct(product)}
+                        onClick={() => handleView(product)}
                         className="flex-1 px-3 py-2 bg-amber-500 text-black rounded-xl hover:bg-amber-600 transition text-xs font-bold flex items-center justify-center gap-1 group"
                       >
                         <HiOutlineEye size={14} className="group-hover:scale-110 transition" />
                         {hasArticle ? (isRTL ? 'مقاله' : 'Article') : (isRTL ? 'مشاهده' : 'View')}
+                        {hasArticle && <HiOutlineArrowRight size={12} className="group-hover:translate-x-1 transition" />}
                       </button>
 
+                      {/* دکمه خرید */}
                       <button
                         onClick={(e) => handleAddToCart(product, e)}
                         className={`flex-1 px-3 py-2 rounded-xl transition text-xs font-bold flex items-center justify-center gap-1 ${
@@ -219,13 +228,6 @@ const SamsungProducts = () => {
                         )}
                       </button>
                     </div>
-
-                    {/* Article Badge */}
-                    {hasArticle && (
-                      <span className="inline-block mt-2 text-[8px] font-bold text-amber-500 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/30">
-                        📄 {isRTL ? 'مقاله دارد' : 'Has Article'}
-                      </span>
-                    )}
                   </div>
                 </motion.div>
               );

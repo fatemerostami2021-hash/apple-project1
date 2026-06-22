@@ -9,6 +9,7 @@ import {
   HiOutlineCheck,
   HiOutlineShoppingCart,
   HiOutlineNewspaper,
+  HiOutlinePause,
 } from "react-icons/hi";
 import { useCart } from "../../hooks/useCart";
 
@@ -41,6 +42,7 @@ const airpodsModels = [
       fa: "ایرپاد مکس کیفیت صدای استثنایی، حذف نویز فعال و طراحی ممتاز را ارائه می‌دهد.",
     },
     articleSlug: "airpods-max-review",
+    videoId: "JeIKquUHjs0",
   },
   {
     id: "airpods-pro-3",
@@ -66,6 +68,7 @@ const airpodsModels = [
       fa: "ایرپاد پرو ۳ با تراشه H2، کیفیت صدای بهتر و تجربه شنیداری شخصی‌سازی‌شده ارائه می‌دهد.",
     },
     articleSlug: "airpods-pro-review",
+    videoId: "JeIKquUHjs0",
   },
 ];
 
@@ -430,6 +433,74 @@ const AirPodsModelSection = ({ model, index, isRTL, onAddToCart, onViewArticle }
 };
 
 // ============================================================
+// کامپوننت: VideoSection (با ویدیوی واقعی)
+// ============================================================
+const VideoSection = ({ isRTL, videoId }) => {
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const handlePlay = () => {
+    setIsPlaying(true);
+  };
+
+  return (
+    <section id="video-section" className="py-20">
+      <div className="max-w-5xl mx-auto px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          viewport={{ once: true }}
+          className="text-center mb-8"
+        >
+          <h2 className="text-3xl md:text-4xl font-black text-neutral-900 dark:text-white">
+            {isRTL ? "تجربه صوتی فضایی" : "Spatial Audio Experience"}
+          </h2>
+          <p className="text-neutral-600 dark:text-neutral-400 mt-2">
+            {isRTL
+              ? "صدای فراگیر با دالبی اتموس را با ایرپاد تجربه کنید"
+              : "Experience immersive sound with Dolby Atmos on AirPods"}
+          </p>
+        </motion.div>
+
+        <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-video bg-black/90">
+          {!isPlaying ? (
+            <div
+              className="relative w-full h-full cursor-pointer group"
+              onClick={handlePlay}
+            >
+              <img
+                src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
+                alt="Video thumbnail"
+                className="w-full h-full object-cover opacity-40"
+                onError={(e) => {
+                  e.target.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+                }}
+              />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-20 h-20 bg-amber-500 rounded-full flex items-center justify-center hover:scale-110 transition shadow-2xl shadow-amber-500/30 group-hover:shadow-amber-500/50">
+                  <HiOutlinePlay size={40} className="text-black ml-1" />
+                </div>
+              </div>
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/60 text-xs font-bold tracking-widest">
+                {isRTL ? "برای پخش کلیک کنید" : "Click to play"}
+              </div>
+            </div>
+          ) : (
+            <iframe
+              className="w-full h-full"
+              src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&rel=0`}
+              title="AirPods Pro 3 Review"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            />
+          )}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// ============================================================
 // کامپوننت اصلی: AirpodsPage
 // ============================================================
 export default function AirpodsPage() {
@@ -438,12 +509,10 @@ export default function AirpodsPage() {
   const { add } = useCart();
   const isRTL = i18n.language === "fa";
 
-  // ✅ تابع خرید → به سبد خرید
   const handleBuyNow = () => {
     navigate("/cart");
   };
 
-  // ✅ تابع افزودن به سبد خرید
   const handleAddToCart = (product) => {
     add({
       _id: product.id,
@@ -453,16 +522,13 @@ export default function AirpodsPage() {
     }, 1);
   };
 
-  // ✅ تابع مشاهده مقاله
   const handleViewArticle = (product) => {
     if (product.articleSlug) {
       navigate(`/articles/${product.articleSlug}`);
     }
   };
 
-  // ✅ تابع مشاهده ویدیو
   const handleWatchVideo = () => {
-    // اسکرول به بخش ویدیو یا باز کردن مودال
     const videoSection = document.getElementById("video-section");
     if (videoSection) {
       videoSection.scrollIntoView({ behavior: "smooth" });
@@ -497,49 +563,8 @@ export default function AirpodsPage() {
         ))}
       </section>
 
-      {/* ===== Video Section ===== */}
-      <section id="video-section" className="py-20">
-        <div className="max-w-5xl mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-            viewport={{ once: true }}
-            className="text-center mb-8"
-          >
-            <h2 className="text-3xl md:text-4xl font-black text-neutral-900 dark:text-white">
-              {isRTL ? "تجربه صوتی فضایی" : "Spatial Audio Experience"}
-            </h2>
-            <p className="text-neutral-600 dark:text-neutral-400 mt-2">
-              {isRTL
-                ? "صدای فراگیر با دالبی اتموس را با ایرپاد تجربه کنید"
-                : "Experience immersive sound with Dolby Atmos on AirPods"}
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.7 }}
-            viewport={{ once: true }}
-            className="relative rounded-2xl overflow-hidden shadow-2xl aspect-video bg-black/60 flex items-center justify-center group cursor-pointer"
-          >
-            <img
-              src="/assets/airpod/headphone-apple.png"
-              alt="AirPods Audio Experience"
-              className="absolute inset-0 w-full h-full object-cover opacity-20"
-            />
-            <div className="relative z-10 text-center">
-              <button className="w-16 h-16 md:w-20 md:h-20 bg-amber-500 rounded-full flex items-center justify-center hover:scale-110 transition shadow-2xl shadow-amber-500/25 group-hover:shadow-amber-500/40">
-                <HiOutlinePlay size={32} className="text-black ml-1" />
-              </button>
-              <p className="text-white/80 text-sm mt-4 font-bold tracking-widest">
-                {isRTL ? "تماشای ویدیو" : "Watch Video"}
-              </p>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      {/* ===== Video Section (با ویدیوی واقعی) ===== */}
+      <VideoSection isRTL={isRTL} videoId={airpodsModels[0].videoId} />
 
       {/* ===== Footer ===== */}
       <footer className="py-12 border-t border-neutral-200 dark:border-neutral-800">
