@@ -6,6 +6,7 @@ import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 
 import authRoutes from "./routes/auth.js";
+import aboutRoutes from "./routes/about.js";
 import productRoutes from "./routes/products.js";
 import articleRoutes from "./routes/articles.js";
 import likeRoutes from "./routes/like.js";
@@ -81,6 +82,7 @@ app.use("/api/articles", likeRoutes);
 app.use("/api/articles", viewsRoutes);
 app.use("/api/comments", commentRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/about", aboutRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/footer", footerRoutes);
 app.use("/uploads", express.static("public/uploads"));
