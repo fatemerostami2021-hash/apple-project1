@@ -9,35 +9,95 @@ const api = axios.create({
   },
 });
 
-// ========== Products ==========
-export const getProducts = (params) => api.get('/api/products', { params });
-export const getProductById = (id) => api.get(`/api/products/${id}`);
-export const getProductBySlug = (slug) => api.get(`/api/products/slug/${slug}`);
+// ===== Articles =====
+export const getArticles = async () => {
+  const response = await api.get('/api/articles');
+  return response.data;
+};
 
-// ========== Samsung ==========
-export const getSamsungProducts = () => api.get('/api/samsung/products');
+export const getArticleBySlug = async (slug) => {
+  const response = await api.get(`/api/articles/${slug}`);
+  return response.data;
+};
 
-// ========== Articles ==========
-export const getArticles = () => api.get('/api/articles');
-export const getArticleBySlug = (slug) => api.get(`/api/articles/${slug}`);
-export const likeArticle = (slug) => api.post(`/api/articles/${slug}/like`);
+export const likeArticle = async (slug) => {
+  const response = await api.post(`/api/articles/${slug}/like`);
+  return response.data;
+};
 
-// ========== Footer ==========
-export const getFooter = () => api.get('/api/footer');
-export const updateFooter = (data) => api.put('/api/footer', data);
+// ===== Products =====
+export const getProducts = async (params) => {
+  const response = await api.get('/api/products', { params });
+  return response.data;
+};
 
-// ========== Auth ==========
-export const login = (data) => api.post('/api/auth/login', data);
-export const register = (data) => api.post('/api/auth/register', data);
-export const getMe = () => api.get('/api/auth/me');
+export const getProductById = async (id) => {
+  const response = await api.get(`/api/products/${id}`);
+  return response.data;
+};
 
-// ========== Cart ==========
-export const addToCart = (data) => api.post('/api/cart', data);
-export const getCart = () => api.get('/api/cart');
-export const removeFromCart = (id) => api.delete(`/api/cart/${id}`);
+export const getProductBySlug = async (slug) => {
+  const response = await api.get(`/api/products/slug/${slug}`);
+  return response.data;
+};
 
-// ========== Orders ==========
-export const createOrder = (data) => api.post('/api/orders', data);
-export const getOrders = () => api.get('/api/orders');
+export const getSamsungProducts = async () => {
+  const response = await api.get('/api/samsung/products');
+  return response.data;
+};
+
+// ===== Footer =====
+export const getFooter = async () => {
+  const response = await api.get('/api/footer');
+  return response.data;
+};
+
+export const updateFooter = async (data) => {
+  const response = await api.put('/api/footer', data);
+  return response.data;
+};
+
+// ===== Auth =====
+export const login = async (data) => {
+  const response = await api.post('/api/auth/login', data);
+  return response.data;
+};
+
+export const register = async (data) => {
+  const response = await api.post('/api/auth/register', data);
+  return response.data;
+};
+
+export const getMe = async () => {
+  const response = await api.get('/api/auth/me');
+  return response.data;
+};
+
+// ===== Cart =====
+export const addToCart = async (data) => {
+  const response = await api.post('/api/cart', data);
+  return response.data;
+};
+
+export const getCart = async () => {
+  const response = await api.get('/api/cart');
+  return response.data;
+};
+
+export const removeFromCart = async (id) => {
+  const response = await api.delete(`/api/cart/${id}`);
+  return response.data;
+};
+
+// ===== Orders =====
+export const createOrder = async (data) => {
+  const response = await api.post('/api/orders', data);
+  return response.data;
+};
+
+export const getOrders = async () => {
+  const response = await api.get('/api/orders');
+  return response.data;
+};
 
 export default api;
