@@ -105,6 +105,13 @@ mongoose
   .then(() => console.log("✅ MongoDB Atlas connected"))
   .catch((err) => console.error("❌ MongoDB connection error:", err));
 
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
-});
+
+// ✅ فقط در لوکال اجرا شود
+if (process.env.NODE_ENV !== "production") {
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running on http://localhost:${PORT}`);
+  });
+}
+
+// ✅ برای Vercel
+export default app;
