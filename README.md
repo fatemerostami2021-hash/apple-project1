@@ -18,3 +18,4 @@ If you are developing a production application, we recommend using TypeScript wi
 # fix: trigger deployment
 # fix: verified email
 # fix: public email
+# fix: public email
