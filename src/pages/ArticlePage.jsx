@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { HiOutlineClock, HiOutlineCalendar, HiOutlineEye, HiOutlineArrowLeft, HiOutlineArrowRight } from "react-icons/hi";
 
-import { getHeroImages, getGalleryImages } from "../constants/articleData";
+import { getHeroImages, getGalleryImages } from "../constants/ArticleData";
 import { useArticle, useViews, useActiveHeading } from "../hooks/useArticlePage";
 import { ReadingProgressBar, ArticleSkeleton, ErrorState, ShareButtons } from "../components/ui/ArticleUI";
 import { HeroSlider, AnimatedWave } from "../components/article/HeroComponents";
