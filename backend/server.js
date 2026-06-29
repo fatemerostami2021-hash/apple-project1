@@ -68,34 +68,45 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static("public/uploads"));
 
 /* ── MongoDB Connection ──
-   ✅ یکبار وصل میشه و cache میشه
-   مناسب برای Serverless (Vercel) که instance ها می‌میرن و دوباره زنده میشن */
-let isConnected = false;
+   ✅ از یک Promise مشترک استفاده می‌کند تا اگر چند درخواست همزمان
+   (race condition در سرورلس / cold start) برسند، همه روی همان
+   تلاش اتصال صبر کنند، نه اینکه هرکدام جدا mongoose.connect را
+   صدا بزنند یا یکی زودتر از موعد به کوئری برسد. */
+let connectionPromise = null;
 
-async function connectDB() {
-  if (isConnected && mongoose.connection.readyState === 1) return;
-
-  const uri = process.env.MONGODB_URI;
-  if (!uri) {
-    throw new Error("MONGODB_URI environment variable is not set!");
+function connectDB() {
+  if (mongoose.connection.readyState === 1) {
+    return Promise.resolve();
   }
 
-  await mongoose.connect(uri, {
-    serverSelectionTimeoutMS: 10000,
-    socketTimeoutMS:          45000,
-    maxPoolSize:              10,
-    bufferCommands:           false, /* ✅ به‌جای buffering، خطا بده */
-  });
+  if (!connectionPromise) {
+    const uri = process.env.MONGODB_URI;
+    if (!uri) {
+      return Promise.reject(new Error("MONGODB_URI environment variable is not set!"));
+    }
 
-  isConnected = true;
-  console.log("✅ MongoDB Atlas connected");
+    connectionPromise = mongoose.connect(uri, {
+      serverSelectionTimeoutMS: 10000,
+      socketTimeoutMS:          45000,
+      maxPoolSize:              10,
+      bufferCommands:           false, /* ✅ به‌جای buffering، خطا بده */
+    })
+      .then(() => {
+        console.log("✅ MongoDB Atlas connected");
+      })
+      .catch((err) => {
+        connectionPromise = null; /* اجازه بده در تلاش بعدی دوباره امتحان شود */
+        throw err;
+      });
+  }
+
+  return connectionPromise;
 }
 
-/* ✅ مهم‌ترین اصلاح نسبت به نسخه‌ی قبلی:
-   این میدلور باید قبل از تمام روت‌های /api ثبت شود، نه بعد از آن‌ها.
+/* ✅ این میدلور باید قبل از تمام روت‌های /api ثبت شود، نه بعد از آن‌ها.
    در Express ترتیب app.use() = ترتیب اجرا. اگر این میدلور بعد از
    روت‌ها بیاید، درخواست هرگز قبل از رسیدن به کوئری Mongoose صبر
-   نمی‌کند و دقیقاً همان مشکل قبلی (buffering/timeout) تکرار می‌شود. */
+   نمی‌کند و مشکل buffering/timeout تکرار می‌شود. */
 app.use(async (req, res, next) => {
   try {
     await connectDB();
