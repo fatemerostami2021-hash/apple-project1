@@ -5,7 +5,7 @@ import { useState, useEffect, useMemo } from "react";
 import {
   FaApple, FaInstagram, FaLinkedin, FaTelegram, FaWhatsapp,
   FaEnvelope, FaPhone, FaMapMarkerAlt, FaAndroid,
-  FaHome, FaBox, FaNewspaper, FaInfoCircle, FaEnvelopeOpenText,
+  FaHome, FaBox, FaNewspaper, FaInfoCircle,
   FaHeadphones, FaLaptop, FaTablet, FaClock
 } from "react-icons/fa";
 import { HiOutlineSparkles } from "react-icons/hi";
@@ -57,29 +57,28 @@ export default function Footer() {
     { weekday: "short", year: "numeric", month: "short", day: "numeric" }
   );
 
-  // ===== لینک‌های سریع (همه موجود هستند) =====
+  // ===== لینک‌های سریع (فقط مسیرهای موجود در App.jsx) =====
   const quickLinks = [
     { path: "/", icon: <FaHome />, label: isRtl ? "خانه" : "Home" },
     { path: "/products", icon: <FaBox />, label: isRtl ? "محصولات" : "Products" },
     { path: "/blog", icon: <FaNewspaper />, label: isRtl ? "مقالات" : "Blog" },
     { path: "/about", icon: <FaInfoCircle />, label: isRtl ? "درباره ما" : "About" },
-    { path: "/contact", icon: <FaEnvelopeOpenText />, label: isRtl ? "تماس با ما" : "Contact" },
   ];
 
   // ===== محصولات اپل (لینک به صفحات موجود) =====
   const appleProductLinks = [
-    { path: "/apple-products/iphone", icon: <FaApple />, label: isRtl ? "آیفون" : "iPhone" },  // ✅ موجود (IphonePage)
-    { path: "/apple-products/watch", icon: <FaClock />, label: isRtl ? "اپل واچ" : "Apple Watch" },  // ✅ موجود (WatchPage)
-    { path: "/products?brand=Apple", icon: <FaLaptop />, label: isRtl ? "مک‌بوک" : "MacBook" },  // ✅ فیلتر شده
-    { path: "/products?brand=Apple", icon: <FaTablet />, label: isRtl ? "آیپد" : "iPad" },  // ✅ فیلتر شده
-    { path: "/products?brand=Apple", icon: <FaHeadphones />, label: isRtl ? "ایرپادز" : "AirPods" },  // ✅ فیلتر شده
+    { path: "/apple-products/iphone", icon: <FaApple />, label: isRtl ? "آیفون" : "iPhone" },
+    { path: "/apple-products/watch", icon: <FaClock />, label: isRtl ? "اپل واچ" : "Apple Watch" },
+    { path: "/apple-products/macbook", icon: <FaLaptop />, label: isRtl ? "مک‌بوک" : "MacBook" },
+    { path: "/apple-products/ipad", icon: <FaTablet />, label: isRtl ? "آیپد" : "iPad" },
+    { path: "/apple-products/airpods", icon: <FaHeadphones />, label: isRtl ? "ایرپادز" : "AirPods" },
   ];
 
-  // ===== محصولات سامسونگ (لینک به صفحات موجود) =====
+  // ===== محصولات سامسونگ (لینک به صفحه موجود /samsung) =====
   const samsungProductLinks = [
-    { path: "/samsung-products", icon: <FaAndroid />, label: isRtl ? "گوشی‌های سامسونگ" : "Samsung Phones" },  // ✅ موجود
-    { path: "/samsung-products", icon: <FaTablet />, label: isRtl ? "تبلت‌های سامسونگ" : "Samsung Tablets" },  // ✅ موجود
-    { path: "/samsung-products", icon: <FaLaptop />, label: isRtl ? "لپ‌تاپ‌های سامسونگ" : "Samsung Laptops" },  // ✅ موجود
+    { path: "/samsung", icon: <FaAndroid />, label: isRtl ? "گوشی‌های سامسونگ" : "Samsung Phones" },
+    { path: "/samsung", icon: <FaTablet />, label: isRtl ? "تبلت‌های سامسونگ" : "Samsung Tablets" },
+    { path: "/samsung", icon: <FaLaptop />, label: isRtl ? "لپ‌تاپ‌های سامسونگ" : "Samsung Laptops" },
   ];
 
   return (
@@ -91,15 +90,15 @@ export default function Footer() {
           : "bg-white text-zinc-600 border-zinc-200"
       }`}
     >
-      {/* Ambient Effects */}
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 h-px w-full max-w-6xl bg-gradient-to-r from-transparent via-amber-500/40 to-transparent" />
         <div className="absolute top-10 left-10 w-40 h-40 bg-amber-500/6 blur-3xl rounded-full" />
         <div className="absolute bottom-0 right-10 w-48 h-48 bg-sky-500/5 blur-3xl rounded-full" />
       </div>
 
-      <div className="container mx-auto px-4 md:px-6 lg:px-8 py-10 md:py-12 relative z-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-8">
+      {/* py کاهش‌یافته در موبایل برای کاهش ارتفاع کلی فوتر */}
+      <div className="container mx-auto px-4 md:px-6 lg:px-8 py-6 md:py-12 relative z-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6 md:gap-8">
 
           {/* ===== ستون ۱: برندینگ ===== */}
           <div className="lg:col-span-1">
@@ -122,7 +121,6 @@ export default function Footer() {
               {isRtl ? d.descriptionFa : d.description}
             </p>
 
-            {/* شبکه‌های اجتماعی */}
             <div className="flex items-center gap-3 flex-wrap">
               {[
                 { key: "linkedin", Icon: FaLinkedin, hover: "hover:bg-[#0077B5] hover:border-[#0077B5] hover:text-white" },
@@ -191,7 +189,6 @@ export default function Footer() {
 
           {/* ===== ستون ۴: محصولات سامسونگ + تماس ===== */}
           <div>
-            {/* سامسونگ */}
             <h3 className="mb-4 text-xs font-black uppercase tracking-[0.22em] text-zinc-900 dark:text-white flex items-center gap-2">
               <FaAndroid className="text-amber-500" />
               {isRtl ? "محصولات سامسونگ" : "Samsung Products"}
@@ -212,7 +209,6 @@ export default function Footer() {
               ))}
             </ul>
 
-            {/* تماس */}
             <h3 className="mb-4 text-xs font-black uppercase tracking-[0.22em] text-zinc-900 dark:text-white">
               {isRtl ? "ارتباط با ما" : "Contact"}
             </h3>
@@ -235,13 +231,13 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* ===== ستون ۵: ساعت ===== */}
-          <div className="flex flex-col items-center lg:items-end">
+          {/* ===== ستون ۵: ساعت — فقط در دسکتاپ بزرگ (lg+) نشان داده می‌شود
+               تا در موبایل/تبلت ارتفاع فوتر بیش از حد زیاد نشود ===== */}
+          <div className="hidden lg:flex flex-col items-center lg:items-end">
             <h3 className="mb-4 text-xs font-black uppercase tracking-[0.22em] text-zinc-900 dark:text-white">
               {isRtl ? "زمان زنده" : "Live Time"}
             </h3>
 
-            {/* ساعت آنالوگ */}
             <div className="relative">
               <div className="relative w-[150px] h-[172px] rounded-[2.8rem] bg-gradient-to-br from-[#b9bec7] via-[#8b929d] to-[#d8dde5] dark:from-[#3f434b] dark:via-[#272a30] dark:to-[#5d6470] p-[5px] shadow-[0_20px_60px_rgba(0,0,0,0.35)] border border-white/20">
                 <div className="absolute -left-[4px] top-[72px] w-[7px] h-[36px] rounded-r-md bg-orange-500 shadow-[0_0_12px_rgba(249,115,22,0.45)]" />
@@ -284,7 +280,6 @@ export default function Footer() {
               </div>
             </div>
 
-            {/* زمان دیجیتال */}
             <div className="mt-6 text-center">
               <div className="text-base font-black tracking-[0.18em] text-zinc-900 dark:text-white">
                 {digitalTime}
@@ -300,7 +295,7 @@ export default function Footer() {
         </div>
 
         {/* ===== فوتر پایین ===== */}
-        <div className="mt-8 pt-5 border-t border-zinc-200 dark:border-zinc-900 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="mt-6 md:mt-8 pt-4 md:pt-5 border-t border-zinc-200 dark:border-zinc-900 flex flex-col md:flex-row items-center justify-between gap-3 md:gap-4">
           <p className="text-[11px] opacity-60 text-center md:text-start">
             © {currentYear} {d.brandName} — {isRtl ? d.copyrightTextFa : d.copyrightText}
           </p>

@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 import { HiOutlineEye, HiHeart } from "react-icons/hi";
 import { motion } from "framer-motion";
-import { getMainVideo, getRelatedVideos } from "../../constants/articleData";
+import { getMainVideo, getRelatedVideos } from "../../constants/ArticleData";
 import { useComments, useLike } from "../../hooks/useArticlePage";
 
 /* ── CinematicGallery ────────────────────────────────────── */

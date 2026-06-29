@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-import { API_BASE } from "../constants/articleData";
+import { API_BASE } from "../constants/ArticleData";
 
 /* ── useArticle ─────────────────────────────────────────── */
 export function useArticle(slug) {
