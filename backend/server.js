@@ -16,6 +16,7 @@ import adminRoutes   from "./routes/admin.js";
 import uploadRoutes  from "./routes/upload.js";
 import slideRoutes   from "./routes/slides.js";
 import footerRoutes  from "./routes/footer.js";
+import migrateRoutes from "./routes/admin-migrate.js";
 
 dotenv.config();
 
@@ -132,6 +133,7 @@ app.use("/api/admin",    adminRoutes);
 app.use("/api/about",    aboutRoutes);
 app.use("/api/upload",   uploadRoutes);
 app.use("/api/footer",   footerRoutes);
+app.use("/api/admin", migrateRoutes);
 
 app.get("/health", (req, res) => {
   res.json({
