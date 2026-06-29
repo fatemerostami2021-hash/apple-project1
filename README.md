@@ -17,3 +17,4 @@ If you are developing a production application, we recommend using TypeScript wi
 # fix: update email for Vercel
 # fix: trigger deployment
 # fix: verified email
+# fix: public email
