@@ -19,3 +19,4 @@ If you are developing a production application, we recommend using TypeScript wi
 # fix: verified email
 # fix: public email
 # fix: public email
+# fix: correct team email
