@@ -1,0 +1,966 @@
+[
+  {
+    "_id": "6a3151ccfaf09f17f53e5fb5",
+    "name": {
+      "en": "Galaxy S24",
+      "fa": "گلکسی اس۲۴"
+    },
+    "slug": "galaxy-s24",
+    "brand": "Samsung",
+    "category": "Phone",
+    "price": 75000000,
+    "thumbnail": "/assets/galexy-series-s/galaxy-s24.png",
+    "inStock": true,
+    "description": {
+      "en": "Compact flagship",
+      "fa": "پرچمدار جمع‌وجور"
+    },
+    "__v": 0,
+    "articleSlug": "galaxy-s24-ultra-ai-revolution"
+  },
+  {
+    "_id": "6a3151ccfaf09f17f53e5fb6",
+    "name": {
+      "en": "Galaxy S24 Plus",
+      "fa": "گلکسی اس۲۴ پلاس"
+    },
+    "slug": "galaxy-s24-plus",
+    "brand": "Samsung",
+    "category": "Phone",
+    "price": 95000000,
+    "thumbnail": "/assets/galexy-series-s/galaxy-s24-plus.png",
+    "inStock": true,
+    "__v": 0,
+    "articleSlug": "s24-plus-vs-iphone-15-pro-max-comparison"
+  },
+  {
+    "_id": "6a3151ccfaf09f17f53e5fb7",
+    "name": {
+      "en": "Galaxy S24 Ultra",
+      "fa": "گلکسی اس۲۴ اولترا"
+    },
+    "slug": "galaxy-s24-ultra",
+    "brand": "Samsung",
+    "category": "Phone",
+    "price": 120000000,
+    "thumbnail": "/assets/galexy-series-s/galaxy-s24-ultra.png",
+    "inStock": true,
+    "description": {
+      "en": "The ultimate Galaxy",
+      "fa": "بهترین گلکسی"
+    },
+    "__v": 0,
+    "articleSlug": "galaxy-s24-ultra-ai-revolution"
+  },
+  {
+    "_id": "6a3151ccfaf09f17f53e5fb8",
+    "name": {
+      "en": "Galaxy S25 Ultra",
+      "fa": "گلکسی اس۲۵ اولترا"
+    },
+    "slug": "galaxy-s25-ultra",
+    "brand": "Samsung",
+    "category": "Phone",
+    "price": 135000000,
+    "thumbnail": "/assets/galexy-series-s/galaxy-s-25-ultra.png",
+    "inStock": true,
+    "__v": 0,
+    "articleSlug": "galaxy-s25-ultra-review"
+  },
+  {
+    "_id": "6a3151ccfaf09f17f53e5fb9",
+    "name": {
+      "en": "Galaxy S26",
+      "fa": "گلکسی اس۲۶"
+    },
+    "slug": "galaxy-s26",
+    "brand": "Samsung",
+    "category": "Phone",
+    "price": 100000000,
+    "thumbnail": "/assets/galexy-series-s/galaxy-s-26.png",
+    "inStock": true,
+    "__v": 0,
+    "articleSlug": "galaxy-s26-review"
+  },
+  {
+    "_id": "6a3151ccfaf09f17f53e5fba",
+    "name": {
+      "en": "Galaxy Z Fold 6",
+      "fa": "گلکسی زد فولد ۶"
+    },
+    "slug": "galaxy-z-fold-6",
+    "brand": "Samsung",
+    "category": "Phone",
+    "price": 150000000,
+    "thumbnail": "/assets/galexy-series-s/galaxy-z-fold6.png",
+    "inStock": true,
+    "description": {
+      "en": "Foldable flagship",
+      "fa": "پرچمدار تاشو"
+    },
+    "__v": 0,
+    "articleSlug": "z-flip-6-style-durability-review"
+  },
+  {
+    "_id": "6a3151ccfaf09f17f53e5fbb",
+    "name": {
+      "en": "Galaxy Z Flip 6",
+      "fa": "گلکسی زد فلیپ ۶"
+    },
+    "slug": "galaxy-z-flip-6",
+    "brand": "Samsung",
+    "category": "Phone",
+    "price": 110000000,
+    "thumbnail": "/assets/galexy-series-s/galaxy-z-flip6.png",
+    "inStock": true,
+    "__v": 0,
+    "articleSlug": "z-flip-6-style-durability-review"
+  },
+  {
+    "_id": "6a3151ccfaf09f17f53e5fbc",
+    "name": {
+      "en": "Galaxy Z Modelle",
+      "fa": "گلکسی زد مدل"
+    },
+    "slug": "galaxy-z-modelle",
+    "brand": "Samsung",
+    "category": "Phone",
+    "price": 90000000,
+    "thumbnail": "/assets/galexy-series-s/galaxy-z-modelle.png",
+    "inStock": true,
+    "__v": 0,
+    "articleSlug": "z-flip-6-style-durability-review"
+  },
+  {
+    "_id": "6a3151ccfaf09f17f53e5fbd",
+    "name": {
+      "en": "Galaxy Tab S10 Ultra",
+      "fa": "گلکسی تب اس۱۰ اولترا"
+    },
+    "slug": "galaxy-tab-s10-ultra",
+    "brand": "Samsung",
+    "category": "Tablet",
+    "price": 85000000,
+    "thumbnail": "/assets/galexy-series-s/galaxy-tab-s10-ultra.png",
+    "inStock": true,
+    "__v": 0,
+    "articleSlug": "tab-s10-ultra-vs-ipad-pro-m4"
+  },
+  {
+    "_id": "6a3151ccfaf09f17f53e5fbe",
+    "name": {
+      "en": "Galaxy Tab S4",
+      "fa": "گلکسی تب اس۴"
+    },
+    "slug": "galaxy-tab-s4",
+    "brand": "Samsung",
+    "category": "Tablet",
+    "price": 45000000,
+    "thumbnail": "/assets/galexy-series-s/galaxy-tab-s4.png",
+    "inStock": true,
+    "__v": 0,
+    "articleSlug": "tab-s10-ultra-vs-ipad-pro-m4"
+  },
+  {
+    "_id": "6a3151ccfaf09f17f53e5fbf",
+    "name": {
+      "en": "Galaxy Tab Pro",
+      "fa": "گلکسی تب پرو"
+    },
+    "slug": "galaxy-tab-pro",
+    "brand": "Samsung",
+    "category": "Tablet",
+    "price": 55000000,
+    "thumbnail": "/assets/galexy-series-s/galaxy-tab-pr0.png",
+    "inStock": true,
+    "__v": 0,
+    "articleSlug": "tab-s10-ultra-vs-ipad-pro-m4"
+  },
+  {
+    "_id": "6a3151ccfaf09f17f53e5fc0",
+    "name": {
+      "en": "Galaxy A Series",
+      "fa": "گلکسی ای"
+    },
+    "slug": "galaxy-a-series",
+    "brand": "Samsung",
+    "category": "Phone",
+    "price": 35000000,
+    "thumbnail": "/assets/galexy-series-s/galaxy-A.png",
+    "inStock": true,
+    "__v": 0,
+    "articleSlug": "galaxy-s24-ultra-ai-revolution"
+  },
+  {
+    "_id": "6a3151ccfaf09f17f53e5fc1",
+    "name": {
+      "en": "Galaxy Note",
+      "fa": "گلکسی نوت"
+    },
+    "slug": "galaxy-note",
+    "brand": "Samsung",
+    "category": "Phone",
+    "price": 80000000,
+    "thumbnail": "/assets/galexy-series-s/galaxy-note.png",
+    "inStock": true,
+    "__v": 0,
+    "articleSlug": "galaxy-s24-ultra-ai-revolution"
+  },
+  {
+    "_id": "6a3151ccfaf09f17f53e5fc2",
+    "name": {
+      "en": "Galaxy Note Collection",
+      "fa": "مجموعه گلکسی نوت"
+    },
+    "slug": "galaxy-note-collection",
+    "brand": "Samsung",
+    "category": "Phone",
+    "price": 90000000,
+    "thumbnail": "/assets/galexy-series-s/galaxy-note-collection.png",
+    "inStock": true,
+    "__v": 0,
+    "articleSlug": "galaxy-s24-ultra-ai-revolution"
+  },
+  {
+    "_id": "6a3151ccfaf09f17f53e5fc3",
+    "name": {
+      "en": "Galaxy M17 5G",
+      "fa": "گلکسی ام۱۷ ۵جی"
+    },
+    "slug": "galaxy-m17-5g",
+    "brand": "Samsung",
+    "category": "Phone",
+    "price": 40000000,
+    "thumbnail": "/assets/galexy-series-s/galaxy-m-17-5G.png",
+    "inStock": true,
+    "__v": 0,
+    "articleSlug": "galaxy-s24-ultra-ai-revolution"
+  },
+  {
+    "_id": "6a3151ccfaf09f17f53e5fc4",
+    "name": {
+      "en": "Galaxy Book",
+      "fa": "گلکسی بوک"
+    },
+    "slug": "galaxy-book",
+    "brand": "Samsung",
+    "category": "Laptop",
+    "price": 95000000,
+    "thumbnail": "/assets/galexy-series-s/galaxy-book.png",
+    "inStock": true,
+    "__v": 0,
+    "articleSlug": "galaxy-s24-ultra-ai-revolution"
+  },
+  {
+    "_id": "6a3151ccfaf09f17f53e5fc5",
+    "name": {
+      "en": "Galaxy Book 6",
+      "fa": "گلکسی بوک ۶"
+    },
+    "slug": "galaxy-book-6",
+    "brand": "Samsung",
+    "category": "Laptop",
+    "price": 110000000,
+    "thumbnail": "/assets/galexy-series-s/galaxy-book-6.png",
+    "inStock": true,
+    "__v": 0,
+    "articleSlug": "galaxy-s24-ultra-ai-revolution"
+  },
+  {
+    "_id": "6a32a43ab1158ceb971b63a0",
+    "name": {
+      "en": "iPhone 17 Pro Max",
+      "fa": "آیفون ۱۷ پرو مکس"
+    },
+    "slug": "iphone-17-pro-max",
+    "brand": "Apple",
+    "category": "Phone",
+    "price": 85000000,
+    "thumbnail": "/assets/iphone/iphone-17-pro-max.png",
+    "inStock": true,
+    "description": {
+      "en": "The most powerful iPhone ever with A17 Pro chip and titanium design.",
+      "fa": "قدرتمندترین آیفون تاریخ با تراشه A17 Pro و طراحی تیتانیومی."
+    },
+    "tags": [
+      "iPhone",
+      "Apple",
+      "Pro Max"
+    ],
+    "featured": true,
+    "__v": 0,
+    "articleSlug": "iphone-17-pro-max"
+  },
+  {
+    "_id": "6a32a43ab1158ceb971b63a1",
+    "name": {
+      "en": "iPhone 17 Pro",
+      "fa": "آیفون ۱۷ پرو"
+    },
+    "slug": "iphone-17-pro",
+    "brand": "Apple",
+    "category": "Phone",
+    "price": 70000000,
+    "thumbnail": "/assets/iphone/iphone-17-pro.png",
+    "inStock": true,
+    "description": {
+      "en": "Professional performance in a compact design.",
+      "fa": "عملکرد حرفه‌ای در طراحی جمع‌وجور."
+    },
+    "tags": [
+      "iPhone",
+      "Apple",
+      "Pro"
+    ],
+    "__v": 0,
+    "articleSlug": "iphone-17-pro-review"
+  },
+  {
+    "_id": "6a32a43ab1158ceb971b63a2",
+    "name": {
+      "en": "iPhone 17",
+      "fa": "آیفون ۱۷"
+    },
+    "slug": "iphone-17",
+    "brand": "Apple",
+    "category": "Phone",
+    "price": 55000000,
+    "thumbnail": "/assets/iphone/iphone-17.png",
+    "inStock": true,
+    "description": {
+      "en": "The perfect balance of performance and value.",
+      "fa": "تعادل کامل بین عملکرد و ارزش."
+    },
+    "tags": [
+      "iPhone",
+      "Apple"
+    ],
+    "__v": 0,
+    "articleSlug": "iphone-17-review"
+  },
+  {
+    "_id": "6a32a43ab1158ceb971b63a3",
+    "name": {
+      "en": "iPhone 16 Pro Max",
+      "fa": "آیفون ۱۶ پرو مکس"
+    },
+    "slug": "iphone-16-pro-max",
+    "brand": "Apple",
+    "category": "Phone",
+    "price": 65000000,
+    "thumbnail": "/assets/iphone/iphone-16-pro-max.png",
+    "inStock": true,
+    "description": {
+      "en": "Big screen, big performance.",
+      "fa": "صفحه بزرگ، عملکرد بزرگ."
+    },
+    "tags": [
+      "iPhone",
+      "Apple",
+      "Pro Max"
+    ],
+    "__v": 0,
+    "articleSlug": "iphone-16-pro-max"
+  },
+  {
+    "_id": "6a32a43ab1158ceb971b63a4",
+    "name": {
+      "en": "iPhone 16",
+      "fa": "آیفون ۱۶"
+    },
+    "slug": "iphone-16",
+    "brand": "Apple",
+    "category": "Phone",
+    "price": 45000000,
+    "thumbnail": "/assets/iphone/iphone-16.png",
+    "inStock": true,
+    "description": {
+      "en": "The latest iPhone with innovative features.",
+      "fa": "جدیدترین آیفون با ویژگی‌های نوآورانه."
+    },
+    "tags": [
+      "iPhone",
+      "Apple"
+    ],
+    "__v": 0,
+    "articleSlug": "iphone-16-review"
+  },
+  {
+    "_id": "6a32a43ab1158ceb971b63a5",
+    "name": {
+      "en": "MacBook Pro M4",
+      "fa": "مک‌بوک پرو M4"
+    },
+    "slug": "macbook-pro-m4",
+    "brand": "Apple",
+    "category": "Laptop",
+    "price": 120000000,
+    "thumbnail": "/images/mac-pro-m4.png",
+    "inStock": true,
+    "description": {
+      "en": "The most powerful MacBook ever with M4 chip.",
+      "fa": "قدرتمندترین مک‌بوک تاریخ با تراشه M4."
+    },
+    "tags": [
+      "MacBook",
+      "Apple",
+      "Pro",
+      "M4"
+    ],
+    "__v": 0,
+    "articleSlug": "macbook-pro-m4-review"
+  },
+  {
+    "_id": "6a32a43ab1158ceb971b63a6",
+    "name": {
+      "en": "MacBook Air M3",
+      "fa": "مک‌بوک ایر M3"
+    },
+    "slug": "macbook-air-m3",
+    "brand": "Apple",
+    "category": "Laptop",
+    "price": 75000000,
+    "thumbnail": "/assets/macbook/macboo-air-m3--.png",
+    "inStock": true,
+    "description": {
+      "en": "Ultra-thin, ultra-fast with M3 chip.",
+      "fa": "فوق‌نازک، فوق‌سریع با تراشه M3."
+    },
+    "tags": [
+      "MacBook",
+      "Apple",
+      "Air",
+      "M3"
+    ],
+    "__v": 0,
+    "articleSlug": "macbook-air-m3-review"
+  },
+  {
+    "_id": "6a32a43ab1158ceb971b63a7",
+    "name": {
+      "en": "iPad Pro M4",
+      "fa": "آیپد پرو M4"
+    },
+    "slug": "ipad-pro-m4",
+    "brand": "Apple",
+    "category": "Tablet",
+    "price": 55000000,
+    "thumbnail": "/assets/ipad/ipad-pro.png",
+    "inStock": true,
+    "description": {
+      "en": "The ultimate tablet experience with M4 chip.",
+      "fa": "نهایی‌ترین تجربه تبلت با تراشه M4."
+    },
+    "tags": [
+      "iPad",
+      "Apple",
+      "Pro",
+      "M4"
+    ],
+    "__v": 0,
+    "articleSlug": "ipad-pro-review"
+  },
+  {
+    "_id": "6a32a43ab1158ceb971b63a8",
+    "name": {
+      "en": "iPad Air",
+      "fa": "آیپد ایر"
+    },
+    "slug": "ipad-air",
+    "brand": "Apple",
+    "category": "Tablet",
+    "price": 35000000,
+    "thumbnail": "/assets/ipad/ipad-air.png",
+    "inStock": true,
+    "description": {
+      "en": "Powerful and portable.",
+      "fa": "قدرتمند و قابل حمل."
+    },
+    "tags": [
+      "iPad",
+      "Apple",
+      "Air"
+    ],
+    "__v": 0,
+    "articleSlug": "ipad-air-review"
+  },
+  {
+    "_id": "6a32a43ab1158ceb971b63ab",
+    "name": {
+      "en": "Apple Watch Ultra 3",
+      "fa": "اپل واچ اولترا ۳"
+    },
+    "slug": "apple-watch-ultra-3",
+    "brand": "Apple",
+    "category": "Watch",
+    "price": 38000000,
+    "thumbnail": "/assets/iphone/hero-endframe.png",
+    "inStock": true,
+    "description": {
+      "en": "The ultimate sports and adventure smartwatch.",
+      "fa": "نهایی‌ترین ساعت هوشمند ورزشی و ماجراجویی."
+    },
+    "tags": [
+      "Apple Watch",
+      "Apple",
+      "Ultra"
+    ],
+    "__v": 0,
+    "articleSlug": "apple-watch-ultra-3"
+  },
+  {
+    "_id": "6a32a43ab1158ceb971b63ac",
+    "name": {
+      "en": "Apple Watch Series 10",
+      "fa": "اپل واچ سری ۱۰"
+    },
+    "slug": "apple-watch-series-10",
+    "brand": "Apple",
+    "category": "Watch",
+    "price": 25000000,
+    "thumbnail": "/assets/iphone/hero-endframe.png",
+    "inStock": true,
+    "description": {
+      "en": "The perfect everyday smartwatch.",
+      "fa": "ساعت هوشمند ایده‌آل روزمره."
+    },
+    "tags": [
+      "Apple Watch",
+      "Apple",
+      "Series 10"
+    ],
+    "__v": 0,
+    "articleSlug": "apple-watch-series-12"
+  },
+  {
+    "_id": "6a32a43ab1158ceb971b63ad",
+    "name": {
+      "en": "Apple Watch SE 3",
+      "fa": "اپل واچ SE ۳"
+    },
+    "slug": "apple-watch-se-3",
+    "brand": "Apple",
+    "category": "Watch",
+    "price": 15000000,
+    "thumbnail": "/assets/iphone/hero-endframe.png",
+    "inStock": true,
+    "description": {
+      "en": "The best value Apple Watch with essential features.",
+      "fa": "بهترین ارزش اپل واچ با ویژگی‌های ضروری."
+    },
+    "tags": [
+      "Apple Watch",
+      "Apple",
+      "SE"
+    ],
+    "__v": 0,
+    "articleSlug": "apple-watch-se-3"
+  },
+  {
+    "_id": "6a38fb0b074a9bad139c62b7",
+    "name": {
+      "en": "Samsung Galaxy S26 Ultra Case",
+      "fa": "قاب سامسونگ گلکسی S26 اولترا"
+    },
+    "slug": "samsung-galaxy-s26-ultra-case",
+    "brand": "Samsung",
+    "category": "Accessory",
+    "subCategory": "cases",
+    "price": 200000,
+    "thumbnail": "/assets/accesseries/us-galaxy-s26ultra-es948-e.png",
+    "images": [
+      "/assets/accesseries/us-galaxy-s26ultra-es948-e.png"
+    ],
+    "description": {
+      "en": "Premium protective case for Samsung Galaxy S26 Ultra.",
+      "fa": "قاب محافظ باکیفیت برای سامسونگ گلکسی S26 اولترا."
+    },
+    "inStock": true,
+    "tags": [
+      "samsung",
+      "case",
+      "protection",
+      "galaxy-s26"
+    ],
+    "__v": 0,
+    "articleSlug": "samsung-galaxy-s26-ultra-case-review"
+  },
+  {
+    "_id": "6a38fb0b074a9bad139c62b8",
+    "name": {
+      "en": "Accessories & Cases Set",
+      "fa": "مجموعه لوازم جانبی و قاب"
+    },
+    "slug": "accessories-cases-set",
+    "brand": "Apple",
+    "category": "Accessory",
+    "subCategory": "cases",
+    "price": 280000,
+    "thumbnail": "/assets/accesseries/accessories-and-cases.png",
+    "images": [
+      "/assets/accesseries/accessories-and-cases.png"
+    ],
+    "description": {
+      "en": "Complete set of accessories and cases for your device.",
+      "fa": "مجموعه کامل لوازم جانبی و قاب برای دستگاه شما."
+    },
+    "inStock": true,
+    "tags": [
+      "apple",
+      "case",
+      "set",
+      "accessory"
+    ],
+    "__v": 0,
+    "articleSlug": "accessories-cases-set-review"
+  },
+  {
+    "_id": "6a38fb0b074a9bad139c62b9",
+    "name": {
+      "en": "Premium Cover Case",
+      "fa": "قاب کاور ممتاز"
+    },
+    "slug": "premium-cover-case",
+    "brand": "Apple",
+    "category": "Accessory",
+    "subCategory": "cases",
+    "price": 180000,
+    "thumbnail": "/assets/accesseries/accessory-cover3.png",
+    "images": [
+      "/assets/accesseries/accessory-cover3.png",
+      "/assets/accesseries/accessory-cover4.png"
+    ],
+    "description": {
+      "en": "Premium quality cover case with excellent protection.",
+      "fa": "قاب کاور با کیفیت ممتاز با محافظت عالی."
+    },
+    "inStock": true,
+    "tags": [
+      "apple",
+      "case",
+      "cover",
+      "protection"
+    ],
+    "__v": 0,
+    "articleSlug": "premium-cover-case-review"
+  },
+  {
+    "_id": "6a38fb0b074a9bad139c62ba",
+    "name": {
+      "en": "Baseus 18W Mirror Lake Charger",
+      "fa": "شارژر Baseus 18W Mirror Lake"
+    },
+    "slug": "baseus-18w-mirror-lake",
+    "brand": "Baseus",
+    "category": "Accessory",
+    "subCategory": "chargers",
+    "price": 180000,
+    "thumbnail": "/assets/accesseries/Baseus-CCJMHA-18W-Mirror-Lake-8.png",
+    "images": [
+      "/assets/accesseries/Baseus-CCJMHA-18W-Mirror-Lake-8.png"
+    ],
+    "description": {
+      "en": "Fast charger with 18W output, compatible with all devices.",
+      "fa": "شارژر سریع با خروجی ۱۸ وات، سازگار با تمام دستگاه‌ها."
+    },
+    "inStock": true,
+    "tags": [
+      "charger",
+      "fast-charging",
+      "baseus"
+    ],
+    "__v": 0,
+    "articleSlug": "baseus-18w-mirror-lake-review"
+  },
+  {
+    "_id": "6a38fb0b074a9bad139c62bb",
+    "name": {
+      "en": "McDodo GaN Mini Fast Travel Charger 65W",
+      "fa": "شارژر مسافرتی GaN McDodo 65W"
+    },
+    "slug": "mcdodo-gan-65w",
+    "brand": "McDodo",
+    "category": "Accessory",
+    "subCategory": "chargers",
+    "price": 350000,
+    "thumbnail": "/assets/accesseries/McDodo-Ch-0171-GaN-Mini-Fast-Traver-Charger-65W-lianclassic.com_.png",
+    "images": [
+      "/assets/accesseries/McDodo-Ch-0171-GaN-Mini-Fast-Traver-Charger-65W-lianclassic.com_.png"
+    ],
+    "description": {
+      "en": "GaN fast charger with 65W output, perfect for travel.",
+      "fa": "شارژر سریع GaN با خروجی ۶۵ وات، عالی برای سفر."
+    },
+    "inStock": true,
+    "tags": [
+      "charger",
+      "gan",
+      "travel",
+      "fast-charging"
+    ],
+    "__v": 0,
+    "articleSlug": "mcdodo-gan-65w-review"
+  },
+  {
+    "_id": "6a38fb0b074a9bad139c62bc",
+    "name": {
+      "en": "Fast Charging Kit",
+      "fa": "کیت شارژ سریع"
+    },
+    "slug": "fast-charging-kit",
+    "brand": "SCOMMRCL",
+    "category": "Accessory",
+    "subCategory": "chargers",
+    "price": 380000,
+    "thumbnail": "/assets/accesseries/fast-charging1.png",
+    "images": [
+      "/assets/accesseries/fast-charging1.png"
+    ],
+    "description": {
+      "en": "Complete fast charging kit with GaN technology.",
+      "fa": "کیت کامل شارژ سریع با فناوری GaN."
+    },
+    "inStock": true,
+    "tags": [
+      "charger",
+      "fast-charging",
+      "kit",
+      "gan"
+    ],
+    "__v": 0,
+    "articleSlug": "fast-charging-kit-review"
+  },
+  {
+    "_id": "6a38fb0b074a9bad139c62bd",
+    "name": {
+      "en": "Wireless Charger Classic",
+      "fa": "شارژر بی‌سیم کلاسیک"
+    },
+    "slug": "wireless-charger-classic",
+    "brand": "SCOMMRCL",
+    "category": "Accessory",
+    "subCategory": "wireless",
+    "price": 220000,
+    "thumbnail": "/assets/accesseries/WIRELESS-CHARGER-classic.png",
+    "images": [
+      "/assets/accesseries/WIRELESS-CHARGER-classic.png",
+      "/assets/accesseries/WIRELESS-CHARGER-classic-5.png",
+      "/assets/accesseries/WIRELESS-CHARGER-classic-6.png"
+    ],
+    "description": {
+      "en": "Wireless charger with classic design, compatible with all Qi devices.",
+      "fa": "شارژر بی‌سیم با طراحی کلاسیک، سازگار با تمام دستگاه‌های Qi."
+    },
+    "inStock": true,
+    "tags": [
+      "wireless",
+      "charger",
+      "qi",
+      "classic"
+    ],
+    "__v": 0,
+    "articleSlug": "wireless-charger-classic-review"
+  },
+  {
+    "_id": "6a38fb0b074a9bad139c62be",
+    "name": {
+      "en": "Brave BDC-52 Cable C to C 100W",
+      "fa": "کابل Brave BDC-52 C to C 100W"
+    },
+    "slug": "brave-bdc-52-cable",
+    "brand": "Brave",
+    "category": "Accessory",
+    "subCategory": "cables",
+    "price": 150000,
+    "thumbnail": "/assets/accesseries/Brave-BDC-52-Cable-C-To-C-100W.png",
+    "images": [
+      "/assets/accesseries/Brave-BDC-52-Cable-C-To-C-100W.png"
+    ],
+    "description": {
+      "en": "USB-C to USB-C cable with 100W power delivery.",
+      "fa": "کابل USB-C به USB-C با توان ۱۰۰ وات."
+    },
+    "inStock": true,
+    "tags": [
+      "cable",
+      "usb-c",
+      "100w",
+      "brave"
+    ],
+    "__v": 0,
+    "articleSlug": "brave-bdc-52-cable-review"
+  },
+  {
+    "_id": "6a38fb0b074a9bad139c62bf",
+    "name": {
+      "en": "Yesido C175 Car Holder",
+      "fa": "جاگوشی ماشین Yesido C175"
+    },
+    "slug": "yesido-c175-car-holder",
+    "brand": "Yesido",
+    "category": "Accessory",
+    "subCategory": "car",
+    "price": 250000,
+    "thumbnail": "/assets/accesseries/Yesido-C175-Car-Holder-8-1.png",
+    "images": [
+      "/assets/accesseries/Yesido-C175-Car-Holder-8-1.png"
+    ],
+    "description": {
+      "en": "Car holder with wireless charging, compatible with all smartphones.",
+      "fa": "جاگوشی ماشین با شارژ بی‌سیم، سازگار با تمام گوشی‌های هوشمند."
+    },
+    "inStock": true,
+    "tags": [
+      "car",
+      "holder",
+      "wireless",
+      "yesido"
+    ],
+    "__v": 0,
+    "articleSlug": "yesido-c175-car-holder-review"
+  },
+  {
+    "_id": "6a38fb0b074a9bad139c62c0",
+    "name": {
+      "en": "Camera Accessory Kit",
+      "fa": "کیت لوازم جانبی دوربین"
+    },
+    "slug": "camera-accessory-kit",
+    "brand": "Apple",
+    "category": "Accessory",
+    "subCategory": "camera",
+    "price": 450000,
+    "thumbnail": "/assets/accesseries/camera-accessory.png",
+    "images": [
+      "/assets/accesseries/camera-accessory.png"
+    ],
+    "description": {
+      "en": "Professional camera accessory kit for iPhone.",
+      "fa": "کیت لوازم جانبی دوربین حرفه‌ای برای آیفون."
+    },
+    "inStock": true,
+    "tags": [
+      "camera",
+      "iphone",
+      "kit",
+      "professional"
+    ],
+    "__v": 0,
+    "articleSlug": "camera-accessory-kit-review"
+  },
+  {
+    "_id": "6a38fb0b074a9bad139c62c1",
+    "name": {
+      "en": "Samsung Accessory Package",
+      "fa": "بسته لوازم جانبی سامسونگ"
+    },
+    "slug": "samsung-accessory-package",
+    "brand": "Samsung",
+    "category": "Accessory",
+    "subCategory": "package",
+    "price": 300000,
+    "thumbnail": "/assets/accesseries/samsung-accessory-package.png",
+    "images": [
+      "/assets/accesseries/samsung-accessory-package.png",
+      "/assets/accesseries/samsung-accessoriy1.png",
+      "/assets/accesseries/galaxy-accessory.png",
+      "/assets/accesseries/galaxy-accessory2.png"
+    ],
+    "description": {
+      "en": "Complete accessory package for Samsung devices.",
+      "fa": "بسته کامل لوازم جانبی برای دستگاه‌های سامسونگ."
+    },
+    "inStock": true,
+    "tags": [
+      "samsung",
+      "package",
+      "accessory",
+      "galaxy"
+    ],
+    "__v": 0,
+    "articleSlug": "samsung-accessory-package-review"
+  },
+  {
+    "_id": "6a38fb0b074a9bad139c62c2",
+    "name": {
+      "en": "SCOMMRCL Premium Accessory",
+      "fa": "لوازم جانبی ممتاز SCOMMRCL"
+    },
+    "slug": "scommrcl-premium-accessory",
+    "brand": "SCOMMRCL",
+    "category": "Accessory",
+    "subCategory": "package",
+    "price": 320000,
+    "thumbnail": "/assets/accesseries/SCOMMRCL-118-Bach_Scom_Only_Colo.png",
+    "images": [
+      "/assets/accesseries/SCOMMRCL-118-Bach_Scom_Only_Colo.png"
+    ],
+    "description": {
+      "en": "Premium accessory package with elegant design.",
+      "fa": "بسته لوازم جانبی ممتاز با طراحی شیک."
+    },
+    "inStock": true,
+    "tags": [
+      "scommrcl",
+      "package",
+      "premium",
+      "accessory"
+    ],
+    "__v": 0,
+    "articleSlug": "scommrcl-premium-accessory-review"
+  },
+  {
+    "_id": "6a3901cd28e50348768ceb1d",
+    "name": {
+      "en": "Tempered Glass Screen Protector",
+      "fa": "محافظ صفحه شیشه‌ای سکوریت"
+    },
+    "slug": "tempered-glass-screen-protector",
+    "brand": "Apple",
+    "category": "Accessory",
+    "subCategory": "protection",
+    "price": 120000,
+    "thumbnail": "/assets/accesseries/accessory-cover3.png",
+    "images": [
+      "/assets/accesseries/accessory-cover3.png"
+    ],
+    "description": {
+      "en": "Premium tempered glass screen protector with 9H hardness.",
+      "fa": "محافظ صفحه شیشه‌ای سکوریت با سختی ۹H."
+    },
+    "inStock": true,
+    "tags": [
+      "protection",
+      "screen",
+      "glass"
+    ],
+    "__v": 0
+  },
+  {
+    "_id": "6a3901cd28e50348768ceb1e",
+    "name": {
+      "en": "Premium Wireless Earbuds",
+      "fa": "ایرپاد بی‌سیم ممتاز"
+    },
+    "slug": "premium-wireless-earbuds",
+    "brand": "Apple",
+    "category": "Accessory",
+    "subCategory": "audio",
+    "price": 450000,
+    "thumbnail": "/assets/airpod/apple-airpod.png",
+    "images": [
+      "/assets/airpod/apple-airpod.png"
+    ],
+    "description": {
+      "en": "High-quality wireless earbuds with noise cancellation.",
+      "fa": "ایرپاد بی‌سیم با کیفیت بالا با حذف نویز."
+    },
+    "inStock": true,
+    "tags": [
+      "audio",
+      "wireless",
+      "earbuds"
+    ],
+    "__v": 0
+  }
+]
