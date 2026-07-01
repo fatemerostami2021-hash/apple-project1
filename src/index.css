@@ -571,4 +571,8 @@ html.dark .hero-muted { color: rgba(255, 255, 255, 0.78); }
   .gold-brand,
   .premium-brand { letter-spacing: 0.15em !important; }
   .samsung-mini { letter-spacing: 1px !important; }
+}@media (max-width: 768px) {
+  .floating-gold-text {
+    display: none !important;
+  }
 }

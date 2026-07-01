@@ -1,6 +1,6 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -16,8 +16,11 @@ import WaveCircleText from "../../animations/WaveCircleText";
 import { useTheme } from "../../store/theme";
 import { fadeIn } from "../../animations/variants";
 import { useSlides } from "../../hooks/useSlides";
+import { useCart } from "../../hooks/useCart.jsx";
 
-// کامپوننت TypingText
+// ============================================================
+// 📝 کامپوننت TypingText
+// ============================================================
 const TypingText = ({ texts, className }) => {
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const [currentText, setCurrentText] = useState(() => texts[0] || "");
@@ -62,10 +65,16 @@ const TypingText = ({ texts, className }) => {
   );
 };
 
+// ============================================================
+// 🏠 کامپوننت اصلی HeroSlider
+// ============================================================
 const HeroSlider = () => {
   const { i18n } = useTranslation();
   const { theme } = useTheme();
   const navigate = useNavigate();
+
+  // ✅ گرفتن تابع addToCart از Context
+  const { addToCart } = useCart();
 
   const darkMode = theme === "dark";
   const currentLang = i18n.resolvedLanguage || i18n.language || "fa";
@@ -83,23 +92,23 @@ const HeroSlider = () => {
   const progressInterval = useRef(null);
   const autoplayDelay = 5000;
 
-  // تنظیم اسلایدها از دیتابیس با لینک‌های صحیح
+  // ============================================================
+  // 🔄 تنظیم اسلایدها از دیتابیس + حذف تکراری‌ها بر اساس image
+  // ============================================================
   useEffect(() => {
+    let finalSlides = [];
+
     if (slidesFromDB && slidesFromDB.length > 0) {
-      const formattedSlides = slidesFromDB.map((slide, index) => {
-        // دریافت اسلاگ صحیح مقاله از articleMap
+      const formatted = slidesFromDB.map((slide, index) => {
         let articleSlug = slide.articleSlug || '';
         
-        // اگر مقاله‌ای تنظیم نشده، از نقشه استفاده کن
         if (!articleSlug) {
           const productSlug = slide.productId?.slug || slide.productId || '';
           articleSlug = slide.articleSlug || slide.article || productSlug || '';
         }
         
-        // اگر هنوز مقاله‌ای نیست، از عنوان اسلاید استفاده کن
         if (!articleSlug) {
           const title = slide.title?.en || slide.title || '';
-          // تبدیل عنوان به اسلاگ
           articleSlug = title
             .toLowerCase()
             .replace(/[^a-z0-9]+/g, '-')
@@ -115,6 +124,7 @@ const HeroSlider = () => {
           image: slide.image || '/images/placeholder.png',
           articleSlug: articleSlug,
           productId: slide.productId?._id || slide.productId || null,
+          price: slide.price || 0,
           buttonText: {
             en: slide.buttonText?.en || 'Buy Now',
             fa: slide.buttonText?.fa || 'خرید'
@@ -123,37 +133,57 @@ const HeroSlider = () => {
           active: slide.active !== false
         };
       });
-      
-      const sorted = formattedSlides
+
+      const sorted = formatted
         .filter(s => s.active)
         .sort((a, b) => a.order - b.order);
-      
-      setSlides(sorted);
-    } else {
-      // اسلایدهای پیش‌فرض
-      setSlides([
+
+      const seenImages = new Set();
+      const uniqueSlides = sorted.filter(slide => {
+        const imageKey = slide.image;
+        if (seenImages.has(imageKey)) {
+          return false;
+        }
+        seenImages.add(imageKey);
+        return true;
+      });
+
+      finalSlides = uniqueSlides;
+    }
+
+    if (finalSlides.length === 0) {
+      finalSlides = [
         {
           id: 'default-1',
           brand: 'Apple',
           title: isRTL ? 'آیفون ۱۷ پرو مکس' : 'iPhone 17 Pro Max',
           subtitle: isRTL ? 'قدرتمندترین آیفون تاریخ' : 'The most powerful iPhone ever',
+          description: isRTL ? 'تراشه A18 پرو · طراحی تیتانیوم · دوربین ۴۸ مگاپیکسل' : 'A18 Pro chip · Titanium design · 48MP camera',
           image: '/assets/iphone/iphone-17-pro-max.png',
+          price: 1299,
           buttonText: { en: 'Buy Now', fa: 'خرید' },
           articleSlug: 'iphone-17-pro-max'
         },
         {
           id: 'default-2',
           brand: 'Samsung',
-          title: isRTL ? 'گلکسی اس۲۴ اولترا' : 'Galaxy S24 Ultra',
-          subtitle: isRTL ? 'بهترین تجربه گلکسی' : 'The ultimate Galaxy experience',
-          image: '/assets/galexy-series-s/galaxy-s24-ultra.png',
+          title: isRTL ? 'گلکسی اس۲۶ اولترا' : 'Galaxy S26 Ultra',
+          subtitle: isRTL ? 'بهترین تجربه اندروید' : 'The ultimate Android experience',
+          description: isRTL ? 'دوربین ۲۰۰ مگاپیکسل · هوش مصنوعی · قلم S Pen' : '200MP camera · AI features · S Pen included',
+          image: '/assets/galexy-series-s/galaxy-s26-ultra.png',
+          price: 1199,
           buttonText: { en: 'Buy Now', fa: 'خرید' },
-          articleSlug: 'galaxy-s24-ultra-ai-revolution'
+          articleSlug: 'galaxy-s26-ultra'
         }
-      ]);
+      ];
     }
+
+    setSlides(finalSlides);
   }, [slidesFromDB, isRTL]);
 
+  // ============================================================
+  // ⏱️ کنترل پیشرفت بار
+  // ============================================================
   const startProgress = useCallback(() => {
     setProgress(0);
     if (progressInterval.current) clearInterval(progressInterval.current);
@@ -175,6 +205,9 @@ const HeroSlider = () => {
     if (progressInterval.current) clearInterval(progressInterval.current);
   }, []);
 
+  // ============================================================
+  // 🖱️ کنترل حرکت ماوس
+  // ============================================================
   const handleMove = useCallback((e) => {
     cancelAnimationFrame(frame.current);
     frame.current = requestAnimationFrame(() => {
@@ -184,9 +217,28 @@ const HeroSlider = () => {
     });
   }, []);
 
+  // ============================================================
+  // 📝 توابع کمکی
+  // ============================================================
   const getButtonText = (slide) => {
     if (!slide?.buttonText) return isRTL ? "خرید" : "Buy Now";
     return isRTL ? slide.buttonText.fa : slide.buttonText.en;
+  };
+
+  // ============================================================
+  // 🛒 افزودن به سبد خرید + هدایت به /cart
+  // ============================================================
+  const handleAddToCart = (slide) => {
+    addToCart({
+      id: slide.productId || slide.id,
+      name: slide.title,
+      price: slide.price || 0,
+      image: slide.image,
+      thumbnail: slide.image,
+      qty: 1,
+      brand: slide.brand,
+    });
+    navigate('/cart');
   };
 
   const handleViewArticle = (articleSlug) => {
@@ -195,14 +247,14 @@ const HeroSlider = () => {
     }
   };
 
-  const handleBuy = (productId) => {
-    if (productId) {
-      navigate(`/product/${productId}`);
-    } else {
-      navigate('/products');
-    }
+  const getTypingTexts = (slide) => {
+    const title = slide.title;
+    return [title, title, title, title, title];
   };
 
+  // ============================================================
+  // 🔄 تغییر جهت RTL/LTR
+  // ============================================================
   useEffect(() => {
     if (swiperRef.current && swiperRef.current.swiper) {
       const swiper = swiperRef.current.swiper;
@@ -211,6 +263,9 @@ const HeroSlider = () => {
     }
   }, [isRTL]);
 
+  // ============================================================
+  // ⏱️ کنترل اتوپلی
+  // ============================================================
   useEffect(() => {
     if (!isHovering) {
       startProgress();
@@ -220,6 +275,9 @@ const HeroSlider = () => {
     return () => stopProgress();
   }, [activeIndex, isHovering, startProgress, stopProgress]);
 
+  // ============================================================
+  // 🚧 لودینگ
+  // ============================================================
   if (loading || slides.length === 0) {
     return (
       <div className="w-full h-[580px] md:h-[760px] flex items-center justify-center bg-gray-100 dark:bg-gray-900">
@@ -230,11 +288,9 @@ const HeroSlider = () => {
     );
   }
 
-  const getTypingTexts = (slide) => {
-    const title = slide.title;
-    return [title, title, title, title, title];
-  };
-
+  // ============================================================
+  // 🎨 رندر اصلی
+  // ============================================================
   return (
     <section
       dir={isRTL ? "rtl" : "ltr"}
@@ -329,7 +385,7 @@ const HeroSlider = () => {
 
                 <div className="flex flex-wrap gap-4 mt-8">
                   <button
-                    onClick={() => handleBuy(slide.productId)}
+                    onClick={() => handleAddToCart(slide)}
                     className="hero-btn px-8 py-4 rounded-full text-sm font-black tracking-wide transition-all duration-300 group flex items-center gap-2"
                   >
                     <span>{getButtonText(slide)}</span>
@@ -400,6 +456,7 @@ const HeroSlider = () => {
         ))}
       </Swiper>
 
+      {/* ⬅️➡️ دکمه‌های نویگیشن */}
       <button
         className="hero-prev absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-40
                    w-12 h-12 md:w-14 md:h-14 rounded-full bg-black/40 backdrop-blur-md border border-white/20

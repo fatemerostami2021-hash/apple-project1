@@ -9,13 +9,6 @@ import { useCart } from "../../hooks/useCart";
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 const PH = "/images/placeholder.png";
 
-/* ══════════════════════════════════════════
-   AppleProducts
-   مهم: دیگر از articleMap دستی استفاده نمی‌کنیم.
-   محصول خودش فیلد article (slug مقاله مرتبط)
-   را از دیتابیس می‌آورد — همان چیزی که
-   connect-products-to-articles.js ست کرده.
-══════════════════════════════════════════ */
 const AppleProducts = () => {
   const { i18n } = useTranslation();
   const navigate  = useNavigate();
@@ -55,20 +48,16 @@ const AppleProducts = () => {
     return data[i18n.language] || data.en || "";
   };
 
-  /* ── دکمه مشاهده — مستقیم به مقاله مرتبط با محصول ── */
   const handleViewArticle = (product, e) => {
     e.stopPropagation();
-    /* فیلد article روی خود محصول هست (از connect-products-to-articles.js) */
     const articleSlug = product.article || product.articleSlug;
     if (articleSlug) {
       navigate(`/articles/${articleSlug}`);
     } else {
-      /* fallback — اگر مقاله متصل نبود، صفحه محصول رو نشون بده */
       navigate(`/product/${product.slug || product._id}`);
     }
   };
 
-  /* ── دکمه خرید — افزودن به سبد، بدون ریدایرکت اجباری ── */
   const handleBuy = (product, e) => {
     e.stopPropagation();
     add(product, 1);
@@ -109,6 +98,48 @@ const AppleProducts = () => {
 
   return (
     <section className="relative py-10 md:py-14 bg-white dark:bg-neutral-950 transition-colors duration-300">
+      {/* ===== HERO SECTION ===== */}
+      <div className="relative w-full h-[200px] sm:h-[280px] md:h-[350px] lg:h-[420px] overflow-hidden mb-10 md:mb-14 rounded-2xl md:rounded-3xl">
+        <img
+          src="/images/apple-hero-product-home.png"
+          alt="Apple Vision Pro"
+          className="w-full h-full object-cover object-center"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent flex items-center">
+          <div className="px-6 sm:px-10 md:px-16 lg:px-20 max-w-2xl">
+            <motion.h2
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight"
+            >
+              Shop Apple Vision Pro
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-sm sm:text-base md:text-lg text-white/80 mt-2 md:mt-4 max-w-lg"
+            >
+              {isRTL
+                ? "دنیای جدیدی از واقعیت افزوده را با Apple Vision Pro تجربه کنید."
+                : "Experience a new world of augmented reality with Apple Vision Pro."}
+            </motion.p>
+            <motion.button
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              onClick={() => navigate("/products?brand=Apple")}
+              className="mt-4 md:mt-6 px-6 md:px-8 py-2.5 md:py-3.5 bg-[#D4AF37] text-black rounded-full font-bold text-sm md:text-base hover:bg-[#C5A027] transition-all shadow-lg shadow-[#D4AF37]/30 hover:shadow-xl hover:scale-105 active:scale-95"
+            >
+              {isRTL ? "مشاهده محصولات" : "Explore Products"}
+            </motion.button>
+          </div>
+        </div>
+        <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white dark:from-neutral-950 to-transparent" />
+      </div>
+
+      {/* ===== PRODUCTS GRID ===== */}
       <div className="max-w-7xl mx-auto px-4 md:px-6">
         <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: .7 }} viewport={{ once: true }} className="text-center mb-8">
@@ -136,7 +167,6 @@ const AppleProducts = () => {
                 onClick={() => navigate(`/product/${product.slug || id}`)}
                 className="group relative cursor-pointer bg-white dark:bg-neutral-900 border border-gray-200 dark:border-neutral-800 rounded-2xl p-4 shadow-sm hover:shadow-xl hover:border-[#D4AF37]/50 transition-all duration-300 overflow-hidden"
               >
-                {/* تصویر */}
                 <div className="flex items-center justify-center h-32 md:h-36 mb-3 bg-gray-50 dark:bg-neutral-800 rounded-xl overflow-hidden">
                   <img src={product.thumbnail || PH} alt={getLangText(product.name)}
                     className="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-105"
