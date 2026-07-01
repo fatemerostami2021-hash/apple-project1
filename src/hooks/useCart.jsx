@@ -1,43 +1,56 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, createContext, useContext } from "react";
 
 const STORAGE_KEY = "cart";
 const USER_CART_KEY = "user_cart";
 
-function readCart() {
-  try { 
-    return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"); 
-  } catch { 
-    return []; 
-  }
-}
+// ============================================================
+// 📦 ایجاد Context
+// ============================================================
+const CartContext = createContext();
 
-export function useCart() {
-  const [items, setItems] = useState(readCart);
+// ============================================================
+// 🛒 CartProvider
+// ============================================================
+export const CartProvider = ({ children }) => {
+  const [items, setItems] = useState([]);
   const [isHydrated, setIsHydrated] = useState(false);
 
-  // همگام‌سازی اولیه
   useEffect(() => {
-    setItems(readCart());
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        setItems(JSON.parse(saved));
+      }
+    } catch {
+      setItems([]);
+    }
     setIsHydrated(true);
   }, []);
 
-  // گوش دادن به رویدادهای تغییر سبد خرید
-  useEffect(() => {
-    const sync = () => setItems(readCart());
-    window.addEventListener("cart-updated", sync);
-    window.addEventListener("storage", sync);
-    return () => { 
-      window.removeEventListener("cart-updated", sync); 
-      window.removeEventListener("storage", sync); 
-    };
-  }, []);
-
-  // ذخیره‌سازی خودکار هنگام تغییر آیتم‌ها
   useEffect(() => {
     if (isHydrated) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
     }
   }, [items, isHydrated]);
+
+  useEffect(() => {
+    const sync = () => {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          setItems(JSON.parse(saved));
+        }
+      } catch {
+        setItems([]);
+      }
+    };
+    window.addEventListener("cart-updated", sync);
+    window.addEventListener("storage", sync);
+    return () => {
+      window.removeEventListener("cart-updated", sync);
+      window.removeEventListener("storage", sync);
+    };
+  }, []);
 
   const save = useCallback((next) => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
@@ -45,6 +58,7 @@ export function useCart() {
     window.dispatchEvent(new Event("cart-updated"));
   }, []);
 
+  // ===== تابع add =====
   const add = useCallback((product, qty = 1) => {
     setItems(prev => {
       const id = product._id || product.id;
@@ -56,7 +70,7 @@ export function useCart() {
       } else {
         next = [...prev, { 
           id, 
-          name: product.name, 
+          name: product.name || product.title, 
           thumb: product.thumbnail || product.image, 
           price: product.price, 
           qty,
@@ -70,6 +84,9 @@ export function useCart() {
       return next;
     });
   }, []);
+
+  // ===== ✅ تابع addToCart (برای سازگاری با HeroSlider) =====
+  const addToCart = add;
 
   const remove = useCallback((id) => {
     setItems(prev => {
@@ -93,7 +110,6 @@ export function useCart() {
 
   const clear = useCallback(() => save([]), [save]);
 
-  // ذخیره سبد خرید برای کاربر (پس از لاگین)
   const saveForUser = useCallback((userId) => {
     if (!userId) return;
     const userCart = {
@@ -104,7 +120,6 @@ export function useCart() {
     localStorage.setItem(`${USER_CART_KEY}_${userId}`, JSON.stringify(userCart));
   }, [items]);
 
-  // بارگذاری سبد خرید کاربر
   const loadForUser = useCallback((userId) => {
     if (!userId) return false;
     try {
@@ -122,7 +137,6 @@ export function useCart() {
     return false;
   }, [save]);
 
-  // ادغام سبد خرید فعلی با سبد خرید کاربر (در زمان لاگین)
   const mergeCart = useCallback((userId) => {
     if (!userId) return;
     try {
@@ -130,7 +144,6 @@ export function useCart() {
       if (saved) {
         const { items: savedItems } = JSON.parse(saved);
         if (savedItems && savedItems.length) {
-          // ادغام آیتم‌ها: اگر تکراری باشند، تعداد جمع می‌شود
           const merged = [...items];
           savedItems.forEach(savedItem => {
             const existingIndex = merged.findIndex(i => i.id === savedItem.id);
@@ -151,17 +164,40 @@ export function useCart() {
   const total = items.reduce((s, i) => s + (i.price || 0) * (i.qty || 1), 0);
   const count = items.reduce((s, i) => s + (i.qty || 1), 0);
 
-  return { 
-    items, 
-    add, 
-    remove, 
-    update, 
-    clear, 
-    total, 
+  const value = {
+    items,
+    add,
+    addToCart,  // ✅ اضافه شد
+    remove,
+    update,
+    clear,
+    total,
     count,
     saveForUser,
     loadForUser,
     mergeCart,
     isHydrated
   };
-}
+
+  return (
+    <CartContext.Provider value={value}>
+      {children}
+    </CartContext.Provider>
+  );
+};
+
+// ============================================================
+// 🪝 هوک useCart
+// ============================================================
+export const useCart = () => {
+  const context = useContext(CartContext);
+  if (!context) {
+    throw new Error('useCart must be used within a CartProvider');
+  }
+  return context;
+};
+
+// ============================================================
+// 🪝 هوک useCartContext (سازگاری)
+// ============================================================
+export const useCartContext = useCart;
