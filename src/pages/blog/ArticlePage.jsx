@@ -11,7 +11,6 @@ import { HeroSlider, AnimatedWave } from "../../components/article/HeroComponent
 import { Sidebar } from "../../components/article/ArticleSections";
 import ArticleContent from "../../components/article/ArticleContent";
 
-/* ── Lazy-loaded heavy sections ─────────────────────────── */
 const CinematicGallery = lazy(() =>
   import("../../components/article/ArticleSections").then((m) => ({ default: m.CinematicGallery }))
 );
@@ -22,7 +21,6 @@ const CommentsSection = lazy(() =>
   import("../../components/article/ArticleSections").then((m) => ({ default: m.CommentsSection }))
 );
 
-/* ── Styles ─────────────────────────────────────────────── */
 const STYLES = `
 @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,700;14..32,800&display=swap');
 
@@ -49,31 +47,51 @@ const STYLES = `
   0%,100% { transform: translate(0,0); }
   50%     { transform: translate(3%,2%); }
 }
-.ap-article-content { background: rgba(15,20,30,0.35); backdrop-filter: blur(12px); border-radius: 28px; padding: 2rem; border: 1px solid rgba(245,158,11,0.25); box-shadow: 0 20px 40px -15px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05); }
-.ap-article-content h1 { font-size: 2.2rem; font-weight: 800; background: linear-gradient(135deg,#fff 0%,#f59e0b 50%,#ffedd5 100%); background-clip: text; -webkit-background-clip: text; color: transparent; margin-bottom: 1.5rem; }
-.ap-article-content h2 { font-size: 1.6rem; font-weight: 700; margin: 2rem 0 1rem; color: #f59e0b; border-left: 4px solid #f59e0b; padding-left: 1rem; border-radius: 0; }
-.ap-article-content h3 { font-size: 1.3rem; font-weight: 600; margin: 1.5rem 0 0.75rem; color: #fbbf24; }
-.ap-article-content p  { margin-bottom: 1.2rem; line-height: 1.85; color: #e2e8f0; }
+.ap-article-content { background: rgba(15,20,30,0.35); backdrop-filter: blur(12px); border-radius: 28px; padding: 1.5rem; border: 1px solid rgba(245,158,11,0.25); box-shadow: 0 20px 40px -15px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05); }
+.ap-article-content h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 900; background: linear-gradient(135deg,#fff 0%,#f59e0b 50%,#ffedd5 100%); background-clip: text; -webkit-background-clip: text; color: transparent; margin-bottom: 1.5rem; line-height: 1.2; }
+.ap-article-content h2 { font-size: clamp(1.3rem, 2.5vw, 1.8rem); font-weight: 800; margin: 2rem 0 1rem; color: #f59e0b; border-left: 4px solid #f59e0b; padding-left: 1rem; border-radius: 0; }
+.ap-article-content h3 { font-size: clamp(1.1rem, 2vw, 1.5rem); font-weight: 700; margin: 1.5rem 0 0.75rem; color: #fbbf24; }
+.ap-article-content p  { margin-bottom: 1.2rem; line-height: 1.85; color: #e2e8f0; font-size: clamp(0.95rem, 1.2vw, 1.1rem); }
 .ap-article-content strong { color: #f59e0b; font-weight: 800; }
 .ap-article-content ul, .ap-article-content ol { background: rgba(245,158,11,0.05); border-radius: 20px; padding: 1rem 1.8rem; margin: 1rem 0; }
 .ap-article-content table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; background: rgba(0,0,0,0.3); border-radius: 16px; overflow: hidden; border: 1px solid rgba(245,158,11,0.3); }
 .ap-article-content th { background: linear-gradient(135deg,#f59e0b,#d97706); color: #000; font-weight: 800; padding: 12px; }
 .ap-article-content td { border: 1px solid rgba(245,158,11,0.2); padding: 10px; color: #e2e8f0; }
-.ap-hero { position: relative; width: 100%; height: 65vh; min-height: 500px; overflow: hidden; }
-.ap-hero-back-btn { position: absolute; top: 1.5rem; left: 1.5rem; z-index: 30; }
-.ap-hero-back-btn a { color: rgba(255,255,255,.8); text-decoration: none; font-size: .85rem; backdrop-filter: blur(8px); background: rgba(0,0,0,0.3); padding: 0.5rem 1rem; border-radius: 2rem; display: inline-flex; align-items: center; gap: 0.4rem; transition: all 0.3s; }
+
+.ap-hero { position: relative; width: 100%; height: 55vh; min-height: 400px; overflow: hidden; }
+@media (min-width: 768px) { .ap-hero { height: 65vh; min-height: 500px; } }
+
+.ap-hero-back-btn { position: absolute; top: 1rem; left: 1rem; z-index: 30; }
+@media (min-width: 768px) { .ap-hero-back-btn { top: 1.5rem; left: 1.5rem; } }
+.ap-hero-back-btn a { color: rgba(255,255,255,.8); text-decoration: none; font-size: .75rem; backdrop-filter: blur(8px); background: rgba(0,0,0,0.3); padding: 0.4rem 0.8rem; border-radius: 2rem; display: inline-flex; align-items: center; gap: 0.4rem; transition: all 0.3s; }
+@media (min-width: 768px) { .ap-hero-back-btn a { font-size: .85rem; padding: 0.5rem 1rem; } }
 .ap-hero-back-btn a:hover { background: #f59e0b; color: #000; }
-.ap-hero-meta { position: absolute; bottom: 0; left: 0; right: 0; z-index: 20; padding: 2rem; background: linear-gradient(to top,rgba(0,0,0,.85) 0%,transparent 100%); }
-.ap-hero-brand { font-size: .75rem; font-weight: 700; text-transform: uppercase; color: #f59e0b; letter-spacing: .1em; }
-.ap-hero-title { font-size: clamp(1.5rem,4vw,2.8rem); font-weight: 900; color: #fff; line-height: 1.3; margin: .5rem 0; text-shadow: 0 2px 15px rgba(0,0,0,.5); }
-.ap-hero-info { display: flex; gap: 1.2rem; font-size: .8rem; color: rgba(255,255,255,.6); flex-wrap: wrap; }
-.ap-body { max-width: 1000px; margin: 0 auto; padding: 2rem 1rem; }
-.ap-cols { display: flex; flex-direction: column; gap: 2rem; }
-@media(min-width:900px) { .ap-cols { flex-direction: row; } }
+
+.ap-hero-meta { position: absolute; bottom: 0; left: 0; right: 0; z-index: 20; padding: 1.5rem; background: linear-gradient(to top,rgba(0,0,0,.85) 0%,transparent 100%); }
+@media (min-width: 768px) { .ap-hero-meta { padding: 2rem; } }
+
+.ap-hero-brand { font-size: .65rem; font-weight: 700; text-transform: uppercase; color: #f59e0b; letter-spacing: .1em; }
+@media (min-width: 768px) { .ap-hero-brand { font-size: .75rem; } }
+
+.ap-hero-title { font-size: clamp(1.5rem, 4vw, 3rem); font-weight: 900; color: #fff; line-height: 1.2; margin: .3rem 0; text-shadow: 0 2px 15px rgba(0,0,0,.5); }
+@media (min-width: 768px) { .ap-hero-title { font-size: clamp(2rem, 5vw, 3.5rem); margin: .5rem 0; } }
+
+.ap-hero-info { display: flex; gap: 0.8rem; font-size: .7rem; color: rgba(255,255,255,.6); flex-wrap: wrap; }
+@media (min-width: 768px) { .ap-hero-info { gap: 1.2rem; font-size: .8rem; } }
+
+.ap-body { max-width: 1000px; margin: 0 auto; padding: 1.5rem 1rem; }
+@media (min-width: 768px) { .ap-body { padding: 2rem 1.5rem; } }
+
+.ap-cols { display: flex; flex-direction: column; gap: 1.5rem; }
+@media(min-width:900px) { .ap-cols { flex-direction: row; gap: 2rem; } }
+
 .ap-tags-row { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1.5rem; }
-.ap-tag-chip { font-size: .7rem; font-weight: 600; color: #f59e0b; border: 1px solid #f59e0b; padding: .2rem .8rem; border-radius: 2rem; transition: all 0.3s; }
+.ap-tag-chip { font-size: .65rem; font-weight: 600; color: #f59e0b; border: 1px solid #f59e0b; padding: .2rem .8rem; border-radius: 2rem; transition: all 0.3s; }
 .ap-tag-chip:hover { background: #f59e0b; color: #000; }
-.ap-share-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,.1); }
+
+.ap-share-row { display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,.1); }
+@media (min-width: 640px) { .ap-share-row { flex-direction: row; justify-content: space-between; align-items: center; } }
+
 .swiper-pagination-bullet { background: rgba(245,158,11,0.6) !important; }
 .swiper-pagination-bullet-active { background: #f59e0b !important; width: 24px !important; border-radius: 12px !important; }
 .custom-scrollbar::-webkit-scrollbar { width: 4px; }
@@ -82,7 +100,6 @@ const STYLES = `
 @media(prefers-reduced-motion:reduce) { .ap-wrap::before { animation: none; } }
 `;
 
-/* ── ArticlePage ─────────────────────────────────────────── */
 export default function ArticlePage() {
   const { slug } = useParams();
   const { i18n } = useTranslation();
@@ -103,14 +120,15 @@ export default function ArticlePage() {
   const galleryImages = getGalleryImages(slug);
   const title = article.title?.[lang] || article.title;
 
+  const fallbackHeroImages = heroImages.length > 0 ? heroImages : (article.cover ? [article.cover] : []);
+
   return (
     <div className="ap-wrap" dir={isRtl ? "rtl" : "ltr"}>
       <style>{STYLES}</style>
       <ReadingProgressBar />
 
-      {/* ── Hero ── */}
       <div className="ap-hero">
-        <HeroSlider images={heroImages} lang={lang} />
+        <HeroSlider images={fallbackHeroImages} lang={lang} />
         <motion.div style={{ opacity: heroOpacity }} className="ap-hero-back-btn">
           <Link to="/blog">
             {isRtl ? <HiOutlineArrowRight size={14} /> : <HiOutlineArrowLeft size={14} />}
@@ -137,7 +155,6 @@ export default function ArticlePage() {
         </div>
       </div>
 
-      {/* ── Body ── */}
       <div className="ap-body">
         <div className="ap-cols">
           <main className="flex-1 min-w-0">
