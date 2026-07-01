@@ -60,7 +60,7 @@ const TypingText = ({ texts, className }) => {
   return (
     <span className={className}>
       {currentText}
-      <span className="inline-block w-[3px] h-10 bg-amber-400 animate-pulse ml-1" />
+      <span className="inline-block w-[3px] h-6 md:h-10 bg-amber-400 animate-pulse ml-1 align-middle" />
     </span>
   );
 };
@@ -73,7 +73,6 @@ const HeroSlider = () => {
   const { theme } = useTheme();
   const navigate = useNavigate();
 
-  // ✅ گرفتن تابع addToCart از Context
   const { addToCart } = useCart();
 
   const darkMode = theme === "dark";
@@ -289,7 +288,7 @@ const HeroSlider = () => {
   }
 
   // ============================================================
-  // 🎨 رندر اصلی
+  // 🎨 رندر اصلی با چیدمان ریسپانسیو
   // ============================================================
   return (
     <section
@@ -297,11 +296,12 @@ const HeroSlider = () => {
       onMouseMove={handleMove}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
-      className="relative w-full h-[580px] md:h-[760px] overflow-hidden group"
+      className="relative w-full min-h-[580px] md:h-[760px] overflow-hidden group"
     >
       <HeroBackground darkMode={darkMode} />
       <WaveCircleText darkMode={darkMode} />
 
+      {/* 📊 نوار پیشرفت */}
       <div className="absolute top-0 left-0 right-0 z-50 h-1 bg-white/20">
         <motion.div
           className="h-full bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 rounded-r-full"
@@ -344,81 +344,32 @@ const HeroSlider = () => {
           <SwiperSlide key={`${slide.id}-${currentLang}`}>
             <div
               className={`
-                relative flex items-center justify-between h-full w-full px-6 lg:px-28 gap-10 overflow-hidden
-                ${isRTL ? "flex-row-reverse text-right" : "flex-row text-left"}
+                relative flex flex-col md:flex-row 
+                items-center justify-center 
+                h-full w-full 
+                px-4 md:px-6 lg:px-28 
+                gap-4 md:gap-10 
+                py-6 md:py-0
+                overflow-hidden
+                ${isRTL ? "md:flex-row-reverse text-right" : "md:flex-row text-left"}
               `}
             >
-              <motion.div
-                variants={fadeIn(isRTL ? "left" : "right", 0.3)}
-                initial="hidden"
-                animate="show"
-                whileHover={{ y: -6, scale: 1.02 }}
-                transition={{ type: "spring", stiffness: 280, damping: 20 }}
-                className="hero-card relative z-30 w-full md:w-[52%] lg:w-[40%] p-8 md:p-12"
-              >
-                <div className="flex items-center gap-3 mb-4">
-                  <HiOutlineSparkles className="text-amber-400 text-sm" />
-                  <p className="hero-brand text-[11px] font-extrabold tracking-[0.25em] uppercase">
-                    {slide.brand}
-                  </p>
-                </div>
-
-                <div className="min-h-[140px] md:min-h-[160px]">
-                  <TypingText
-                    texts={getTypingTexts(slide)}
-                    className="hero-title text-4xl md:text-6xl lg:text-7xl font-black tracking-tight
-                               bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-600 
-                               bg-clip-text text-transparent
-                               drop-shadow-[0_0_20px_rgba(255,215,0,0.4)]"
-                  />
-                </div>
-
-                <p className="hero-subtitle mt-4 text-base md:text-lg lg:text-xl font-bold opacity-90">
-                  {slide.subtitle}
-                </p>
-
-                {slide.description && (
-                  <p className="text-sm text-gray-400 mt-2 opacity-70 font-medium">
-                    {slide.description}
-                  </p>
-                )}
-
-                <div className="flex flex-wrap gap-4 mt-8">
-                  <button
-                    onClick={() => handleAddToCart(slide)}
-                    className="hero-btn px-8 py-4 rounded-full text-sm font-black tracking-wide transition-all duration-300 group flex items-center gap-2"
-                  >
-                    <span>{getButtonText(slide)}</span>
-                    <HiOutlineShoppingBag className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                  </button>
-
-                  {slide.articleSlug && (
-                    <button
-                      onClick={() => handleViewArticle(slide.articleSlug)}
-                      className="px-7 py-4 rounded-full text-sm font-black tracking-wide transition-all duration-300 
-                                 bg-transparent border-2 border-amber-500/50 text-amber-400 
-                                 hover:bg-amber-500 hover:text-black hover:border-amber-500
-                                 flex items-center gap-2 group"
-                    >
-                      <HiOutlineEye className="w-5 h-5 group-hover:scale-110 transition" />
-                      <span>{isRTL ? 'مشاهده مقاله' : 'View Article'}</span>
-                      <HiOutlineArrowRight className="w-4 h-4 group-hover:translate-x-1 transition" />
-                    </button>
-                  )}
-                </div>
-              </motion.div>
-
+              {/* ═══════ تصویر محصول (بالا در موبایل، کنار در دسکتاپ) ═══════ */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.9, x: isRTL ? 50 : -50 }}
                 animate={{ opacity: 1, scale: 1, x: 0 }}
                 transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
                 className={`
-                  relative w-full md:w-[60%] h-full flex items-center perspective-[2000px] z-10
-                  ${isRTL ? "justify-start" : "justify-end"}
+                  relative w-full md:w-[60%] 
+                  h-[45%] md:h-full 
+                  flex items-center justify-center
+                  perspective-[2000px] z-10
+                  order-1 md:order-2
+                  ${isRTL ? "md:justify-start" : "md:justify-end"}
                 `}
               >
                 <div
-                  className="absolute w-[45%] h-[45%] blur-[90px] opacity-30 pointer-events-none"
+                  className="absolute w-[60%] h-[60%] blur-[90px] opacity-30 pointer-events-none"
                   style={{
                     background: `radial-gradient(
                       circle at ${50 + mouse.x}% ${50 + mouse.y}%,
@@ -442,7 +393,7 @@ const HeroSlider = () => {
                   src={slide.image}
                   alt={slide.title}
                   draggable={false}
-                  className="hero-product-image relative w-[88%] md:w-[92%] lg:w-[95%] max-h-[92%] object-contain select-none will-change-transform drop-shadow-[0_60px_120px_rgba(0,0,0,0.35)]"
+                  className="hero-product-image relative w-[75%] md:w-[88%] lg:w-[95%] max-h-[85%] md:max-h-[92%] object-contain select-none will-change-transform drop-shadow-[0_60px_120px_rgba(0,0,0,0.35)]"
                   style={{
                     transform: `translateZ(0) translate3d(${mouse.x * 0.8}px, ${mouse.y * 0.8}px, 0)`,
                   }}
@@ -451,6 +402,67 @@ const HeroSlider = () => {
                   }}
                 />
               </motion.div>
+
+              {/* ═══════ کارت متن (پایین در موبایل، کنار در دسکتاپ) ═══════ */}
+              <motion.div
+                variants={fadeIn(isRTL ? "left" : "right", 0.3)}
+                initial="hidden"
+                animate="show"
+                whileHover={{ y: -6, scale: 1.02 }}
+                transition={{ type: "spring", stiffness: 280, damping: 20 }}
+                className="hero-card relative z-30 w-[92%] md:w-[52%] lg:w-[40%] p-6 md:p-8 lg:p-12 order-2 md:order-1"
+              >
+                <div className="flex items-center gap-3 mb-3 md:mb-4">
+                  <HiOutlineSparkles className="text-amber-400 text-sm" />
+                  <p className="hero-brand text-[10px] md:text-[11px] font-extrabold tracking-[0.2em] md:tracking-[0.25em] uppercase">
+                    {slide.brand}
+                  </p>
+                </div>
+
+                <div className="min-h-[80px] md:min-h-[140px] lg:min-h-[160px]">
+                  <TypingText
+                    texts={getTypingTexts(slide)}
+                    className="hero-title text-2xl md:text-4xl lg:text-7xl font-black tracking-tight
+                               bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-600 
+                               bg-clip-text text-transparent
+                               drop-shadow-[0_0_20px_rgba(255,215,0,0.4)]"
+                  />
+                </div>
+
+                <p className="hero-subtitle mt-3 md:mt-4 text-sm md:text-base lg:text-xl font-bold opacity-90">
+                  {slide.subtitle}
+                </p>
+
+                {slide.description && (
+                  <p className="text-xs md:text-sm text-gray-400 mt-2 opacity-70 font-medium line-clamp-2">
+                    {slide.description}
+                  </p>
+                )}
+
+                <div className="flex flex-col sm:flex-row gap-3 mt-6 md:mt-8">
+                  <button
+                    onClick={() => handleAddToCart(slide)}
+                    className="hero-btn w-full sm:w-auto px-6 md:px-8 py-3 md:py-4 rounded-full text-xs md:text-sm font-black tracking-wide transition-all duration-300 group flex items-center justify-center gap-2"
+                  >
+                    <span>{getButtonText(slide)}</span>
+                    <HiOutlineShoppingBag className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
+                  </button>
+
+                  {slide.articleSlug && (
+                    <button
+                      onClick={() => handleViewArticle(slide.articleSlug)}
+                      className="w-full sm:w-auto px-5 md:px-7 py-3 md:py-4 rounded-full text-xs md:text-sm font-black tracking-wide transition-all duration-300 
+                                 bg-transparent border-2 border-amber-500/50 text-amber-400 
+                                 hover:bg-amber-500 hover:text-black hover:border-amber-500
+                                 flex items-center justify-center gap-2 group"
+                    >
+                      <HiOutlineEye className="w-4 h-4 md:w-5 md:h-5 group-hover:scale-110 transition" />
+                      <span>{isRTL ? 'مشاهده مقاله' : 'View Article'}</span>
+                      <HiOutlineArrowRight className="w-3 h-3 md:w-4 md:h-4 group-hover:translate-x-1 transition hidden sm:block" />
+                    </button>
+                  )}
+                </div>
+              </motion.div>
             </div>
           </SwiperSlide>
         ))}
@@ -458,46 +470,51 @@ const HeroSlider = () => {
 
       {/* ⬅️➡️ دکمه‌های نویگیشن */}
       <button
-        className="hero-prev absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-40
-                   w-12 h-12 md:w-14 md:h-14 rounded-full bg-black/40 backdrop-blur-md border border-white/20
+        className="hero-prev absolute left-2 md:left-8 top-1/2 -translate-y-1/2 z-40
+                   w-10 h-10 md:w-14 md:h-14 rounded-full bg-black/40 backdrop-blur-md border border-white/20
                    flex items-center justify-center text-white hover:text-amber-400 hover:bg-black/60
                    hover:border-amber-400/50 hover:scale-110 transition-all duration-300 opacity-0
                    group-hover:opacity-100 focus:opacity-100"
         aria-label={isRTL ? "بعدی" : "Previous"}
       >
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d={isRTL ? "M9 5l7 7-7 7" : "M15 19l-7-7 7-7"} />
         </svg>
       </button>
       
       <button
-        className="hero-next absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-40
-                   w-12 h-12 md:w-14 md:h-14 rounded-full bg-black/40 backdrop-blur-md border border-white/20
+        className="hero-next absolute right-2 md:right-8 top-1/2 -translate-y-1/2 z-40
+                   w-10 h-10 md:w-14 md:h-14 rounded-full bg-black/40 backdrop-blur-md border border-white/20
                    flex items-center justify-center text-white hover:text-amber-400 hover:bg-black/60
                    hover:border-amber-400/50 hover:scale-110 transition-all duration-300 opacity-0
                    group-hover:opacity-100 focus:opacity-100"
         aria-label={isRTL ? "قبلی" : "Next"}
       >
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d={isRTL ? "M15 19l-7-7 7-7" : "M9 5l7 7-7 7"} />
         </svg>
       </button>
 
-      <div className="hero-pagination absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3 z-30" />
+      {/* 📍 نقاط راهنما */}
+      <div className="hero-pagination absolute bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 flex gap-3 z-30" />
 
-      <div className="absolute bottom-8 right-8 z-30 hidden lg:block">
-        <div className="bg-black/40 backdrop-blur-md rounded-full px-5 py-2.5">
-          <span className="text-white text-sm font-mono font-bold">
+      {/* 🔢 شمارنده */}
+      <div className="absolute bottom-6 md:bottom-8 right-4 md:right-8 z-30 hidden lg:block">
+        <div className="bg-black/40 backdrop-blur-md rounded-full px-4 md:px-5 py-2 md:py-2.5">
+          <span className="text-white text-xs md:text-sm font-mono font-bold">
             {String(activeIndex + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}
           </span>
         </div>
       </div>
 
+      {/* ============================================================
+          🎨 استایل‌های CSS
+          ============================================================ */}
       <style>{`
         .hero-card {
-          border-radius: 28px;
-          backdrop-filter: blur(24px) saturate(180%);
-          -webkit-backdrop-filter: blur(24px) saturate(180%);
+          border-radius: 20px;
+          backdrop-filter: blur(20px) saturate(180%);
+          -webkit-backdrop-filter: blur(20px) saturate(180%);
           background: rgba(255,255,255,0.06);
           border: 1px solid rgba(255,255,255,0.15);
           box-shadow: 0 25px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.15);
@@ -519,7 +536,7 @@ const HeroSlider = () => {
           color: #fbbf24;
         }
         .hero-subtitle {
-          line-height: 1.8;
+          line-height: 1.6;
           opacity: .9;
           max-width: 40ch;
         }
@@ -538,8 +555,8 @@ const HeroSlider = () => {
           color: black;
         }
         .hero-pagination .swiper-pagination-bullet {
-          width: 8px;
-          height: 8px;
+          width: 6px;
+          height: 6px;
           background: #888;
           opacity: .5;
           transition: all .3s ease;
@@ -547,7 +564,7 @@ const HeroSlider = () => {
           cursor: pointer;
         }
         .hero-pagination .swiper-pagination-bullet-active {
-          width: 32px;
+          width: 24px;
           border-radius: 12px;
           background: #fbbf24;
           opacity: 1;
@@ -568,26 +585,38 @@ const HeroSlider = () => {
         .animate-pulse {
           animation: blink 1s step-end infinite;
         }
+        
+        /* ════════════════════ Mobile Responsive Styles ════════════════════ */
         @media (max-width: 768px) {
           .hero-card {
             width: 100%;
-            padding: 24px;
+            padding: 20px;
+            border-radius: 16px;
+            transform: none !important;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3) !important;
+          }
+          .hero-card:hover {
+            transform: none !important;
           }
           .hero-title {
-            font-size: 2rem !important;
+            font-size: 1.5rem !important;
           }
           .hero-subtitle {
             max-width: 100%;
-            font-size: 0.9rem !important;
+            font-size: 0.85rem !important;
+            line-height: 1.5;
           }
           .hero-btn {
             padding: 10px 20px;
             font-size: 12px;
           }
+          .hero-brand {
+            letter-spacing: 0.2em;
+          }
         }
         @media (max-width: 640px) {
           .hero-title {
-            font-size: 1.5rem !important;
+            font-size: 1.25rem !important;
           }
           .hero-card {
             padding: 16px;
