@@ -1,25 +1,43 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { useTheme } from "../store/theme";
+
+// 🔥 هوک تشخیص موبایل (با گوش دادن به resize)
+function useIsMobile(breakpoint = 768) {
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== "undefined" ? window.innerWidth < breakpoint : false
+  );
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth < breakpoint);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, [breakpoint]);
+  return isMobile;
+}
 
 export default function GalaxyBackground() {
   const mountRef = useRef(null);
   const { theme } = useTheme();
   const isDark = theme === "dark";
+  const isMobile = useIsMobile(); // 🔥
+
+  // 🔥 احترام به تنظیم «کاهش حرکت» سیستم کاربر
+  const prefersReduced =
+    typeof window !== "undefined" &&
+    window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+
+  // 🔥 آیا اصلاً باید سه‌بعدی اجرا شود؟
+  const enable3D = isDark && !isMobile && !prefersReduced;
 
   useEffect(() => {
-    // ✅ در تم لایت، کهکشان اصلاً ساخته نمی‌شه
-    if (!isDark) return;
+    // 🔥 روی موبایل / لایت / کاهش‌حرکت اصلاً کهکشان ساخته نمی‌شود
+    if (!enable3D) return;
     if (!mountRef.current) return;
 
     const mount = mountRef.current;
     let disposed = false;
     let cleanupGalaxy = null;
 
-    // ✅ ساخت صحنه‌ی سنگین Three.js (۴۷۰۰+ ذره + WebGL context) رو
-    // از رندر اولیه‌ی صفحه جدا می‌کنیم. این از تصادم هم‌زمان
-    // "fetch محصولات + mount صفحه + ساخت کهکشان" جلوگیری می‌کنه که
-    // باعث لرزش/جابه‌جایی محصولات موقع رفرش در تم دارک می‌شد.
     const scheduleInit = (cb) => {
       if ("requestIdleCallback" in window) {
         const id = window.requestIdleCallback(cb, { timeout: 700 });
@@ -35,9 +53,6 @@ export default function GalaxyBackground() {
     });
 
     function initGalaxy() {
-      // ===============================
-      // Scene / Camera / Renderer
-      // ===============================
       const scene = new THREE.Scene();
 
       const camera = new THREE.PerspectiveCamera(
@@ -54,27 +69,33 @@ export default function GalaxyBackground() {
           alpha: true,
           antialias: true,
           powerPreference: "high-performance",
+          failIfMajorPerformanceCaveat: true, // 🔥 روی GPU ضعیف اصلاً نساز
         });
       } catch (e) {
         console.warn("WebGL not available, skipping galaxy background:", e);
         return null;
       }
 
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      // 🔥 محدود کردن pixelRatio به 1.5 (بزرگ‌ترین عامل مصرف GPU)
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
       renderer.setSize(window.innerWidth, window.innerHeight);
       renderer.setClearColor(0x000000, 0);
 
       mount.appendChild(renderer.domElement);
-      // ✅ شفاف شروع می‌شه و با fade نرم ظاهر می‌شه — به‌جای پاپ ناگهانی
       renderer.domElement.style.opacity = "0";
       renderer.domElement.style.transition = "opacity 0.8s ease";
       requestAnimationFrame(() => {
         if (!disposed) renderer.domElement.style.opacity = "1";
       });
 
-      // ===============================
+      // 🔥 مدیریت از دست رفتن WebGL context (جلوگیری از کرش سفید)
+      const handleContextLost = (e) => {
+        e.preventDefault();
+        console.warn("WebGL context lost — pausing galaxy.");
+      };
+      renderer.domElement.addEventListener("webglcontextlost", handleContextLost);
+
       // Mouse Parallax
-      // ===============================
       const mouse = { x: 0, y: 0 };
       const handleMouse = (e) => {
         mouse.x = (e.clientX / window.innerWidth - 0.5) * 2;
@@ -82,9 +103,7 @@ export default function GalaxyBackground() {
       };
       window.addEventListener("mousemove", handleMouse);
 
-      // ===============================
-      // Particle Counts — کاهش‌یافته برای خوانایی متن و سبک‌تر شدن
-      // ===============================
+      // 🔥 چون فقط روی دسکتاپ اجرا می‌شود، تعداد ذرات کامل می‌ماند
       const mainCount = 1800;
       const dustCount = 2200;
       const starCount = 700;
@@ -99,9 +118,7 @@ export default function GalaxyBackground() {
         return { x, y, z, radius };
       };
 
-      // ===============================
       // Main Galaxy (طلایی)
-      // ===============================
       const geo = new THREE.BufferGeometry();
       const pos = new Float32Array(mainCount * 3);
       const col = new Float32Array(mainCount * 3);
@@ -134,9 +151,7 @@ export default function GalaxyBackground() {
       const galaxy = new THREE.Points(geo, mat);
       scene.add(galaxy);
 
-      // ===============================
       // Dust Layer
-      // ===============================
       const dustGeo = new THREE.BufferGeometry();
       const dustPos = new Float32Array(dustCount * 3);
 
@@ -163,9 +178,7 @@ export default function GalaxyBackground() {
       const dust = new THREE.Points(dustGeo, dustMat);
       scene.add(dust);
 
-      // ===============================
       // Star Layer
-      // ===============================
       const starGeo = new THREE.BufferGeometry();
       const starPos = new Float32Array(starCount * 3);
 
@@ -190,9 +203,7 @@ export default function GalaxyBackground() {
       const stars = new THREE.Points(starGeo, starMat);
       scene.add(stars);
 
-      // ===============================
       // Shooting Stars
-      // ===============================
       const shootingStars = [];
 
       function resetStar(star) {
@@ -219,9 +230,7 @@ export default function GalaxyBackground() {
         shootingStars.push(star);
       }
 
-      // ===============================
       // Nebula Glow
-      // ===============================
       const nebulaGeo = new THREE.SphereGeometry(4, 32, 32);
       const nebulaMat = new THREE.MeshBasicMaterial({
         color: "#D4AF37",
@@ -231,12 +240,21 @@ export default function GalaxyBackground() {
       const nebula = new THREE.Mesh(nebulaGeo, nebulaMat);
       scene.add(nebula);
 
-      // ===============================
       // Animation
-      // ===============================
       let t = 0;
       let frameId;
       let animDisposed = false;
+
+      // 🔥 وقتی تب مخفی است، انیمیشن متوقف شود (صرفه‌جویی باتری/حافظه)
+      const handleVisibility = () => {
+        if (document.hidden) {
+          if (frameId) cancelAnimationFrame(frameId);
+          frameId = null;
+        } else if (!animDisposed && !frameId) {
+          animate();
+        }
+      };
+      document.addEventListener("visibilitychange", handleVisibility);
 
       const animate = () => {
         if (animDisposed) return;
@@ -262,9 +280,7 @@ export default function GalaxyBackground() {
 
       animate();
 
-      // ===============================
       // Resize
-      // ===============================
       const resize = () => {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
@@ -272,14 +288,14 @@ export default function GalaxyBackground() {
       };
       window.addEventListener("resize", resize);
 
-      // ===============================
-      // Cleanup — برمی‌گرده تا effect اصلی صداش کنه
-      // ===============================
+      // Cleanup
       return () => {
         animDisposed = true;
 
         window.removeEventListener("mousemove", handleMouse);
         window.removeEventListener("resize", resize);
+        document.removeEventListener("visibilitychange", handleVisibility); // 🔥
+        renderer.domElement.removeEventListener("webglcontextlost", handleContextLost); // 🔥
 
         if (frameId) cancelAnimationFrame(frameId);
 
@@ -311,18 +327,16 @@ export default function GalaxyBackground() {
       };
     }
 
-    // ===============================
-    // Cleanup اصلی effect
-    // ===============================
     return () => {
       disposed = true;
       cancelSchedule();
       if (cleanupGalaxy) cleanupGalaxy();
     };
-  }, [isDark]);
+  }, [enable3D]); // 🔥 وابستگی به enable3D به‌جای isDark
 
   return (
     <>
+      {/* لایه پس‌زمینه پایه — همیشه هست */}
       <div
         style={{
           position: "fixed",
@@ -334,7 +348,22 @@ export default function GalaxyBackground() {
         }}
       />
 
-      {isDark && (
+      {/* 🔥 روی موبایل دارک، به‌جای Three.js یک گرادیانت سبک نشان بده */}
+      {isDark && !enable3D && (
+        <div
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: -2,
+            pointerEvents: "none",
+            background:
+              "radial-gradient(ellipse at 50% 30%, rgba(212,175,55,0.10), transparent 60%), #000000",
+          }}
+        />
+      )}
+
+      {/* گلوی نبولا — فقط وقتی سه‌بعدی فعال است */}
+      {enable3D && (
         <div
           style={{
             position: "fixed",
@@ -351,7 +380,8 @@ export default function GalaxyBackground() {
         />
       )}
 
-      {isDark && (
+      {/* کانتینر Three.js — فقط روی دسکتاپ دارک */}
+      {enable3D && (
         <div
           ref={mountRef}
           style={{

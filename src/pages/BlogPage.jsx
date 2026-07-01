@@ -136,7 +136,8 @@ export default function BlogPage() {
                   whileHover={{ y: -8 }}
                   className="group rounded-2xl overflow-hidden bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 hover:border-[#D4AF37]/50 hover:shadow-xl transition-all duration-300"
                 >
-                  <Link to={`/article/${article.slug}`} aria-label={getLang(article.title)}>
+                  {/* ✅ اصلاح مسیر: /articles/ به جای /article/ */}
+                  <Link to={`/articles/${article.slug}`} aria-label={getLang(article.title)}>
                     <div className="h-48 overflow-hidden relative">
                       <OptimizedImage 
                         src={article.cover} 

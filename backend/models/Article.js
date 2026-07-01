@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 
 const articleSchema = new mongoose.Schema({
-  id: { type: String, unique: true },
   title: {
     en: { type: String, required: true },
     fa: { type: String, required: true }
@@ -25,6 +24,9 @@ const articleSchema = new mongoose.Schema({
   active: { type: Boolean, default: true },
   featured: { type: Boolean, default: false },
   views: { type: Number, default: 0 }
-}, { timestamps: true });
+}, { 
+  timestamps: true,
+  autoIndex: false  // ✅ غیرفعال کردن autoIndex
+});
 
 export default mongoose.model('Article', articleSchema);
