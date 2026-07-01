@@ -32,7 +32,7 @@ import { Link } from "react-router-dom";
 export default function IphonePage() {
   const { t, i18n } = useTranslation();
   const isRtl = i18n.language === "fa";
-  
+
   const [activeImages, setActiveImages] = useState({});
 
   const [sliderRef] = useKeenSlider({
@@ -41,6 +41,7 @@ export default function IphonePage() {
     breakpoints: {
       "(max-width:1024px)": { slides: { perView: 3 } },
       "(max-width:768px)": { slides: { perView: 2 } },
+      "(max-width:480px)": { slides: { perView: 1.15, spacing: 10 } },
     },
   });
 
@@ -154,7 +155,10 @@ export default function IphonePage() {
   };
 
   return (
-    <main className={`min-h-screen transition-colors duration-500 overflow-x-hidden ${isRtl ? 'font-vazir' : 'font-sans'}`}>
+    // ✅ FIX #2: overflow-x-hidden کلی از صفحه حذف شد.
+    // به‌جاش overflow فقط دور المنت‌های واقعاً مشکل‌ساز (دکمه‌ی Compare با موقعیت منفی)
+    // کنترل می‌شه، تا رفتار sticky و انیمیشن‌های عمودی صفحه دست‌نخورده بمونه.
+    <main className={`min-h-screen transition-colors duration-500 ${isRtl ? 'font-vazir' : 'font-sans'}`}>
       <Helmet>
         <title>iPhone Evolution | Apple World</title>
         <meta name="description" content="بررسی و مقایسه نسل‌های مختلف آیفون از سری ۱۲ تا ۱۷ پرو مکس" />
@@ -162,8 +166,8 @@ export default function IphonePage() {
       </Helmet>
 
       {/* HERO SECTION */}
-      <section className="relative w-full min-h-[50vh] flex items-center justify-center px-6 overflow-hidden">
-        <div className="max-w-[1300px] w-full flex flex-col md:flex-row items-center justify-center gap-12 lg:gap-24">
+      <section className="relative w-full min-h-[50vh] flex items-center justify-center px-4 sm:px-6 overflow-hidden">
+        <div className="max-w-[1300px] w-full flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12 lg:gap-24">
           <motion.div
             initial={{ opacity: 0, scale: 0.5, rotate: -10 }}
             animate={{ opacity: 1, scale: 1, rotate: 0 }}
@@ -171,19 +175,20 @@ export default function IphonePage() {
             whileHover={{ scale: 1.1, rotate: 5 }}
             className="flex-shrink-0"
           >
-            <img 
-              src={logo} 
-              alt="Apple Brand Logo" 
-              className="w-32 md:w-48 lg:w-64 drop-shadow-[0_20px_50px_rgba(0,0,0,0.2)] dark:invert"
+            <img
+              src={logo}
+              alt="Apple Brand Logo"
+              className="w-24 sm:w-32 md:w-48 lg:w-64 drop-shadow-[0_20px_50px_rgba(0,0,0,0.2)] dark:invert"
             />
           </motion.div>
 
           <div className={`text-center md:text-left ${isRtl ? 'md:text-right' : 'md:text-left'}`}>
+            {/* ✅ کوچک‌تر شدن سایز پایه‌ی فونت روی موبایل خیلی کوچیک تا با letter تنگ کنار هم بشکنه بدون overflow */}
             <motion.h1
               initial={{ opacity: 0, x: isRtl ? 50 : -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3, duration: 0.8 }}
-              className="text-6xl md:text-8xl font-black tracking-tighter uppercase mb-4 bg-clip-text text-transparent bg-gradient-to-b from-black to-gray-400 dark:from-white dark:to-gray-600"
+              className="text-4xl sm:text-5xl md:text-8xl font-black tracking-tighter uppercase mb-4 bg-clip-text text-transparent bg-gradient-to-b from-black to-gray-400 dark:from-white dark:to-gray-600 break-words"
             >
               {t("iphonePage.hero.title1")} <br />
               <span className="text-blue-600 hover:text-blue-500 transition-colors duration-300">
@@ -194,7 +199,7 @@ export default function IphonePage() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6 }}
-              className="max-w-xl text-lg md:text-xl font-medium opacity-80 leading-relaxed"
+              className="max-w-xl text-base sm:text-lg md:text-xl font-medium opacity-80 leading-relaxed"
             >
               {t("iphonePage.hero.subtitle")}
             </motion.p>
@@ -203,15 +208,18 @@ export default function IphonePage() {
       </section>
 
       {/* PRODUCTS LOOP */}
-      <section id="models" className="max-w-[1400px] mx-auto px-6 py-20 space-y-40">
+      <section id="models" className="max-w-[1400px] mx-auto px-4 sm:px-6 py-14 md:py-20 space-y-24 md:space-y-40">
         {models.map((m) => {
           const activeImage = activeImages[m.name] || m.img;
           return (
-            <article key={m.name} className="grid lg:grid-cols-12 gap-12 items-start border-b pb-28 border-gray-200 dark:border-gray-800">
-              
+            <article key={m.name} className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-start border-b pb-16 lg:pb-28 border-gray-200 dark:border-gray-800">
+
               {/* LEFT SIDE - Media */}
-              <div className="lg:col-span-5 sticky top-24">
-                <div className="relative group">
+              {/* ✅ FIX #1: sticky فقط از lg به بالا فعاله؛ روی موبایل/تبلت المنت به‌صورت طبیعی همراه صفحه اسکرول می‌شه */}
+              <div className="lg:col-span-5 lg:sticky lg:top-24">
+                {/* ✅ overflow-hidden محدود به همین رپر: دکمه‌ی Compare با موقعیت منفی
+                    دیگه نمی‌تونه از عرض صفحه بیرون بزنه و اسکرول افقی نامرئی ایجاد کنه */}
+                <div className="relative group overflow-hidden rounded-[2rem]">
                   <AnimatePresence mode="wait">
                     <motion.img
                       key={activeImage}
@@ -224,18 +232,18 @@ export default function IphonePage() {
                       className="w-[85%] mx-auto drop-shadow-[0_30px_60px_rgba(0,0,0,0.15)] transition-all duration-700"
                     />
                   </AnimatePresence>
-                  
-                  {/* ✅ دکمه مقایسه اول - روی تصویر */}
+
+                  {/* دکمه مقایسه روی تصویر */}
                   <Link
                     to={`/iphone/compare?model=${encodeURIComponent(m.slug)}`}
-                    className="absolute -top-4 -right-4 bg-blue-600 text-white p-4 rounded-2xl shadow-xl text-xs font-bold rotate-12 hover:rotate-0 transition-transform z-20"
+                    className="absolute top-3 right-3 sm:-top-4 sm:-right-4 bg-blue-600 text-white p-3 sm:p-4 rounded-2xl shadow-xl text-[10px] sm:text-xs font-bold sm:rotate-12 hover:rotate-0 transition-transform z-20"
                   >
                     + {t("iphonePage.compare") || "Compare"}
                   </Link>
                 </div>
 
                 {/* DYNAMIC GALLERY */}
-                <div className="flex justify-center gap-4 mt-12">
+                <div className="flex justify-center flex-wrap gap-3 sm:gap-4 mt-8 lg:mt-12">
                   {m.gallery.map((img, index) => (
                     <motion.img
                       key={index}
@@ -243,7 +251,7 @@ export default function IphonePage() {
                       whileHover={{ y: -5 }}
                       alt={`${m.name} view ${index}`}
                       onClick={() => handleGalleryClick(m.name, img)}
-                      className={`w-20 h-20 p-2 border-2 rounded-2xl cursor-pointer transition-all ${
+                      className={`w-16 h-16 sm:w-20 sm:h-20 p-2 border-2 rounded-2xl cursor-pointer transition-all ${
                         activeImage === img ? "border-blue-500 bg-blue-50/50 scale-110 shadow-lg" : "border-transparent opacity-50 grayscale hover:grayscale-0"
                       }`}
                     />
@@ -252,63 +260,62 @@ export default function IphonePage() {
               </div>
 
               {/* RIGHT SIDE - Content */}
-              <div className="lg:col-span-7 space-y-10">
+              <div className="lg:col-span-7 space-y-8 lg:space-y-10">
                 <div className={isRtl ? 'text-right' : 'text-left'}>
-                  <h2 className="text-5xl font-black mb-6 flex items-center gap-4 flex-wrap">
+                  <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black mb-6 flex items-center gap-3 sm:gap-4 flex-wrap break-words">
                     <Link to={`/iphone/${m.slug}`} className="hover:text-blue-600 transition-colors">
                       {m.name}
                     </Link>
-                    <span className="text-sm bg-green-100 text-green-700 px-3 py-1 rounded-full">
+                    <span className="text-xs sm:text-sm bg-green-100 text-green-700 px-3 py-1 rounded-full whitespace-nowrap">
                       {t("iphonePage.newGen") || "New"}
                     </span>
                   </h2>
-                  
-                  <div className={`flex flex-wrap gap-4 mb-6 ${isRtl ? "justify-end" : "justify-start"}`}>
+
+                  <div className={`flex flex-wrap gap-3 sm:gap-4 mb-6 ${isRtl ? "justify-end" : "justify-start"}`}>
                     <a
                       href={m.buyLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="px-6 py-3 rounded-full bg-blue-600 text-white font-semibold hover:bg-blue-500 transition-colors"
+                      className="px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-blue-600 text-white font-semibold hover:bg-blue-500 transition-colors text-sm sm:text-base"
                     >
                       {isRtl ? "خرید" : "Buy Now"}
                     </a>
 
                     <Link
                       to={`/blog/${m.slug}`}
-                      className="inline-flex items-center justify-center px-6 py-3 rounded-full font-extrabold tracking-wide text-sm md:text-base text-black dark:text-black bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 border border-yellow-300/80 shadow-md shadow-yellow-500/20 transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-xl hover:shadow-yellow-500/30 hover:from-yellow-300 hover:via-amber-300 hover:to-yellow-400 active:scale-95"
+                      className="inline-flex items-center justify-center px-5 sm:px-6 py-2.5 sm:py-3 rounded-full font-extrabold tracking-wide text-xs sm:text-sm md:text-base text-black dark:text-black bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 border border-yellow-300/80 shadow-md shadow-yellow-500/20 transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-xl hover:shadow-yellow-500/30 hover:from-yellow-300 hover:via-amber-300 hover:to-yellow-400 active:scale-95"
                     >
                       {t("readMore") || "Read More"}
                     </Link>
 
-                    {/* ✅ دکمه مقایسه دوم - در بخش دکمه‌ها */}
                     <Link
                       to={`/iphone/compare?model=${encodeURIComponent(m.slug)}`}
-                      className="px-6 py-3 rounded-full border border-blue-600 text-blue-600 font-semibold hover:bg-blue-50 dark:hover:bg-blue-950/30 transition-colors"
+                      className="px-5 sm:px-6 py-2.5 sm:py-3 rounded-full border border-blue-600 text-blue-600 font-semibold hover:bg-blue-50 dark:hover:bg-blue-950/30 transition-colors text-sm sm:text-base"
                     >
                       {t("iphonePage.compare") || "Compare"}
                     </Link>
                   </div>
 
-                  <div className="flex gap-4 mb-4">
+                  <div className="flex gap-3 sm:gap-4 mb-4">
                     {m.colors.map(color => (
-                      <div key={color} style={{backgroundColor: color}} className="w-8 h-8 rounded-full border-2 border-white shadow-xl cursor-pointer hover:scale-125 transition-transform" />
+                      <div key={color} style={{backgroundColor: color}} className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border-2 border-white shadow-xl cursor-pointer hover:scale-125 transition-transform" />
                     ))}
                   </div>
                 </div>
 
-                <div className="bg-gray-100/50 dark:bg-gray-900/50 p-8 rounded-[2.5rem] backdrop-blur-sm border border-white/20">
-                  <div className="flex items-center gap-3 mb-8">
-                    <span className="bg-blue-600 text-white px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest">Specifications</span>
+                <div className="bg-gray-100/50 dark:bg-gray-900/50 p-5 sm:p-8 rounded-[1.75rem] sm:rounded-[2.5rem] backdrop-blur-sm border border-white/20">
+                  <div className="flex items-center gap-3 mb-6 sm:mb-8">
+                    <span className="bg-blue-600 text-white px-3 sm:px-4 py-1.5 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-widest whitespace-nowrap">Specifications</span>
                     <div className="h-[1px] flex-1 bg-gray-300 dark:bg-gray-700"></div>
                   </div>
                   <AccordionItem model={m.name} />
                 </div>
 
                 {/* SIMILAR SLIDER */}
-                <div className="pt-10">
-                  <h4 className="text-2xl font-bold mb-8 flex justify-between items-center">
+                <div className="pt-6 lg:pt-10">
+                  <h4 className="text-xl sm:text-2xl font-bold mb-6 sm:mb-8 flex justify-between items-center flex-wrap gap-2">
                     {t("iphonePage.discover") || "Discover More"}
-                    <a href="#models" className="text-sm text-blue-600 hover:underline">
+                    <a href="#models" className="text-xs sm:text-sm text-blue-600 hover:underline">
                       {isRtl ? "مشاهده همه مدل‌ها" : "Explore All Models"}
                     </a>
                   </h4>
@@ -318,10 +325,10 @@ export default function IphonePage() {
                       <div key={item.name} className="keen-slider__slide px-2">
                         <Link
                           to={`/iphone/${item.slug}`}
-                          className="block bg-white/10 dark:bg-black/10 border border-gray-200 dark:border-gray-800 rounded-3xl p-6 text-center hover:bg-white dark:hover:bg-gray-800 transition-all duration-500 shadow-sm hover:shadow-2xl"
+                          className="block bg-white/10 dark:bg-black/10 border border-gray-200 dark:border-gray-800 rounded-3xl p-4 sm:p-6 text-center hover:bg-white dark:hover:bg-gray-800 transition-all duration-500 shadow-sm hover:shadow-2xl"
                         >
-                          <img src={item.img} className="h-32 mx-auto object-contain mb-4" alt={item.name} />
-                          <p className="text-sm font-black mb-1">{item.name}</p>
+                          <img src={item.img} className="h-24 sm:h-32 mx-auto object-contain mb-3 sm:mb-4" alt={item.name} />
+                          <p className="text-xs sm:text-sm font-black mb-1">{item.name}</p>
                           <p className="text-blue-600 font-bold text-xs">${item.price}</p>
                         </Link>
                       </div>
@@ -335,16 +342,16 @@ export default function IphonePage() {
       </section>
 
       {/* VIDEO EXPERIENCE */}
-      <section className="py-32 px-6">
+      <section className="py-20 md:py-32 px-4 sm:px-6">
         <div className="max-w-[1200px] mx-auto text-center">
-          <motion.h2 
-            initial={{ opacity: 0 }} 
+          <motion.h2
+            initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            className="text-5xl font-black mb-16"
+            className="text-3xl sm:text-4xl md:text-5xl font-black mb-10 md:mb-16"
           >
             Cinematic Experience
           </motion.h2>
-          <div className="relative aspect-video rounded-[3rem] overflow-hidden shadow-[0_100px_150px_-50px_rgba(0,0,0,0.5)] border-[12px] border-white dark:border-gray-800">
+          <div className="relative aspect-video rounded-[1.5rem] sm:rounded-[3rem] overflow-hidden shadow-[0_100px_150px_-50px_rgba(0,0,0,0.5)] border-[6px] sm:border-[12px] border-white dark:border-gray-800">
             <iframe
               className="w-full h-full"
               src="https://www.youtube.com/embed/TX9qSaGXFyg?autoplay=0&mute=1"
@@ -356,8 +363,8 @@ export default function IphonePage() {
       </section>
 
       {/* FOOTER BRANDING */}
-      <section className="py-24 text-center">
-        <h3 className="text-gray-200 dark:text-gray-800 text-[12vw] font-black tracking-tighter select-none opacity-50">APPLE IPHONE</h3>
+      <section className="py-16 md:py-24 text-center overflow-hidden">
+        <h3 className="text-gray-200 dark:text-gray-800 text-[14vw] sm:text-[12vw] font-black tracking-tighter select-none opacity-50 whitespace-nowrap">APPLE IPHONE</h3>
       </section>
     </main>
   );
