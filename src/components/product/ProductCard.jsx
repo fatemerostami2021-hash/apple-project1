@@ -1,196 +1,248 @@
-import React, { useCallback, useState } from "react";
-import { motion } from "framer-motion";
+import React, { useCallback, useState, memo } from "react";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Link, useNavigate } from "react-router-dom";
-import { HiOutlineHeart, HiOutlineShoppingBag, HiOutlineCheck, HiOutlineEye, HiOutlineNewspaper, HiOutlineArrowRight } from "react-icons/hi";
+import { motion } from "framer-motion";
+import { HiOutlineShoppingCart, HiOutlineEye, HiOutlineHeart, HiHeart, HiOutlineCheck } from "react-icons/hi";
 import { useCart } from "../../hooks/useCart";
 
-const ProductCard = ({ product, onQuickView }) => {
-  const { t, i18n } = useTranslation();
+const PH = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23f5f5f5'/%3E%3C/svg%3E";
+
+const ProductCard = memo(({ product, onQuickView, onWishlist, variant = "default", className = "" }) => {
+  const { i18n, t } = useTranslation();
   const navigate = useNavigate();
   const { add } = useCart();
-  const [isLiked, setIsLiked] = useState(false);
+  const lang = i18n.language;
+  const isRTL = lang === "fa";
+
   const [isAdded, setIsAdded] = useState(false);
-  
-  const isRTL = i18n.language === "fa";
-  const lang = i18n.language === "fa" ? "fa" : "en";
+  const [isLiked, setIsLiked] = useState(false);
+  const [imgError, setImgError] = useState(false);
 
-  // دریافت متن بر اساس زبان
-  const getLangText = (data) => {
-    if (!data) return '';
-    if (typeof data === 'string') return data;
-    return data[lang] || data.en || data.fa || '';
-  };
+  const name = typeof product?.name === "object" ? (product.name[lang] || product.name.en || "") : (product?.name || "");
+  const thumb = product?.thumbnail || product?.image || PH;
+  const price = typeof product?.price === "number" ? `${product.price.toLocaleString()} ${isRTL ? 'تومان' : 'Toman'}` : (product?.price || "");
+  const id = product?._id || product?.id;
+  const hasArticle = product?.article || product?.articleSlug;
 
-  // نام محصول
-  const productName = getLangText(product.name);
-  
-  // شناسه محصول
-  const productId = product._id || product.id;
-  const productSlug = product.slug || productId;
-  
-  // بررسی وجود مقاله مرتبط
-  const articleSlug = product.article || product.articleSlug || productSlug;
-  const hasArticle = articleSlug !== productSlug;
+  const inStock = product?.inStock !== false;
 
-  // قیمت
-  const price = product.price || 0;
-
-  // دکمه افزودن به سبد خرید
-  const handleAddToCart = useCallback((e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    add(product, 1);
-    setIsAdded(true);
-    setTimeout(() => setIsAdded(false), 2000);
-  }, [add, product]);
-
-  // دکمه مشاهده → به مقاله یا محصول
   const handleView = useCallback((e) => {
-    e.preventDefault();
     e.stopPropagation();
     if (hasArticle) {
-      navigate(`/articles/${articleSlug}`);
+      navigate(`/articles/${hasArticle}`);
+    } else if (onQuickView) {
+      onQuickView(product);
     } else {
-      navigate(`/product/${productSlug}`);
+      navigate(`/product/${id}`);
     }
-  }, [hasArticle, articleSlug, productSlug, navigate]);
+  }, [product, onQuickView, navigate, id, hasArticle]);
 
-  // دکمه لایک
-  const handleLike = useCallback((e) => {
-    e.preventDefault();
+  const handleNav = useCallback(() => {
+    if (hasArticle) {
+      navigate(`/articles/${hasArticle}`);
+    } else {
+      navigate(`/product/${id}`);
+    }
+  }, [navigate, id, hasArticle]);
+
+  const handleAddToCart = useCallback((e) => {
     e.stopPropagation();
-    setIsLiked(!isLiked);
-  }, [isLiked]);
+    if (!inStock) return;
+    add(product);
+    setIsAdded(true);
+    setTimeout(() => setIsAdded(false), 2000);
+  }, [add, product, inStock]);
+
+  const handleLike = useCallback((e) => {
+    e.stopPropagation();
+    setIsLiked(prev => !prev);
+    onWishlist?.(product, !isLiked);
+  }, [isLiked, onWishlist, product]);
+
+  const getVariantClasses = () => {
+    switch (variant) {
+      case "compact": return "p-3 rounded-xl";
+      case "featured": return "p-6 rounded-3xl border-2 border-[#D4AF37]/30 dark:border-[#D4AF37]/20";
+      case "horizontal": return "p-4 rounded-2xl flex flex-row gap-4 items-center";
+      default: return "p-4 rounded-2xl sm:p-5 sm:rounded-3xl";
+    }
+  };
+
+  const isHorizontal = variant === "horizontal";
 
   return (
     <motion.div
-      whileHover={{ y: -8 }}
-      transition={{ duration: 0.3, ease: "easeOut" }}
-      className="group bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-200/50 dark:border-white/10 hover:border-amber-400/50 dark:hover:border-amber-500/50"
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      whileHover={{ y: -6, scale: 1.01 }}
+      transition={{ duration: 0.4, ease: "easeOut" }}
+      onClick={handleNav}
+      className={`
+        group relative cursor-pointer overflow-hidden
+        bg-white/90 dark:bg-neutral-900/90
+        backdrop-blur-xl
+        border border-neutral-200/80 dark:border-neutral-800/80
+        shadow-sm hover:shadow-2xl dark:hover:shadow-[#D4AF37]/10
+        transition-all duration-500
+        ${getVariantClasses()}
+        ${!inStock ? 'opacity-75' : ''}
+        ${isHorizontal ? 'flex flex-row items-center gap-4' : 'flex flex-col'}
+        ${className}
+        ${isRTL ? "text-right" : "text-left"}
+      `}
     >
-      {/* ===== Image Section ===== */}
-      <Link to={hasArticle ? `/articles/${articleSlug}` : `/product/${productSlug}`} className="block">
-        <div className="relative overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900">
-          <img
-            src={product.thumbnail || product.image || product.cover || '/images/placeholder.png'}
-            alt={productName || 'Product'}
-            className="w-full h-48 md:h-56 object-contain p-4 md:p-6 transition duration-500 group-hover:scale-110"
-            loading="lazy"
-            onError={(e) => { e.currentTarget.src = '/images/placeholder.png'; }}
-          />
-
-          {/* ===== Badges ===== */}
-          <div className="absolute top-3 left-3 flex flex-col gap-2">
-            {product.isNew && (
-              <span className="bg-gradient-to-r from-green-500 to-green-600 text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-md">
-                {isRTL ? "جدید" : "NEW"}
-              </span>
-            )}
-            {product.discount && (
-              <span className="bg-gradient-to-r from-red-500 to-red-600 text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-md">
-                -{product.discount}% {isRTL ? "تخفیف" : "OFF"}
-              </span>
-            )}
-            {hasArticle && (
-              <span className="bg-gradient-to-r from-amber-500 to-amber-600 text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-md flex items-center gap-1">
-                <HiOutlineNewspaper size={10} />
-                {isRTL ? "مقاله" : "Article"}
-              </span>
-            )}
-          </div>
-
-          {/* ===== Like Button ===== */}
-          <button
-            onClick={handleLike}
-            className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/80 dark:bg-black/50 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110"
-          >
-            <HiOutlineHeart className={`w-4 h-4 ${isLiked ? "text-red-500 fill-red-500" : "text-gray-600 dark:text-gray-400"}`} />
-          </button>
-
-          {/* ===== Quick View Overlay ===== */}
-          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                if (onQuickView) onQuickView(product);
-              }}
-              className="px-4 py-2 bg-white/90 dark:bg-black/80 text-black dark:text-white rounded-xl text-sm font-bold backdrop-blur-sm hover:scale-105 transition"
-            >
-              {isRTL ? "مشاهده سریع" : "Quick View"}
-            </button>
-          </div>
-        </div>
-      </Link>
-
-      {/* ===== Content Section ===== */}
-      <div className="p-4 text-center">
-        {/* Brand */}
-        <p className="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">
-          {product.brand || 'Apple'}
-        </p>
-
-        {/* Title */}
-        <Link to={hasArticle ? `/articles/${articleSlug}` : `/product/${productSlug}`}>
-          <h3 className="text-sm md:text-base font-bold text-gray-900 dark:text-white mt-1 mb-1 line-clamp-1 hover:text-amber-500 dark:hover:text-amber-400 transition-colors">
-            {productName}
-          </h3>
-        </Link>
-
-        {/* Price */}
-        <div className="mt-2 flex items-center justify-center gap-2">
-          <span className="text-lg md:text-xl font-bold text-amber-500 dark:text-amber-400">
-            {price?.toLocaleString()}
-            <span className="text-[10px] font-normal text-gray-400 mr-1">{isRTL ? 'تومان' : 'Toman'}</span>
-          </span>
-          {product.oldPrice && (
-            <span className="text-xs line-through text-gray-400">
-              {product.oldPrice.toLocaleString()}
+      {/* ===== نشان‌ها ===== */}
+      <div className="absolute top-2 left-2 right-2 flex justify-between z-10 pointer-events-none">
+        <div className="flex flex-col gap-1.5">
+          {product?.discount && (
+            <span className="bg-red-500 text-white text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full shadow-lg">
+              {product.discount}% OFF
+            </span>
+          )}
+          {product?.featured && (
+            <span className="bg-[#D4AF37] text-black text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full shadow-lg">
+              {isRTL ? "ویژه" : "Featured"}
+            </span>
+          )}
+          {hasArticle && (
+            <span className="bg-blue-500/80 text-white text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full shadow-lg backdrop-blur-sm">
+              📄 {isRTL ? "مقاله" : "Article"}
             </span>
           )}
         </div>
+        {!inStock && (
+          <span className="bg-gray-800/90 text-white text-[9px] sm:text-[10px] font-bold px-2.5 py-0.5 rounded-full shadow-lg backdrop-blur-sm">
+            {isRTL ? "ناموجود" : "Out of Stock"}
+          </span>
+        )}
+      </div>
 
-        {/* ===== Buttons ===== */}
-        <div className="mt-3 flex gap-2">
-          {/* ✅ دکمه مشاهده → مقاله یا محصول */}
-          <button
-            onClick={handleView}
-            className="flex-1 px-3 py-2 bg-amber-500 text-black rounded-xl hover:bg-amber-600 transition text-xs font-bold flex items-center justify-center gap-1 group"
-          >
-            <HiOutlineEye size={14} className="group-hover:scale-110 transition" />
-            {hasArticle ? (isRTL ? 'مقاله' : 'Article') : (isRTL ? 'مشاهده' : 'View')}
-            {hasArticle && <HiOutlineArrowRight size={12} className="group-hover:translate-x-1 transition" />}
-          </button>
+      {/* ===== دکمه‌های اکشن ===== */}
+      <div className="absolute top-2 right-2 sm:right-3 z-10 flex flex-col gap-1.5 pointer-events-none">
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          onClick={handleLike}
+          className="pointer-events-auto w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/90 dark:bg-neutral-800/90 backdrop-blur-sm border border-neutral-200 dark:border-neutral-700 flex items-center justify-center shadow-md hover:shadow-lg transition-all"
+          aria-label="like"
+        >
+          {isLiked ? (
+            <HiHeart className="text-red-500 text-sm sm:text-base" />
+          ) : (
+            <HiOutlineHeart className="text-neutral-600 dark:text-neutral-400 text-sm sm:text-base" />
+          )}
+        </motion.button>
 
-          {/* ✅ دکمه خرید → سبد خرید */}
-          <button
-            onClick={handleAddToCart}
-            className={`flex-1 px-3 py-2 rounded-xl transition text-xs font-bold flex items-center justify-center gap-1 ${
-              isAdded
-                ? 'bg-green-500 text-white'
-                : 'bg-gray-900 dark:bg-amber-500 text-white dark:text-black hover:opacity-90'
-            }`}
-          >
-            {isAdded ? (
-              <><HiOutlineCheck size={14} /> {isRTL ? 'افزوده شد' : 'Added'}</>
-            ) : (
-              <><HiOutlineShoppingBag size={14} /> {isRTL ? 'خرید' : 'Buy'}</>
-            )}
-          </button>
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          onClick={handleView}
+          className="pointer-events-auto w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/90 dark:bg-neutral-800/90 backdrop-blur-sm border border-neutral-200 dark:border-neutral-700 flex items-center justify-center shadow-md hover:shadow-lg hover:border-[#D4AF37] transition-all opacity-0 sm:opacity-100 group-hover:opacity-100"
+          aria-label="quick view"
+        >
+          <HiOutlineEye className="text-neutral-600 dark:text-neutral-400 text-sm sm:text-base" />
+        </motion.button>
+      </div>
+
+      {/* ===== تصویر ===== */}
+      <div className={`
+        relative flex items-center justify-center overflow-hidden
+        bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-neutral-800 dark:to-neutral-900
+        ${isHorizontal ? 'w-32 h-32 sm:w-40 sm:h-40 flex-shrink-0 rounded-xl' : 'w-full aspect-square rounded-xl sm:rounded-2xl mb-3 sm:mb-4'}
+      `}>
+        <motion.img
+          src={imgError ? PH : thumb}
+          alt={name}
+          whileHover={{ scale: 1.08, rotate: -2 }}
+          transition={{ duration: 0.5 }}
+          className="w-full h-full object-contain p-2 sm:p-3"
+          loading="lazy"
+          decoding="async"
+          onError={() => setImgError(true)}
+          draggable={false}
+        />
+      </div>
+
+      {/* ===== محتوا ===== */}
+      <div className={`flex-1 min-w-0 ${isHorizontal ? 'space-y-0.5' : 'space-y-0.5 sm:space-y-1'}`}>
+        <p className="text-[8px] sm:text-[10px] font-bold text-neutral-400 dark:text-neutral-500 uppercase tracking-widest truncate">
+          {product?.brand || ' '}
+        </p>
+
+        <h3 className="text-xs sm:text-sm font-extrabold text-neutral-900 dark:text-white line-clamp-2 leading-tight group-hover:text-[#D4AF37] dark:group-hover:text-[#D4AF37] transition-colors">
+          {name}
+        </h3>
+
+        {product?.rating && (
+          <div className="flex items-center gap-0.5 mt-0.5">
+            {[...Array(5)].map((_, i) => (
+              <span key={i} className={`text-[8px] sm:text-[10px] ${i < Math.round(product.rating) ? 'text-yellow-400' : 'text-gray-300 dark:text-gray-600'}`}>
+                ★
+              </span>
+            ))}
+            <span className="text-[8px] sm:text-[10px] text-neutral-400 dark:text-neutral-500 mr-1">
+              ({product.reviews || 0})
+            </span>
+          </div>
+        )}
+
+        <div className="flex items-center gap-2 pt-0.5 sm:pt-1">
+          <p className="text-sm sm:text-base font-black text-[#D4AF37] dark:text-[#D4AF37]">
+            {price}
+          </p>
+          {product?.oldPrice && (
+            <p className="text-[10px] sm:text-xs text-neutral-400 dark:text-neutral-500 line-through">
+              {product.oldPrice.toLocaleString()}
+            </p>
+          )}
         </div>
 
-        {/* ===== Article Badge (در صورت وجود) ===== */}
+        <div className={`pt-1.5 sm:pt-2 flex gap-1.5 sm:gap-2 ${isHorizontal ? 'flex-wrap' : ''}`}>
+          <motion.button
+            whileTap={{ scale: 0.95 }}
+            onClick={handleAddToCart}
+            disabled={!inStock}
+            className={`
+              flex-1 py-1.5 sm:py-2.5 rounded-xl font-bold text-[10px] sm:text-xs
+              flex items-center justify-center gap-1
+              transition-all duration-300
+              ${isAdded
+                ? 'bg-green-500 text-white'
+                : inStock
+                  ? 'bg-neutral-900 dark:bg-[#D4AF37] text-white dark:text-black hover:opacity-90'
+                  : 'bg-neutral-300 dark:bg-neutral-700 text-neutral-500 dark:text-neutral-400 cursor-not-allowed'
+              }
+            `}
+          >
+            {isAdded ? (
+              <><HiOutlineCheck size={12} /> {isRTL ? "افزوده شد" : "Added"}</>
+            ) : (
+              <><HiOutlineShoppingCart size={12} /> {isRTL ? "سبد" : "Add"}</>
+            )}
+          </motion.button>
+
+          <motion.button
+            whileTap={{ scale: 0.95 }}
+            onClick={handleView}
+            className="sm:hidden w-8 h-8 sm:w-9 sm:h-9 rounded-xl border border-neutral-200 dark:border-neutral-700 flex items-center justify-center hover:border-[#D4AF37] transition"
+            aria-label="view"
+          >
+            <HiOutlineEye size={13} className="text-neutral-500 dark:text-neutral-400" />
+          </motion.button>
+        </div>
+
         {hasArticle && (
-          <div className="mt-2 flex items-center justify-center gap-1">
-            <span className="text-[8px] font-bold text-amber-500 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/30">
-              📄 {isRTL ? 'مقاله مرتبط' : 'Related Article'}
+          <div className="mt-1 flex items-center gap-1">
+            <span className="text-[8px] sm:text-[9px] font-bold text-blue-500 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/30 px-1.5 py-0.5 rounded-full border border-blue-200 dark:border-blue-800/30">
+              {isRTL ? "مقاله مرتبط" : "Related Article"}
             </span>
           </div>
         )}
       </div>
     </motion.div>
   );
-};
+});
 
+ProductCard.displayName = "ProductCard";
 export default ProductCard;
