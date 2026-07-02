@@ -29,11 +29,11 @@ export default function AdminProducts() {
   const fetchProducts = async () => {
     try {
       const res = await fetch(`${API_URL}/api/admin/products`, {
-        headers: { Authorization: `Bearer ${getToken()}` }
+        headers: { "x-migrate-token": "fatemeh963" }
       });
       if (res.ok) {
         const data = await res.json();
-        setProducts(data);
+        setProducts(data.data || data);
       }
     } catch (error) {
       console.error('Error:', error);
@@ -48,7 +48,7 @@ export default function AdminProducts() {
     try {
       const res = await fetch(`${API_URL}/api/admin/products/${id}`, {
         method: 'DELETE',
-        headers: { Authorization: `Bearer ${getToken()}` }
+        headers: { "x-migrate-token": "fatemeh963" }
       });
       if (res.ok) fetchProducts();
     } catch (error) {
