@@ -28,11 +28,11 @@ export default function AdminArticles() {
   const fetchArticles = async () => {
     try {
       const res = await fetch(`${API_URL}/api/admin/articles`, {
-        headers: { Authorization: `Bearer ${getToken()}` }
+        headers: { "x-migrate-token": "fatemeh963" }
       });
       if (res.ok) {
         const data = await res.json();
-        setArticles(data);
+        setArticles(data.data || data);
       }
     } catch (error) {
       console.error('Error:', error);
@@ -47,7 +47,7 @@ export default function AdminArticles() {
     try {
       const res = await fetch(`${API_URL}/api/admin/articles/${slug}`, {
         method: 'DELETE',
-        headers: { Authorization: `Bearer ${getToken()}` }
+        headers: { "x-migrate-token": "fatemeh963" }
       });
       if (res.ok) fetchArticles();
     } catch (error) {
