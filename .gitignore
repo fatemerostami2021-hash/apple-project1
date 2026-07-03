@@ -32,3 +32,6 @@ dist-ssr
 .vercel
 *.backup
 *.env
+.env
+.env.backup
+.env.backup2
