@@ -35,3 +35,6 @@ dist-ssr
 .env
 .env.backup
 .env.backup2
+.env
+.env.backup
+.env.backup2
