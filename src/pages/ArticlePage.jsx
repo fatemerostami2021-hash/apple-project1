@@ -142,7 +142,7 @@ export default function ArticlePage() {
 
             <Suspense fallback={<div className="h-48 bg-gray-900/30 rounded-xl animate-pulse mt-10" />}>
               {galleryImages.length > 0 && <CinematicGallery images={galleryImages} isRtl={isRtl} />}
-              <VideoSection slug={slug} isRtl={isRtl} />
+              <VideoSection slug={slug} isRtl={isRtl} mainVideo={article.mainVideo} />
               <CommentsSection articleSlug={slug} isRtl={isRtl} />
             </Suspense>
 

@@ -1,0 +1,23 @@
+// ============================================================
+// 🎬 استخراج YouTube ID از لینک
+// ============================================================
+const extractYouTubeId = (url) => {
+  if (!url) return '';
+  
+  const patterns = [
+    /(?:youtube\.com\/watch\?v=)([^&]+)/,
+    /(?:youtu\.be\/)([^?]+)/,
+    /(?:youtube\.com\/embed\/)([^?]+)/,
+    /(?:youtube\.com\/shorts\/)([^?]+)/
+  ];
+  
+  for (const pattern of patterns) {
+    const match = url.match(pattern);
+    if (match) return match[1];
+  }
+  
+  // اگر آیدی خالص وارد شده بود
+  if (url.length === 11) return url;
+  
+  return url;
+};

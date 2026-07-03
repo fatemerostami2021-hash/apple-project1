@@ -3,14 +3,17 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { 
   HiOutlineUpload, HiOutlinePhotograph, HiOutlinePlus, 
-  HiOutlineX, HiOutlineSave, HiOutlineTrash
+  HiOutlineX, HiOutlineSave, HiOutlineTrash, HiOutlineSparkles
 } from 'react-icons/hi';
+import { FaMagic } from 'react-icons/fa';
 
 export default function AdminProductForm() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiError, setAiError] = useState(null);
   const [formData, setFormData] = useState({
     name: { fa: '', en: '' },
     slug: '',
@@ -24,8 +27,66 @@ export default function AdminProductForm() {
     tags: []
   });
 
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
   const getToken = () => localStorage.getItem('adminToken');
 
+  // ============================================================
+  // ✨ تکمیل با AI
+  // ============================================================
+  const handleAIComplete = async () => {
+    if (!formData.name.fa && !formData.name.en) {
+      alert('لطفاً حداقل نام محصول را وارد کنید');
+      return;
+    }
+
+    setAiLoading(true);
+    setAiError(null);
+
+    try {
+      const res = await fetch(`${API_URL}/api/agent/complete-product`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name.en || formData.name.fa,
+          brand: formData.brand,
+          category: formData.category,
+          existingData: {
+            name: formData.name,
+            description: formData.description,
+            price: formData.price,
+            tags: formData.tags,
+          }
+        }),
+      });
+
+      const result = await res.json();
+
+      if (result.success) {
+        setFormData(prev => ({
+          ...prev,
+          description: {
+            fa: result.data.description?.fa || prev.description.fa,
+            en: result.data.description?.en || prev.description.en,
+          },
+          price: result.data.price || prev.price,
+          tags: result.data.tags || prev.tags,
+          // specs: result.data.specs || prev.specs,
+        }));
+      } else {
+        setAiError(result.error || 'خطا در تکمیل خودکار');
+      }
+    } catch (error) {
+      setAiError('خطا در ارتباط با سرور');
+    } finally {
+      setAiLoading(false);
+    }
+  };
+
+  // ============================================================
+  // 📥 دریافت محصول برای ویرایش
+  // ============================================================
   useEffect(() => {
     const token = getToken();
     if (!token) {
@@ -37,7 +98,7 @@ export default function AdminProductForm() {
 
   const fetchProduct = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/api/products/${id}`, {
+      const res = await fetch(`${API_URL}/api/products/${id}`, {
         headers: { 'Authorization': 'Bearer ' + getToken() }
       });
       if (res.ok) {
@@ -60,13 +121,16 @@ export default function AdminProductForm() {
     }
   };
 
+  // ============================================================
+  // 📤 آپلود تصاویر
+  // ============================================================
   const uploadImage = async (file, type) => {
     setUploading(true);
     const formData = new FormData();
     formData.append('image', file);
     
     try {
-      const res = await fetch(`http://localhost:5000/api/upload/image?type=${type}`, {
+      const res = await fetch(`${API_URL}/api/upload/image?type=${type}`, {
         method: 'POST',
         headers: { 'Authorization': 'Bearer ' + getToken() },
         body: formData
@@ -102,14 +166,17 @@ export default function AdminProductForm() {
     setFormData({ ...formData, images: newImages });
   };
 
+  // ============================================================
+  // 💾 ذخیره محصول
+  // ============================================================
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     const method = id ? 'PUT' : 'POST';
     const url = id 
-      ? `http://localhost:5000/api/admin/products/${id}`
-      : 'http://localhost:5000/api/admin/products';
+      ? `${API_URL}/api/admin/products/${id}`
+      : `${API_URL}/api/admin/products`;
 
     try {
       const res = await fetch(url, {
@@ -150,7 +217,55 @@ export default function AdminProductForm() {
 
           <div className="p-6">
             <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Basic Info */}
+              
+              {/* ============================================================
+                  ✨ دکمه تکمیل با AI
+                  ============================================================ */}
+              <div className="flex items-center justify-between p-4 bg-amber-500/5 border border-amber-500/20 rounded-xl">
+                <div>
+                  <h3 className="font-bold text-amber-600 dark:text-amber-400 flex items-center gap-2">
+                    <FaMagic className="text-sm" />
+                    تکمیل خودکار با AI
+                  </h3>
+                  <p className="text-xs text-gray-500">
+                    توضیحات، قیمت و تگ‌ها را به‌صورت خودکار تکمیل می‌کند
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleAIComplete}
+                  disabled={aiLoading || (!formData.name.fa && !formData.name.en)}
+                  className={`
+                    flex items-center gap-2 px-4 py-2 rounded-lg font-bold transition-all
+                    ${aiLoading || (!formData.name.fa && !formData.name.en)
+                      ? 'bg-gray-700 text-gray-400 cursor-not-allowed'
+                      : 'bg-gradient-to-r from-amber-500 to-yellow-500 text-black hover:scale-105'
+                    }
+                  `}
+                >
+                  {aiLoading ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-gray-500 border-t-transparent rounded-full animate-spin" />
+                      در حال تکمیل...
+                    </>
+                  ) : (
+                    <>
+                      <HiOutlineSparkles className="text-sm" />
+                      تکمیل با AI
+                    </>
+                  )}
+                </button>
+              </div>
+
+              {aiError && (
+                <div className="p-3 text-sm text-red-500 bg-red-500/10 rounded-lg">
+                  ❌ {aiError}
+                </div>
+              )}
+
+              {/* ============================================================
+                  اطلاعات پایه
+                  ============================================================ */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm text-gray-400 mb-1">نام فارسی</label>
@@ -230,7 +345,9 @@ export default function AdminProductForm() {
                 </div>
               </div>
 
-              {/* Thumbnail */}
+              {/* ============================================================
+                  تصویر شاخص
+                  ============================================================ */}
               <div>
                 <label className="block text-sm text-gray-400 mb-1">📸 تصویر شاخص</label>
                 <div className="flex items-center gap-4">
@@ -254,7 +371,9 @@ export default function AdminProductForm() {
                 </div>
               </div>
 
-              {/* Gallery Images */}
+              {/* ============================================================
+                  گالری تصاویر
+                  ============================================================ */}
               <div>
                 <label className="block text-sm text-gray-400 mb-1">🖼️ گالری تصاویر</label>
                 <div className="flex flex-wrap gap-3 mb-3">
@@ -278,7 +397,9 @@ export default function AdminProductForm() {
                 </div>
               </div>
 
-              {/* Description */}
+              {/* ============================================================
+                  توضیحات
+                  ============================================================ */}
               <div>
                 <label className="block text-sm text-gray-400 mb-1">توضیحات فارسی</label>
                 <textarea
@@ -301,7 +422,9 @@ export default function AdminProductForm() {
                 />
               </div>
 
-              {/* Tags & Stock */}
+              {/* ============================================================
+                  تگ‌ها و موجودی
+                  ============================================================ */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm text-gray-400 mb-1">🏷️ تگ‌ها (با کاما جدا کنید)</label>
@@ -326,7 +449,9 @@ export default function AdminProductForm() {
                 </div>
               </div>
 
-              {/* Action Buttons */}
+              {/* ============================================================
+                  دکمه‌های عملیات
+                  ============================================================ */}
               <div className="flex gap-3 pt-4 border-t border-gray-800">
                 <button
                   type="submit"

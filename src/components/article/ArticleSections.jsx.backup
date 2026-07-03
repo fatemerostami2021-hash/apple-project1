@@ -70,16 +70,14 @@ export function CinematicGallery({ images, isRtl }) {
     </div>
   );
 }
-// ✅ VideoSection اصلاح شده - فقط از mainVideo props استفاده می‌کند
-export function VideoSection({ slug, isRtl, mainVideo }) {
-  // اگر mainVideo وجود ندارد یا id آن خالی است، چیزی نمایش نده
-  if (!mainVideo || !mainVideo.id) {
-    return null;
-  }
 
-  // فقط از mainVideo props استفاده کن، نه از getMainVideo
+/* ── VideoSection ────────────────────────────────────────── */
+export function VideoSection({ slug, isRtl }) {
+  const mainVideo = getMainVideo(slug);
+  const relatedVideos = getRelatedVideos(slug);
   const [active, setActive] = useState(mainVideo);
-  const relatedVideos = []; // ویدیوهای مرتبط فعلاً خالی
+
+  const allVideos = [mainVideo, ...relatedVideos];
 
   return (
     <div className="my-10">
@@ -88,26 +86,51 @@ export function VideoSection({ slug, isRtl, mainVideo }) {
         {isRtl ? "ویدیو بررسی" : "Video Review"}
       </h3>
 
-      <div className="grid grid-cols-1 gap-4">
-        <div className="aspect-video rounded-xl overflow-hidden bg-black shadow-xl shadow-amber-500/10">
-          <iframe
-            src={`https://www.youtube.com/embed/${active.id}?rel=0`}
-            title={active.title || 'Video'}
-            allowFullScreen
-            className="w-full h-full"
-          />
-        </div>
-        {active.title && (
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div className="lg:col-span-2">
+          <div className="aspect-video rounded-xl overflow-hidden bg-black shadow-xl shadow-amber-500/10">
+            <iframe
+              src={`https://www.youtube.com/embed/${active.id}?rel=0`}
+              title={active.title}
+              allowFullScreen
+              className="w-full h-full"
+            />
+          </div>
           <p className="font-semibold mt-2 text-white">{active.title}</p>
-        )}
-        {active.duration && (
           <p className="text-sm text-gray-400">{active.duration}</p>
-        )}
+        </div>
+
+        <div className="space-y-2 max-h-[400px] overflow-y-auto custom-scrollbar">
+          <p className="text-sm font-bold text-amber-400 mb-2">
+            {isRtl ? "ویدیوهای مرتبط" : "Related Videos"}
+          </p>
+          {allVideos.map((v) => (
+            <button
+              key={v.id}
+              onClick={() => setActive(v)}
+              className={`w-full flex gap-3 p-2 rounded-lg transition-all text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 ${
+                active.id === v.id
+                  ? "bg-amber-500/20 border border-amber-500/30"
+                  : "hover:bg-gray-800/50"
+              }`}
+            >
+              <img
+                src={`https://img.youtube.com/vi/${v.id}/mqdefault.jpg`}
+                alt={v.title}
+                loading="lazy"
+                className="w-24 h-14 rounded object-cover flex-shrink-0"
+              />
+              <div>
+                <p className="text-sm font-medium text-white line-clamp-2">{v.title}</p>
+                <p className="text-xs text-gray-500 mt-0.5">{v.duration}</p>
+              </div>
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );
 }
-
 
 /* ── CommentsSection ─────────────────────────────────────── */
 export function CommentsSection({ articleSlug, isRtl }) {

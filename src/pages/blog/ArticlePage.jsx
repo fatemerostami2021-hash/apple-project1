@@ -453,29 +453,36 @@ export default function ArticlePage() {
               <ArticleContent content={article.content?.[lang]} isRtl={isRtl} />
             </div>
 
-            {/* ===== Gallery, Video, Comments ===== */}
-            <div className="ap-media-section">
-              <Suspense fallback={<div className="h-48 bg-gray-900/30 rounded-xl animate-pulse" />}>
-                {galleryImages.length > 0 && (
-                  <CinematicGallery images={galleryImages} isRtl={isRtl} />
-                )}
-                <VideoSection slug={slug} isRtl={isRtl} />
-                <CommentsSection articleSlug={slug} isRtl={isRtl} />
-              </Suspense>
-            </div>
+         {/* ===== Gallery, Video, Comments ===== */}
+<div className="ap-media-section">
+  <Suspense fallback={<div className="h-48 bg-gray-900/30 rounded-xl animate-pulse" />}>
+    {galleryImages.length > 0 && (
+      <CinematicGallery images={galleryImages} isRtl={isRtl} />
+    )}
+    
+    {/* ✅ ارسال mainVideo به VideoSection */}
+    <VideoSection 
+      slug={slug} 
+      isRtl={isRtl} 
+      mainVideo={article.mainVideo} 
+    />
+    
+    <CommentsSection articleSlug={slug} isRtl={isRtl} />
+  </Suspense>
+</div>
 
-            <div className="mt-10 pt-4 text-center">
-              <Link
-                to="/blog"
-                className="text-sm text-gray-500 hover:text-amber-500 transition inline-flex items-center gap-2"
-              >
-                {isRtl ? (
-                  <><HiOutlineArrowRight size={14} /><span>بازگشت به بلاگ</span></>
-                ) : (
-                  <><HiOutlineArrowLeft size={14} /><span>Back to Blog</span></>
-                )}
-              </Link>
-            </div>
+<div className="mt-10 pt-4 text-center">
+  <Link
+    to="/blog"
+    className="text-sm text-gray-500 hover:text-amber-500 transition inline-flex items-center gap-2"
+  >
+    {isRtl ? (
+      <><HiOutlineArrowRight size={14} /><span>بازگشت به بلاگ</span></>
+    ) : (
+      <><HiOutlineArrowLeft size={14} /><span>Back to Blog</span></>
+    )}
+  </Link>
+</div>
           </main>
 
           {/* ===== Sidebar ===== */}
