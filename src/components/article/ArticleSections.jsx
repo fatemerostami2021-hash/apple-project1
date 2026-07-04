@@ -3,6 +3,7 @@ import { HiOutlineEye, HiHeart } from "react-icons/hi";
 import { motion } from "framer-motion";
 import { getMainVideo, getRelatedVideos } from "../../constants/ArticleData";
 import { useComments, useLike } from "../../hooks/useArticlePage";
+import { useTheme } from "../../store/theme";
 
 /* ── CinematicGallery ────────────────────────────────────── */
 export function CinematicGallery({ images, isRtl }) {
@@ -70,6 +71,7 @@ export function CinematicGallery({ images, isRtl }) {
     </div>
   );
 }
+
 // ✅ VideoSection اصلاح شده - فقط از mainVideo props استفاده می‌کند
 export function VideoSection({ slug, isRtl, mainVideo }) {
   // اگر mainVideo وجود ندارد یا id آن خالی است، چیزی نمایش نده
@@ -107,7 +109,6 @@ export function VideoSection({ slug, isRtl, mainVideo }) {
     </div>
   );
 }
-
 
 /* ── CommentsSection ─────────────────────────────────────── */
 export function CommentsSection({ articleSlug, isRtl }) {
@@ -204,6 +205,8 @@ export function CommentsSection({ articleSlug, isRtl }) {
 
 /* ── Sidebar ─────────────────────────────────────────────── */
 export function Sidebar({ article, activeId, views, isRtl }) {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
   const { liked, count, toggle } = useLike(article?.slug, article?.likes || 0);
   const [sections, setSections] = useState([]);
 
@@ -223,73 +226,110 @@ export function Sidebar({ article, activeId, views, isRtl }) {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
+  // ===== توکن‌های شیشه‌ای — بدون بک‌گراند صاف، فقط بلور + مرز ظریف، سازگار با تم روشن/تیره =====
+  const glass = isDark
+    ? "border border-white/10 bg-white/[0.045] shadow-[0_8px_32px_-8px_rgba(0,0,0,0.5)]"
+    : "border border-black/[0.06] bg-white/55 shadow-[0_8px_32px_-12px_rgba(0,0,0,0.12)]";
+  const textPrimary = isDark ? "text-white" : "text-zinc-900";
+  const textMuted = isDark ? "text-zinc-400" : "text-zinc-500";
+
   return (
-    <aside className="lg:sticky lg:top-24 space-y-5 w-full lg:w-72 flex-shrink-0">
+    <aside className="lg:sticky lg:top-24 space-y-4 w-full lg:w-72 flex-shrink-0">
       {/* Author */}
-      <div className="text-center p-4 rounded-xl bg-gray-900/50 border border-amber-500/20">
-        <div className="w-14 h-14 mx-auto rounded-full bg-gradient-to-br from-amber-500 to-amber-700 flex items-center justify-center text-black text-xl font-black">
+      <div className={`relative overflow-hidden text-center p-5 rounded-2xl backdrop-blur-2xl backdrop-saturate-150 ${glass}`}>
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-500/50 to-transparent" />
+        <div className="relative w-16 h-16 mx-auto rounded-full bg-gradient-to-br from-amber-400 via-amber-500 to-amber-700 flex items-center justify-center text-black text-xl font-black shadow-[0_6px_20px_rgba(245,158,11,0.35)] ring-2 ring-amber-500/20">
           {(article?.author?.[0] || "T").toUpperCase()}
         </div>
-        <h4 className="mt-2 font-bold text-white text-sm">{article?.author || "Tech Team"}</h4>
+        <h4 className={`mt-3 font-bold text-sm ${textPrimary}`}>{article?.author || "Tech Team"}</h4>
+        <p className={`mt-0.5 text-[11px] font-medium tracking-wide uppercase ${textMuted}`}>
+          {isRtl ? "نویسنده" : "Author"}
+        </p>
       </div>
 
       {/* Stats */}
-      <div className="flex justify-around p-3 rounded-xl bg-gray-900/50 border border-amber-500/20">
-        <div className="text-center">
+      <div
+        className={`flex divide-x rtl:divide-x-reverse ${
+          isDark ? "divide-white/10" : "divide-black/[0.06]"
+        } rounded-2xl backdrop-blur-2xl backdrop-saturate-150 overflow-hidden ${glass}`}
+      >
+        <div className="flex-1 text-center py-3.5">
           <HiOutlineEye className="w-5 h-5 mx-auto text-amber-500" aria-hidden="true" />
-          <p className="font-bold text-white mt-1 text-sm">{views}</p>
-          <p className="text-[10px] text-gray-400">{isRtl ? "بازدید" : "Views"}</p>
+          <p className={`font-bold mt-1 text-sm ${textPrimary}`}>{views}</p>
+          <p className={`text-[10px] ${textMuted}`}>{isRtl ? "بازدید" : "Views"}</p>
         </div>
-        <button
+        <motion.button
           onClick={toggle}
-          className="text-center transition-transform hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 rounded"
+          whileTap={{ scale: 0.85 }}
+          className="flex-1 text-center py-3.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-inset"
           aria-label={liked ? "Unlike" : "Like"}
         >
-          <HiHeart
-            className={`w-5 h-5 mx-auto ${liked ? "text-amber-500 fill-amber-500" : "text-amber-500"}`}
-            aria-hidden="true"
-          />
-          <p className="font-bold text-white mt-1 text-sm">{count}</p>
-          <p className="text-[10px] text-gray-400">{isRtl ? "لایک" : "Likes"}</p>
-        </button>
+          <motion.div animate={liked ? { scale: [1, 1.3, 1] } : {}} transition={{ duration: 0.35 }}>
+            <HiHeart
+              className={`w-5 h-5 mx-auto ${liked ? "text-amber-500 fill-amber-500" : "text-amber-500/70"}`}
+              aria-hidden="true"
+            />
+          </motion.div>
+          <p className={`font-bold mt-1 text-sm ${textPrimary}`}>{count}</p>
+          <p className={`text-[10px] ${textMuted}`}>{isRtl ? "لایک" : "Likes"}</p>
+        </motion.button>
       </div>
 
       {/* Table of contents */}
       {sections.length > 0 && (
-        <nav className="p-3 rounded-xl bg-gray-900/30 border border-gray-800" aria-label="فهرست مطالب">
-          <p className="text-xs font-bold text-amber-500 mb-2 uppercase tracking-wider">
-            {isRtl ? "فهرست" : "Contents"}
+        <nav
+          className={`p-4 rounded-2xl backdrop-blur-2xl backdrop-saturate-150 ${glass}`}
+          aria-label="فهرست مطالب"
+        >
+          <p className="text-[11px] font-bold text-amber-500 mb-3 uppercase tracking-[0.15em]">
+            {isRtl ? "فهرست مطالب" : "Contents"}
           </p>
           <div className="max-h-[280px] overflow-y-auto custom-scrollbar space-y-0.5">
-            {sections.map((s) => (
-              <button
-                key={s.id}
-                onClick={() => scrollTo(s.id)}
-                className={`w-full text-left px-2 py-1.5 text-xs rounded-lg transition-all focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-amber-500 ${
-                  activeId === s.id
-                    ? "text-amber-500 bg-amber-500/10 font-bold"
-                    : "text-gray-400 hover:text-white hover:bg-gray-800/50"
-                }`}
-              >
-                {s.title}
-              </button>
-            ))}
+            {sections.map((s) => {
+              const active = activeId === s.id;
+              return (
+                <button
+                  key={s.id}
+                  onClick={() => scrollTo(s.id)}
+                  className={`relative w-full text-left rtl:text-right px-3 py-2 text-xs rounded-xl transition-all duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-amber-500 ${
+                    active
+                      ? `font-bold text-amber-500 ${isDark ? "bg-amber-500/10" : "bg-amber-500/[0.08]"} pl-4 rtl:pl-3 rtl:pr-4`
+                      : `${textMuted} ${
+                          isDark
+                            ? "hover:text-white hover:bg-white/5"
+                            : "hover:text-zinc-900 hover:bg-black/[0.03]"
+                        }`
+                  }`}
+                >
+                  {active && (
+                    <span className="absolute left-1 rtl:left-auto rtl:right-1 top-1/2 -translate-y-1/2 w-[3px] h-3.5 bg-amber-500 rounded-full" />
+                  )}
+                  {s.title}
+                </button>
+              );
+            })}
           </div>
         </nav>
       )}
 
       {/* Tags */}
       {article?.tags?.length > 0 && (
-        <div className="flex flex-wrap gap-1.5" role="list" aria-label="تگ‌ها">
-          {article.tags.slice(0, 8).map((t) => (
-            <span
-              key={t}
-              role="listitem"
-              className="text-[10px] text-gray-400 border border-gray-700 px-2 py-0.5 rounded-full hover:border-amber-500 hover:text-amber-500 transition cursor-default"
-            >
-              #{t}
-            </span>
-          ))}
+        <div className={`p-4 rounded-2xl backdrop-blur-2xl backdrop-saturate-150 ${glass}`}>
+          <div className="flex flex-wrap gap-1.5" role="list" aria-label="تگ‌ها">
+            {article.tags.slice(0, 8).map((t) => (
+              <span
+                key={t}
+                role="listitem"
+                className={`text-[10px] px-2.5 py-1 rounded-full border transition cursor-default ${
+                  isDark
+                    ? "text-zinc-400 border-white/10 hover:border-amber-500/60 hover:text-amber-500"
+                    : "text-zinc-500 border-black/[0.08] hover:border-amber-500/60 hover:text-amber-500"
+                }`}
+              >
+                #{t}
+              </span>
+            ))}
+          </div>
         </div>
       )}
     </aside>

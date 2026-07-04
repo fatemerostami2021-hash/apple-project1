@@ -40,6 +40,13 @@ export default function Footer() {
     return item.label || "";
   };
 
+  // ===== اسکرول دقیق به بالای صفحه هنگام کلیک روی هر آیتم =====
+  // چون بعضی لینک‌ها به مسیر یکسانی با query متفاوت اشاره می‌کنن (مثلاً /products?brand=Apple)
+  // ری‌اکت روتر ممکنه اسکرول رو خودکار ریست نکنه، پس اینجا صریح انجامش می‌دیم.
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  };
+
   // ===== ساعت =====
   const sec = time.getSeconds();
   const min = time.getMinutes();
@@ -151,6 +158,7 @@ export default function Footer() {
                 <li key={idx}>
                   <Link
                     to={item.path}
+                    onClick={scrollToTop}
                     className="group inline-flex items-center gap-1.5 md:gap-2 text-xs md:text-sm opacity-85 hover:opacity-100 hover:text-amber-500 transition-all duration-300"
                   >
                     <span className="text-amber-500/60 group-hover:text-amber-500 transition-all text-xs md:text-base">
@@ -174,6 +182,7 @@ export default function Footer() {
                 <li key={idx}>
                   <Link
                     to={item.path}
+                    onClick={scrollToTop}
                     className="group inline-flex items-center gap-1.5 md:gap-2 text-xs md:text-sm opacity-85 hover:opacity-100 hover:text-amber-500 transition-all duration-300"
                   >
                     <span className="text-amber-500/60 group-hover:text-amber-500 transition-all text-xs md:text-base">
@@ -197,6 +206,7 @@ export default function Footer() {
                 <li key={idx}>
                   <Link
                     to={item.path}
+                    onClick={scrollToTop}
                     className="group inline-flex items-center gap-1.5 md:gap-2 text-xs md:text-sm opacity-85 hover:opacity-100 hover:text-amber-500 transition-all duration-300"
                   >
                     <span className="text-amber-500/60 group-hover:text-amber-500 transition-all text-xs md:text-base">
