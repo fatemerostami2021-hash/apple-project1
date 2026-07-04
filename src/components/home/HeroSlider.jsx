@@ -85,14 +85,16 @@ const HeroSlider = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isHovering, setIsHovering] = useState(false);
   const [progress, setProgress] = useState(0);
-  
+
   const frame = useRef();
   const swiperRef = useRef(null);
   const progressInterval = useRef(null);
   const autoplayDelay = 5000;
 
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
   // ============================================================
-  // 🔄 تنظیم اسلایدها از دیتابیس + حذف تکراری‌ها بر اساس image
+  // 🔄 تنظیم اسلایدها از دیتابیس
   // ============================================================
   useEffect(() => {
     let finalSlides = [];
@@ -100,12 +102,12 @@ const HeroSlider = () => {
     if (slidesFromDB && slidesFromDB.length > 0) {
       const formatted = slidesFromDB.map((slide, index) => {
         let articleSlug = slide.articleSlug || '';
-        
+
         if (!articleSlug) {
           const productSlug = slide.productId?.slug || slide.productId || '';
           articleSlug = slide.articleSlug || slide.article || productSlug || '';
         }
-        
+
         if (!articleSlug) {
           const title = slide.title?.en || slide.title || '';
           articleSlug = title
@@ -186,7 +188,7 @@ const HeroSlider = () => {
   const startProgress = useCallback(() => {
     setProgress(0);
     if (progressInterval.current) clearInterval(progressInterval.current);
-    
+
     const startTime = Date.now();
     progressInterval.current = setInterval(() => {
       const elapsed = Date.now() - startTime;
@@ -208,13 +210,14 @@ const HeroSlider = () => {
   // 🖱️ کنترل حرکت ماوس
   // ============================================================
   const handleMove = useCallback((e) => {
+    if (isMobile) return;
     cancelAnimationFrame(frame.current);
     frame.current = requestAnimationFrame(() => {
       const x = (e.clientX / window.innerWidth - 0.5) * 20;
       const y = (e.clientY / window.innerHeight - 0.5) * 20;
       setMouse({ x, y });
     });
-  }, []);
+  }, [isMobile]);
 
   // ============================================================
   // 📝 توابع کمکی
@@ -224,9 +227,6 @@ const HeroSlider = () => {
     return isRTL ? slide.buttonText.fa : slide.buttonText.en;
   };
 
-  // ============================================================
-  // 🛒 افزودن به سبد خرید + هدایت به /cart
-  // ============================================================
   const handleAddToCart = (slide) => {
     addToCart({
       id: slide.productId || slide.id,
@@ -296,7 +296,7 @@ const HeroSlider = () => {
       onMouseMove={handleMove}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
-      className="relative w-full min-h-[580px] md:h-[760px] overflow-hidden group"
+      className="relative w-full min-h-[420px] md:h-[680px] overflow-hidden group"
     >
       <HeroBackground darkMode={darkMode} />
       <WaveCircleText darkMode={darkMode} />
@@ -316,7 +316,7 @@ const HeroSlider = () => {
         modules={[Autoplay, Pagination, Navigation]}
         slidesPerView={1}
         loop={true}
-        speed={1200}
+        speed={isMobile ? 600 : 1200}
         dir={isRTL ? "rtl" : "ltr"}
         autoplay={{
           delay: autoplayDelay,
@@ -347,21 +347,21 @@ const HeroSlider = () => {
                 relative flex flex-col md:flex-row 
                 items-center justify-center 
                 h-full w-full 
-                px-4 md:px-6 lg:px-28 
-                gap-4 md:gap-10 
-                py-6 md:py-0
+                px-2 md:px-6 lg:px-28 
+                gap-1 md:gap-10 
+                py-2 md:py-0
                 overflow-hidden
                 ${isRTL ? "md:flex-row-reverse text-right" : "md:flex-row text-left"}
               `}
             >
-              {/* ═══════ تصویر محصول (بالا در موبایل، کنار در دسکتاپ) ═══════ */}
+              {/* ═══════ تصویر محصول (بزرگتر در موبایل) ═══════ */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.9, x: isRTL ? 50 : -50 }}
                 animate={{ opacity: 1, scale: 1, x: 0 }}
                 transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
                 className={`
                   relative w-full md:w-[60%] 
-                  h-[45%] md:h-full 
+                  h-[55%] md:h-full 
                   flex items-center justify-center
                   perspective-[2000px] z-10
                   order-1 md:order-2
@@ -369,7 +369,7 @@ const HeroSlider = () => {
                 `}
               >
                 <div
-                  className="absolute w-[60%] h-[60%] blur-[90px] opacity-30 pointer-events-none"
+                  className="absolute w-[50%] h-[50%] blur-[90px] opacity-30 pointer-events-none"
                   style={{
                     background: `radial-gradient(
                       circle at ${50 + mouse.x}% ${50 + mouse.y}%,
@@ -385,7 +385,7 @@ const HeroSlider = () => {
                   animate={{ scale: 1.03, opacity: 1, x: 0 }}
                   exit={{ scale: 0.85, opacity: 0, x: isRTL ? -100 : 100 }}
                   transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
-                  whileHover={{ 
+                  whileHover={isMobile ? {} : { 
                     scale: 1.05, 
                     rotateY: mouse.x * 0.3, 
                     rotateX: -mouse.y * 0.3 
@@ -393,9 +393,10 @@ const HeroSlider = () => {
                   src={slide.image}
                   alt={slide.title}
                   draggable={false}
-                  className="hero-product-image relative w-[75%] md:w-[88%] lg:w-[95%] max-h-[85%] md:max-h-[92%] object-contain select-none will-change-transform drop-shadow-[0_60px_120px_rgba(0,0,0,0.35)]"
+                  loading="lazy"
+                  className="hero-product-image relative w-[92%] md:w-[88%] lg:w-[95%] max-h-[90%] md:max-h-[92%] object-contain select-none will-change-transform drop-shadow-[0_60px_120px_rgba(0,0,0,0.35)]"
                   style={{
-                    transform: `translateZ(0) translate3d(${mouse.x * 0.8}px, ${mouse.y * 0.8}px, 0)`,
+                    transform: isMobile ? `translateZ(0)` : `translateZ(0) translate3d(${mouse.x * 0.8}px, ${mouse.y * 0.8}px, 0)`,
                   }}
                   onError={(e) => {
                     e.target.src = '/images/placeholder.png';
@@ -403,62 +404,62 @@ const HeroSlider = () => {
                 />
               </motion.div>
 
-              {/* ═══════ کارت متن (پایین در موبایل، کنار در دسکتاپ) ═══════ */}
+              {/* ═══════ کارت متن (کوچکتر در موبایل) ═══════ */}
               <motion.div
                 variants={fadeIn(isRTL ? "left" : "right", 0.3)}
                 initial="hidden"
                 animate="show"
-                whileHover={{ y: -6, scale: 1.02 }}
+                whileHover={isMobile ? {} : { y: -6, scale: 1.02 }}
                 transition={{ type: "spring", stiffness: 280, damping: 20 }}
-                className="hero-card relative z-30 w-[92%] md:w-[52%] lg:w-[40%] p-6 md:p-8 lg:p-12 order-2 md:order-1"
+                className="hero-card relative z-30 w-[95%] md:w-[52%] lg:w-[40%] p-2 md:p-8 lg:p-12 order-2 md:order-1"
               >
-                <div className="flex items-center gap-3 mb-3 md:mb-4">
-                  <HiOutlineSparkles className="text-amber-400 text-sm" />
-                  <p className="hero-brand text-[10px] md:text-[11px] font-extrabold tracking-[0.2em] md:tracking-[0.25em] uppercase">
+                <div className="flex items-center gap-1 md:gap-3 mb-1 md:mb-4">
+                  <HiOutlineSparkles className="text-amber-400 text-[8px] md:text-sm" />
+                  <p className="hero-brand text-[7px] md:text-[11px] font-extrabold tracking-[0.2em] md:tracking-[0.25em] uppercase">
                     {slide.brand}
                   </p>
                 </div>
 
-                <div className="min-h-[80px] md:min-h-[140px] lg:min-h-[160px]">
+                <div className="min-h-[40px] md:min-h-[140px] lg:min-h-[160px]">
                   <TypingText
                     texts={getTypingTexts(slide)}
-                    className="hero-title text-2xl md:text-4xl lg:text-7xl font-black tracking-tight
+                    className="hero-title text-lg md:text-4xl lg:text-7xl font-black tracking-tight
                                bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-600 
                                bg-clip-text text-transparent
                                drop-shadow-[0_0_20px_rgba(255,215,0,0.4)]"
                   />
                 </div>
 
-                <p className="hero-subtitle mt-3 md:mt-4 text-sm md:text-base lg:text-xl font-bold opacity-90">
+                <p className="hero-subtitle mt-1 md:mt-4 text-[10px] md:text-base lg:text-xl font-bold opacity-90">
                   {slide.subtitle}
                 </p>
 
                 {slide.description && (
-                  <p className="text-xs md:text-sm text-gray-400 mt-2 opacity-70 font-medium line-clamp-2">
+                  <p className="text-[8px] md:text-sm text-gray-400 mt-0.5 md:mt-2 opacity-70 font-medium line-clamp-1 md:line-clamp-2">
                     {slide.description}
                   </p>
                 )}
 
-                <div className="flex flex-col sm:flex-row gap-3 mt-6 md:mt-8">
+                <div className="flex flex-col sm:flex-row gap-1 md:gap-3 mt-2 md:mt-8">
                   <button
                     onClick={() => handleAddToCart(slide)}
-                    className="hero-btn w-full sm:w-auto px-6 md:px-8 py-3 md:py-4 rounded-full text-xs md:text-sm font-black tracking-wide transition-all duration-300 group flex items-center justify-center gap-2"
+                    className="hero-btn w-full sm:w-auto px-3 md:px-8 py-1.5 md:py-4 rounded-full text-[9px] md:text-sm font-black tracking-wide transition-all duration-300 group flex items-center justify-center gap-1 md:gap-2"
                   >
                     <span>{getButtonText(slide)}</span>
-                    <HiOutlineShoppingBag className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
+                    <HiOutlineShoppingBag className="w-3 h-3 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
                   </button>
 
                   {slide.articleSlug && (
                     <button
                       onClick={() => handleViewArticle(slide.articleSlug)}
-                      className="w-full sm:w-auto px-5 md:px-7 py-3 md:py-4 rounded-full text-xs md:text-sm font-black tracking-wide transition-all duration-300 
+                      className="w-full sm:w-auto px-3 md:px-7 py-1.5 md:py-4 rounded-full text-[9px] md:text-sm font-black tracking-wide transition-all duration-300 
                                  bg-transparent border-2 border-amber-500/50 text-amber-400 
                                  hover:bg-amber-500 hover:text-black hover:border-amber-500
-                                 flex items-center justify-center gap-2 group"
+                                 flex items-center justify-center gap-1 md:gap-2 group"
                     >
-                      <HiOutlineEye className="w-4 h-4 md:w-5 md:h-5 group-hover:scale-110 transition" />
+                      <HiOutlineEye className="w-3 h-3 md:w-5 md:h-5 group-hover:scale-110 transition" />
                       <span>{isRTL ? 'مشاهده مقاله' : 'View Article'}</span>
-                      <HiOutlineArrowRight className="w-3 h-3 md:w-4 md:h-4 group-hover:translate-x-1 transition hidden sm:block" />
+                      <HiOutlineArrowRight className="w-2 h-2 md:w-4 md:h-4 group-hover:translate-x-1 transition hidden sm:block" />
                     </button>
                   )}
                 </div>
@@ -470,38 +471,38 @@ const HeroSlider = () => {
 
       {/* ⬅️➡️ دکمه‌های نویگیشن */}
       <button
-        className="hero-prev absolute left-2 md:left-8 top-1/2 -translate-y-1/2 z-40
-                   w-10 h-10 md:w-14 md:h-14 rounded-full bg-black/40 backdrop-blur-md border border-white/20
+        className="hero-prev absolute left-1 md:left-8 top-1/2 -translate-y-1/2 z-40
+                   w-8 h-8 md:w-14 md:h-14 rounded-full bg-black/40 backdrop-blur-md border border-white/20
                    flex items-center justify-center text-white hover:text-amber-400 hover:bg-black/60
                    hover:border-amber-400/50 hover:scale-110 transition-all duration-300 opacity-0
                    group-hover:opacity-100 focus:opacity-100"
         aria-label={isRTL ? "بعدی" : "Previous"}
       >
-        <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-4 h-4 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d={isRTL ? "M9 5l7 7-7 7" : "M15 19l-7-7 7-7"} />
         </svg>
       </button>
       
       <button
-        className="hero-next absolute right-2 md:right-8 top-1/2 -translate-y-1/2 z-40
-                   w-10 h-10 md:w-14 md:h-14 rounded-full bg-black/40 backdrop-blur-md border border-white/20
+        className="hero-next absolute right-1 md:right-8 top-1/2 -translate-y-1/2 z-40
+                   w-8 h-8 md:w-14 md:h-14 rounded-full bg-black/40 backdrop-blur-md border border-white/20
                    flex items-center justify-center text-white hover:text-amber-400 hover:bg-black/60
                    hover:border-amber-400/50 hover:scale-110 transition-all duration-300 opacity-0
                    group-hover:opacity-100 focus:opacity-100"
         aria-label={isRTL ? "قبلی" : "Next"}
       >
-        <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-4 h-4 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d={isRTL ? "M15 19l-7-7 7-7" : "M9 5l7 7-7 7"} />
         </svg>
       </button>
 
       {/* 📍 نقاط راهنما */}
-      <div className="hero-pagination absolute bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 flex gap-3 z-30" />
+      <div className="hero-pagination absolute bottom-3 md:bottom-8 left-1/2 -translate-x-1/2 flex gap-2 md:gap-3 z-30" />
 
       {/* 🔢 شمارنده */}
-      <div className="absolute bottom-6 md:bottom-8 right-4 md:right-8 z-30 hidden lg:block">
-        <div className="bg-black/40 backdrop-blur-md rounded-full px-4 md:px-5 py-2 md:py-2.5">
-          <span className="text-white text-xs md:text-sm font-mono font-bold">
+      <div className="absolute bottom-3 md:bottom-8 right-2 md:right-8 z-30 hidden lg:block">
+        <div className="bg-black/40 backdrop-blur-md rounded-full px-2 md:px-5 py-0.5 md:py-2.5">
+          <span className="text-white text-[10px] md:text-sm font-mono font-bold">
             {String(activeIndex + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}
           </span>
         </div>
@@ -512,21 +513,26 @@ const HeroSlider = () => {
           ============================================================ */}
       <style>{`
         .hero-card {
-          border-radius: 20px;
+          border-radius: 12px;
           backdrop-filter: blur(20px) saturate(180%);
           -webkit-backdrop-filter: blur(20px) saturate(180%);
           background: rgba(255,255,255,0.06);
           border: 1px solid rgba(255,255,255,0.15);
           box-shadow: 0 25px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.15);
-          transition: all .4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          transition: all .3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
         html.dark .hero-card {
           background: rgba(20,20,20,0.4);
           border: 1px solid rgba(255,255,255,0.08);
         }
-        .hero-card:hover {
-          transform: translateY(-8px) scale(1.01);
-          box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+        @media (min-width: 768px) {
+          .hero-card {
+            border-radius: 28px;
+          }
+          .hero-card:hover {
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+          }
         }
         .hero-brand {
           letter-spacing: .4em;
@@ -590,36 +596,50 @@ const HeroSlider = () => {
         @media (max-width: 768px) {
           .hero-card {
             width: 100%;
-            padding: 20px;
-            border-radius: 16px;
+            padding: 8px 12px !important;
+            border-radius: 10px;
             transform: none !important;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3) !important;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3) !important;
           }
           .hero-card:hover {
             transform: none !important;
           }
           .hero-title {
-            font-size: 1.5rem !important;
+            font-size: 1.1rem !important;
+            line-height: 1.2 !important;
           }
           .hero-subtitle {
             max-width: 100%;
-            font-size: 0.85rem !important;
-            line-height: 1.5;
+            font-size: 0.7rem !important;
+            line-height: 1.3 !important;
           }
           .hero-btn {
-            padding: 10px 20px;
-            font-size: 12px;
+            padding: 4px 10px !important;
+            font-size: 9px !important;
           }
           .hero-brand {
-            letter-spacing: 0.2em;
+            letter-spacing: 0.15em;
+            font-size: 7px !important;
+          }
+          .hero-product-image {
+            width: 95% !important;
+            max-height: 92% !important;
           }
         }
-        @media (max-width: 640px) {
+        @media (max-width: 480px) {
           .hero-title {
-            font-size: 1.25rem !important;
+            font-size: 0.95rem !important;
           }
           .hero-card {
-            padding: 16px;
+            padding: 6px 10px !important;
+          }
+          .hero-btn {
+            padding: 3px 8px !important;
+            font-size: 8px !important;
+          }
+          .hero-product-image {
+            width: 96% !important;
+            max-height: 94% !important;
           }
         }
       `}</style>
