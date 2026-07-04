@@ -22,19 +22,15 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-# Security
+
+# Security - تمام فایل‌های محیطی و بکاپ
 .env
 .env.production
 .env.development
 .env.local
-.env
-
-.vercel
+.env.backup
+.env.backup2
 *.backup
 *.env
-.env
-.env.backup
-.env.backup2
-.env
-.env.backup
-.env.backup2
+
+.vercel
