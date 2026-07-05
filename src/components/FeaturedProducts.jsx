@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from "react";
+import React, { useMemo, useRef, useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import { useNavigate } from "react-router-dom";
@@ -29,15 +29,17 @@ const itemVariants = {
   }
 };
 
-// بیشترین slidesPerView بین همه‌ی breakpoint ها، برای تصمیم امن درباره‌ی loop
+// ✅ Breakpoints با تنظیمات بهینه
 const BREAKPOINTS = {
-  320: { slidesPerView: 1.3, spaceBetween: 12 },
-  480: { slidesPerView: 2.1, spaceBetween: 16 },
-  640: { slidesPerView: 2.4, spaceBetween: 20 },
-  768: { slidesPerView: 3.1, spaceBetween: 24 },
-  1024: { slidesPerView: 3.8, spaceBetween: 28 },
-  1280: { slidesPerView: 4.2, spaceBetween: 32 },
+  320: { slidesPerView: 1.2, spaceBetween: 12 },
+  480: { slidesPerView: 1.8, spaceBetween: 16 },
+  640: { slidesPerView: 2.2, spaceBetween: 20 },
+  768: { slidesPerView: 2.8, spaceBetween: 24 },
+  1024: { slidesPerView: 3.5, spaceBetween: 28 },
+  1280: { slidesPerView: 4.0, spaceBetween: 32 },
 };
+
+// ✅ محاسبه بیشترین slidesPerView
 const MAX_SLIDES_PER_VIEW = Math.max(
   ...Object.values(BREAKPOINTS).map((b) => b.slidesPerView)
 );
@@ -59,11 +61,18 @@ export default function FeaturedProducts({
   const nextRef = useRef(null);
   const paginationRef = useRef(null);
 
-  // برای اطمینان از این‌که refs قبل از init آماده‌ن، یه re-render کوچیک بعد از mount می‌زنیم
-  const [, forceRerender] = useState(0);
+  const [swiperKey, setSwiperKey] = useState(0);
 
   const isFa = language === "fa";
   const isRTL = isFa;
+
+  // ✅ ریستارت Swiper با تغییر زبان
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setSwiperKey(prev => prev + 1);
+    }, 100);
+    return () => clearTimeout(timer);
+  }, [language]);
 
   const stableProducts = useMemo(() => {
     if (!products || products.length === 0) return [];
@@ -72,9 +81,8 @@ export default function FeaturedProducts({
 
   const slideCount = stableProducts.length;
 
-  // ✅ loop فقط وقتی فعال میشه که تعداد اسلایدها به‌قدر کافی از بیشترین slidesPerView بیشتر باشه
-  // (Swiper با loop + slidesPerView اعشاری و اسلاید کم گیر می‌کنه / می‌پره)
-  const enableLoop = slideCount >= Math.ceil(MAX_SLIDES_PER_VIEW) * 2;
+  // ✅ شرط loop: حداقل ۴ اسلاید و بیشتر از ۲ برابر slidesPerView
+  const enableLoop = slideCount >= 4 && slideCount > MAX_SLIDES_PER_VIEW * 1.5;
 
   const content = useMemo(
     () => ({
@@ -152,22 +160,23 @@ export default function FeaturedProducts({
           </motion.button>
         </motion.div>
 
-        {/* Swiper */}
+        {/* Swiper - با شرط loop اصلاح شده */}
         <motion.div variants={itemVariants} className="relative group">
           <Swiper
+            key={swiperKey}
             modules={[Navigation, Pagination]}
             spaceBetween={24}
-            slidesPerView={1.4}
+            slidesPerView={1.2} // ✅ کاهش برای loop بهتر
             loop={enableLoop}
             grabCursor={true}
             watchSlidesProgress={true}
-            // ✅ حالا واقعاً فعال میشن (قبلاً پاس داده نمی‌شدن)
+            dir={isRTL ? "rtl" : "ltr"}
             navigation={{
-              prevEl: null,
-              nextEl: null,
+              prevEl: prevRef.current,
+              nextEl: nextRef.current,
             }}
             pagination={{
-              el: null,
+              el: paginationRef.current,
               clickable: true,
             }}
             onBeforeInit={(swiper) => {
@@ -280,7 +289,6 @@ export default function FeaturedProducts({
           align-items: stretch;
         }
 
-        /* فید شدن آیتم‌ها با mount شدن - مستقل از هر کلاس داخلی Swiper */
         .product-fade-item {
           animation: productFadeIn 0.5s ease both;
           animation-delay: var(--fade-delay, 0ms);
@@ -296,7 +304,6 @@ export default function FeaturedProducts({
           }
         }
 
-        /* ===== دکمه‌ی «مشاهده همه» - تم مشکی/طلایی ===== */
         .viewall-btn {
           background: linear-gradient(135deg, #1a1a1a, #000000);
           color: #f6e27a;

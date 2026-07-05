@@ -236,7 +236,7 @@ const Home = () => {
         </div>
       </section>
 
-      <BrandWaveSlider />
+   
 
       {/* ════════════════════ Apple Showcase ════════════════════ */}
       <section className="relative w-full py-4 sm:py-12 md:py-20 overflow-hidden bg-transparent transition-colors duration-300">
@@ -494,7 +494,7 @@ const Home = () => {
           )}
         </div>
       </section>
-
+ <BrandWaveSlider />
       <QuickViewModal product={selectedProduct} onClose={() => setSelectedProduct(null)} />
     </div>
   );
