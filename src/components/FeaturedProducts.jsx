@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import { useNavigate } from "react-router-dom";
@@ -29,6 +29,19 @@ const itemVariants = {
   }
 };
 
+// بیشترین slidesPerView بین همه‌ی breakpoint ها، برای تصمیم امن درباره‌ی loop
+const BREAKPOINTS = {
+  320: { slidesPerView: 1.3, spaceBetween: 12 },
+  480: { slidesPerView: 2.1, spaceBetween: 16 },
+  640: { slidesPerView: 2.4, spaceBetween: 20 },
+  768: { slidesPerView: 3.1, spaceBetween: 24 },
+  1024: { slidesPerView: 3.8, spaceBetween: 28 },
+  1280: { slidesPerView: 4.2, spaceBetween: 32 },
+};
+const MAX_SLIDES_PER_VIEW = Math.max(
+  ...Object.values(BREAKPOINTS).map((b) => b.slidesPerView)
+);
+
 export default function FeaturedProducts({
   products,
   darkMode = false,
@@ -41,29 +54,38 @@ export default function FeaturedProducts({
   className = ""
 }) {
   const navigate = useNavigate();
-  
+
   const prevRef = useRef(null);
   const nextRef = useRef(null);
   const paginationRef = useRef(null);
+
+  // برای اطمینان از این‌که refs قبل از init آماده‌ن، یه re-render کوچیک بعد از mount می‌زنیم
+  const [, forceRerender] = useState(0);
 
   const isFa = language === "fa";
   const isRTL = isFa;
 
   const stableProducts = useMemo(() => {
     if (!products || products.length === 0) return [];
-    return products.filter(p => p.active !== false).slice(0, limit);
+    return products.filter((p) => p.active !== false).slice(0, limit);
   }, [products, limit]);
 
-  // ✅ تعداد اسلایدها برای لوپ
   const slideCount = stableProducts.length;
-  const enableLoop = slideCount > 4;
 
-  const content = useMemo(() => ({
-    title: title || (isFa ? "محصولات ویژه" : "Featured Products"),
-    subtitle: subtitle || (isFa ? "انتخاب برترین‌ها برای شما" : "Top picks curated for you"),
-    viewAll: isFa ? "مشاهده همه" : "View All",
-    empty: isFa ? "محصولی یافت نشد" : "No products found"
-  }), [isFa, title, subtitle]);
+  // ✅ loop فقط وقتی فعال میشه که تعداد اسلایدها به‌قدر کافی از بیشترین slidesPerView بیشتر باشه
+  // (Swiper با loop + slidesPerView اعشاری و اسلاید کم گیر می‌کنه / می‌پره)
+  const enableLoop = slideCount >= Math.ceil(MAX_SLIDES_PER_VIEW) * 2;
+
+  const content = useMemo(
+    () => ({
+      title: title || (isFa ? "محصولات ویژه" : "Featured Products"),
+      subtitle:
+        subtitle || (isFa ? "انتخاب برترین‌ها برای شما" : "Top picks curated for you"),
+      viewAll: isFa ? "مشاهده همه" : "View All",
+      empty: isFa ? "محصولی یافت نشد" : "No products found"
+    }),
+    [isFa, title, subtitle]
+  );
 
   if (stableProducts.length === 0) {
     return (
@@ -93,9 +115,8 @@ export default function FeaturedProducts({
       <FeaturedBackground darkMode={darkMode} />
 
       <div className="relative z-10 max-w-[1600px] mx-auto px-4 md:px-8 lg:px-12">
-        
         {/* Header */}
-        <motion.div 
+        <motion.div
           variants={itemVariants}
           className="flex flex-col md:flex-row items-start md:items-end justify-between mb-10 md:mb-14 gap-4"
         >
@@ -106,11 +127,11 @@ export default function FeaturedProducts({
                 {isFa ? "منتخب" : "Curated"}
               </span>
             </div>
-            
+
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-neutral-900 dark:text-white tracking-tight leading-tight">
               {content.title}
             </h2>
-            
+
             <p className="mt-2 text-base md:text-lg text-neutral-600 dark:text-neutral-400 max-w-xl">
               {content.subtitle}
             </p>
@@ -123,7 +144,11 @@ export default function FeaturedProducts({
             className="hidden md:flex items-center gap-2 px-6 py-3 rounded-full bg-black dark:bg-white text-white dark:text-black text-sm font-bold tracking-wide hover:bg-neutral-800 dark:hover:bg-neutral-100 transition-colors duration-300 shadow-lg"
           >
             <span>{content.viewAll}</span>
-            {isRTL ? <HiOutlineArrowLeft className="w-4 h-4" /> : <HiOutlineArrowRight className="w-4 h-4" />}
+            {isRTL ? (
+              <HiOutlineArrowLeft className="w-4 h-4" />
+            ) : (
+              <HiOutlineArrowRight className="w-4 h-4" />
+            )}
           </motion.button>
         </motion.div>
 
@@ -136,37 +161,33 @@ export default function FeaturedProducts({
             loop={enableLoop}
             grabCursor={true}
             watchSlidesProgress={true}
+            // ✅ حالا واقعاً فعال میشن (قبلاً پاس داده نمی‌شدن)
+            navigation={{
+              prevEl: null,
+              nextEl: null,
+            }}
+            pagination={{
+              el: null,
+              clickable: true,
+            }}
             onBeforeInit={(swiper) => {
               swiper.params.navigation.prevEl = prevRef.current;
               swiper.params.navigation.nextEl = nextRef.current;
               swiper.params.pagination.el = paginationRef.current;
             }}
-            breakpoints={{
-              320: { slidesPerView: 1.3, spaceBetween: 12 },
-              480: { slidesPerView: 2.1, spaceBetween: 16 },
-              640: { slidesPerView: 2.4, spaceBetween: 20 },
-              768: { slidesPerView: 3.1, spaceBetween: 24 },
-              1024: { slidesPerView: 3.8, spaceBetween: 28 },
-              1280: { slidesPerView: 4.2, spaceBetween: 32 },
-            }}
+            breakpoints={BREAKPOINTS}
             className="!pb-14 featured-swiper"
           >
             {stableProducts.map((product, index) => {
               const productId = product._id || product.id;
               return (
-                <SwiperSlide
-                  key={productId || `product-${index}`}
-                  className="h-auto"
-                >
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.05, duration: 0.5 }}
-                    viewport={{ once: true }}
-                    className="h-full p-1"
+                <SwiperSlide key={productId || `product-${index}`} className="h-auto">
+                  <div
+                    className="h-full p-1 product-fade-item"
+                    style={{ "--fade-delay": `${index * 60}ms` }}
                   >
                     <ProductCard product={product} />
-                  </motion.div>
+                  </div>
                 </SwiperSlide>
               );
             })}
@@ -194,10 +215,15 @@ export default function FeaturedProducts({
                 aria-label="Previous"
               >
                 <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d={isRTL ? "M9 5l7 7-7 7" : "M15 19l-7-7 7-7"} />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2.5}
+                    d={isRTL ? "M9 5l7 7-7 7" : "M15 19l-7-7 7-7"}
+                  />
                 </svg>
               </button>
-              
+
               <button
                 ref={nextRef}
                 className={`
@@ -216,7 +242,12 @@ export default function FeaturedProducts({
                 aria-label="Next"
               >
                 <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d={isRTL ? "M15 19l-7-7 7-7" : "M9 5l7 7-7 7"} />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2.5}
+                    d={isRTL ? "M15 19l-7-7 7-7" : "M9 5l7 7-7 7"}
+                  />
                 </svg>
               </button>
             </>
@@ -224,15 +255,15 @@ export default function FeaturedProducts({
 
           {/* Pagination */}
           {showPagination && (
-            <div ref={paginationRef} className="absolute bottom-2 left-1/2 -translate-x-1/2 z-20 flex justify-center gap-1.5 w-full" />
+            <div
+              ref={paginationRef}
+              className="absolute bottom-2 left-1/2 -translate-x-1/2 z-20 flex justify-center gap-1.5 w-full"
+            />
           )}
         </motion.div>
 
         {/* Mobile View All Button */}
-        <motion.div 
-          variants={itemVariants}
-          className="mt-8 flex md:hidden justify-center"
-        >
+        <motion.div variants={itemVariants} className="mt-8 flex md:hidden justify-center">
           <button
             onClick={() => navigate("/products")}
             className="w-full max-w-xs py-3.5 rounded-full bg-amber-500 text-black text-sm font-bold tracking-wide hover:bg-amber-400 transition-colors shadow-lg"
@@ -248,6 +279,23 @@ export default function FeaturedProducts({
           display: flex;
           align-items: stretch;
         }
+
+        /* فید شدن آیتم‌ها با mount شدن - مستقل از هر کلاس داخلی Swiper */
+        .product-fade-item {
+          animation: productFadeIn 0.5s ease both;
+          animation-delay: var(--fade-delay, 0ms);
+        }
+        @keyframes productFadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(16px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
         .swiper-pagination-bullet {
           width: 8px;
           height: 8px;

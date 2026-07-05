@@ -1,135 +1,116 @@
-import React, { useMemo, useRef } from "react";
+import React, { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { brands } from "../data/brandsData";
 import "../styles/brand-wave-slider.css";
 
 const BrandWaveSlider = () => {
-
   const { i18n, t } = useTranslation();
-
-  const trackRef = useRef(null);
-
   const isFa = i18n.language.startsWith("fa");
 
-  /* duplicate enough items for seamless loop */
-  const loopBrands = useMemo(() => {
+  // ✅ state برای کنترل نمایش برندها
+  const [isVisible, setIsVisible] = useState(false);
+  // ✅ state برای ریستارت انیمیشن (با تغییر key)
+  const [animationKey, setAnimationKey] = useState(0);
 
-    return [
-      ...brands,
-      ...brands,
-      ...brands,
-      ...brands,
-    ];
-
+  /*
+    هر ردیف از کل لیست برندها استفاده می‌کنه (نه نصفش) و چند بار پشت‌سرهم
+    تکرار میشه تا عرض ترک همیشه از عرض صفحه بیشتر باشه (حتی رو مانیتور عریض).
+    تعداد تکرار باید زوج باشه تا ترفند لوپ -50% درست کار کنه.
+  */
+  const rowTop = useMemo(() => {
+    if (!brands || brands.length === 0) return [];
+    return [...brands, ...brands, ...brands, ...brands, ...brands, ...brands];
   }, []);
 
-  /* restart animation manually */
-  const restartSlider = () => {
+  const rowBottom = useMemo(() => {
+    if (!brands || brands.length === 0) return [];
+    const shifted = [...brands.slice(1), brands[0]];
+    return [...shifted, ...shifted, ...shifted, ...shifted, ...shifted, ...shifted];
+  }, []);
 
-    if (!trackRef.current) return;
+  const renderItem = (brand, index) => {
+    const Icon = brand.icon;
+    return (
+      <a
+        key={`${brand.id}-${index}`}
+        href={brand.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="brand-item"
+        style={{ "--brand-color": brand.color }}
+      >
+        <div className="brand-icon-wrap">
+          <Icon className="brand-icon" style={{ color: brand.color }} />
+        </div>
+        <span className="brand-name">
+          {isFa ? brand.name_fa : brand.name_en}
+        </span>
+      </a>
+    );
+  };
 
-    trackRef.current.style.animation = "none";
+  // ✅ نمایش برندها با کلیک
+  const handleTitleClick = () => {
+    setIsVisible(true);
+    // ✅ ریستارت انیمیشن با تغییر key
+    setAnimationKey(prev => prev + 1);
+  };
 
-    void trackRef.current.offsetWidth;
-
-    trackRef.current.style.animation = "";
-
+  // ✅ نمایش برندها با هاور موس
+  const handleTitleHover = () => {
+    setIsVisible(true);
+    // ✅ ریستارت انیمیشن با تغییر key
+    setAnimationKey(prev => prev + 1);
   };
 
   return (
-
     <section className="brand-wave-section">
-
-      {/* HEADER */}
       <div className="brand-header">
-
         <h2
           className="brand-title"
-          onMouseEnter={restartSlider}
-          onClick={restartSlider}
+          onClick={handleTitleClick}
+          onMouseEnter={handleTitleHover}
+          style={{ cursor: "pointer" }}
         >
           {t("featuredBrands")}
         </h2>
-
       </div>
 
-      {/* SLIDER */}
-      <div className="brand-slider">
+      {/* ✅ نمایش اسلایدر فقط در صورت visible بودن */}
+      {isVisible && (
+        <div className="brand-slider">
+          <div className="brand-row">
+            <div
+              key={`row1-${animationKey}`}
+              className={`brand-track brand-track--row1 ${isFa ? "rtl" : "ltr"}`}
+            >
+              {rowTop.map((brand, index) => renderItem(brand, index))}
+            </div>
+          </div>
 
-        <div
-          ref={trackRef}
-          className={`brand-track ${isFa ? "rtl" : "ltr"}`}
-        >
-
-          {loopBrands.map((brand, index) => {
-
-            const Icon = brand.icon;
-
-            return (
-
-              <a
-                key={`${brand.id}-${index}`}
-                href={brand.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="brand-item"
-                style={{
-                  "--brand-color": brand.color
-                }}
-              >
-
-                {/* ICON */}
-                <div className="brand-icon-wrap">
-
-                  <Icon
-                    className="brand-logo"
-                    style={{
-                      color: brand.color
-                    }}
-                  />
-
-                </div>
-
-                {/* NAME */}
-                <span className="brand-name">
-                  {isFa
-                    ? brand.name_fa
-                    : brand.name_en}
-                </span>
-
-              </a>
-
-            );
-
-          })}
-
+          <div className="brand-row">
+            <div
+              key={`row2-${animationKey}`}
+              className={`brand-track brand-track--row2 ${isFa ? "rtl" : "ltr"}`}
+            >
+              {rowBottom.map((brand, index) => renderItem(brand, index))}
+            </div>
+          </div>
         </div>
+      )}
 
-      </div>
-
-      {/* WAVE */}
       <div className="brand-wave-svg">
-
-        <svg
-          viewBox="0 0 1440 160"
-          preserveAspectRatio="none"
-        >
-
+        <svg viewBox="0 0 1440 160" preserveAspectRatio="none">
           <path
             d="M0,96L80,90.7C160,85,320,75,480,80C640,85,800,107,960,112C1120,117,1280,107,1360,101.3L1440,96L1440,160L0,160Z"
             fill="currentColor"
             opacity="0.06"
           />
-
         </svg>
-
       </div>
-
     </section>
-
   );
-
 };
 
 export default BrandWaveSlider;

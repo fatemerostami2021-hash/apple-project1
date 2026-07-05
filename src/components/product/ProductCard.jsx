@@ -2,7 +2,7 @@ import React, { useCallback, useState, memo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
-import { HiOutlineShoppingCart, HiOutlineEye, HiOutlineHeart, HiHeart, HiOutlineCheck } from "react-icons/hi";
+import { HiOutlineShoppingCart, HiOutlineEye, HiOutlineHeart, HiHeart, HiOutlineCheck, HiOutlineBookOpen } from "react-icons/hi";
 import { useCart } from "../../hooks/useCart";
 
 const PH = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23f5f5f5'/%3E%3C/svg%3E";
@@ -59,6 +59,11 @@ const ProductCard = memo(({ product, onQuickView, onWishlist, variant = "default
     onWishlist?.(product, !isLiked);
   }, [isLiked, onWishlist, product]);
 
+  const handleArticleClick = useCallback((e) => {
+    e.stopPropagation();
+    if (hasArticle) navigate(`/articles/${hasArticle}`);
+  }, [navigate, hasArticle]);
+
   const getVariantClasses = () => {
     switch (variant) {
       case "compact": return "p-3 rounded-xl";
@@ -106,8 +111,9 @@ const ProductCard = memo(({ product, onQuickView, onWishlist, variant = "default
             </span>
           )}
           {hasArticle && (
-            <span className="bg-blue-500/80 text-white text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full shadow-lg backdrop-blur-sm">
-              📄 {isRTL ? "مقاله" : "Article"}
+            <span className="bg-gradient-to-r from-black via-neutral-900 to-black text-[#f6e27a] text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full shadow-lg border border-[#D4AF37]/50 flex items-center gap-1">
+              <HiOutlineBookOpen className="text-[10px] sm:text-xs" />
+              {isRTL ? "مقاله" : "Article"}
             </span>
           )}
         </div>
@@ -199,19 +205,21 @@ const ProductCard = memo(({ product, onQuickView, onWishlist, variant = "default
         </div>
 
         <div className={`pt-1.5 sm:pt-2 flex gap-1.5 sm:gap-2 ${isHorizontal ? 'flex-wrap' : ''}`}>
+          {/* ===== دکمه‌ی خرید - تم مشکی/طلایی ===== */}
           <motion.button
+            whileHover={inStock ? { scale: 1.02 } : {}}
             whileTap={{ scale: 0.95 }}
             onClick={handleAddToCart}
             disabled={!inStock}
             className={`
               flex-1 py-1.5 sm:py-2.5 rounded-xl font-bold text-[10px] sm:text-xs
               flex items-center justify-center gap-1
-              transition-all duration-300
+              border transition-all duration-300
               ${isAdded
-                ? 'bg-green-500 text-white'
+                ? 'bg-emerald-500 text-white border-emerald-500 shadow-md shadow-emerald-500/30'
                 : inStock
-                  ? 'bg-neutral-900 dark:bg-[#D4AF37] text-white dark:text-black hover:opacity-90'
-                  : 'bg-neutral-300 dark:bg-neutral-700 text-neutral-500 dark:text-neutral-400 cursor-not-allowed'
+                  ? 'bg-gradient-to-br from-black to-neutral-900 text-[#f6e27a] border-[#D4AF37]/40 shadow-md hover:border-[#D4AF37] hover:shadow-lg hover:shadow-[#D4AF37]/25 hover:from-neutral-900 hover:to-black'
+                  : 'bg-neutral-300 dark:bg-neutral-700 text-neutral-500 dark:text-neutral-400 border-transparent cursor-not-allowed'
               }
             `}
           >
@@ -232,12 +240,17 @@ const ProductCard = memo(({ product, onQuickView, onWishlist, variant = "default
           </motion.button>
         </div>
 
+        {/* ===== دکمه‌ی مقاله مرتبط - تم مشکی/طلایی، واقعاً قابل کلیک ===== */}
         {hasArticle && (
-          <div className="mt-1 flex items-center gap-1">
-            <span className="text-[8px] sm:text-[9px] font-bold text-blue-500 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/30 px-1.5 py-0.5 rounded-full border border-blue-200 dark:border-blue-800/30">
-              {isRTL ? "مقاله مرتبط" : "Related Article"}
-            </span>
-          </div>
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.96 }}
+            onClick={handleArticleClick}
+            className="mt-1.5 w-full flex items-center justify-center gap-1.5 py-1.5 rounded-lg text-[9px] sm:text-[10px] font-bold text-black bg-gradient-to-r from-[#D4AF37] via-[#f6e27a] to-[#D4AF37] shadow-md hover:shadow-lg hover:brightness-105 transition-all"
+          >
+            <HiOutlineBookOpen size={12} />
+            {isRTL ? "مشاهده مقاله" : "Read Article"}
+          </motion.button>
         )}
       </div>
     </motion.div>
