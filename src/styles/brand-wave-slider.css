@@ -1,325 +1,447 @@
 /* =========================
-   Brand Wave Section - حرکت مداوم قطاروار
+   Brand Wave Section
    ========================= */
 
-:root {
-  --text-color: #111;
-  --page-bg: #fff;
-  --gold-1: #d4af37;
-  --gold-2: #f6e27a;
+:root{
+  --text-color:#111;
+  --page-bg:#fff;
+
+  --gold-1:#d4af37;
+  --gold-2:#f6e27a;
+
   --fade-color: var(--page-bg);
 }
 
 .dark,
-[data-theme="dark"] {
-  --text-color: #fff;
-  --page-bg: #0b0c10;
-  --fade-color: #0b0c10;
+[data-theme="dark"]{
+  --text-color:#fff;
+  --page-bg:#0b0c10;
+
+  --fade-color:#0b0c10;
 }
 
-.brand-wave-section {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-  padding: 90px 0 60px;
-  background: transparent;
-  /* ✅ جلوگیری از فید */
-  opacity: 1 !important;
-  visibility: visible !important;
+.brand-wave-section{
+  position:relative;
+  width:100%;
+  overflow:hidden;
+  padding:90px 0 60px;
+  background:transparent;
 }
 
 /* =========================
    Header
    ========================= */
 
-.brand-header {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 50px;
-  text-align: center;
+.brand-header{
+  display:flex;
+  justify-content:center;
+  margin-bottom:50px;
+  text-align:center;
 }
 
-.brand-title {
-  font-size: 34px;
-  font-weight: 800;
-  letter-spacing: -1px;
-  color: var(--text-color);
-  position: relative;
-  cursor: pointer;
-  transition: color 0.3s ease, filter 0.3s ease;
+.brand-title{
+  font-size:34px;
+  font-weight:800;
+  letter-spacing:-1px;
+
+  color:var(--text-color);
+
+  position:relative;
+  cursor:pointer;
+
+  transition:
+    color .3s ease,
+    filter .3s ease;
 }
 
-.brand-title::after {
-  content: "";
-  display: block;
-  width: 92px;
-  height: 3px;
-  margin: 12px auto 0;
-  border-radius: 999px;
-  background: linear-gradient(90deg, var(--gold-1), var(--gold-2), var(--gold-1));
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+/* gold divider */
+
+.brand-title::after{
+  content:"";
+
+  display:block;
+
+  width:92px;
+  height:3px;
+
+  margin:12px auto 0;
+
+  border-radius:999px;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--gold-1),
+      var(--gold-2),
+      var(--gold-1)
+    );
+
+  transition:
+    transform .3s ease,
+    box-shadow .3s ease;
 }
 
-.brand-title:hover {
-  color: var(--gold-2);
+.brand-title:hover{
+  color:var(--gold-2);
 }
 
-.brand-title:hover::after {
-  transform: scaleX(1.2);
-  box-shadow: 0 0 14px rgba(246, 226, 122, 0.7);
-}
+.brand-title:hover::after{
+  transform:scaleX(1.2);
 
-/* =========================
-   Slider - با Masking
-   ========================= */
-
-.brand-slider {
-  width: 100%;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 36px;
-
-  /* ✅ محو شدن لبه‌ها (مانند n8n) */
-  -webkit-mask-image: linear-gradient(
-    to right,
-    transparent 0%,
-    black 8%,
-    black 92%,
-    transparent 100%
-  );
-  mask-image: linear-gradient(
-    to right,
-    transparent 0%,
-    black 8%,
-    black 92%,
-    transparent 100%
-  );
-}
-
-.brand-row {
-  width: 100%;
-  overflow: hidden;
+  box-shadow:
+    0 0 14px rgba(246,226,122,.7);
 }
 
 /* =========================
-   Track - حرکت مداوم قطاروار بدون فید
+   Slider (now holds TWO rows)
    ========================= */
 
-.brand-track {
-  display: flex;
-  align-items: center;
-  width: max-content;
-  gap: 80px;
-  will-change: transform;
-  /* ✅ حرکت مداوم و جلوگیری از فید */
-  animation: brandLoop 60s linear infinite;
-  animation-fill-mode: forwards;
-  opacity: 1 !important;
-  transform: translateX(0);
+.brand-slider{
+  width:100%;
+  position:relative;
+
+  display:flex;
+  flex-direction:column;
+  gap:36px;
 }
 
-.brand-track--row2 {
+/* fade edges - now spans the whole slider (both rows) */
+
+.brand-slider::before,
+.brand-slider::after{
+  content:"";
+
+  position:absolute;
+  top:0;
+
+  width:140px;
+  height:100%;
+
+  z-index:5;
+
+  pointer-events:none;
+}
+
+.brand-slider::before{
+  left:0;
+
+  background:
+    linear-gradient(
+      to right,
+      var(--fade-color),
+      transparent
+    );
+}
+
+.brand-slider::after{
+  right:0;
+
+  background:
+    linear-gradient(
+      to left,
+      var(--fade-color),
+      transparent
+    );
+}
+
+/* each row clips its own track */
+
+.brand-row{
+  width:100%;
+  overflow:hidden;
+}
+
+/* =========================
+   Track
+   ========================= */
+
+.brand-track{
+  display:flex;
+  align-items:center;
+
+  width:max-content;
+
+  gap:48px;
+
+  will-change:transform;
+
+  animation:
+    brandLoop 45s linear infinite;
+}
+
+/* row 2 plays the same keyframes backwards -> opposite visual direction */
+.brand-track--row2{
   animation-direction: reverse;
 }
 
-.brand-row:hover .brand-track {
-  animation-play-state: paused;
+.brand-row:hover .brand-track{
+  animation-play-state:paused;
 }
 
-@keyframes brandLoop {
-  from {
-    transform: translateX(0);
+@keyframes brandLoop{
+
+  from{
+    transform:translateX(0);
   }
-  to {
-    transform: translateX(-50%);
+
+  to{
+    transform:translateX(-50%);
   }
+
 }
 
 /* =========================
-   Item - مثل ریل قطار
+   Item
    ========================= */
 
-.brand-item {
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  text-decoration: none;
-  position: relative;
-  transition: transform 0.45s ease, filter 0.45s ease;
-  opacity: 1 !important;
+.brand-item{
+  flex-shrink:0;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+
+  gap:16px;
+
+  text-decoration:none;
+
+  position:relative;
+
+  transition:
+    transform .45s ease,
+    filter .45s ease;
 }
 
-.brand-item::before {
-  content: "";
-  position: absolute;
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(120, 180, 255, 0.22), transparent 70%);
-  opacity: 0;
-  transition: 0.5s ease;
-  z-index: -1;
+/* glow */
+
+.brand-item::before{
+  content:"";
+
+  position:absolute;
+
+  width:120px;
+  height:120px;
+
+  border-radius:50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(120,180,255,.22),
+      transparent 70%
+    );
+
+  opacity:0;
+
+  transition:.5s ease;
+
+  z-index:-1;
 }
 
-.brand-item:hover::before {
-  opacity: 1;
-  transform: scale(1.2);
+.brand-item:hover::before{
+  opacity:1;
+  transform:scale(1.2);
 }
 
-.brand-item:hover {
-  transform: translateY(-10px) scale(1.1);
-  filter: brightness(1.15);
+/* hover */
+
+.brand-item:hover{
+  transform:
+    translateY(-10px)
+    scale(1.1);
+
+  filter:brightness(1.15);
 }
 
 /* =========================
    Icon Wrap
    ========================= */
 
-.brand-icon-wrap {
-  width: 110px;
-  height: 110px;
-  border-radius: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.1);
-  transition: 0.45s ease;
+.brand-icon-wrap{
+  width:88px;
+  height:88px;
+
+  border-radius:24px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:
+    rgba(255,255,255,0.06);
+
+  backdrop-filter:blur(14px);
+
+  border:
+    1px solid rgba(255,255,255,0.10);
+
+  box-shadow:
+    0 10px 28px rgba(0,0,0,.10);
+
+  transition:.45s ease;
 }
 
 .dark .brand-icon-wrap,
-[data-theme="dark"] .brand-icon-wrap {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+[data-theme="dark"] .brand-icon-wrap{
+  background:
+    rgba(255,255,255,0.05);
+
+  border:
+    1px solid rgba(255,255,255,0.12);
 }
 
-.brand-icon {
-  width: 58px;
-  height: 58px;
-  color: white;
-  transition: 0.45s ease;
+/* =========================
+   ICONS BIGGER + CLEAR
+   ========================= */
+
+/* if using react-icons */
+
+.brand-icon{
+  width:44px;
+  height:44px;
+
+  color:white;
+
+  transition:.45s ease;
 }
 
-.brand-item:hover .brand-icon-wrap {
-  border-color: color-mix(in srgb, var(--brand-color, #7ab8ff) 60%, transparent);
-  box-shadow: 0 14px 44px rgba(0, 0, 0, 0.18), 0 0 24px color-mix(in srgb, var(--brand-color, #7ab8ff) 60%, transparent);
+/* if using img */
+
+.brand-logo{
+  width:44px;
+  height:44px;
+
+  object-fit:contain;
+
+  transition:.45s ease;
 }
 
-.brand-item:hover .brand-icon {
-  transform: scale(1.15);
-  filter: drop-shadow(0 0 12px color-mix(in srgb, var(--brand-color, #7ab8ff) 80%, transparent)) drop-shadow(0 0 28px color-mix(in srgb, var(--brand-color, #7ab8ff) 45%, transparent));
+/* hover glow */
+
+.brand-item:hover .brand-icon-wrap{
+  border-color:
+    color-mix(
+      in srgb,
+      var(--brand-color, #7ab8ff) 60%,
+      transparent
+    );
+
+  box-shadow:
+    0 14px 44px rgba(0,0,0,.18),
+    0 0 24px
+    color-mix(
+      in srgb,
+      var(--brand-color, #7ab8ff) 60%,
+      transparent
+    );
+}
+
+.brand-item:hover .brand-icon,
+.brand-item:hover .brand-logo{
+  transform:scale(1.15);
+
+  filter:
+    drop-shadow(
+      0 0 12px
+      color-mix(
+        in srgb,
+        var(--brand-color, #7ab8ff) 80%,
+        transparent
+      )
+    )
+    drop-shadow(
+      0 0 28px
+      color-mix(
+        in srgb,
+        var(--brand-color, #7ab8ff) 45%,
+        transparent
+      )
+    );
 }
 
 /* =========================
    Name
    ========================= */
 
-.brand-name {
-  font-size: 15px;
-  font-weight: 700;
-  white-space: nowrap;
-  color: var(--text-color);
-  opacity: 0.95;
+.brand-name{
+  font-size:15px;
+  font-weight:700;
+
+  white-space:nowrap;
+
+  color:var(--text-color);
+
+  opacity:.95;
 }
 
 /* =========================
    Wave
    ========================= */
 
-.brand-wave-svg {
-  width: 100%;
-  height: 120px;
-  margin-top: 40px;
-  opacity: 0.8;
-  animation: waveFloat 8s ease-in-out infinite;
+.brand-wave-svg{
+  width:100%;
+  height:120px;
+
+  margin-top:40px;
+
+  opacity:.8;
+
+  animation:
+    waveFloat 8s ease-in-out infinite;
 }
 
-.brand-wave-svg svg {
-  width: 100%;
-  height: 100%;
+.brand-wave-svg svg{
+  width:100%;
+  height:100%;
 }
 
-@keyframes waveFloat {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(10px);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
+@keyframes waveFloat{
 
-/* =========================
-   Mobile - حرکت مداوم قطاروار
-   ========================= */
-
-@media (max-width: 768px) {
-  .brand-track {
-    gap: 42px;
-    animation-duration: 40s;
+  0%{
+    transform:translateY(0);
   }
 
-  .brand-title {
-    font-size: 26px;
+  50%{
+    transform:translateY(10px);
   }
 
-  .brand-icon-wrap {
-    width: 82px;
-    height: 82px;
-    border-radius: 24px;
+  100%{
+    transform:translateY(0);
   }
 
-  .brand-icon {
-    width: 44px;
-    height: 44px;
-  }
-}
-
-@media (max-width: 480px) {
-  .brand-track {
-    gap: 30px;
-    animation-duration: 30s;
-  }
-
-  .brand-icon-wrap {
-    width: 64px;
-    height: 64px;
-    border-radius: 18px;
-  }
-
-  .brand-icon {
-    width: 34px;
-    height: 34px;
-  }
-
-  .brand-name {
-    font-size: 11px;
-  }
 }
 
 /* =========================
-   Fallback - مرورگرهای قدیمی
+   Mobile
    ========================= */
 
-@supports not (backdrop-filter: blur(14px)) {
-  .brand-icon-wrap {
-    background: rgba(255, 255, 255, 0.1);
-  }
-}
+@media (max-width:768px){
 
-@media print {
-  .brand-track {
-    animation: none !important;
+  .brand-slider{
+    gap:22px;
   }
-  .brand-wave-section {
-    opacity: 1 !important;
+
+  .brand-track{
+    gap:28px;
+    animation-duration:28s;
   }
+
+  .brand-title{
+    font-size:26px;
+  }
+
+  .brand-icon-wrap{
+    width:64px;
+    height:64px;
+
+    border-radius:18px;
+  }
+
+  .brand-icon,
+  .brand-logo{
+    width:32px;
+    height:32px;
+  }
+
 }

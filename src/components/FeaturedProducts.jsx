@@ -141,13 +141,13 @@ export default function FeaturedProducts({
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
             onClick={() => navigate("/products")}
-            className="hidden md:flex items-center gap-2 px-6 py-3 rounded-full bg-black dark:bg-white text-white dark:text-black text-sm font-bold tracking-wide hover:bg-neutral-800 dark:hover:bg-neutral-100 transition-colors duration-300 shadow-lg"
+            className="viewall-btn hidden md:flex items-center gap-2 px-7 py-3 rounded-full text-sm font-bold tracking-wide transition-all duration-300"
           >
             <span>{content.viewAll}</span>
             {isRTL ? (
-              <HiOutlineArrowLeft className="w-4 h-4" />
+              <HiOutlineArrowLeft className="w-4 h-4 viewall-arrow" />
             ) : (
-              <HiOutlineArrowRight className="w-4 h-4" />
+              <HiOutlineArrowRight className="w-4 h-4 viewall-arrow" />
             )}
           </motion.button>
         </motion.div>
@@ -266,7 +266,7 @@ export default function FeaturedProducts({
         <motion.div variants={itemVariants} className="mt-8 flex md:hidden justify-center">
           <button
             onClick={() => navigate("/products")}
-            className="w-full max-w-xs py-3.5 rounded-full bg-amber-500 text-black text-sm font-bold tracking-wide hover:bg-amber-400 transition-colors shadow-lg"
+            className="viewall-btn-mobile w-full max-w-xs py-3.5 rounded-full text-sm font-bold tracking-wide transition-all duration-300"
           >
             {content.viewAll}
           </button>
@@ -294,6 +294,45 @@ export default function FeaturedProducts({
             opacity: 1;
             transform: translateY(0);
           }
+        }
+
+        /* ===== دکمه‌ی «مشاهده همه» - تم مشکی/طلایی ===== */
+        .viewall-btn {
+          background: linear-gradient(135deg, #1a1a1a, #000000);
+          color: #f6e27a;
+          border: 1px solid rgba(212, 175, 55, 0.4);
+          box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35),
+                      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+        .viewall-btn:hover {
+          background: linear-gradient(135deg, #000000, #1a1a1a);
+          border-color: rgba(212, 175, 55, 0.9);
+          color: #ffe9a8;
+          box-shadow: 0 6px 24px rgba(212, 175, 55, 0.25),
+                      0 0 0 1px rgba(212, 175, 55, 0.3),
+                      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        }
+        .viewall-arrow {
+          transition: transform 0.3s ease;
+        }
+        .viewall-btn:hover .viewall-arrow {
+          transform: translateX(4px);
+        }
+        [dir="rtl"] .viewall-btn:hover .viewall-arrow {
+          transform: translateX(-4px);
+        }
+
+        .viewall-btn-mobile {
+          background: linear-gradient(135deg, #d4af37, #f6e27a, #d4af37);
+          color: #111;
+          box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+        }
+        .viewall-btn-mobile:hover {
+          background: linear-gradient(135deg, #c49f2f, #ecd66e, #c49f2f);
+          box-shadow: 0 8px 26px rgba(212, 175, 55, 0.55);
+        }
+        .viewall-btn-mobile:active {
+          transform: scale(0.97);
         }
 
         .swiper-pagination-bullet {

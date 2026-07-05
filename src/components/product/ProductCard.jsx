@@ -26,18 +26,8 @@ const ProductCard = memo(({ product, onQuickView, onWishlist, variant = "default
 
   const inStock = product?.inStock !== false;
 
-  const handleView = useCallback((e) => {
-    e.stopPropagation();
-    if (hasArticle) {
-      navigate(`/articles/${hasArticle}`);
-    } else if (onQuickView) {
-      onQuickView(product);
-    } else {
-      navigate(`/product/${id}`);
-    }
-  }, [product, onQuickView, navigate, id, hasArticle]);
-
-  const handleNav = useCallback(() => {
+  // ✅ رفتن به صفحه محصول یا مقاله
+  const handleNavigate = useCallback(() => {
     if (hasArticle) {
       navigate(`/articles/${hasArticle}`);
     } else {
@@ -45,6 +35,7 @@ const ProductCard = memo(({ product, onQuickView, onWishlist, variant = "default
     }
   }, [navigate, id, hasArticle]);
 
+  // ✅ اضافه به سبد خرید
   const handleAddToCart = useCallback((e) => {
     e.stopPropagation();
     if (!inStock) return;
@@ -53,12 +44,14 @@ const ProductCard = memo(({ product, onQuickView, onWishlist, variant = "default
     setTimeout(() => setIsAdded(false), 2000);
   }, [add, product, inStock]);
 
+  // ✅ لایک
   const handleLike = useCallback((e) => {
     e.stopPropagation();
     setIsLiked(prev => !prev);
     onWishlist?.(product, !isLiked);
   }, [isLiked, onWishlist, product]);
 
+  // ✅ مشاهده مقاله
   const handleArticleClick = useCallback((e) => {
     e.stopPropagation();
     if (hasArticle) navigate(`/articles/${hasArticle}`);
@@ -80,16 +73,16 @@ const ProductCard = memo(({ product, onQuickView, onWishlist, variant = "default
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
-      whileHover={{ y: -6, scale: 1.01 }}
-      transition={{ duration: 0.4, ease: "easeOut" }}
-      onClick={handleNav}
+      whileHover={{ y: -4, scale: 1.005 }} // ✅ کاهش انیمیشن برای جلوگیری از لرزش
+      transition={{ duration: 0.3, ease: "easeOut" }} // ✅ کاهش duration
+      onClick={handleNavigate}
       className={`
         group relative cursor-pointer overflow-hidden
         bg-white/90 dark:bg-neutral-900/90
         backdrop-blur-xl
         border border-neutral-200/80 dark:border-neutral-800/80
         shadow-sm hover:shadow-2xl dark:hover:shadow-[#D4AF37]/10
-        transition-all duration-500
+        transition-all duration-300
         ${getVariantClasses()}
         ${!inStock ? 'opacity-75' : ''}
         ${isHorizontal ? 'flex flex-row items-center gap-4' : 'flex flex-col'}
@@ -124,7 +117,7 @@ const ProductCard = memo(({ product, onQuickView, onWishlist, variant = "default
         )}
       </div>
 
-      {/* ===== دکمه‌های اکشن ===== */}
+      {/* ===== دکمه‌های اکشن (فقط لایک) ===== */}
       <div className="absolute top-2 right-2 sm:right-3 z-10 flex flex-col gap-1.5 pointer-events-none">
         <motion.button
           whileHover={{ scale: 1.1 }}
@@ -139,16 +132,6 @@ const ProductCard = memo(({ product, onQuickView, onWishlist, variant = "default
             <HiOutlineHeart className="text-neutral-600 dark:text-neutral-400 text-sm sm:text-base" />
           )}
         </motion.button>
-
-        <motion.button
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          onClick={handleView}
-          className="pointer-events-auto w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/90 dark:bg-neutral-800/90 backdrop-blur-sm border border-neutral-200 dark:border-neutral-700 flex items-center justify-center shadow-md hover:shadow-lg hover:border-[#D4AF37] transition-all opacity-0 sm:opacity-100 group-hover:opacity-100"
-          aria-label="quick view"
-        >
-          <HiOutlineEye className="text-neutral-600 dark:text-neutral-400 text-sm sm:text-base" />
-        </motion.button>
       </div>
 
       {/* ===== تصویر ===== */}
@@ -160,8 +143,8 @@ const ProductCard = memo(({ product, onQuickView, onWishlist, variant = "default
         <motion.img
           src={imgError ? PH : thumb}
           alt={name}
-          whileHover={{ scale: 1.08, rotate: -2 }}
-          transition={{ duration: 0.5 }}
+          whileHover={{ scale: 1.05, rotate: -1 }} // ✅ کاهش انیمیشن
+          transition={{ duration: 0.4 }}
           className="w-full h-full object-contain p-2 sm:p-3"
           loading="lazy"
           decoding="async"
@@ -205,7 +188,7 @@ const ProductCard = memo(({ product, onQuickView, onWishlist, variant = "default
         </div>
 
         <div className={`pt-1.5 sm:pt-2 flex gap-1.5 sm:gap-2 ${isHorizontal ? 'flex-wrap' : ''}`}>
-          {/* ===== دکمه‌ی خرید - تم مشکی/طلایی ===== */}
+          {/* ===== دکمه‌ی خرید ===== */}
           <motion.button
             whileHover={inStock ? { scale: 1.02 } : {}}
             whileTap={{ scale: 0.95 }}
@@ -229,18 +212,9 @@ const ProductCard = memo(({ product, onQuickView, onWishlist, variant = "default
               <><HiOutlineShoppingCart size={12} /> {isRTL ? "سبد" : "Add"}</>
             )}
           </motion.button>
-
-          <motion.button
-            whileTap={{ scale: 0.95 }}
-            onClick={handleView}
-            className="sm:hidden w-8 h-8 sm:w-9 sm:h-9 rounded-xl border border-neutral-200 dark:border-neutral-700 flex items-center justify-center hover:border-[#D4AF37] transition"
-            aria-label="view"
-          >
-            <HiOutlineEye size={13} className="text-neutral-500 dark:text-neutral-400" />
-          </motion.button>
         </div>
 
-        {/* ===== دکمه‌ی مقاله مرتبط - تم مشکی/طلایی، واقعاً قابل کلیک ===== */}
+        {/* ===== دکمه‌ی مقاله مرتبط ===== */}
         {hasArticle && (
           <motion.button
             whileHover={{ scale: 1.02 }}

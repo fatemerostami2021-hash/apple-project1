@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 import { brands } from "../data/brandsData";
@@ -7,11 +7,6 @@ import "../styles/brand-wave-slider.css";
 const BrandWaveSlider = () => {
   const { i18n, t } = useTranslation();
   const isFa = i18n.language.startsWith("fa");
-
-  // ✅ state برای کنترل نمایش برندها
-  const [isVisible, setIsVisible] = useState(false);
-  // ✅ state برای ریستارت انیمیشن (با تغییر key)
-  const [animationKey, setAnimationKey] = useState(0);
 
   /*
     هر ردیف از کل لیست برندها استفاده می‌کنه (نه نصفش) و چند بار پشت‌سرهم
@@ -50,55 +45,25 @@ const BrandWaveSlider = () => {
     );
   };
 
-  // ✅ نمایش برندها با کلیک
-  const handleTitleClick = () => {
-    setIsVisible(true);
-    // ✅ ریستارت انیمیشن با تغییر key
-    setAnimationKey(prev => prev + 1);
-  };
-
-  // ✅ نمایش برندها با هاور موس
-  const handleTitleHover = () => {
-    setIsVisible(true);
-    // ✅ ریستارت انیمیشن با تغییر key
-    setAnimationKey(prev => prev + 1);
-  };
-
   return (
     <section className="brand-wave-section">
       <div className="brand-header">
-        <h2
-          className="brand-title"
-          onClick={handleTitleClick}
-          onMouseEnter={handleTitleHover}
-          style={{ cursor: "pointer" }}
-        >
-          {t("featuredBrands")}
-        </h2>
+        <h2 className="brand-title">{t("featuredBrands")}</h2>
       </div>
 
-      {/* ✅ نمایش اسلایدر فقط در صورت visible بودن */}
-      {isVisible && (
-        <div className="brand-slider">
-          <div className="brand-row">
-            <div
-              key={`row1-${animationKey}`}
-              className={`brand-track brand-track--row1 ${isFa ? "rtl" : "ltr"}`}
-            >
-              {rowTop.map((brand, index) => renderItem(brand, index))}
-            </div>
-          </div>
-
-          <div className="brand-row">
-            <div
-              key={`row2-${animationKey}`}
-              className={`brand-track brand-track--row2 ${isFa ? "rtl" : "ltr"}`}
-            >
-              {rowBottom.map((brand, index) => renderItem(brand, index))}
-            </div>
+      <div className="brand-slider">
+        <div className="brand-row">
+          <div className={`brand-track brand-track--row1 ${isFa ? "rtl" : "ltr"}`}>
+            {rowTop.map((brand, index) => renderItem(brand, index))}
           </div>
         </div>
-      )}
+
+        <div className="brand-row">
+          <div className={`brand-track brand-track--row2 ${isFa ? "rtl" : "ltr"}`}>
+            {rowBottom.map((brand, index) => renderItem(brand, index))}
+          </div>
+        </div>
+      </div>
 
       <div className="brand-wave-svg">
         <svg viewBox="0 0 1440 160" preserveAspectRatio="none">
