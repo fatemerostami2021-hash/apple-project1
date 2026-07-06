@@ -159,48 +159,48 @@ export default function IphonePage() {
         <meta name="description" content="بررسی و مقایسه نسل‌های مختلف آیفون از سری ۱۲ تا ۱۷ پرو مکس" />
         <meta name="keywords" content="iPhone 17 Pro Max, iPhone 16, Apple, iOS, آیفون ۱۷" />
       </Helmet>
+{/* HERO SECTION */}
+<section className="relative w-full min-h-[50vh] sm:min-h-[58vh] md:min-h-[68vh] flex items-center justify-center px-4 sm:px-6 overflow-hidden">
+  <div className="max-w-[1400px] w-full flex flex-col md:flex-row items-center justify-center gap-8 sm:gap-12 lg:gap-24">
+    <motion.div
+      initial={{ opacity: 0, scale: 0.5, rotate: -10 }}
+      animate={{ opacity: 1, scale: 1, rotate: 0 }}
+      transition={{ duration: 1, type: "spring" }}
+      whileHover={{ scale: 1.08, rotate: 5 }}
+      className="relative flex-shrink-0"
+    >
+      {/* گلوی نرم پشت لوگو برای حس حرفه‌ای‌تر */}
+      <div className="absolute inset-0 -z-10 blur-[60px] opacity-40 bg-gradient-to-br from-blue-400 via-gray-300 to-amber-300 dark:from-blue-500/40 dark:via-gray-400/20 dark:to-amber-400/40 rounded-full scale-110" />
+      <img
+        src={logo}
+        alt="Apple Brand Logo"
+        className="w-32 sm:w-44 md:w-60 lg:w-72 xl:w-80 drop-shadow-[0_20px_50px_rgba(0,0,0,0.3)] dark:invert"
+      />
+    </motion.div>
 
-      {/* HERO SECTION */}
-      <section className="relative w-full min-h-[45vh] sm:min-h-[50vh] md:min-h-[60vh] flex items-center justify-center px-4 sm:px-6 overflow-hidden">
-        <div className="max-w-[1300px] w-full flex flex-col md:flex-row items-center justify-center gap-6 sm:gap-10 lg:gap-20">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.5, rotate: -10 }}
-            animate={{ opacity: 1, scale: 1, rotate: 0 }}
-            transition={{ duration: 1, type: "spring" }}
-            whileHover={{ scale: 1.1, rotate: 5 }}
-            className="flex-shrink-0"
-          >
-            <img 
-              src={logo} 
-              alt="Apple Brand Logo" 
-              className="w-20 sm:w-28 md:w-40 lg:w-56 drop-shadow-[0_15px_40px_rgba(0,0,0,0.25)] dark:invert"
-            />
-          </motion.div>
-
-          <div className={`text-center md:text-left ${isRtl ? 'md:text-right' : 'md:text-left'}`}>
-            <motion.h1
-              initial={{ opacity: 0, x: isRtl ? 50 : -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.3, duration: 0.8 }}
-              className="text-3xl sm:text-5xl md:text-6xl lg:text-8xl font-extrabold tracking-tight uppercase mb-2 sm:mb-4 bg-clip-text text-transparent bg-gradient-to-b from-black to-gray-500 dark:from-white dark:to-gray-500"
-            >
-              {t("iphonePage.hero.title1")} <br />
-              <span className="text-blue-600 hover:text-blue-500 transition-colors duration-300">
-                {t("iphonePage.hero.title2")}
-              </span>
-            </motion.h1>
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.6 }}
-              className="max-w-lg text-sm sm:text-lg md:text-xl font-bold opacity-85 leading-relaxed"
-            >
-              {t("iphonePage.hero.subtitle")}
-            </motion.p>
-          </div>
-        </div>
-      </section>
-
+    <div className={`text-center md:text-left ${isRtl ? 'md:text-right' : 'md:text-left'}`}>
+      <motion.h1
+        initial={{ opacity: 0, x: isRtl ? 50 : -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.3, duration: 0.8 }}
+        className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black tracking-tight uppercase mb-3 sm:mb-5 bg-clip-text text-transparent bg-gradient-to-b from-black to-gray-600 dark:from-white dark:to-gray-400 leading-[0.95]"
+      >
+        {t("iphonePage.hero.title1")} <br />
+        <span className="text-blue-600 hover:text-blue-500 transition-colors duration-300">
+          {t("iphonePage.hero.title2")}
+        </span>
+      </motion.h1>
+      <motion.p
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.6 }}
+        className="max-w-lg text-base sm:text-xl md:text-2xl font-extrabold opacity-90 leading-relaxed tracking-wide"
+      >
+        {t("iphonePage.hero.subtitle")}
+      </motion.p>
+    </div>
+  </div>
+</section>
       {/* PRODUCTS LOOP */}
       <section id="models" className="max-w-[1400px] mx-auto px-3 sm:px-6 py-10 sm:py-16 md:py-20 space-y-12 sm:space-y-20 md:space-y-28 lg:space-y-36">
         {models.map((m) => {

@@ -19,6 +19,34 @@ import { useSlides } from "../../hooks/useSlides";
 import { useCart } from "../../hooks/useCart.jsx";
 
 // ============================================================
+// 📝 اسلایدهای پیش‌فرض - همیشه آماده، مستقل از دیتابیس
+// ============================================================
+const getDefaultSlides = (isRTL) => [
+  {
+    id: 'default-1',
+    brand: 'Apple',
+    title: isRTL ? 'آیفون ۱۷ پرو مکس' : 'iPhone 17 Pro Max',
+    subtitle: isRTL ? 'قدرتمندترین آیفون تاریخ' : 'The most powerful iPhone ever',
+    description: isRTL ? 'تراشه A18 پرو · طراحی تیتانیوم · دوربین ۴۸ مگاپیکسل' : 'A18 Pro chip · Titanium design · 48MP camera',
+    image: '/assets/iphone/iphone-17-pro-max.png',
+    price: 1299,
+    buttonText: { en: 'Buy Now', fa: 'خرید' },
+    articleSlug: 'iphone-17-pro-max'
+  },
+  {
+    id: 'default-2',
+    brand: 'Samsung',
+    title: isRTL ? 'گلکسی اس۲۶ اولترا' : 'Galaxy S26 Ultra',
+    subtitle: isRTL ? 'بهترین تجربه اندروید' : 'The ultimate Android experience',
+    description: isRTL ? 'دوربین ۲۰۰ مگاپیکسل · هوش مصنوعی · قلم S Pen' : '200MP camera · AI features · S Pen included',
+    image: '/assets/galexy-series-s/galaxy-s26-ultra.png',
+    price: 1199,
+    buttonText: { en: 'Buy Now', fa: 'خرید' },
+    articleSlug: 'galaxy-s26-ultra'
+  }
+];
+
+// ============================================================
 // 📝 کامپوننت TypingText
 // ============================================================
 const TypingText = ({ texts, className }) => {
@@ -80,7 +108,12 @@ const HeroSlider = () => {
   const isRTL = currentLang.startsWith("fa");
 
   const { slides: slidesFromDB, loading } = useSlides();
-  const [slides, setSlides] = useState([]);
+
+  // ✅ از همون اول با اسلایدهای پیش‌فرض شروع می‌کنیم - نه آرایه‌ی خالی
+  // این یعنی هیرو همون لحظه‌ی اول رندر میشه، بدون منتظر موندن برای API/دیتابیس
+  const [slides, setSlides] = useState(() => getDefaultSlides(isRTL));
+  const [usingDefaults, setUsingDefaults] = useState(true);
+
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
   const [activeIndex, setActiveIndex] = useState(0);
   const [isHovering, setIsHovering] = useState(false);
@@ -94,93 +127,71 @@ const HeroSlider = () => {
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
   // ============================================================
-  // 🔄 تنظیم اسلایدها از دیتابیس
+  // 🔄 وقتی دیتابیس جواب داد، اسلایدها رو بی‌صدا جایگزین کن
+  // (بدون نمایش صفحه‌ی لودینگ، بدون پرش بصری)
   // ============================================================
   useEffect(() => {
-    let finalSlides = [];
+    if (!slidesFromDB || slidesFromDB.length === 0) return;
 
-    if (slidesFromDB && slidesFromDB.length > 0) {
-      const formatted = slidesFromDB.map((slide, index) => {
-        let articleSlug = slide.articleSlug || '';
+    const formatted = slidesFromDB.map((slide, index) => {
+      let articleSlug = slide.articleSlug || '';
 
-        if (!articleSlug) {
-          const productSlug = slide.productId?.slug || slide.productId || '';
-          articleSlug = slide.articleSlug || slide.article || productSlug || '';
-        }
+      if (!articleSlug) {
+        const productSlug = slide.productId?.slug || slide.productId || '';
+        articleSlug = slide.articleSlug || slide.article || productSlug || '';
+      }
 
-        if (!articleSlug) {
-          const title = slide.title?.en || slide.title || '';
-          articleSlug = title
-            .toLowerCase()
-            .replace(/[^a-z0-9]+/g, '-')
-            .replace(/^-|-$/g, '');
-        }
+      if (!articleSlug) {
+        const title = slide.title?.en || slide.title || '';
+        articleSlug = title
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/^-|-$/g, '');
+      }
 
-        return {
-          id: slide._id || `slide-${index}`,
-          brand: slide.brand || 'Apple',
-          title: isRTL ? slide.title?.fa : slide.title?.en,
-          subtitle: isRTL ? slide.subtitle?.fa : slide.subtitle?.en,
-          description: isRTL ? slide.description?.fa : slide.description?.en,
-          image: slide.image || '/images/placeholder.png',
-          articleSlug: articleSlug,
-          productId: slide.productId?._id || slide.productId || null,
-          price: slide.price || 0,
-          buttonText: {
-            en: slide.buttonText?.en || 'Buy Now',
-            fa: slide.buttonText?.fa || 'خرید'
-          },
-          order: slide.order || index,
-          active: slide.active !== false
-        };
-      });
-
-      const sorted = formatted
-        .filter(s => s.active)
-        .sort((a, b) => a.order - b.order);
-
-      const seenImages = new Set();
-      const uniqueSlides = sorted.filter(slide => {
-        const imageKey = slide.image;
-        if (seenImages.has(imageKey)) {
-          return false;
-        }
-        seenImages.add(imageKey);
-        return true;
-      });
-
-      finalSlides = uniqueSlides;
-    }
-
-    if (finalSlides.length === 0) {
-      finalSlides = [
-        {
-          id: 'default-1',
-          brand: 'Apple',
-          title: isRTL ? 'آیفون ۱۷ پرو مکس' : 'iPhone 17 Pro Max',
-          subtitle: isRTL ? 'قدرتمندترین آیفون تاریخ' : 'The most powerful iPhone ever',
-          description: isRTL ? 'تراشه A18 پرو · طراحی تیتانیوم · دوربین ۴۸ مگاپیکسل' : 'A18 Pro chip · Titanium design · 48MP camera',
-          image: '/assets/iphone/iphone-17-pro-max.png',
-          price: 1299,
-          buttonText: { en: 'Buy Now', fa: 'خرید' },
-          articleSlug: 'iphone-17-pro-max'
+      return {
+        id: slide._id || `slide-${index}`,
+        brand: slide.brand || 'Apple',
+        title: isRTL ? slide.title?.fa : slide.title?.en,
+        subtitle: isRTL ? slide.subtitle?.fa : slide.subtitle?.en,
+        description: isRTL ? slide.description?.fa : slide.description?.en,
+        image: slide.image || '/images/placeholder.png',
+        articleSlug: articleSlug,
+        productId: slide.productId?._id || slide.productId || null,
+        price: slide.price || 0,
+        buttonText: {
+          en: slide.buttonText?.en || 'Buy Now',
+          fa: slide.buttonText?.fa || 'خرید'
         },
-        {
-          id: 'default-2',
-          brand: 'Samsung',
-          title: isRTL ? 'گلکسی اس۲۶ اولترا' : 'Galaxy S26 Ultra',
-          subtitle: isRTL ? 'بهترین تجربه اندروید' : 'The ultimate Android experience',
-          description: isRTL ? 'دوربین ۲۰۰ مگاپیکسل · هوش مصنوعی · قلم S Pen' : '200MP camera · AI features · S Pen included',
-          image: '/assets/galexy-series-s/galaxy-s26-ultra.png',
-          price: 1199,
-          buttonText: { en: 'Buy Now', fa: 'خرید' },
-          articleSlug: 'galaxy-s26-ultra'
-        }
-      ];
-    }
+        order: slide.order || index,
+        active: slide.active !== false
+      };
+    });
 
-    setSlides(finalSlides);
+    const sorted = formatted
+      .filter(s => s.active)
+      .sort((a, b) => a.order - b.order);
+
+    const seenImages = new Set();
+    const uniqueSlides = sorted.filter(slide => {
+      const imageKey = slide.image;
+      if (seenImages.has(imageKey)) return false;
+      seenImages.add(imageKey);
+      return true;
+    });
+
+    if (uniqueSlides.length > 0) {
+      setSlides(uniqueSlides);
+      setUsingDefaults(false);
+    }
   }, [slidesFromDB, isRTL]);
+
+  // اگه فقط زبان عوض شد و هنوز از پیش‌فرض‌ها استفاده می‌کنیم، متن‌هاشون رو به‌روز کن
+  useEffect(() => {
+    if (usingDefaults) {
+      setSlides(getDefaultSlides(isRTL));
+    }
+  }, [isRTL, usingDefaults]);
 
   // ============================================================
   // ⏱️ کنترل پیشرفت بار
@@ -274,18 +285,8 @@ const HeroSlider = () => {
     return () => stopProgress();
   }, [activeIndex, isHovering, startProgress, stopProgress]);
 
-  // ============================================================
-  // 🚧 لودینگ
-  // ============================================================
-  if (loading || slides.length === 0) {
-    return (
-      <div className="w-full h-[580px] md:h-[760px] flex items-center justify-center bg-gray-100 dark:bg-gray-900">
-        <div className="text-2xl font-black text-gray-600 dark:text-gray-400">
-          ⏳ {isRTL ? "در حال بارگذاری..." : "Loading..."}
-        </div>
-      </div>
-    );
-  }
+  // ✅ دیگه هیچ حالت "loading" کامل‌صفحه نداریم - همیشه اسلایدها آماده‌ن
+  // (چه پیش‌فرض، چه از دیتابیس)
 
   // ============================================================
   // 🎨 رندر اصلی با چیدمان ریسپانسیو
@@ -393,7 +394,10 @@ const HeroSlider = () => {
                   src={slide.image}
                   alt={slide.title}
                   draggable={false}
-                  loading="lazy"
+                  // ✅ تصویر هیرو بالای صفحه‌ست - نباید lazy باشه، باید فوری و با اولویت لود بشه
+                  loading={idx === 0 ? "eager" : "lazy"}
+                  fetchpriority={idx === 0 ? "high" : "auto"}
+                  decoding="async"
                   className="hero-product-image relative w-[92%] md:w-[88%] lg:w-[95%] max-h-[90%] md:max-h-[92%] object-contain select-none will-change-transform drop-shadow-[0_60px_120px_rgba(0,0,0,0.35)]"
                   style={{
                     transform: isMobile ? `translateZ(0)` : `translateZ(0) translate3d(${mouse.x * 0.8}px, ${mouse.y * 0.8}px, 0)`,
