@@ -14,6 +14,7 @@ import viewsRoutes   from "./routes/views.js";
 import commentRoutes from "./routes/comments.js";
 import adminRoutes   from "./routes/admin.js";
 import agentRoutes   from "./routes/agent.js";
+import agentArticleRoutes from "./routes/agent-article.js";
 import uploadRoutes  from "./routes/upload.js";
 import slideRoutes   from "./routes/slides.js";
 import footerRoutes  from "./routes/footer.js";
