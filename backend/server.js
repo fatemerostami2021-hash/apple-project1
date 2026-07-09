@@ -133,6 +133,7 @@ app.use("/api/articles", viewsRoutes);
 app.use("/api/comments", commentRoutes);
 app.use("/api/admin",    adminRoutes);
 app.use("/api/agent",    agentRoutes);
+app.use("/api/agent-article", agentArticleRoutes);
 app.use("/api/about",    aboutRoutes);
 app.use("/api/upload",   uploadRoutes);
 app.use("/api/footer",   footerRoutes);

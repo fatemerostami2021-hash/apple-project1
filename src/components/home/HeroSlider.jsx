@@ -9,7 +9,14 @@ import "swiper/css/navigation";
 import { useTranslation } from "react-i18next";
 import { useState, useEffect, useCallback, useRef } from "react";
 import { motion } from "framer-motion";
-import { HiOutlineShoppingBag, HiOutlineSparkles, HiOutlineEye, HiOutlineArrowRight } from "react-icons/hi";
+import { 
+  HiOutlineShoppingBag, 
+  HiOutlineSparkles, 
+  HiOutlineEye, 
+  HiOutlineArrowRight,
+  HiPlay,
+  HiPause
+} from "react-icons/hi";
 
 import HeroBackground from "../../animations/HeroBackground";
 import WaveCircleText from "../../animations/WaveCircleText";
@@ -17,6 +24,221 @@ import { useTheme } from "../../store/theme";
 import { fadeIn } from "../../animations/variants";
 import { useSlides } from "../../hooks/useSlides";
 import { useCart } from "../../hooks/useCart.jsx";
+
+// ============================================================
+// 🎥 کامپوننت ویدیوی داخل کارت
+// ============================================================
+const FloatingVideo = ({ darkMode, isRTL }) => {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [error, setError] = useState(null);
+  const videoRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const containerRef = useRef(null);
+
+  // ✅ مسیر صحیح ویدیو
+  const videoPath = new URL('/assets/video/iphon-18-google-flow.mp4', import.meta.url).href;
+
+  // لاگ برای دیباگ
+  useEffect(() => {
+    console.log('🎥 Video path:', videoPath);
+    console.log('📁 Origin:', window.location.origin);
+  }, []);
+
+  // مشاهده‌گر برای پخش خودکار
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+        if (entry.isIntersecting && videoRef.current && isPlaying) {
+          videoRef.current.play().catch(() => {});
+        } else if (videoRef.current) {
+          videoRef.current.pause();
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => {
+      if (containerRef.current) {
+        observer.unobserve(containerRef.current);
+      }
+    };
+  }, [isPlaying]);
+
+  // کنترل پخش/مکث
+  const togglePlay = () => {
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+        setIsPlaying(false);
+      } else {
+        videoRef.current.play()
+          .then(() => {
+            setIsPlaying(true);
+            console.log('✅ Video playing');
+          })
+          .catch((err) => {
+            console.error('❌ Play error:', err);
+            setError(err.message);
+          });
+      }
+    }
+  };
+
+  // کنترل صدا
+  const toggleMute = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !isMuted;
+      setIsMuted(!isMuted);
+    }
+  };
+
+  // نمایش خطا
+  if (error) {
+    return (
+      <div className="w-full h-full rounded-xl md:rounded-2xl bg-gradient-to-br from-red-500/20 to-amber-500/20 border border-red-500/30 flex items-center justify-center">
+        <div className="text-center p-2">
+          <svg className="w-8 h-8 md:w-12 md:h-12 text-red-400 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+          <span className="text-[8px] md:text-[10px] text-white/70">Video Error</span>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div
+      ref={containerRef}
+      className="w-full h-full rounded-xl md:rounded-2xl overflow-hidden relative group/video"
+    >
+      {/* ویدیو */}
+      <video
+        ref={videoRef}
+        src={videoPath}
+        className="w-full h-full object-cover"
+        loop
+        muted={isMuted}
+        playsInline
+        preload="auto"
+        onLoadedData={() => {
+          setIsLoaded(true);
+          console.log('✅ Video loaded');
+          if (!isPlaying && isVisible) {
+            videoRef.current?.play().catch(() => {});
+          }
+        }}
+        onError={(e) => {
+          console.error('❌ Video error:', e);
+          setError('Failed to load video');
+        }}
+        onPlay={() => setIsPlaying(true)}
+        onPause={() => setIsPlaying(false)}
+      />
+
+      {/* اوورلی تاریک */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+
+      {/* دکمه‌های کنترل */}
+      <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between gap-1 md:gap-3">
+        <button
+          onClick={togglePlay}
+          className="
+            w-7 h-7 md:w-10 md:h-10
+            rounded-full
+            bg-black/60 backdrop-blur-md
+            border border-white/30
+            flex items-center justify-center
+            text-white hover:text-amber-400
+            hover:border-amber-400/50
+            transition-all duration-300
+            hover:scale-110
+            z-10
+          "
+          aria-label={isPlaying ? "Pause" : "Play"}
+        >
+          {isPlaying ? (
+            <HiPause className="w-4 h-4 md:w-5 md:h-5" />
+          ) : (
+            <HiPlay className="w-4 h-4 md:w-5 md:h-5 ml-0.5" />
+          )}
+        </button>
+
+        <button
+          onClick={toggleMute}
+          className="
+            w-7 h-7 md:w-10 md:h-10
+            rounded-full
+            bg-black/60 backdrop-blur-md
+            border border-white/30
+            flex items-center justify-center
+            text-white hover:text-amber-400
+            hover:border-amber-400/50
+            transition-all duration-300
+            hover:scale-110
+            z-10
+          "
+          aria-label={isMuted ? "Unmute" : "Mute"}
+        >
+          {isMuted ? (
+            <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
+            </svg>
+          ) : (
+            <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+            </svg>
+          )}
+        </button>
+      </div>
+
+      {/* برچسب "تبلیغ" */}
+      <div className="absolute top-2 left-2 md:top-3 md:left-3 z-10">
+        <span className="
+          text-[6px] md:text-[9px] 
+          font-bold uppercase 
+          px-1.5 py-0.5 md:px-2.5 md:py-1
+          rounded-full
+          bg-black/50 backdrop-blur-sm
+          border border-white/20
+          text-white/70
+          tracking-wider
+        ">
+          {isRTL ? 'تبلیغ' : 'Ad'}
+        </span>
+      </div>
+
+      {/* نشانگر پخش */}
+      {!isPlaying && isVisible && isLoaded && (
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <div className="
+            w-12 h-12 md:w-16 md:h-16
+            rounded-full
+            bg-amber-500/80 backdrop-blur-sm
+            flex items-center justify-center
+            animate-pulse
+          ">
+            <HiPlay className="w-6 h-6 md:w-8 md:h-8 text-white ml-1" />
+          </div>
+        </div>
+      )}
+
+      {/* نشانگر لودینگ */}
+      {!isLoaded && (
+        <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+          <div className="w-8 h-8 md:w-12 md:h-12 border-3 border-white/20 border-t-amber-400 rounded-full animate-spin" />
+        </div>
+      )}
+    </div>
+  );
+};
 
 // ============================================================
 // 📝 اسلایدهای پیش‌فرض - همیشه آماده، مستقل از دیتابیس
@@ -109,8 +331,7 @@ const HeroSlider = () => {
 
   const { slides: slidesFromDB, loading } = useSlides();
 
-  // ✅ از همون اول با اسلایدهای پیش‌فرض شروع می‌کنیم - نه آرایه‌ی خالی
-  // این یعنی هیرو همون لحظه‌ی اول رندر میشه، بدون منتظر موندن برای API/دیتابیس
+  // ✅ از همون اول با اسلایدهای پیش‌فرض شروع می‌کنیم
   const [slides, setSlides] = useState(() => getDefaultSlides(isRTL));
   const [usingDefaults, setUsingDefaults] = useState(true);
 
@@ -128,7 +349,6 @@ const HeroSlider = () => {
 
   // ============================================================
   // 🔄 وقتی دیتابیس جواب داد، اسلایدها رو بی‌صدا جایگزین کن
-  // (بدون نمایش صفحه‌ی لودینگ، بدون پرش بصری)
   // ============================================================
   useEffect(() => {
     if (!slidesFromDB || slidesFromDB.length === 0) return;
@@ -285,12 +505,6 @@ const HeroSlider = () => {
     return () => stopProgress();
   }, [activeIndex, isHovering, startProgress, stopProgress]);
 
-  // ✅ دیگه هیچ حالت "loading" کامل‌صفحه نداریم - همیشه اسلایدها آماده‌ن
-  // (چه پیش‌فرض، چه از دیتابیس)
-
-  // ============================================================
-  // 🎨 رندر اصلی با چیدمان ریسپانسیو
-  // ============================================================
   return (
     <section
       dir={isRTL ? "rtl" : "ltr"}
@@ -348,8 +562,8 @@ const HeroSlider = () => {
                 relative flex flex-col md:flex-row 
                 items-center justify-center 
                 h-full w-full 
-                px-2 md:px-6 lg:px-28 
-                gap-1 md:gap-10 
+                px-2 md:px-6 lg:px-20 
+                gap-1 md:gap-6 
                 py-2 md:py-0
                 overflow-hidden
                 ${isRTL ? "md:flex-row-reverse text-right" : "md:flex-row text-left"}
@@ -361,8 +575,8 @@ const HeroSlider = () => {
                 animate={{ opacity: 1, scale: 1, x: 0 }}
                 transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
                 className={`
-                  relative w-full md:w-[60%] 
-                  h-[55%] md:h-full 
+                  relative w-full md:w-[55%] 
+                  h-[50%] md:h-full 
                   flex items-center justify-center
                   perspective-[2000px] z-10
                   order-1 md:order-2
@@ -394,11 +608,10 @@ const HeroSlider = () => {
                   src={slide.image}
                   alt={slide.title}
                   draggable={false}
-                  // ✅ تصویر هیرو بالای صفحه‌ست - نباید lazy باشه، باید فوری و با اولویت لود بشه
                   loading={idx === 0 ? "eager" : "lazy"}
                   fetchpriority={idx === 0 ? "high" : "auto"}
                   decoding="async"
-                  className="hero-product-image relative w-[92%] md:w-[88%] lg:w-[95%] max-h-[90%] md:max-h-[92%] object-contain select-none will-change-transform drop-shadow-[0_60px_120px_rgba(0,0,0,0.35)]"
+                  className="hero-product-image relative w-[92%] md:w-[88%] lg:w-[92%] max-h-[88%] md:max-h-[92%] object-contain select-none will-change-transform drop-shadow-[0_60px_120px_rgba(0,0,0,0.35)]"
                   style={{
                     transform: isMobile ? `translateZ(0)` : `translateZ(0) translate3d(${mouse.x * 0.8}px, ${mouse.y * 0.8}px, 0)`,
                   }}
@@ -408,62 +621,72 @@ const HeroSlider = () => {
                 />
               </motion.div>
 
-              {/* ═══════ کارت متن (کوچکتر در موبایل) ═══════ */}
+              {/* ═══════ کارت متن با ویدیو ═══════ */}
               <motion.div
                 variants={fadeIn(isRTL ? "left" : "right", 0.3)}
                 initial="hidden"
                 animate="show"
                 whileHover={isMobile ? {} : { y: -6, scale: 1.02 }}
                 transition={{ type: "spring", stiffness: 280, damping: 20 }}
-                className="hero-card relative z-30 w-[95%] md:w-[52%] lg:w-[40%] p-2 md:p-8 lg:p-12 order-2 md:order-1"
+                className="hero-card relative z-30 w-[95%] md:w-[48%] lg:w-[38%] p-2 md:p-5 lg:p-7 order-2 md:order-1"
               >
-                <div className="flex items-center gap-1 md:gap-3 mb-1 md:mb-4">
-                  <HiOutlineSparkles className="text-amber-400 text-[8px] md:text-sm" />
-                  <p className="hero-brand text-[7px] md:text-[11px] font-extrabold tracking-[0.2em] md:tracking-[0.25em] uppercase">
+                {/* 🎥 ویدیو در بالای کارت */}
+                <div className="w-full aspect-video rounded-lg md:rounded-xl overflow-hidden mb-2 md:mb-3 shadow-lg border border-white/10">
+                  <FloatingVideo darkMode={darkMode} isRTL={isRTL} />
+                </div>
+
+                {/* برند */}
+                <div className="flex items-center gap-1 md:gap-2 mb-1 md:mb-2">
+                  <HiOutlineSparkles className="text-amber-400 text-[8px] md:text-sm flex-shrink-0" />
+                  <p className="hero-brand text-[7px] md:text-[11px] font-extrabold tracking-[0.2em] md:tracking-[0.25em] uppercase truncate">
                     {slide.brand}
                   </p>
                 </div>
 
-                <div className="min-h-[40px] md:min-h-[140px] lg:min-h-[160px]">
+                {/* عنوان تایپینگ */}
+                <div className="min-h-[28px] md:min-h-[80px] lg:min-h-[100px]">
                   <TypingText
                     texts={getTypingTexts(slide)}
-                    className="hero-title text-lg md:text-4xl lg:text-7xl font-black tracking-tight
+                    className="hero-title text-base md:text-2xl lg:text-4xl font-black tracking-tight
                                bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-600 
                                bg-clip-text text-transparent
                                drop-shadow-[0_0_20px_rgba(255,215,0,0.4)]"
                   />
                 </div>
 
-                <p className="hero-subtitle mt-1 md:mt-4 text-[10px] md:text-base lg:text-xl font-bold opacity-90">
+                {/* زیر عنوان */}
+                <p className="hero-subtitle mt-0.5 md:mt-2 text-[9px] md:text-base lg:text-lg font-bold opacity-90 line-clamp-1">
                   {slide.subtitle}
                 </p>
 
+                {/* توضیحات */}
                 {slide.description && (
-                  <p className="text-[8px] md:text-sm text-gray-400 mt-0.5 md:mt-2 opacity-70 font-medium line-clamp-1 md:line-clamp-2">
+                  <p className="text-[7px] md:text-sm text-gray-400 mt-0.5 md:mt-1 opacity-70 font-medium line-clamp-1 md:line-clamp-2">
                     {slide.description}
                   </p>
                 )}
 
-                <div className="flex flex-col sm:flex-row gap-1 md:gap-3 mt-2 md:mt-8">
+                {/* دکمه‌ها */}
+                <div className="flex flex-col sm:flex-row gap-1 md:gap-2 mt-2 md:mt-4">
                   <button
                     onClick={() => handleAddToCart(slide)}
-                    className="hero-btn w-full sm:w-auto px-3 md:px-8 py-1.5 md:py-4 rounded-full text-[9px] md:text-sm font-black tracking-wide transition-all duration-300 group flex items-center justify-center gap-1 md:gap-2"
+                    className="hero-btn w-full sm:w-auto px-3 md:px-6 py-1.5 md:py-3 rounded-full text-[8px] md:text-sm font-black tracking-wide transition-all duration-300 group flex items-center justify-center gap-1 md:gap-2"
                   >
                     <span>{getButtonText(slide)}</span>
-                    <HiOutlineShoppingBag className="w-3 h-3 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
+                    <HiOutlineShoppingBag className="w-3 h-3 md:w-4 md:h-4 group-hover:translate-x-1 transition-transform flex-shrink-0" />
                   </button>
 
                   {slide.articleSlug && (
                     <button
                       onClick={() => handleViewArticle(slide.articleSlug)}
-                      className="w-full sm:w-auto px-3 md:px-7 py-1.5 md:py-4 rounded-full text-[9px] md:text-sm font-black tracking-wide transition-all duration-300 
+                      className="w-full sm:w-auto px-3 md:px-5 py-1.5 md:py-3 rounded-full text-[8px] md:text-sm font-black tracking-wide transition-all duration-300 
                                  bg-transparent border-2 border-amber-500/50 text-amber-400 
                                  hover:bg-amber-500 hover:text-black hover:border-amber-500
                                  flex items-center justify-center gap-1 md:gap-2 group"
                     >
-                      <HiOutlineEye className="w-3 h-3 md:w-5 md:h-5 group-hover:scale-110 transition" />
-                      <span>{isRTL ? 'مشاهده مقاله' : 'View Article'}</span>
-                      <HiOutlineArrowRight className="w-2 h-2 md:w-4 md:h-4 group-hover:translate-x-1 transition hidden sm:block" />
+                      <HiOutlineEye className="w-3 h-3 md:w-4 md:h-4 group-hover:scale-110 transition flex-shrink-0" />
+                      <span className="whitespace-nowrap">{isRTL ? 'مشاهده مقاله' : 'View Article'}</span>
+                      <HiOutlineArrowRight className="w-2 h-2 md:w-3 md:h-3 group-hover:translate-x-1 transition hidden sm:block flex-shrink-0" />
                     </button>
                   )}
                 </div>
@@ -475,37 +698,37 @@ const HeroSlider = () => {
 
       {/* ⬅️➡️ دکمه‌های نویگیشن */}
       <button
-        className="hero-prev absolute left-1 md:left-8 top-1/2 -translate-y-1/2 z-40
-                   w-8 h-8 md:w-14 md:h-14 rounded-full bg-black/40 backdrop-blur-md border border-white/20
+        className="hero-prev absolute left-1 md:left-6 top-1/2 -translate-y-1/2 z-40
+                   w-8 h-8 md:w-12 md:h-12 rounded-full bg-black/40 backdrop-blur-md border border-white/20
                    flex items-center justify-center text-white hover:text-amber-400 hover:bg-black/60
                    hover:border-amber-400/50 hover:scale-110 transition-all duration-300 opacity-0
                    group-hover:opacity-100 focus:opacity-100"
         aria-label={isRTL ? "بعدی" : "Previous"}
       >
-        <svg className="w-4 h-4 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d={isRTL ? "M9 5l7 7-7 7" : "M15 19l-7-7 7-7"} />
         </svg>
       </button>
       
       <button
-        className="hero-next absolute right-1 md:right-8 top-1/2 -translate-y-1/2 z-40
-                   w-8 h-8 md:w-14 md:h-14 rounded-full bg-black/40 backdrop-blur-md border border-white/20
+        className="hero-next absolute right-1 md:right-6 top-1/2 -translate-y-1/2 z-40
+                   w-8 h-8 md:w-12 md:h-12 rounded-full bg-black/40 backdrop-blur-md border border-white/20
                    flex items-center justify-center text-white hover:text-amber-400 hover:bg-black/60
                    hover:border-amber-400/50 hover:scale-110 transition-all duration-300 opacity-0
                    group-hover:opacity-100 focus:opacity-100"
         aria-label={isRTL ? "قبلی" : "Next"}
       >
-        <svg className="w-4 h-4 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d={isRTL ? "M15 19l-7-7 7-7" : "M9 5l7 7-7 7"} />
         </svg>
       </button>
 
       {/* 📍 نقاط راهنما */}
-      <div className="hero-pagination absolute bottom-3 md:bottom-8 left-1/2 -translate-x-1/2 flex gap-2 md:gap-3 z-30" />
+      <div className="hero-pagination absolute bottom-3 md:bottom-6 left-1/2 -translate-x-1/2 flex gap-2 md:gap-3 z-30" />
 
       {/* 🔢 شمارنده */}
-      <div className="absolute bottom-3 md:bottom-8 right-2 md:right-8 z-30 hidden lg:block">
-        <div className="bg-black/40 backdrop-blur-md rounded-full px-2 md:px-5 py-0.5 md:py-2.5">
+      <div className="absolute bottom-3 md:bottom-6 right-2 md:right-6 z-30 hidden lg:block">
+        <div className="bg-black/40 backdrop-blur-md rounded-full px-2 md:px-4 py-0.5 md:py-2">
           <span className="text-white text-[10px] md:text-sm font-mono font-bold">
             {String(activeIndex + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}
           </span>
@@ -517,21 +740,21 @@ const HeroSlider = () => {
           ============================================================ */}
       <style>{`
         .hero-card {
-          border-radius: 12px;
+          border-radius: 16px;
           backdrop-filter: blur(20px) saturate(180%);
           -webkit-backdrop-filter: blur(20px) saturate(180%);
-          background: rgba(255,255,255,0.06);
-          border: 1px solid rgba(255,255,255,0.15);
-          box-shadow: 0 25px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.15);
+          background: rgba(255,255,255,0.08);
+          border: 1px solid rgba(255,255,255,0.12);
+          box-shadow: 0 25px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
           transition: all .3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
         html.dark .hero-card {
-          background: rgba(20,20,20,0.4);
-          border: 1px solid rgba(255,255,255,0.08);
+          background: rgba(20,20,20,0.5);
+          border: 1px solid rgba(255,255,255,0.06);
         }
         @media (min-width: 768px) {
           .hero-card {
-            border-radius: 28px;
+            border-radius: 24px;
           }
           .hero-card:hover {
             transform: translateY(-8px) scale(1.01);
@@ -546,19 +769,19 @@ const HeroSlider = () => {
           color: #fbbf24;
         }
         .hero-subtitle {
-          line-height: 1.6;
+          line-height: 1.4;
           opacity: .9;
-          max-width: 40ch;
+          max-width: 100%;
         }
         .hero-btn {
           background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
           color: white;
-          box-shadow: 0 12px 35px rgba(0,0,0,.4);
+          box-shadow: 0 8px 25px rgba(0,0,0,.4);
           font-weight: 900;
         }
         .hero-btn:hover {
-          transform: translateY(-3px) scale(1.04);
-          box-shadow: 0 20px 50px rgba(0,0,0,.5);
+          transform: translateY(-2px) scale(1.03);
+          box-shadow: 0 15px 40px rgba(0,0,0,.5);
         }
         html.dark .hero-btn {
           background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
@@ -600,8 +823,8 @@ const HeroSlider = () => {
         @media (max-width: 768px) {
           .hero-card {
             width: 100%;
-            padding: 8px 12px !important;
-            border-radius: 10px;
+            padding: 8px 10px !important;
+            border-radius: 12px;
             transform: none !important;
             box-shadow: 0 8px 20px rgba(0,0,0,0.3) !important;
           }
@@ -609,17 +832,17 @@ const HeroSlider = () => {
             transform: none !important;
           }
           .hero-title {
-            font-size: 1.1rem !important;
+            font-size: 1rem !important;
             line-height: 1.2 !important;
           }
           .hero-subtitle {
             max-width: 100%;
-            font-size: 0.7rem !important;
+            font-size: 0.65rem !important;
             line-height: 1.3 !important;
           }
           .hero-btn {
-            padding: 4px 10px !important;
-            font-size: 9px !important;
+            padding: 4px 8px !important;
+            font-size: 8px !important;
           }
           .hero-brand {
             letter-spacing: 0.15em;
@@ -627,23 +850,23 @@ const HeroSlider = () => {
           }
           .hero-product-image {
             width: 95% !important;
-            max-height: 92% !important;
+            max-height: 90% !important;
           }
         }
         @media (max-width: 480px) {
           .hero-title {
-            font-size: 0.95rem !important;
+            font-size: 0.85rem !important;
           }
           .hero-card {
-            padding: 6px 10px !important;
+            padding: 6px 8px !important;
           }
           .hero-btn {
-            padding: 3px 8px !important;
-            font-size: 8px !important;
+            padding: 3px 6px !important;
+            font-size: 7px !important;
           }
           .hero-product-image {
             width: 96% !important;
-            max-height: 94% !important;
+            max-height: 92% !important;
           }
         }
       `}</style>
