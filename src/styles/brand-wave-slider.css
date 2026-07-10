@@ -103,6 +103,10 @@
   display:flex;
   flex-direction:column;
   gap:36px;
+
+  /* اجبار به LTR برای کل این بخش، صرف‌نظر از زبان صفحه،
+     تا از باگ مرورگرها در overflow+flex+transform زیر rtl جلوگیری بشه */
+  direction: ltr;
 }
 
 /* fade edges - now spans the whole slider (both rows) */
@@ -149,6 +153,7 @@
 .brand-row{
   width:100%;
   overflow:hidden;
+  direction: ltr;
 }
 
 /* =========================
@@ -164,6 +169,8 @@
   gap:48px;
 
   will-change:transform;
+
+  direction: ltr;
 
   animation:
     brandLoop 45s linear infinite;
