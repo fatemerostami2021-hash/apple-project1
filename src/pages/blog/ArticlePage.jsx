@@ -466,11 +466,18 @@ export default function ArticlePage() {
   if (loading) return <ArticleSkeleton />;
   if (error || !article) return <ErrorState message={error} onRetry={() => window.location.reload()} />;
 
-  const heroImages = getHeroImages(slug);
-  const galleryImages = getGalleryImages(slug);
-  const title = article.title?.[lang] || article.title;
+  // ✅ اول از فایل ثابت (لیست دستی قدیمی) می‌خونه؛ اگر برای این slug چیزی نبود،
+  // به‌جای خالی موندن، از اطلاعاتی که n8n مستقیم توی دیتابیس ذخیره کرده استفاده می‌کنه.
+  const heroImagesStatic = getHeroImages(slug);
+  const galleryImagesStatic = getGalleryImages(slug);
 
-  const fallbackHeroImages = heroImages.length > 0 ? heroImages : (article.cover ? [article.cover] : []);
+  const fallbackHeroImages =
+    heroImagesStatic.length > 0 ? heroImagesStatic : (article.cover ? [article.cover] : []);
+
+  const galleryImages =
+    galleryImagesStatic.length > 0 ? galleryImagesStatic : (article.gallery || []);
+
+  const title = article.title?.[lang] || article.title;
 
   return (
     <div className={`ap-wrap ${isDark ? "" : "ap-light"}`} dir={isRtl ? "rtl" : "ltr"}>
